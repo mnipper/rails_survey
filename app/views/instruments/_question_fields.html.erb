@@ -1,0 +1,10 @@
+<fieldset>
+  <%= f.label :text, "Question" %><br />
+  <%= f.text_area :text %><br />
+  <%= f.check_box :_destroy %>
+  <%= f.label :_destroy, "Remove Question" %>
+  <%= f.fields_for :options do |builder| %>
+    <%= render 'option_fields', f: builder %>
+  <% end %>
+  <%= link_to_add_fields "Add Option", f, :options %>
+</fieldset>
