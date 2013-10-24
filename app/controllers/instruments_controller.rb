@@ -26,7 +26,7 @@ class InstrumentsController < ApplicationController
 
   def update
     @instrument = Instrument.find(params[:id])
-    if @instrument.update_attributes(params[:instrument])
+    if @instrument.update_attributes(instrument_params)
       redirect_to @instrument, notice: "Successfully updated instrument."
     else
       render :edit
