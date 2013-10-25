@@ -42,7 +42,10 @@ class InstrumentsController < ApplicationController
   private
 
   def instrument_params
-    params.require(:instrument).permit(:title, questions_attributes: [:text, :question_type,
-        :question_identifier, :instrument_id, options_attributes: [:question_id, :text]])
+    # if current_user
+    #params.require(:instrument).permit(:title, questions_attributes: [:text, :question_type,
+    #    :question_identifier, :instrument_id, :_destroy, options_attributes: [:question_id, :text]])
+    # end
+    params.require(:instrument).permit!
   end
 end

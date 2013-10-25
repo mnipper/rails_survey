@@ -1,5 +1,9 @@
 <fieldset>
-  <%= f.label :text, "Question" %><br />
+  <%= f.label :question_type %>
+  <%= f.select(:question_type, options_for_select(Settings.question_types)) %><br />
+  <%= f.label :question_identifier %>
+  <%= f.text_field :question_identifier %><br />
+  <%= f.label :text %>
   <%= f.text_area :text %><br />
   <%= f.check_box :_destroy %>
   <%= f.label :_destroy, "Remove Question" %>
