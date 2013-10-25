@@ -26,7 +26,7 @@ class InstrumentsController < ApplicationController
 
   def update
     @instrument = Instrument.find(params[:id])
-    if @instrument.update_attributes(instrument_params)
+    if @instrument.update_attributes!(instrument_params)
       redirect_to @instrument, notice: "Successfully updated instrument."
     else
       render :edit
@@ -43,6 +43,6 @@ class InstrumentsController < ApplicationController
 
   def instrument_params
     params.require(:instrument).permit(:title, questions_attributes: [:text, :question_type,
-        :question_identifier, :instrument_id])
+        :question_identifier, :instrument_id, options_attributes: [:question_id, :text]])
   end
 end
