@@ -1,0 +1,9 @@
+<h1>Surveys</h1>
+<% @surveys.each do |survey| %>
+  <p>
+    Id: <%= survey.id %><br />
+    Instrument: <%= survey.instrument.title %><br />
+    Device: <%= survey.device_id %><br />
+    <%= link_to 'View Responses', survey_path(survey) %>
+  </p>
+<% end %>

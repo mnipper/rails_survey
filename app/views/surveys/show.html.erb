@@ -1,0 +1,16 @@
+<h1>Survey for <%= @survey.instrument.title %></h1>
+
+<% @survey.responses.each do |response| %>
+  <p>
+    <%= response.question.question_identifier %><br />
+    <%= response.question.text %><br />
+    <% response.question.options.each do |option| %>
+      <%= option.text %><br />
+    <% end %>
+    <%= response.text %><br />
+    <% if response.other_response %>
+      <%= response.other_response %><br />
+    <% end %>
+    <%= response.created_at %>
+  </p>
+<% end %>
