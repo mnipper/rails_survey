@@ -4,9 +4,11 @@
   <p>
     <%= response.question.question_identifier %><br />
     <%= response.question.text %><br />
+    <ol start="0">
     <% response.question.options.each do |option| %>
-      <%= option.text %><br />
+      <li><%= option.text %></li>
     <% end %>
+    </ol>
     <%= response.text %><br />
     <% if response.other_response %>
       <%= response.other_response %><br />

@@ -4,7 +4,7 @@
 <% @instrument.questions.each do |question| %>
   <li>
     <%= question.text %>
-    <ol class="options">
+    <ol class="options" start="0">
       <% question.options.each do |option| %>
         <li><%= option.text %></li>
       <% end %>
