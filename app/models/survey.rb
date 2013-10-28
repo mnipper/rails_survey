@@ -1,4 +1,7 @@
 class Survey < ActiveRecord::Base
   belongs_to :instrument
-  has_many :responses
+  
+  def responses
+    Response.where(survey_uuid: uuid)
+  end
 end
