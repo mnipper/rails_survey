@@ -1,0 +1,76 @@
+V1.5
+- White version
+- Landing page
+- Css & Structure refactoring
+- Drop Bootstrap 2 version from package
+
+Files changed:
+ folder:
+  * --new-- white/*
+ html:
+  * --new-- landing.html
+ styles:
+  * sass/_base
+  * sass/_bootstrap-override
+  * sass/_responsive
+  * sass/lib/_animate
+
+V1.4
+- Bootstrap 3 support
+- Ready-to-use Inbox App
+
+Files changed:
+ all files :)
+ html:
+  * --new-- special_inbox.html
+ styles:
+  * sass/bootstrap-original/*
+ js:
+  * inbox.js
+  * folders.json
+  * emails.json
+ lib:
+  * --new-- lib/wysihtml5/advanced.js
+
+V1.3
+- Overall UI improvements
+- New iCheck library instead of out-of-date uniform
+- Print Optimized
+- Invoice Page
+
+Files changed:
+ html:
+  * all html files: icon-desktop replaced with icon-home
+  * --new-- special_invoice.html
+ styles:
+  * _base.scss
+  * _bootstrap-override.scss
+  * _general.scss
+  * _variables.scss
+  * application.scss
+  * --new-- _print.scss
+ js:
+  * form-elemets.js
+  * forms.js
+ lib:
+  * --new-- lib/icheck.js/jquery.icheck.js
+  * --removed-- lib/uniform/*
+ images:
+  * --new-- img/icheck/square/*
+  * --removed-- img/sprite.png
+  * --removed-- img/sprite.psd
+
+
+V1.2
+- Fileupload fix
+- Second level menu overlap fix
+Files changed:
+  * js/app.js
+  * component_fileupload.html
+
+
+V1.1
+- Generic Search Field
+- Form Wizard (form_wizard.html)
+- jQuery Datatables (tables_dynamic.html)
+- UI improvements

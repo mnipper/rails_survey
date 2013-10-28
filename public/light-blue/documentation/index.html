@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Light Blue Documentation</title>
+    <link href="css/documentation.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta charset="utf-8">
+</head>
+<body class="background-two">
+<nav id="sidebar" class="sidebar">
+    <ul id="side-nav" class="side-nav">
+        <li class="active green">
+            <a href="index.html"><i class=" icon-desktop"></i> <span class="name">Dashboard</span></a>
+        </li>
+        <li class="teal accordion-group">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#side-nav" href="#stats-collapse"><i class=" icon-bar-chart"></i> <span class="name">Statistics</span></a>
+            <ul id="stats-collapse" class="accordion-body collapse">
+                <li><a href="stat_statistics.html">Stats</a></li>
+                <li><a href="stat_charts.html">Charts</a></li>
+                <li><a href="stat_realtime.html">Realtime</a></li>
+            </ul>
+        </li>
+        <li class="blue accordion-group">
+            <a class="accordion-toggle collapsed" data-toggle="collapse"
+               data-parent="#side-nav" href="#forms-collapse"><i class=" icon-edit"></i> <span class="name">Forms</span></a>
+            <ul id="forms-collapse" class="accordion-body collapse">
+                <li><a href="form_account.html">Account</a></li>
+                <li><a href="form_article.html">Article</a></li>
+                <li><a href="form_elements.html">Elements</a></li>
+                <li><a href="form_validation.html">Validation</a></li>
+                <li><a href="form_wizard.html">Wizard</a></li>
+            </ul>
+        </li>
+        <li class="brown accordion-group">
+            <a class="accordion-toggle collapsed" data-toggle="collapse"
+               data-parent="#side-nav" href="#ui-collapse"><i class=" icon-magic"></i> <span class="name">UI</span></a>
+            <ul id="ui-collapse" class="accordion-body collapse">
+                <li><a href="ui_buttons.html">Buttons</a></li>
+                <li><a href="ui_dialogs.html">Dialogs</a></li>
+                <li><a href="ui_icons.html">Icons</a></li>
+                <li><a href="ui_tabs.html">Tabs</a></li>
+                <li><a href="ui_accordion.html">Accordion</a></li>
+            </ul>
+        </li>
+        <li class="dark-red accordion-group">
+            <a class="accordion-toggle collapsed" data-toggle="collapse"
+               data-parent="#side-nav" href="#components-collapse"><i class=" icon-bookmark-empty"></i> <span class="name">Components</span></a>
+            <ul id="components-collapse" class="accordion-body collapse">
+                <li><a href="component_calendar.html">Calendar</a></li>
+                <li><a href="component_maps.html">Maps</a></li>
+                <li><a href="component_gallery.html">Gallery</a></li>
+                <li><a href="component_fileupload.html">Fileupload</a></li>
+            </ul>
+        </li>
+        <li class="red accordion-group">
+            <a class="accordion-toggle collapsed" data-toggle="collapse"
+               data-parent="#side-nav" href="#tables-collapse"><i class=" icon-table"></i> <span class="name">Tables</span></a>
+            <ul id="tables-collapse" class="accordion-body collapse">
+                <li><a href="tables_static.html">Static</a></li>
+                <li><a href="tables_dynamic.html">Dynamic</a></li>
+            </ul>
+        </li>
+        <li class="orange">
+            <a href="grid.html"><i class=" icon-columns"></i><span class="name">Grid</span></a>
+        </li>
+        <li class="lime accordion-group">
+            <a class="accordion-toggle collapsed" data-toggle="collapse"
+               data-parent="#side-nav" href="#special-collapse"><i class=" icon-asterisk"></i> <span class="name">Special</span></a>
+            <ul id="special-collapse" class="accordion-body collapse">
+                <li><a href="special_search.html">Search</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="special_404.html">404</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<div class="wrap">
+    <header class="page-header">
+        <h1>Documentation</h1>
+    </header>
+    <div class="content container-fluid">
+        <div class="row-fluid">
+            <div class="span10 offset1">
+                <section class="widget">
+                    <h2>About Template</h2>
+                    <p><strong>Light Blue Admin Template</strong> is next-generation, well-designed and powerful front-end template. It's very useful for designing either your next
+                        web application or admin entrance for it.</p>
+                    <p>It's base on super powerful <a href="http://twitter.github.com/bootstrap/">Bootstrap</a> front-end framework which
+                        uses <strong>12-column responsive grid</strong> layout.</p>
+
+                    <h2>Scss</h2>
+                    <p>Light Blue uses <a href="http://sass-lang.com/">scss</a> to generate css. This choice has been made because of significant boost
+                    scss gives when developing front-end apps like this one. I used <a href="http://compass-style.org/">compass</a> to compile scss to css, but what to use
+                        is absolutely up to your choice. Anyway editing css is a good old way, right? :)</p>
+                    <p>The main scss file is <a href="../sass/application.scss">application.scss</a>. It includes all libraries and partial files.</p>
+                    <ul>
+                        <li><a href="../sass/_general.scss">general.scss</a> - all application styles. Only element styles
+                            (<code>body</code>, <code>a</code>, <code>h2</code>, etc).</li>
+                        <li><a href="../sass/_base.scss">base.scss</a> - all application styles. Everything except elements.
+                            Every class used in Light Blue is defined here.</li>
+                        <li><a href="../sass/_font.scss">font.scss</a> - downloaded version of Open Sans font.</li>
+                        <li><a href="../sass/_responsive.scss">responsive.scss</a> - responsive styles.</li>
+                        <li><a href="../sass/_variables.scss">variables.scss</a> - all template variables like colors, button sizes, etc.</li>
+                        <li><a href="../sass/_svg.scss">svg.scss</a> - svg-related styles.</li>
+                    </ul>
+
+                    <h2>Support</h2>
+                    <p>If you have any questions or problems when installing template feel free to contact me via email -
+                        <a href="mailto:philip.daineka@gmail.com">philip.daineka@gmail.com</a>. I will provide as much help as possible.</p>
+
+                    <h3>Statistics Boxes</h3>
+                    <hr/>
+                    <p>See <a href="stat_statistics.html">statistics section</a>.</p>
+
+                    <h3>Left Sidebar</h3>
+                    <hr/>
+                    <p>Left sidebar is based on
+                        <a href="http://twitter.github.com/bootstrap/javascript.html#collapse">Bootstrap's collapse component</a>.
+                        <a href="../js/settings.js">Settings.js</a> holds additional javascript code which is used to
+                        change sidebar state and sidebar position depending on chosen option (icons, auto) and (left, right).</p>
+
+                    <h3>Top Navigation</h3>
+                    <hr/>
+                    <p>Is simple <a href="http://twitter.github.com/bootstrap/components.html#navbar">Bootstrap's Navbar</a>.
+                        User profile and settings popovers are implemented via <a href="http://twitter.github.com/bootstrap/javascript.html#popovers">Bootstrap's popover</a></p>
+
+                    <h3>Charts</h3>
+                    <hr/>
+                    <p>Charts are built with <a href="http://d3js.org/">D3.js</a>-based <a href="http://nvd3.org/">nvd3 library</a>. Read more in
+                        <a href="stat_charts.html">charts section</a></p>
+
+                    <h3>Change Log</h3>
+                    <hr/>
+                    <h4><strong>Version 1.5</strong></h4>
+                    <ul>
+                        <li>- White version (<a href="../white/index.html">white/</a>) <small><em>Thanks to Quang Pham for convincing me :)</em></small></li>
+                        <li>- Landing page (<a href="../landing.html">landing.html</a>)</li>
+                        <li>- Css & Structure refactoring</li>
+                        <li>- Drop Bootstrap 2 version from package</li>
+                    </ul>
+                    <h4><strong>Version 1.4</strong></h4>
+                    <ul>
+                        <li>- Bootstrap 3 support</li>
+                        <li>- Ready-to-use Inbox App (<a href="../special_inbox.html">special_inbox.html</a>)</li>
+                    </ul>
+                    <h4><strong>Version 1.3</strong></h4>
+                    <ul>
+                        <li>- Overall UI improvements</li>
+                        <li>- New iCheck library instead of out-of-date uniform</li>
+                        <li>- Print Optimized</li>
+                        <li>- Invoice Page (<a href="../special_invoice.html">special_invoice.html</a>)</li>
+                    </ul>
+                    <h4><strong>Version 1.2</strong></h4>
+                    <ul>
+                        <li>- Fileupload fix</li>
+                        <li>- Second level menu overlap fix</li>
+                    </ul>
+                    <h4><strong>Version 1.1</strong></h4>
+                    <ul>
+                        <li>- Generic Search Field</li>
+                        <li>- Form Wizard (<a href="../form_wizard.html">form_wizard.html</a>)</li>
+                        <li>- jQuery Datatables (<a href="../tables_dynamic.html">tables_dynamic.html</a>)</li>
+                        <li>- UI improvements</li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jquery and friends -->
+<script src="js/jquery.1.9.0.min.js"> </script>
+<script src="js/jquery-migrate-1.1.0.min.js"> </script>
+<script src="js/bootstrap-transition.js"></script>
+<script src="js/bootstrap-collapse.js"></script>
+
+</body>
+</html>
