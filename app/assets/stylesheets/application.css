@@ -9,5 +9,11 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *= require bootstrap-original/bootstrap
+ *= require bootstrap-original/responsive
+ *= require font-awesome/css/font-awesome.min
+ *= require fontello/css/fontello
+ *= require lib/bootstrap-switch
  *= require_tree .
+ *= require application.commented
  */

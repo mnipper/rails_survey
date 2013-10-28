@@ -1,4 +1,4 @@
-@import url(../lib/nvd3/src/nv.d3.css);
+@import url(/assets/nvd3/src/nv.d3.css);
 @import url(./font-awesome/css/font-awesome.min.css);
 @import url(./fontello/css/fontello.css);
 @font-face {
@@ -8654,7 +8654,7 @@ a.thumbnail:focus {
   padding: 0;
   width: 22px;
   height: 22px;
-  background: url(../img/icheck/square/grey.png) no-repeat;
+  background: url(/assets/img/icheck/square/grey.png) no-repeat;
   border: none;
   cursor: pointer;
 }
@@ -8716,7 +8716,7 @@ a.thumbnail:focus {
   /* line 89, D:/projects/admin/sass/lib/_icheckbox.scss */
   .icheckbox_square-grey,
   .iradio_square-grey {
-    background-image: url(../img/icheck/square/grey@2x.png);
+    background-image: url(/assets/img/icheck/square/grey@2x.png);
     -webkit-background-size: 240px 24px;
     background-size: 240px 24px;
   }
@@ -9799,7 +9799,7 @@ ul.wysihtml5-toolbar div[data-wysihtml5-command-value="orange"] {
 .colorpicker-saturation {
   width: 170px;
   height: 170px;
-  background-image: url("../img/saturation2.png");
+  background-image: url("/assets/img/saturation2.png");
   cursor: crosshair;
   float: left;
 }
@@ -9858,12 +9858,12 @@ ul.wysihtml5-toolbar div[data-wysihtml5-command-value="orange"] {
 
 /* line 59, D:/projects/admin/sass/lib/_bootstrap-colorpicker.scss */
 .colorpicker-hue {
-  background-image: url("../img/hue.png");
+  background-image: url("/assets/img/hue.png");
 }
 
 /* line 62, D:/projects/admin/sass/lib/_bootstrap-colorpicker.scss */
 .colorpicker-alpha {
-  background-image: url("../img/alpha.png");
+  background-image: url("/assets/img/alpha.png");
   display: none;
 }
 
@@ -9931,7 +9931,7 @@ ul.wysihtml5-toolbar div[data-wysihtml5-command-value="orange"] {
   height: 10px;
   margin-top: 5px;
   clear: both;
-  background-image: url("../img/alpha.png");
+  background-image: url("/assets/img/alpha.png");
   background-position: 0 100%;
 }
 /* line 112, D:/projects/admin/sass/lib/_bootstrap-colorpicker.scss */
@@ -10703,7 +10703,7 @@ table.fc-border-separate {
 
 /* line 38, D:/projects/admin/sass/lib/_jquery.fileupload-ui.scss */
 .progress-animated .bar {
-  background: url(../img/progressbar.gif) !important;
+  background: url(/assets/img/progressbar.gif) !important;
   filter: none;
 }
 
@@ -16577,19 +16577,19 @@ html {
 body {
   font-weight: 300;
   padding-bottom: 100px;
-  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHJhZGlhbEdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9IjEwJSIgY3k9IjAiIHI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9InJnYmEoNzQsIDEyMSwgMTQ3LCAwLjg5KSIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSJyZ2JhKDIyNiwgMjI2LCAyMjYsIDAuODcpIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSJyZ2JhKDE4NSwgMTM1LCAxMzEsIDAuODcpIi8+PC9yYWRpYWxHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4="), url("../img/bgnoise_lg_dark.png");
+  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHJhZGlhbEdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9IjEwJSIgY3k9IjAiIHI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9InJnYmEoNzQsIDEyMSwgMTQ3LCAwLjg5KSIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSJyZ2JhKDIyNiwgMjI2LCAyMjYsIDAuODcpIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSJyZ2JhKDE4NSwgMTM1LCAxMzEsIDAuODcpIi8+PC9yYWRpYWxHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4="), url("/assets/img/bgnoise_lg_dark.png");
   background-color: rgba(74, 121, 147, 0.89);
-  background: radial-gradient(farthest-side ellipse at 10% 0, rgba(74, 121, 147, 0.89), rgba(204, 204, 204, 0.85) 60%, rgba(185, 135, 131, 0.87) 120%), url("../img/bgnoise_lg_dark.png");
-  background: -webkit-radial-gradient(10% 0, farthest-side ellipse, rgba(74, 121, 147, 0.89), rgba(204, 204, 204, 0.85) 60%, rgba(185, 135, 131, 0.87) 120%), url("../img/bgnoise_lg_dark.png");
-  background: -moz-radial-gradient(10% 0, farthest-side ellipse, rgba(74, 121, 147, 0.89), rgba(204, 204, 204, 0.85) 60%, rgba(185, 135, 131, 0.87) 120%), url("../img/bgnoise_lg_dark.png");
+  background: radial-gradient(farthest-side ellipse at 10% 0, rgba(74, 121, 147, 0.89), rgba(204, 204, 204, 0.85) 60%, rgba(185, 135, 131, 0.87) 120%), url("/assets/img/bgnoise_lg_dark.png");
+  background: -webkit-radial-gradient(10% 0, farthest-side ellipse, rgba(74, 121, 147, 0.89), rgba(204, 204, 204, 0.85) 60%, rgba(185, 135, 131, 0.87) 120%), url("/assets/img/bgnoise_lg_dark.png");
+  background: -moz-radial-gradient(10% 0, farthest-side ellipse, rgba(74, 121, 147, 0.89), rgba(204, 204, 204, 0.85) 60%, rgba(185, 135, 131, 0.87) 120%), url("/assets/img/bgnoise_lg_dark.png");
 }
 /* line 50, D:/projects/admin/sass/_general.scss */
 body.background-dark {
-  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHJhZGlhbEdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9IjEwJSIgY3k9IjAiIHI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9InJnYmEoMTAyLCAxMDUsIDEwNCwgMC45MCkiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0icmdiYSg5MywgMTEyLCAxMTksIDAuODkpIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSJyZ2JhKDE2MCwgMTc0LCAxNTAsIDAuOTApIi8+PC9yYWRpYWxHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4="), url("../img/bgnoise_lg_dark.png");
+  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHJhZGlhbEdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9IjEwJSIgY3k9IjAiIHI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9InJnYmEoMTAyLCAxMDUsIDEwNCwgMC45MCkiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0icmdiYSg5MywgMTEyLCAxMTksIDAuODkpIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSJyZ2JhKDE2MCwgMTc0LCAxNTAsIDAuOTApIi8+PC9yYWRpYWxHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4="), url("/assets/img/bgnoise_lg_dark.png");
   background-color: rgba(102, 105, 104, 0.9);
-  background: radial-gradient(farthest-side ellipse at 10% 0, rgba(102, 105, 104, 0.9), rgba(93, 112, 119, 0.89), rgba(160, 174, 150, 0.9)), url("../img/bgnoise_lg_dark.png");
-  background: -webkit-radial-gradient(10% 0, farthest-side ellipse, rgba(102, 105, 104, 0.9), rgba(93, 112, 119, 0.89), rgba(160, 174, 150, 0.9)), url("../img/bgnoise_lg_dark.png");
-  background: -moz-radial-gradient(10% 0, farthest-side ellipse, rgba(102, 105, 104, 0.9), rgba(93, 112, 119, 0.89), rgba(160, 174, 150, 0.9)), url("../img/bgnoise_lg_dark.png");
+  background: radial-gradient(farthest-side ellipse at 10% 0, rgba(102, 105, 104, 0.9), rgba(93, 112, 119, 0.89), rgba(160, 174, 150, 0.9)), url("/assets/img/bgnoise_lg_dark.png");
+  background: -webkit-radial-gradient(10% 0, farthest-side ellipse, rgba(102, 105, 104, 0.9), rgba(93, 112, 119, 0.89), rgba(160, 174, 150, 0.9)), url("/assets/img/bgnoise_lg_dark.png");
+  background: -moz-radial-gradient(10% 0, farthest-side ellipse, rgba(102, 105, 104, 0.9), rgba(93, 112, 119, 0.89), rgba(160, 174, 150, 0.9)), url("/assets/img/bgnoise_lg_dark.png");
 }
 
 /* line 60, D:/projects/admin/sass/_general.scss */
@@ -16607,13 +16607,13 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
 input[type=search], input.search {
   padding-left: 26px;
   background-color: white;
-  background: url(../img/search.png) 5px 5px no-repeat white;
+  background: url(/assets/img/search.png) 5px 5px no-repeat white;
 }
 /* line 74, D:/projects/admin/sass/_general.scss */
 input[type=search].input-transparent, input.search.input-transparent {
   border: none;
   color: #f8f8f8;
-  background: url(../img/search-white.png) 5px 5px no-repeat rgba(51, 51, 51, 0.4);
+  background: url(/assets/img/search-white.png) 5px 5px no-repeat rgba(51, 51, 51, 0.4);
 }
 /* line 57, D:/projects/admin/sass/bootstrap-original/_mixins.scss */
 input[type=search].input-transparent:-moz-placeholder, input.search.input-transparent:-moz-placeholder {
@@ -17494,7 +17494,7 @@ input.parsley-error {
   padding: 4px 14px;
   color: #f8f8f8;
   border: none;
-  background: url(../img/search-white.png) 5px 5px no-repeat rgba(51, 51, 51, 0.4);
+  background: url(/assets/img/search-white.png) 5px 5px no-repeat rgba(51, 51, 51, 0.4);
   padding-left: 26px;
   -webkit-transition: width 0.2s;
   -moz-transition: width 0.2s;
@@ -18832,27 +18832,27 @@ table.table thead .sorting_desc_disabled {
 
 /* line 1758, D:/projects/admin/sass/_base.scss */
 table.table thead .sorting {
-  background: url("../img/datatables/sort_both.png") no-repeat center right;
+  background: url("/assets/img/datatables/sort_both.png") no-repeat center right;
 }
 
 /* line 1759, D:/projects/admin/sass/_base.scss */
 table.table thead .sorting_asc {
-  background: url("../img/datatables/sort_asc.png") no-repeat center right;
+  background: url("/assets/img/datatables/sort_asc.png") no-repeat center right;
 }
 
 /* line 1760, D:/projects/admin/sass/_base.scss */
 table.table thead .sorting_desc {
-  background: url("../img/datatables/sort_desc.png") no-repeat center right;
+  background: url("/assets/img/datatables/sort_desc.png") no-repeat center right;
 }
 
 /* line 1762, D:/projects/admin/sass/_base.scss */
 table.table thead .sorting_asc_disabled {
-  background: url("../img/datatables/sort_asc_disabled.png") no-repeat center right;
+  background: url("/assets/img/datatables/sort_asc_disabled.png") no-repeat center right;
 }
 
 /* line 1763, D:/projects/admin/sass/_base.scss */
 table.table thead .sorting_desc_disabled {
-  background: url("../img/datatables/sort_desc_disabled.png") no-repeat center right;
+  background: url("/assets/img/datatables/sort_desc_disabled.png") no-repeat center right;
 }
 
 /* line 1765, D:/projects/admin/sass/_base.scss */
