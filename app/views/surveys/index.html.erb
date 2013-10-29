@@ -1,9 +1,29 @@
-<h1>Surveys</h1>
-<% @surveys.each do |survey| %>
-  <p>
-    Id: <%= survey.id %><br />
-    Instrument: <%= survey.instrument.title %><br />
-    Device: <%= survey.device_id %><br />
-    <%= link_to 'View Responses', survey_path(survey) %>
-  </p>
-<% end %>
+<section class="widget">
+  <header>
+    <h4><i class="icon-download-alt"></i> Survey Results</h4>
+  </header>
+  <div class="body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>UUID</th>
+          <th>Instrument</th>
+          <th>Device</th>
+          <th>% complete</th>
+          <th>Responses</th>
+        </tr>
+      </thead>
+      <tbody>
+    <% @surveys.each do |survey| %>
+        <tr>
+          <td><%= survey.uuid %></td>
+          <td><%= link_to survey.instrument.title, instrument_path(survey.instrument) %></td>
+          <td><%= survey.device_id %></td>
+          <td><%= survey.percent_complete %>
+          <td><%= link_to 'View Responses', survey_path(survey) %></td>
+        </tr>
+    <% end %>
+      </tbody>
+    </table>
+  </div>
+</section>
