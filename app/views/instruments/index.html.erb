@@ -1,9 +1,32 @@
-<h1>Instruments</h1>
-<% @instruments.each do |instrument| %>
-  <p>
-    <%= instrument.title %><br />
-    <%= link_to 'Edit', edit_instrument_path(instrument) %>
-    <%= link_to 'View', instrument_path(instrument) %>
-  </p>
-<% end %>
-<%= link_to 'New instrument', new_instrument_path %>
+<section class="widget">
+  <header>
+    <h4><i class="icon-edit"></i> Instruments</h4>
+    <div class="actions hidden-xs-portrait"> 
+      <%= link_to new_instrument_path, class: 'btn btn-primary' do %>
+        <i class="icon-plus"></i> New Instrument 
+      <% end %>
+    </div>
+  </header>
+  <div class="body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th># questions</th>
+          <th>Created at</th>
+          <th>Last updated</th>
+        </tr>
+      </thead>
+      <tbody>
+    <% @instruments.each do |instrument| %>
+        <tr>
+          <td><%= link_to instrument.title, instrument_path(instrument) %></td>
+          <td><%= instrument.questions.count %></td>
+          <td><%= instrument.created_at %></td>
+          <td><%= instrument.updated_at %></td>
+        </tr>
+    <% end %>
+      </tbody>
+    </table>
+  </div>
+</section>
