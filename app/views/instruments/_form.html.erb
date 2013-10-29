@@ -1,26 +1,35 @@
-<%= form_for @instrument do |f| %>
-  <% if @instrument.errors.any? %>
-    <div class="error_messages">
-      <h2><%= pluralize(@instrument.errors.count, "error") %> prohibited this survey from being saved:</h2>
-      <ul>
-      <% @instrument.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+<section class="widget">
+  <header>
+    <h4><i class="icon-edit"></i> Instruments</h4>
+  </header>
+  <div class="body">
+    <%= form_for @instrument do |f| %>
+      <% if @instrument.errors.any? %>
+        <div class="error_messages">
+          <h2><%= pluralize(@instrument.errors.count, "error") %> prohibited this survey from being saved:</h2>
+          <ul>
+          <% @instrument.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :title %><br />
-    <%= f.text_field :title %>
+      <div class="field">
+        <%= f.label :title, 'Instrument Title' %><br />
+        <%= f.text_field :title %>
+      </div>
+      
+      <%= f.fields_for :questions do |builder| %>
+        <%= render 'question_fields', f: builder %>
+      <% end %>
+      <div>
+        <%= link_to_add_fields "Add Question", f, :questions, class: 'btn btn-inverse' %>
+      </div>
+      
+      <div>
+        <%= f.submit %>
+      </div>
+    <% end %>
   </div>
-  
-  <%= f.fields_for :questions do |builder| %>
-    <%= render 'question_fields', f: builder %>
-  <% end %>
-  <%= link_to_add_fields "Add Question", f, :questions %>
-  
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</section>
