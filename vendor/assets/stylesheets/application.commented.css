@@ -17070,7 +17070,7 @@ input.parsley-error {
   -moz-transition: margin-top 0.35s ease;
   -o-transition: margin-top 0.35s ease;
   transition: margin-top 0.35s ease;
-  max-width: none;
+  max-width: 900px;
 }
 
 /***********************************/

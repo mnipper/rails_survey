@@ -17,3 +17,6 @@
  *= require_tree .
  *= require application.commented
  */
+
+.top-buffer { margin-top:20px; }
+.bottom-buffer { margin-bottom:20px; }

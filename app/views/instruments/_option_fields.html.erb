@@ -1,6 +1,8 @@
-<fieldset>
-  <%= f.label :text, "Text" %>
-  <%= f.text_field :text %>
-  <%= f.hidden_field :_destroy %>
-  <%= link_to "remove", '#', class: "remove_fields" %>
-</fieldset>
+<div class="well">
+  <fieldset>
+    <%= f.label :text, "Text" %>
+    <%= f.text_field :text %>
+    <%= f.hidden_field :_destroy %>
+    <%= link_to "remove", '#', class: "btn btn-danger remove_fields" %>
+  </fieldset>
+</div>

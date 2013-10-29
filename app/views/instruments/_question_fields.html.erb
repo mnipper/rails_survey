@@ -1,14 +1,29 @@
-<fieldset>
-  <%= f.label :question_type %>
-  <%= f.select(:question_type, options_for_select(Settings.question_types)) %><br />
-  <%= f.label :question_identifier %>
-  <%= f.text_field :question_identifier %><br />
-  <%= f.label :text %>
-  <%= f.text_area :text %><br />
-  <%= f.check_box :_destroy %>
-  <%= f.fields_for :options do |builder| %>
-    <%= render 'option_fields', f: builder %>
-  <% end %>
-  <%= link_to "Remove Question", '#', class: "btn btn-danger remove_fields" %>
-  <%= link_to_add_fields "Add Option", f, :options %>
-</fieldset>
+<div class="well">
+  <fieldset>
+    <div>
+      <%= f.label :question_type %><br />
+      <%= f.select(:question_type, options_for_select(Settings.question_types)) %>
+    </div>
+
+    <div class="top-buffer">
+      <%= f.label :question_identifier %><br />
+      <%= f.text_field :question_identifier %>
+    </div>
+
+    <div class="top-buffer">
+      <%= f.label :text %><br />
+      <%= f.text_area :text %>
+    </div>
+
+    <div class="top-buffer">
+      <%= f.fields_for :options do |builder| %>
+        <%= render 'option_fields', f: builder %>
+      <% end %>
+    </div>
+
+    <div class="top-buffer">
+      <%= link_to "Remove Question", '#', class: "btn btn-danger remove_fields" %>
+      <%= link_to_add_fields "Add Option", f, :options, class: 'btn btn-success' %>
+    </div>
+  </fieldset>
+</div>

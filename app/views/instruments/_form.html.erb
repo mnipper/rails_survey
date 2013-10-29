@@ -15,7 +15,7 @@
         </div>
       <% end %>
 
-      <div class="field">
+      <div class="field bottom-buffer">
         <%= f.label :title, 'Instrument Title' %><br />
         <%= f.text_field :title %>
       </div>
@@ -23,12 +23,10 @@
       <%= f.fields_for :questions do |builder| %>
         <%= render 'question_fields', f: builder %>
       <% end %>
-      <div>
-        <%= link_to_add_fields "Add Question", f, :questions, class: 'btn btn-inverse' %>
-      </div>
+      <%= link_to_add_fields "Add Question", f, :questions, class: 'btn btn-success top-buffer' %>
       
-      <div>
-        <%= f.submit %>
+      <div class="top-buffer pull-right">
+        <%= f.submit class: 'btn btn-primary btn-large' %>
       </div>
     <% end %>
   </div>
