@@ -6,6 +6,7 @@ class Survey < ActiveRecord::Base
   end
 
   def percent_complete
-    (responses.count.to_f / instrument.questions.count).round(2)
+    (responses.uniq.pluck(:question_id).count.to_f / instrument.questions.count)
+      .round(2)
   end
 end
