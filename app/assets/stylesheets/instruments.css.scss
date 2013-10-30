@@ -1,3 +1,6 @@
 // Place all the styles related to the instruments controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+ol.questions { list-style: decimal; padding-left: 40px; }
+ol.options { list-style: square; padding-left: 40px;}

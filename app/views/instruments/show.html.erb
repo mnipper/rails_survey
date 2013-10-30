@@ -1,19 +1,25 @@
 <h1><%= @instrument.title %></h1>
 
-<div>
-  <ol>
-  <% @instrument.questions.each do |question| %>
-    <li>
-      <%= question.text %>
-      <ol start="0">
-        <% question.options.each do |option| %>
-          <li><%= option.text %></li>
-        <% end %>
-      </ol>
-    </li>
-  <% end %>
-  </ol>
-</div>
+<section class="widget">
+  <div class="body">
+    <ol class="questions">
+      <% @instrument.questions.each do |question| %>
+        <li>
+          <%= question.text %> <br />
+          <span class="label label-info"><%= question.question_type %></span>
+          <% if question.options %>
+            <br />Options:
+            <ol class="options" start="0">
+              <% question.options.each do |option| %>
+                <li><%= option.text %></li>
+              <% end %>
+            </ol>
+          <% end %>
+        </li>
+      <% end %>
+    </ol>
 
-<%= link_to 'Edit', edit_instrument_path(@instrument) %> |
-<%= link_to 'Back to Instruments', instruments_path %>
+    <%= link_to 'Edit', edit_instrument_path(@instrument) %> |
+    <%= link_to 'Back to Instruments', instruments_path %>
+  </div>
+</section>
