@@ -2,7 +2,7 @@
   <fieldset>
     <div>
       <%= f.label :question_type %><br />
-      <%= f.select(:question_type, options_for_select(Settings.question_types)) %>
+      <%= f.select(:question_type, options_for_select(Settings.question_types, f.object.question_type)) %>
     </div>
 
     <div class="top-buffer">
