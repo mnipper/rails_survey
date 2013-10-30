@@ -23,13 +23,9 @@
             <a href="#"><i class="icon-home"></i> <span class="name">Dashboard</span></a> 
         </li> 
 
-        <li class="panel">
-            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#side-nav" href="#devices-collapse"><i class="icon-mobile-phone"></i> <span class="name">Devices</span></a>
-            <ul id="devices-collapse" class="panel-collapse collapse">
-                <li><a href="#">View</a></li>
-                <li><a href="#">Add Device</a></li>
-            </ul>
-        </li>
+        <li class="panel"> 
+            <a href="#"><i class="icon-mobile-phone"></i> <span class="name">Devices</span></a> 
+        </li> 
 
         <li class="panel"> 
             <a class="accordion-toggle collapsed" data-toggle="collapse" 
@@ -40,13 +36,11 @@
             </ul>
         </li>
 
-        <li class="panel">
-            <a class="accordion-toggle collapsed" data-toggle="collapse"
-               data-parent="#side-nav" href="#surveys-collapse"><i class="icon-download-alt"></i> <span class="name">Survey Results</span></a>
-            <ul id="surveys-collapse" class="panel-collapse collapse">
-                <li><%= link_to 'View Surveys', surveys_path %></li>
-            </ul>
-        </li>
+        <li class="panel"> 
+            <%= link_to surveys_path do %>
+              <i class="icon-download-alt"></i><span class="name">Survey Results</span> 
+            <% end %> 
+        </li> 
 
         <li class="panel">
             <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#side-nav" href="#stats-collapse"><i class="icon-bar-chart"></i> <span class="name">Statistics</span></a>
@@ -61,29 +55,14 @@
             <a href="#"><i class="icon-bell-alt"></i> <span class="name">Notifications</span></a> 
         </li> 
 
-        <li class="panel">
-            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#side-nav" href="#export-collapse"><i class="icon-download"></i> <span class="name">Export</span></a>
-            <ul id="export-collapse" class="panel-collapse collapse">
-                <li><a href="#">CSV</a></li>
-                <li><a href="#">Stata</a></li>
-            </ul>
-        </li>
+        <li class="panel"> 
+            <a href="#"><i class="icon-download"></i> <span class="name">Export</span></a> 
+        </li> 
 
         <li class="visible-xs">
             <a href="login.html"><i class="icon-signout"></i> <span class="name">Sign Out</span></a>
         </li>
     </ul>
-
-    <div id="sidebar-settings" class="settings">
-        <button type="button"
-                data-value="icons"
-                class="btn-icons btn btn-transparent btn-sm">Icons</button>
-
-        <button type="button"
-                data-value="auto"
-                class="btn-auto btn btn-transparent btn-sm">Auto</button>
-    </div>
-
 </nav>
 
 <div class="wrap">
