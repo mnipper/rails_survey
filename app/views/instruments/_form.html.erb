@@ -17,7 +17,7 @@
 
       <div class="field bottom-buffer">
         <%= f.label :title, 'Instrument Title' %><br />
-        <%= f.text_field :title %>
+        <%= f.text_field :title, class: 'form-control' %>
       </div>
       
       <%= f.fields_for :questions do |builder| %>

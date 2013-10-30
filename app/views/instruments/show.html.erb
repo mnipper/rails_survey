@@ -1,17 +1,19 @@
 <h1><%= @instrument.title %></h1>
 
-<ol class="questions">
-<% @instrument.questions.each do |question| %>
-  <li>
-    <%= question.text %>
-    <ol class="options" start="0">
-      <% question.options.each do |option| %>
-        <li><%= option.text %></li>
-      <% end %>
-    </ol>
-  </li>
-<% end %>
-</ol>
+<div>
+  <ol>
+  <% @instrument.questions.each do |question| %>
+    <li>
+      <%= question.text %>
+      <ol start="0">
+        <% question.options.each do |option| %>
+          <li><%= option.text %></li>
+        <% end %>
+      </ol>
+    </li>
+  <% end %>
+  </ol>
+</div>
 
 <%= link_to 'Edit', edit_instrument_path(@instrument) %> |
 <%= link_to 'Back to Instruments', instruments_path %>

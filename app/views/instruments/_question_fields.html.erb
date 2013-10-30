@@ -12,7 +12,7 @@
 
     <div class="top-buffer">
       <%= f.label :text %><br />
-      <%= f.text_area :text %>
+      <%= f.text_area :text, rows: 4, class: 'form-control' %>
     </div>
 
     <div class="top-buffer">
@@ -22,8 +22,8 @@
     </div>
 
     <div class="top-buffer">
+      <%= link_to_add_fields "Add Option", f, :options, class: 'pull-right btn btn-success' %>
       <%= link_to "Remove Question", '#', class: "btn btn-danger remove_fields" %>
-      <%= link_to_add_fields "Add Option", f, :options, class: 'btn btn-success' %>
     </div>
   </fieldset>
 </div>
