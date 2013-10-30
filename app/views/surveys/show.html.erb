@@ -1,18 +1,34 @@
-<h1>Survey for <%= @survey.instrument.title %></h1>
-
-<% @survey.responses.each do |response| %>
-  <p>
-    <%= response.question.question_identifier %><br />
-    <%= response.question.text %><br />
-    <ol start="0">
-    <% response.question.options.each do |option| %>
-      <li><%= option.text %></li>
+<h1><%= @survey.instrument.title %><br /><%= @survey.uuid %></h1>
+<section class="widget">
+  <header>
+    <h4><i class="icon-download-alt"></i> Survey Results</h4>
+  </header>
+  <div class="body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Question Type</th>
+          <th>Question Identifier</th>
+          <th>Question Text</th>
+          <th>Question Options</th>
+          <th>Response</th>
+          <th>Other Response</th>
+          <th>Created at</th>
+        </tr>
+      </thead>
+      <tbody>
+    <% @survey.responses.each do |response| %>
+        <tr>
+          <td><%= response.question.question_type %></td>
+          <td><%= response.question.question_identifier %></td>
+          <td><%= response.question.text %></td>
+          <td><%= response.question.options.join(', ') %></td>
+          <td><%= response %>
+          <td><%= response.other_response ? response.other_response : 'NA' %></td>
+          <td><%= response.created_at %>
+        </tr>
     <% end %>
-    </ol>
-    <%= response.text %><br />
-    <% if response.other_response %>
-      <%= response.other_response %><br />
-    <% end %>
-    <%= response.created_at %>
-  </p>
-<% end %>
+      </tbody>
+    </table>
+  </div>
+</section>
