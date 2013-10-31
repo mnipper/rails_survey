@@ -17,12 +17,14 @@
 
     <div class="top-buffer">
       <%= f.fields_for :options do |builder| %>
-        <%= render 'option_fields', f: builder %>
+        <%= render partial: 'option_fields', locals: { f: builder, question_type: f.object.question_type } %>
       <% end %>
     </div>
 
     <div class="top-buffer">
-      <%= link_to_add_fields "Add Option", f, :options, class: 'pull-right btn btn-success' %>
+      <% if Settings.question_with_options.include? f.object.question_type %>
+        <%= link_to_add_fields "Add Option", f, :options, class: 'pull-right btn btn-success' %>
+      <% end %>
       <%= link_to "Remove Question", '#', class: "btn btn-danger remove_fields" %>
     </div>
   </fieldset>
