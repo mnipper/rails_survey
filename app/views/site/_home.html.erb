@@ -1,0 +1,48 @@
+
+<nav id="sidebar" class="sidebar nav-collapse collapse">
+  <ul id="side-nav" class="side-nav">
+    <li class="active">
+      <a href="#"><i class="icon-home"></i> <span class="name">Dashboard</span></a>
+    </li>
+
+    <li class="panel">
+      <a href="#"><i class="icon-mobile-phone"></i> <span class="name">Devices</span></a>
+    </li>
+
+    <li class="panel">
+      <a class="accordion-toggle collapsed" data-toggle="collapse"
+         data-parent="#side-nav" href="#instruments-collapse"><i class="icon-edit"></i> <span class="name">Instruments</span></a>
+      <ul id="instruments-collapse" class="panel-collapse collapse">
+        <li><%= link_to 'View Instruments', instruments_path %></li>
+        <li><%= link_to 'New Instrument', new_instrument_path %></li>
+      </ul>
+    </li>
+
+    <li class="panel">
+      <%= link_to surveys_path do %>
+          <i class="icon-download-alt"></i><span class="name">Survey Results</span>
+      <% end %>
+    </li>
+
+    <li class="panel">
+      <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#side-nav" href="#stats-collapse"><i class="icon-bar-chart"></i> <span class="name">Statistics</span></a>
+      <ul id="stats-collapse" class="panel-collapse collapse">
+        <li><a href="#">Stats</a></li>
+        <li><a href="#">Charts</a></li>
+        <li><a href="#">Realtime</a></li>
+      </ul>
+    </li>
+
+    <li class="panel">
+      <a href="#"><i class="icon-bell-alt"></i> <span class="name">Notifications</span></a>
+    </li>
+
+    <li class="panel">
+      <a href="#"><i class="icon-download"></i> <span class="name">Export</span></a>
+    </li>
+
+    <li class="visible-xs">
+      <a href="login.html"><i class="icon-signout"></i> <span class="name">Sign Out</span></a>
+    </li>
+  </ul>
+</nav>

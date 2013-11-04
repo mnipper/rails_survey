@@ -1,422 +1,399 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Rails Survey</title>
-    <%= stylesheet_link_tag    "application", media: "all" %>
-    <%= javascript_include_tag "application" %>
-    <%= csrf_meta_tags %>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <meta charset="utf-8">
+  <title>Rails Survey</title>
+  <%= stylesheet_link_tag    "application", media: "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta charset="utf-8">
 </head>
 
 <body class="background-dark">
 
 <div class="logo">
 
-    <h4><%= link_to 'Rails Survey', root_path %></h4> 
-</div> 
-<nav id="sidebar" class="sidebar nav-collapse collapse"> 
-    <ul id="side-nav" class="side-nav"> 
-        <li class="active"> 
-            <a href="#"><i class="icon-home"></i> <span class="name">Dashboard</span></a> 
-        </li> 
+  <h4><%= link_to 'Rails Survey', root_path %></h4>
 
-        <li class="panel"> 
-            <a href="#"><i class="icon-mobile-phone"></i> <span class="name">Devices</span></a> 
-        </li> 
+  <!--Devise flash messages -->
+  <div id="flash-message">
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+  </div>
 
-        <li class="panel"> 
-            <a class="accordion-toggle collapsed" data-toggle="collapse" 
-               data-parent="#side-nav" href="#instruments-collapse"><i class="icon-edit"></i> <span class="name">Instruments</span></a> 
-            <ul id="instruments-collapse" class="panel-collapse collapse">
-                <li><%= link_to 'View Instruments', instruments_path %></li> 
-                <li><%= link_to 'New Instrument', new_instrument_path %></li> 
-            </ul>
-        </li>
+</div>
 
-        <li class="panel"> 
-            <%= link_to surveys_path do %>
-              <i class="icon-download-alt"></i><span class="name">Survey Results</span> 
-            <% end %> 
-        </li> 
-
-        <li class="panel">
-            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#side-nav" href="#stats-collapse"><i class="icon-bar-chart"></i> <span class="name">Statistics</span></a>
-            <ul id="stats-collapse" class="panel-collapse collapse">
-                <li><a href="#">Stats</a></li>
-                <li><a href="#">Charts</a></li>
-                <li><a href="#">Realtime</a></li>
-            </ul>
-        </li>
-
-        <li class="panel"> 
-            <a href="#"><i class="icon-bell-alt"></i> <span class="name">Notifications</span></a> 
-        </li> 
-
-        <li class="panel"> 
-            <a href="#"><i class="icon-download"></i> <span class="name">Export</span></a> 
-        </li> 
-
-        <li class="visible-xs">
-            <a href="login.html"><i class="icon-signout"></i> <span class="name">Sign Out</span></a>
-        </li>
-    </ul>
-</nav>
+<% if user_signed_in? %>
+    <%= render partial: '/site/home' %>
+<% else %>
+    <%= render '/site/welcome' %>
+<% end %>
 
 <div class="wrap">
-    <header class="page-header">
-        <div class="navbar">
-                <ul class="nav navbar-nav navbar-right pull-right">
-                    <li class="visible-phone-landscape">
-                        <a href="#" id="search-toggle">
-                            <i class="icon-search"></i>
-                        </a>
-                    </li> 
-                    <li class="dropdown"> 
-                        <a href="#" title="Messages" id="messages" 
-                           class="dropdown-toggle" 
-                           data-toggle="dropdown">
-
-                            <i class="icon-comments"></i> 
-                        </a>
-
-                        <ul id="messages-menu" class="dropdown-menu messages" role="menu"> 
-                            <li role="presentation"> 
-                                <a href="#" class="message"> 
-                                    <img src="/assets/img/1.jpg" alt=""> 
-                                    <div class="details"> 
-                                        <div class="sender">Jane Hew</div> 
-                                        <div class="text"> 
-                                            Hey, John! How is it going? ...  
-                                        </div> 
-                                    </div> 
-                                </a> 
-                            </li>
-
-                            <li role="presentation"> 
-                                <a href="#" class="message"> 
-                                    <img src="/assets/img/2.jpg" alt=""> 
-                                    <div class="details"> 
-                                        <div class="sender">Alies Rumiancaŭ</div> 
-                                        <div class="text"> 
-                                            I'll definitely buy this template 
-                                        </div> 
-                                    </div> 
-                                </a> 
-                            </li>
-
-                            <li role="presentation"> 
-                                <a href="#" class="message"> 
-                                    <img src="/assets/img/3.jpg" alt=""> 
-                                    <div class="details"> 
-                                        <div class="sender">Michał Rumiancaŭ</div> 
-                                        <div class="text"> 
-                                            Is it really Lore ipsum? Lore ...  
-                                        </div> 
-                                    </div> 
-                                </a> 
-                            </li>
-
-                            <li role="presentation"> 
-                                <a href="#" class="text-align-center see-all"> 
-                                    See all messages <i class="icon-arrow-right"></i> 
-                                </a> 
-                            </li>
-
-                        </ul> 
-                    </li>
-
-                    <li class="dropdown">
-
-                        <a href="#" title="8 support tickets"
-
-                           class="dropdown-toggle"
-
-                           data-toggle="dropdown">
-
-                            <i class="icon-group"></i>
-
-                            <span class="count">8</span>
-
-                        </a>
-
-                        <ul id="support-menu" class="dropdown-menu support" role="menu">
-
-                            <li role="presentation">
-
-                                <a href="#" class="support-ticket">
-
-                                    <div class="picture">
-
-                                        <span class="label label-important"><i class="icon-bell-alt"></i></span>
-
-                                    </div>
-
-                                    <div class="details">
-
-                                        Check out this awesome ticket
-
-                                    </div>
-
-                                </a>
-
-                            </li>
-
-                            <li role="presentation">
-
-                                <a href="#" class="support-ticket">
-
-                                    <div class="picture">
-
-                                        <span class="label label-warning"><i class="icon-question-sign"></i></span>
-
-                                    </div>
-
-                                    <div class="details">
-
-                                        "What is the best way to get ...
-
-                                    </div>
-
-                                </a>
-
-                            </li>
-
-                            <li role="presentation">
-
-                                <a href="#" class="support-ticket">
-
-                                    <div class="picture">
-
-                                        <span class="label label-success"><i class="icon-tag"></i></span>
-
-                                    </div>
-
-                                    <div class="details">
-
-                                        This is just a simple notification
-
-                                    </div>
-
-                                </a>
-
-                            </li>
-
-                            <li role="presentation">
-
-                                <a href="#" class="support-ticket">
-
-                                    <div class="picture">
-
-                                        <span class="label label-info"><i class="icon-info-sign"></i></span>
-
-                                    </div>
-
-                                    <div class="details">
-
-                                        12 new orders has arrived today
-
-                                    </div>
-
-                                </a>
-
-                            </li>
-
-                            <li role="presentation">
-
-                                <a href="#" class="support-ticket">
-
-                                    <div class="picture">
-
-                                        <span class="label label-important"><i class="icon-plus"></i></span>
-
-                                    </div>
-
-                                    <div class="details">
-
-                                        One more thing that just happened
-
-                                    </div>
-
-                                </a>
-
-                            </li>
-
-                            <li role="presentation">
-
-                                <a href="#" class="text-align-center see-all">
-
-                                    See all tickets <i class="icon-arrow-right"></i>
-
-                                </a>
-
-                            </li>
-
-                        </ul>
-
-                    </li>
-
-                    <li class="divider"></li>
-
-                    <li class="hidden-xs">
-
-                        <a href="#" id="settings"
-
-                           title="Settings"
-
-                           data-toggle="popover"
-
-                           data-placement="bottom">
-
-                            <i class="icon-cog"></i>
-
-                        </a>
-
-                    </li>
-
-                    <li class="hidden-xs dropdown">
-
-                        <a href="#" title="Account" id="account"
-
-                           class="dropdown-toggle"
-
-                           data-toggle="dropdown">
-
-                            <i class="icon-user"></i>
-
-                        </a>
-
-                        <ul id="account-menu" class="dropdown-menu account" role="menu">
-
-                            <li role="presentation" class="account-picture">
-
-                                <img src="/assets/img/2.jpg" alt="">
-
-                                Philip Daineka
-
-                            </li>
-
-                            <li role="presentation">
-
-                                <a href="form_account.html" class="link">
-
-                                    <i class="icon-user"></i>
-
-                                    Profile
-
-                                </a>
-
-                            </li>
-
-                            <li role="presentation">
-
-                                <a href="component_calendar.html" class="link">
-
-                                    <i class="icon-calendar"></i>
-
-                                    Calendar
-
-                                </a>
-
-                            </li>
-
-                            <li role="presentation">
-
-                                <a href="#" class="link">
-
-                                    <i class="icon-inbox"></i>
-
-                                    Inbox
-
-                                </a>
-
-                            </li>
-
-                        </ul>
-
-                    </li>
-
-                    <li class="visible-xs">
-
-                        <a href="#"
-
-                           class="btn-navbar"
-
-                           data-toggle="collapse"
-
-                           data-target=".sidebar"
-
-                           title="">
-
-                            <i class="icon-reorder"></i>
-
-                        </a>
-
-                    </li>
-
-                    <li class="hidden-xs"><a href="login.html"><i class="icon-signout"></i></a></li>
-
-                </ul>
-
-                <form id="search-form" class="navbar-form pull-right" role="search">
-
-                    <input type="search" class="search-query" placeholder="Search...">
-
-                </form>
-
-                <div class="notifications pull-right">
-
-                    <div class="alert pull-right">
-
-                        <a href="#" class="close" data-dismiss="alert">&times;</a>
-
-                        <i class="icon-info-sign"></i> This is an example tooltip! 
-                    </div>
-
-                </div>
+<header class="page-header">
+<div class="navbar">
+<ul class="nav navbar-nav navbar-right pull-right">
+<li class="visible-phone-landscape">
+  <a href="#" id="search-toggle">
+    <i class="icon-search"></i>
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" title="Messages" id="messages"
+     class="dropdown-toggle"
+     data-toggle="dropdown">
+
+    <i class="icon-comments"></i>
+  </a>
+
+  <ul id="messages-menu" class="dropdown-menu messages" role="menu">
+    <li role="presentation">
+      <a href="#" class="message">
+        <img src="/assets/img/1.jpg" alt="">
+        <div class="details">
+          <div class="sender">Jane Hew</div>
+          <div class="text">
+            Hey, John! How is it going? ...
+          </div>
         </div>
-    </header>
+      </a>
+    </li>
 
-    <div class="content container">
-      <div class="row">
-        <%= yield %>
-      </div>
-    </div>
+    <li role="presentation">
+      <a href="#" class="message">
+        <img src="/assets/img/2.jpg" alt="">
+        <div class="details">
+          <div class="sender">Alies Rumiancaŭ</div>
+          <div class="text">
+            I'll definitely buy this template
+          </div>
+        </div>
+      </a>
+    </li>
+
+    <li role="presentation">
+      <a href="#" class="message">
+        <img src="/assets/img/3.jpg" alt="">
+        <div class="details">
+          <div class="sender">Michał Rumiancaŭ</div>
+          <div class="text">
+            Is it really Lore ipsum? Lore ...
+          </div>
+        </div>
+      </a>
+    </li>
+
+    <li role="presentation">
+      <a href="#" class="text-align-center see-all">
+        See all messages <i class="icon-arrow-right"></i>
+      </a>
+    </li>
+
+  </ul>
+</li>
+
+<li class="dropdown">
+
+  <a href="#" title="8 support tickets"
+
+     class="dropdown-toggle"
+
+     data-toggle="dropdown">
+
+    <i class="icon-group"></i>
+
+    <span class="count">8</span>
+
+  </a>
+
+  <ul id="support-menu" class="dropdown-menu support" role="menu">
+
+    <li role="presentation">
+
+      <a href="#" class="support-ticket">
+
+        <div class="picture">
+
+          <span class="label label-important"><i class="icon-bell-alt"></i></span>
+
+        </div>
+
+        <div class="details">
+
+          Check out this awesome ticket
+
+        </div>
+
+      </a>
+
+    </li>
+
+    <li role="presentation">
+
+      <a href="#" class="support-ticket">
+
+        <div class="picture">
+
+          <span class="label label-warning"><i class="icon-question-sign"></i></span>
+
+        </div>
+
+        <div class="details">
+
+          "What is the best way to get ...
+
+        </div>
+
+      </a>
+
+    </li>
+
+    <li role="presentation">
+
+      <a href="#" class="support-ticket">
+
+        <div class="picture">
+
+          <span class="label label-success"><i class="icon-tag"></i></span>
+
+        </div>
+
+        <div class="details">
+
+          This is just a simple notification
+
+        </div>
+
+      </a>
+
+    </li>
+
+    <li role="presentation">
+
+      <a href="#" class="support-ticket">
+
+        <div class="picture">
+
+          <span class="label label-info"><i class="icon-info-sign"></i></span>
+
+        </div>
+
+        <div class="details">
+
+          12 new orders has arrived today
+
+        </div>
+
+      </a>
+
+    </li>
+
+    <li role="presentation">
+
+      <a href="#" class="support-ticket">
+
+        <div class="picture">
+
+          <span class="label label-important"><i class="icon-plus"></i></span>
+
+        </div>
+
+        <div class="details">
+
+          One more thing that just happened
+
+        </div>
+
+      </a>
+
+    </li>
+
+    <li role="presentation">
+
+      <a href="#" class="text-align-center see-all">
+
+        See all tickets <i class="icon-arrow-right"></i>
+
+      </a>
+
+    </li>
+
+  </ul>
+
+</li>
+
+<li class="divider"></li>
+
+<li class="hidden-xs">
+
+  <a href="#" id="settings"
+
+     title="Settings"
+
+     data-toggle="popover"
+
+     data-placement="bottom">
+
+    <i class="icon-cog"></i>
+
+  </a>
+
+</li>
+
+<li class="hidden-xs dropdown">
+
+  <a href="#" title="Account" id="account"
+
+     class="dropdown-toggle"
+
+     data-toggle="dropdown">
+
+    <i class="icon-user"></i>
+
+  </a>
+
+  <ul id="account-menu" class="dropdown-menu account" role="menu">
+
+    <li role="presentation" class="account-picture">
+
+      <img src="/assets/img/2.jpg" alt="">
+
+      Philip Daineka
+
+    </li>
+
+    <li role="presentation">
+
+      <a href="form_account.html" class="link">
+
+        <i class="icon-user"></i>
+
+        Profile
+
+      </a>
+
+    </li>
+
+    <li role="presentation">
+
+      <a href="component_calendar.html" class="link">
+
+        <i class="icon-calendar"></i>
+
+        Calendar
+
+      </a>
+
+    </li>
+
+    <li role="presentation">
+
+      <a href="#" class="link">
+
+        <i class="icon-inbox"></i>
+
+        Inbox
+
+      </a>
+
+    </li>
+
+  </ul>
+
+</li>
+
+<li class="visible-xs">
+
+  <a href="#"
+
+     class="btn-navbar"
+
+     data-toggle="collapse"
+
+     data-target=".sidebar"
+
+     title="">
+
+    <i class="icon-reorder"></i>
+
+  </a>
+
+</li>
+
+<li class="hidden-xs">
+  <!-- <a href="login.html"><i class="icon-signout"></i></a> -->
+  <% if user_signed_in? %>
+    <%= link_to destroy_user_session_path, :method => :delete do %>
+      <i class="icon-signout"></i>
+    <% end %>
+  <% else %>
+    <%= link_to new_user_session_path do %>
+      <i class="icon-signin"></i>
+    <% end %>
+  <% end %>
+</li>
+
+</ul>
+
+<form id="search-form" class="navbar-form pull-right" role="search">
+
+  <input type="search" class="search-query" placeholder="Search...">
+
+</form>
+
+<div class="notifications pull-right">
+
+  <div class="alert pull-right">
+
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+
+    <i class="icon-info-sign"></i> This is an example tooltip!
+  </div>
+
+</div>
+</div>
+</header>
+
+<div class="content container">
+  <div class="row">
+    <%= yield %>
+  </div>
+</div>
 
 
 <script type="text/template" id="message-template">
 
-        <div class="sender pull-left">
+  <div class="sender pull-left">
 
-            <div class="icon">
+    <div class="icon">
 
-                <img src="/assets/img/2.jpg" class="img-circle" alt="">
+      <img src="/assets/img/2.jpg" class="img-circle" alt="">
 
-            </div>
+    </div>
 
-            <div class="time">
+    <div class="time">
 
-                just now
+      just now
 
-            </div>
+    </div>
 
-        </div>
+  </div>
 
-        <div class="chat-message-body">
+  <div class="chat-message-body">
 
-            <span class="arrow"></span>
+    <span class="arrow"></span>
 
-            <div class="sender">Tikhon Laninga</div>
+    <div class="sender">Tikhon Laninga</div>
 
-            <div class="text">
+    <div class="text">
 
-                <%%- text %>
+      <%%- text %>
 
-            </div>
+    </div>
 
-        </div>
+  </div>
 
 </script>
 
@@ -424,53 +401,53 @@
 
 <script type="text/template" id="settings-template">
 
-    <div class="setting clearfix">
+  <div class="setting clearfix">
 
-        <div>Background</div>
+    <div>Background</div>
 
-        <div id="background-toggle" class="pull-left btn-group" data-toggle="buttons-radio">
+    <div id="background-toggle" class="pull-left btn-group" data-toggle="buttons-radio">
 
-            <%% dark = background == 'dark'; light = background == 'light';%>
+      <%% dark = background == 'dark'; light = background == 'light';%>
 
-            <button type="button" data-value="dark" class="btn btn-sm btn-transparent <%%= dark? 'active' : '' %>">Dark</button>
+      <button type="button" data-value="dark" class="btn btn-sm btn-transparent <%%= dark? 'active' : '' %>">Dark</button>
 
-            <button type="button" data-value="light" class="btn btn-sm btn-transparent <%%= light? 'active' : '' %>">Light</button>
-
-        </div>
+      <button type="button" data-value="light" class="btn btn-sm btn-transparent <%%= light? 'active' : '' %>">Light</button>
 
     </div>
 
-    <div class="setting clearfix">
+  </div>
 
-        <div>Sidebar on the</div>
+  <div class="setting clearfix">
 
-        <div id="sidebar-toggle" class="pull-left btn-group" data-toggle="buttons-radio">
+    <div>Sidebar on the</div>
 
-            <%% onRight = sidebar == 'right'%>
+    <div id="sidebar-toggle" class="pull-left btn-group" data-toggle="buttons-radio">
 
-            <button type="button" data-value="left" class="btn btn-sm btn-transparent <%%= onRight? '' : 'active' %>">Left</button>
+      <%% onRight = sidebar == 'right'%>
 
-            <button type="button" data-value="right" class="btn btn-sm btn-transparent <%%= onRight? 'active' : '' %>">Right</button>
+      <button type="button" data-value="left" class="btn btn-sm btn-transparent <%%= onRight? '' : 'active' %>">Left</button>
 
-        </div>
+      <button type="button" data-value="right" class="btn btn-sm btn-transparent <%%= onRight? 'active' : '' %>">Right</button>
+
+    </div>
+
+  </div>
+
+  <div class="setting clearfix">
+
+    <div>Sidebar</div>
+
+    <div id="display-sidebar-toggle" class="pull-left btn-group" data-toggle="buttons-radio">
+
+      <%% display = displaySidebar%>
+
+      <button type="button" data-value="true" class="btn btn-sm btn-transparent <%%= display? 'active' : '' %>">Show</button>
+
+      <button type="button" data-value="false" class="btn btn-sm btn-transparent <%%= display? '' : 'active' %>">Hide</button>
 
     </div>
 
-    <div class="setting clearfix">
-
-        <div>Sidebar</div>
-
-        <div id="display-sidebar-toggle" class="pull-left btn-group" data-toggle="buttons-radio">
-
-            <%% display = displaySidebar%>
-
-            <button type="button" data-value="true" class="btn btn-sm btn-transparent <%%= display? 'active' : '' %>">Show</button>
-
-            <button type="button" data-value="false" class="btn btn-sm btn-transparent <%%= display? '' : 'active' %>">Hide</button>
-
-        </div>
-
-    </div>
+  </div>
 
 </script>
 
@@ -478,31 +455,31 @@
 
 <script type="text/template" id="sidebar-settings-template">
 
-    <%% auto = sidebarState == 'auto'%>
+  <%% auto = sidebarState == 'auto'%>
 
-    <%% if (auto) {%>
+  <%% if (auto) {%>
 
-    <button type="button"
+  <button type="button"
 
-            data-value="icons"
+          data-value="icons"
 
-            class="btn-icons btn btn-transparent btn-sm">Icons</button>
+          class="btn-icons btn btn-transparent btn-sm">Icons</button>
 
-    <button type="button"
+  <button type="button"
 
-            data-value="auto"
+          data-value="auto"
 
-            class="btn-auto btn btn-transparent btn-sm">Auto</button>
+          class="btn-auto btn btn-transparent btn-sm">Auto</button>
 
-    <%%} else {%>
+  <%%} else {%>
 
-    <button type="button"
+  <button type="button"
 
-            data-value="auto"
+          data-value="auto"
 
-            class="btn btn-transparent btn-sm">Auto</button>
+          class="btn btn-transparent btn-sm">Auto</button>
 
-    <%% } %>
+  <%% } %>
 </script>
 
 </body>

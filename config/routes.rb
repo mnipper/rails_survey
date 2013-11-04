@@ -1,4 +1,6 @@
 RailsSurvey::Application.routes.draw do
+
+  devise_for :users
   resources :responses
 
   resources :surveys
@@ -13,6 +15,7 @@ RailsSurvey::Application.routes.draw do
     end
   end
 
-  root to: 'instruments#index'
+  root to: 'site#welcome'
   resources :instruments
+  resources :site
 end

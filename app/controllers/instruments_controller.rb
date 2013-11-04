@@ -1,4 +1,7 @@
 class InstrumentsController < ApplicationController
+
+  before_filter :authenticate_user!
+
   def index
     @instruments = Instrument.all
   end

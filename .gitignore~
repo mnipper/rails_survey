@@ -18,16 +18,3 @@
 config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml
-
-# Ignore Rubymine files
-scopes/scope_settings.xml
-encodings.xml
-misc.xml
-modules.xml
-rails_survey.iml
-vcs.xml
-.idea/
-
-
-#Ignore bin
-bin/
