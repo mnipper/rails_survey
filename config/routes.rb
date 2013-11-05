@@ -18,4 +18,6 @@ RailsSurvey::Application.routes.draw do
   root to: 'site#welcome'
   resources :instruments
   resources :site
+  resources :graphs
+  get '/realtime' => "graphs#realtime"
 end

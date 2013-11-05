@@ -17,10 +17,10 @@
     if (typeof define === 'function' && define.amd) {
         // Register as an anonymous AMD module:
         define([
-            'jquery',
+            '/jquery',
             'load-image',
             'canvas-to-blob',
-            './jquery.fileupload'
+            './jquery.fileupload.js'
         ], factory);
     } else {
         // Browser globals:
