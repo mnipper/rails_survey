@@ -1,0 +1,27 @@
+<section class="widget">
+  <header>
+    <h4><i class="icon-mobile-phone"></i> Devices</h4>
+  </header>
+  <div class="body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Device Identifier</th>
+          <th>Number of Surveys</th>
+          <th>Last Survey</th>
+          <th>Last Update</th>
+        </tr>
+      </thead>
+      <tbody>
+    <% @surveys.each do |survey| %>
+        <tr>
+          <td><%= survey.device_identifier %></td>
+          <td><%= Survey.find(:all, conditions: ["device_identifier = ?", survey.device_identifier]).count %></td>
+          <td><%= link_to survey.uuid, survey_path(survey) %></td>
+          <td><%= time_ago_in_words(survey.updated_at) %> ago</td>
+        </tr>
+    <% end %>
+      </tbody>
+    </table>
+  </div>
+</section>

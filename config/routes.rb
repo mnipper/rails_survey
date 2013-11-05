@@ -18,4 +18,5 @@ RailsSurvey::Application.routes.draw do
   root to: 'site#welcome'
   resources :instruments
   resources :site
+  resources :devices, only: [:index]
 end
