@@ -1,17 +1,40 @@
-<h2>Sign in</h2>
+<div class="single-widget-container">
+    <section class="widget login-widget">
+        <header class="text-align-center">
+            <h4>Login to your account</h4>
+        </header>
+        <div class="body">
+            <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+              <fieldset>
+                  <div class="form-group no-margin">
+                      <label for="email" >Email</label>
 
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+                      <div class="input-group input-group-lg">
+                              <span class="input-group-addon">
+                                  <i class="eicon-user"></i>
+                              </span>
+                          <%= f.email_field :email, :autofocus => true, class: 'form-control input-lg', placeholder: 'Your email' %>
+                        </div>
+                      </div>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+                  </div>
 
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
+                  <div class="form-group">
+                      <label for="password" >Password</label>
 
-  <div><%= f.submit "Sign in" %></div>
-<% end %>
+                      <div class="input-group input-group-lg">
+                              <span class="input-group-addon">
+                                  <i class="icon-lock"></i>
+                              </span>
+                          <%= f.password_field :password, class: 'form-control input-lg', placeholder: "Your password" %></div>
+                      </div>
 
-<%= render "users/shared/links" %>
+              <div class="form-actions">
+                  <%= f.submit "Sign in", class: 'btn btn-block btn-lg btn-danger'  %>
+                  <div class="forgot"><a class="forgot" href="#">Forgot Username or Password?</a></div>
+              </div>
+          </fieldset>
+        <% end %>
+      </div>
+  </section>
+</div>
