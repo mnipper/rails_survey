@@ -15,9 +15,9 @@ RailsSurvey::Application.routes.draw do
     end
   end
 
-  root to: 'site#welcome'
+  root to: 'instruments#index'
   resources :instruments
-  resources :site
   resources :graphs
   get '/realtime' => "graphs#realtime"
+  resources :devices, only: [:index]
 end
