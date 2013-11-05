@@ -14,7 +14,7 @@
       </thead>
       <tbody>
     <% @surveys.each do |survey| %>
-        <tr>
+        <tr class="<%= "danger" if survey.updated_at < 1.day.ago %>">
           <td><%= survey.device_identifier %></td>
           <td><%= Survey.find(:all, conditions: ["device_identifier = ?", survey.device_identifier]).count %></td>
           <td><%= link_to survey.uuid, survey_path(survey) %></td>
