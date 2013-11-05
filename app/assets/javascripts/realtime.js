@@ -1,8 +1,9 @@
 $(function(){
+    var myCount = 150;
     var seriesData = [ [] ];
-    var random = new Rickshaw.Fixtures.RandomData(150);
+    var random = new Rickshaw.Fixtures.RandomData(myCount);
 
-    for (var i = 0; i < 150; i++) {
+    for (var i = 0; i < myCount; i++) {
         random.addData(seriesData);
     }
 

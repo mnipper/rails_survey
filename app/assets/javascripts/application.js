@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require backbone/backbone
+//= require socket.io/lib/socket.io
 //= require site
 //= require nvd3/lib/d3.v2
 //= require d3.layout.min

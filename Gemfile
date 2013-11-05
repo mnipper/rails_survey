@@ -39,6 +39,12 @@ gem "twitter-bootstrap-rails"
 # User authentication
 gem 'devise'
 
+# Redis gem
+gem 'redis-rails'
+
+# Socket io
+gem 'socket.io-rails'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
