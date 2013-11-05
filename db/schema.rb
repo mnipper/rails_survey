@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131105171202) do
+ActiveRecord::Schema.define(version: 20131105215815) do
+
+  create_table "devices", force: true do |t|
+    t.string   "identifier"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "instruments", force: true do |t|
     t.string   "title"
@@ -47,10 +53,10 @@ ActiveRecord::Schema.define(version: 20131105171202) do
 
   create_table "surveys", force: true do |t|
     t.integer  "instrument_id"
-    t.string   "device_identifier"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "uuid"
+    t.integer  "device_id"
   end
 
   add_index "surveys", ["uuid"], name: "index_surveys_on_uuid"

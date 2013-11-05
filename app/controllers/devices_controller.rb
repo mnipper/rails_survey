@@ -1,5 +1,5 @@
 class DevicesController < ApplicationController
   def index
-    @surveys = Survey.group(:device_identifier)
+    @devices = Device.all 
   end
 end
