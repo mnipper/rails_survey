@@ -13,6 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require site
 //= require_tree .
 //= require_tree ../../../vendor/assets/javascripts/.
