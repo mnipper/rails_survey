@@ -17,6 +17,5 @@ RailsSurvey::Application.routes.draw do
 
   root to: 'instruments#index'
   resources :instruments
-  resources :site
   resources :devices, only: [:index]
 end
