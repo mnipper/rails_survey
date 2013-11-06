@@ -1,12 +1,12 @@
 require "spec_helper"
 
 describe Response do
-  it { should respond_to(:question) }
-  it { should respond_to(:survey) }
-
   before :each do
     @response = Response.new
   end
+
+  it { should respond_to(:question) }
+  it { should respond_to(:survey) }
 
   it "should return the survey by UUID" do
     example_uuid = "00000000-0000-0000-0000-000000000000"
