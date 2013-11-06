@@ -1,6 +1,10 @@
 require "spec_helper"
 
 describe Device do
+  it { should respond_to(:surveys) }
+  it { should respond_to(:danger_zone?) }
+  it { should respond_to(:last_survey) }
+
   it "should be in the danger zone if last survey is too old" do
     device = Device.new
     survey = Survey.new
