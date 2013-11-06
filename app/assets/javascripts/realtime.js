@@ -1,5 +1,6 @@
 $(function(){
-    var myCount = 150;
+    var myCount = $("#num-responses").text();
+    myCount = parseInt(myCount);
     var seriesData = [ [] ];
     var random = new Rickshaw.Fixtures.RandomData(myCount);
 
@@ -10,10 +11,8 @@ $(function(){
     var palette = new Rickshaw.Color.Palette( { scheme: 'classic9' } );
 
 // instantiate our graph!
-
     var graph = new Rickshaw.Graph( {
         element: document.getElementById("realtime-chart"),
-        //width: $("#chart-container").width(),
         height: 300,
         renderer: 'area',
         stroke: true,

@@ -7,4 +7,13 @@ class ApplicationController < ActionController::Base
     instruments_path
   end
 
+  def respond_to_ajax
+    if request.xhr?
+      respond_to do |format|
+        format.js
+      end
+    end
+  end
+
+
 end

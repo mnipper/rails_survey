@@ -1,0 +1,1 @@
+$('#num-responses').html('<%= @num_surveys_html %>')

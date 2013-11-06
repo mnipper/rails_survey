@@ -17,7 +17,10 @@ RailsSurvey::Application.routes.draw do
 
   root to: 'instruments#index'
   resources :instruments
-  resources :graphs
-  get '/realtime' => "graphs#realtime"
   resources :devices, only: [:index]
+
+  get '/realtime' => 'graphs#realtime'
+  get '/graphs/update' => 'graphs#update'
+
+  resources :graphs
 end

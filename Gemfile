@@ -45,6 +45,9 @@ gem 'redis-rails'
 # Socket io
 gem 'socket.io-rails'
 
+# Backbone
+gem "rails-backbone"
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

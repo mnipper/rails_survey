@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require_tree .
+//= require_tree ../../../vendor/assets/javascripts/.
 //= require backbone/backbone
 //= require socket.io/lib/socket.io
 //= require nvd3/lib/d3.v2
@@ -27,6 +29,3 @@
 //= require bootstrap/popover
 //= require bootstrap/button
 //= require bootstrap/dropdown
-//= require_tree .
-//= require_tree ../../../vendor/assets/javascripts/.
-//= require_tree ../../../vendor/assets/lib/.
