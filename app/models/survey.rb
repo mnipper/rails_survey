@@ -1,5 +1,6 @@
 class Survey < ActiveRecord::Base
   belongs_to :instrument
+  belongs_to :device
   
   def responses
     Response.where(survey_uuid: uuid)

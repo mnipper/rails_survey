@@ -13,12 +13,12 @@
         </tr>
       </thead>
       <tbody>
-    <% @surveys.each do |survey| %>
-        <tr class="<%= "danger" if survey.updated_at < 1.day.ago %>">
-          <td><%= survey.device_identifier %></td>
-          <td><%= Survey.find(:all, conditions: ["device_identifier = ?", survey.device_identifier]).count %></td>
-          <td><%= link_to survey.uuid, survey_path(survey) %></td>
-          <td><%= time_ago_in_words(survey.updated_at) %> ago</td>
+    <% @devices.each do |device| %>
+        <tr class="<%= "danger" if device.danger_zone? %>">
+          <td><%= device.identifier %></td>
+          <td><%= device.surveys.count %></td>
+          <td><%= link_to device.last_survey.uuid, survey_path(device.last_survey) %></td>
+          <td><%= time_ago_in_words(device.last_survey.updated_at) %> ago</td>
         </tr>
     <% end %>
       </tbody>
