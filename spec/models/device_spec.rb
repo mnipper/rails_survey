@@ -28,5 +28,6 @@ describe Device do
     device1 = Device.create(identifier: 'a')
     device2 = Device.new(identifier: 'a')
     device2.should_not be_valid
+    device1.destroy
   end
 end
