@@ -1,4 +1,8 @@
-<h1><%= @survey.instrument.title %><br /><%= @survey.uuid %></h1>
+<h1>
+  <% if @survey.instrument %>
+    <%= @survey.instrument.title %><br /><%= @survey.uuid %>
+  <% end %>
+</h1>
 <section class="widget">
   <header>
     <h4><i class="icon-download-alt"></i> Survey Results</h4>
@@ -18,7 +22,8 @@
       </thead>
       <tbody>
     <% @survey.responses.each do |response| %>
-        <tr>
+          <% if response.question %>
+          <tr>
           <td><%= response.question.question_type %></td>
           <td><%= response.question.question_identifier %></td>
           <td><%= response.question.text %></td>
@@ -27,6 +32,7 @@
           <td><%= response.other_response ? response.other_response : 'NA' %></td>
           <td><%= response.created_at %>
         </tr>
+        <% end %>
     <% end %>
       </tbody>
     </table>

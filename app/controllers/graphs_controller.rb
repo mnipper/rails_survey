@@ -1,7 +1,11 @@
 class GraphsController < ApplicationController
 
   def realtime
+     @count = Response.count
+  end
 
+  def bar_data
+    data = Instrument
   end
 
   def update
@@ -11,6 +15,6 @@ class GraphsController < ApplicationController
   end
 
   def show
-     surveys =
+
   end
 end

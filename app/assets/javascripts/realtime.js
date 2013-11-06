@@ -1,16 +1,32 @@
 $(function(){
+
+    var numDataPoints = 150;
     var myCount = $("#num-responses").text();
     myCount = parseInt(myCount);
-    var seriesData = [ [] ];
-    var random = new Rickshaw.Fixtures.RandomData(myCount);
+    var seriesData = [];
 
-    for (var i = 0; i < myCount; i++) {
-        random.addData(seriesData);
+    for(var k = 0; k < numDataPoints; k++) {
+        var timeBase = Math.floor(new Date().getTime() / 1000);
+        var data = {};
+        data = {x: k + timeBase, y:myCount};
+        seriesData[k] = data;
+    }
+
+    function populateData() {
+        var newSeriesData = [];
+        for (var i = 0; i < numDataPoints - 1; i++){
+            newSeriesData[i] = seriesData[i + 1];
+        }
+        var num = $("#num-responses").text();
+        console.log (parseInt(num));
+        var timeBase = Math.floor(new Date().getTime() / 1000);
+        //newSeriesData[numDataPoints - 1] = {x: numDataPoints + timeBase, y: parseInt(num)};
+        seriesData.push({x: numDataPoints + timeBase, y: parseInt(num)});
+       // return newSeriesData;
     }
 
     var palette = new Rickshaw.Color.Palette( { scheme: 'classic9' } );
 
-// instantiate our graph!
     var graph = new Rickshaw.Graph( {
         element: document.getElementById("realtime-chart"),
         height: 300,
@@ -19,8 +35,8 @@ $(function(){
         preserve: true,
         series: [{
             color: $blue,
-            data: seriesData[0],
-            name: 'Number of responses'
+            data: seriesData,
+            name: 'Responses'
         } ]
     } );
 
@@ -93,11 +109,13 @@ $(function(){
     ];
 
     setInterval( function() {
-        random.addData(seriesData);
+        //random.addData(seriesData);
+        //graph.series.data = populateData();
+        populateData();
         graph.update();
-
+        console.log("updated graph");
     }, 1500 );
-
+/**
     function addAnnotation(force) {
         if (messages.length > 0 && (force || Math.random() >= 0.95)) {
             annotator.add(seriesData[2][seriesData[2].length-1].x, messages.shift());
@@ -106,4 +124,5 @@ $(function(){
 
     addAnnotation(true);
     setTimeout( function() { setInterval( addAnnotation, 3000 ) }, 3000 );
+ **/
 });
