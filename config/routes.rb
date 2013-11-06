@@ -17,6 +17,7 @@ RailsSurvey::Application.routes.draw do
 
   root to: 'instruments#index'
   resources :instruments
+  resources :notifications, only: [:index]
   resources :devices, only: [:index]
 
   get '/realtime' => 'graphs#realtime'

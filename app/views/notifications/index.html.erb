@@ -1,0 +1,21 @@
+<section class="widget">
+  <header>
+    <h4><i class="icon-bell-alt"></i> Notifications</h4>
+  </header>
+  <div class="body">
+    <table class="table table-hover">
+      <tbody>
+        <% if @dangerous_devices.empty? %>
+          <tr><td>No notifications.</td></tr>
+        <% else %>
+          <% @dangerous_devices.each do |device| %>
+              <tr>
+                <td><%= %Q[#{device.identifier} has not sent a survey in 
+                    #{time_ago_in_words(device.last_survey.updated_at)}] %></td>
+              </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</section>
