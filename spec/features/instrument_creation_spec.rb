@@ -21,4 +21,17 @@ feature "Instrument Creation" do
     click_link "Remove Question"
     expect(page).to_not have_text("Question type")
   end
+
+  scenario "user adds an option", js: true do
+    click_link "Add Question"
+    click_link "Add Option"
+    expect(page).to have_text("Next question")
+  end
+
+  scenario "user deletes an option", js: true do
+    click_link "Add Question"
+    click_link "Add Option"
+    click_link "Remove Option"
+    expect(page).to_not have_text("Next question")
+  end
 end
