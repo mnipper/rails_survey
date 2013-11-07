@@ -18,7 +18,7 @@ $(function(){
             newSeriesData[i] = seriesData[i + 1];
         }
         var num = $("#num-responses").text();
-        console.log (parseInt(num));
+        //console.log (parseInt(num));
         var timeBase = Math.floor(new Date().getTime() / 1000);
         //newSeriesData[numDataPoints - 1] = {x: numDataPoints + timeBase, y: parseInt(num)};
         seriesData.push({x: numDataPoints + timeBase, y: parseInt(num)});
@@ -113,7 +113,7 @@ $(function(){
         //graph.series.data = populateData();
         populateData();
         graph.update();
-        console.log("updated graph");
+        //console.log("updated graph");
     }, 1500 );
 /**
     function addAnnotation(force) {

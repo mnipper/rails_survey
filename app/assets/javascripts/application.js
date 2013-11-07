@@ -13,10 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require realtime
+//= require bar
 //= require_tree .
 //= require_tree ../../../vendor/assets/javascripts/.
 //= require backbone/backbone
-//= require socket.io/lib/socket.io
 //= require nvd3/lib/d3.v2
 //= require d3.layout.min
 //= require rickshaw/rickshaw
