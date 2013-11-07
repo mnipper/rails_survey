@@ -9,7 +9,7 @@ class Response < ActiveRecord::Base
     if question.options.empty?
       text
     else
-      question.options[text.to_i]
+      question.options[text.to_i].to_s
     end
   end
 

@@ -28,6 +28,6 @@ describe Response do
     question.options = [option]
     @response.question = question
     @response.text = '0'
-    @response.to_s.should == option
+    @response.to_s.should == option.to_s
   end
 end
