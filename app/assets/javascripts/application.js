@@ -13,8 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require realtime
-//= require bar
 //= require_tree .
 //= require_tree ../../../vendor/assets/javascripts/.
 //= require backbone/backbone
