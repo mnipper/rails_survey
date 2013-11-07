@@ -1,3 +1,4 @@
+/*
 
 $(function(){
     var xAxisLabels;
@@ -19,19 +20,28 @@ $(function(){
         labels[k] = myStringArray[0].substr(1);
     }
 
-    var barGraph = new Rickshaw.Graph({
-        element: document.getElementById("survey-bar-chart"),
-        height: 300,
-        renderer: 'bar',
-        series: [
-            {
-                color: "blue",
-                data: seriesData[0]
-            }
-        ]
-    });
-    barGraph.render();
+    var testElement = document.getElementById("survey-bar-chart");
+    console.log(testElement);
+    console.log("is it null?");
 
+    var barGraph;
+    try {
+        barGraph = new Rickshaw.Graph({
+            element: document.getElementById("survey-bar-chart"),
+            height: 300,
+            renderer: 'bar',
+            series: [
+                {
+                    color: "blue",
+                    data: seriesData[0]
+                }
+            ]
+        });
+        barGraph.render();
+    }
+    catch(err) {
+
+    }
     xAxisLabels = function (n) {
         var map = { };
         for (var i = 0; i < labels.length; i++) {
@@ -48,4 +58,4 @@ $(function(){
     });
     xAxisBar.render();
 
-});
+});*/

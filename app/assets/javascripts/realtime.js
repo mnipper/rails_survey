@@ -1,3 +1,4 @@
+/*
 $(function(){
 
     var numDataPoints = 150;
@@ -18,32 +19,34 @@ $(function(){
             newSeriesData[i] = seriesData[i + 1];
         }
         var num = $("#num-responses").text();
-        //console.log (parseInt(num));
         var timeBase = Math.floor(new Date().getTime() / 1000);
-        //newSeriesData[numDataPoints - 1] = {x: numDataPoints + timeBase, y: parseInt(num)};
         seriesData.push({x: numDataPoints + timeBase, y: parseInt(num)});
-       // return newSeriesData;
     }
 
     var palette = new Rickshaw.Color.Palette( { scheme: 'classic9' } );
 
     var realtimeGraph;
-    realtimeGraph = new Rickshaw.Graph({
-        element: document.getElementById("survey-realtime-chart"),
-        height: 300,
-        renderer: 'area',
-        stroke: true,
-        preserve: true,
-        series: [
-            {
-                color: "blue",
-                data: seriesData,
-                name: 'Responses'
-            }
-        ]
-    });
+    try {
+        realtimeGraph = new Rickshaw.Graph({
+            element: document.getElementById("survey-realtime-chart"),
+            height: 300,
+            renderer: 'area',
+            stroke: true,
+            preserve: true,
+            series: [
+                {
+                    color: "blue",
+                    data: seriesData,
+                    name: 'Responses'
+                }
+            ]
+        });
+        realtimeGraph.render();
+    }
+    catch (err) {
 
-    realtimeGraph.render();
+    }
+
 
     $(window).resize(function(){
         realtimeGraph.width = $("#chart-container").width();
@@ -83,7 +86,7 @@ $(function(){
     var ticksTreatment = 'glow';
 
     var xAxis = new Rickshaw.Graph.Axis.Time( {
-        graph: realtimeGraph,
+       graph: realtimeGraph,
         ticksTreatment: ticksTreatment
     } );
 
@@ -97,8 +100,6 @@ $(function(){
 
     yAxis.render();
 
-
-// add some data every so often
 
     var messages = [
         "Changed home page welcome message",
@@ -128,4 +129,4 @@ $(function(){
     addAnnotation(true);
     setTimeout( function() { setInterval( addAnnotation, 3000 ) }, 3000 );
 
-});
+});*/

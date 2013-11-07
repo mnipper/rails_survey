@@ -7,15 +7,15 @@ $ ->
       url: '/graphs/update'
     }).done (data) ->
 
-  $("#bar-charts").click (e) ->
+  ###$("#bar-charts").click (e) ->
+    e.stopPropagation()
     console.log "bar-chart"
-    $.ajax({
-      url: '/bars'
-    }).done (data) ->
-      console.log "done bars"
+    $.getScript "/app/views/graphs/bar.js"
+    console.log "called bar chart script"
 
   $("#realtime-charts").click (e) ->
+    console.log "realtime-chart"
     $.ajax({
       url: '/realtime'
     }).done (data) ->
-      console.log "done real"
+      console.log "done real"###
