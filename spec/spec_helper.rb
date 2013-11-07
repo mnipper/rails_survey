@@ -5,6 +5,18 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
 
+driver = Selenium::WebDriver.for :firefox
+driver.manage.timeouts.implicit_wait = 300
+driver.manage.timeouts.script_timeout = 300
+driver.manage.timeouts.page_load = 300
+
+Capybara.register_driver :selenium do |app|
+  http_client = Selenium::WebDriver::Remote::Http::Default.new
+  http_client.timeout = 300
+  Capybara::Selenium::Driver.new(app, :browser => :firefox, :http_client => http_client)
+end
+
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
