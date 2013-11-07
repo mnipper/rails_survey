@@ -44,7 +44,7 @@ group :development, :test do
   gem "factory_girl_rails", "~> 4.0"
   gem 'database_cleaner', '~> 1.0'
   gem 'capybara'
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '2.29.0'
 end
 
 # Use ActiveModel has_secure_password
