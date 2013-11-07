@@ -4,6 +4,7 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
 rvm:
   - 2.0.0
+script: rspec spec
 notifications:
   email: false
   irc:
