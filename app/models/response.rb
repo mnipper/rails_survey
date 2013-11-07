@@ -13,4 +13,18 @@ class Response < ActiveRecord::Base
     end
   end
 
+  def self.responses_by_hour
+    map = {}
+    (0..23).each do |hour|
+      map[hour] = 0
+    end
+    responses = Response.all
+    responses.each do |response|
+      hr = response.created_at.hour
+      old_value = map[hr]
+      map[hr] = old_value + 1
+    end
+    map
+  end
+
 end

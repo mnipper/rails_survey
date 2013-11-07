@@ -12,6 +12,7 @@
   <div class="row">
     <div class="col-md-9 col-sm-6">
       <section class="widget large">
+        <div id="survey-bar-chart-y" style="left: 0px; position: absolute; color: #000000; width: 20px"> </div>
         <div id="survey-bar-chart" class="body chart">
           <!-- <svg></svg>  -->
         </div>
@@ -34,22 +35,12 @@
         var myArrayString = $("#bar-responses").text();
         myArrayString = myArrayString.trim();
         var myArray = myArrayString.split(",");
-
         for (var k = 0; k < myArray.length; k++){
-            myArray[k].replace("");
-            var myString = myArray[k].replace("{","");
-            myString = myArray[k].replace("}","");
-            myString = myArray[k].replace("[","");
-            myString = myArray[k].replace("[","");
-            var myStringArray = myString.split("=>");
+            var myStringArray = myArray[k].split("=>");
             seriesData[0].push({x: k, y: parseInt(myStringArray[1]) });
             myStringArray[0].trim();
-            labels[k] = myStringArray[0].substr(1);
+            labels[k] = myStringArray[0].substring(3, myStringArray[0].length - 1);
         }
-
-        var testElement = document.getElementById("survey-bar-chart");
-        console.log(testElement);
-        console.log("is it null?");
 
         var barGraph;
         try {
@@ -66,9 +57,8 @@
             });
             barGraph.render();
         }
-        catch(err) {
+        catch(err) {}
 
-        }
         xAxisLabels = function (n) {
             var map = { };
             for (var i = 0; i < labels.length; i++) {
@@ -84,6 +74,15 @@
             tickFormat: xAxisLabels
         });
         xAxisBar.render();
+
+        var yAxisBar;
+        yAxisBar = new Rickshaw.Graph.Axis.Y({
+            graph: barGraph,
+            element: document.getElementById("survey-bar-chart-y"),
+            orientation: "left",
+            tickFormat: Rickshaw.Fixtures.Number.formatKMBT
+        })
+        yAxisBar.render();
 
     });
 </script>

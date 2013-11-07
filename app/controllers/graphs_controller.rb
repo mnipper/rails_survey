@@ -18,6 +18,7 @@ class GraphsController < ApplicationController
     respond_to_ajax
   end
 
-  def show
+  def hourly
+    @responses = Response.responses_by_hour
   end
 end
