@@ -22,6 +22,7 @@ RailsSurvey::Application.routes.draw do
 
   get '/realtime' => 'graphs#realtime'
   get '/graphs/update' => 'graphs#update'
+  get '/bars' => 'graphs#bars'
 
   resources :graphs
 end

@@ -4,8 +4,8 @@ class GraphsController < ApplicationController
      @count = Response.count
   end
 
-  def bar_data
-    data = Instrument
+  def bars
+    @counts = Instrument.instrument_response_count
   end
 
   def update

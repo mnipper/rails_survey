@@ -3,7 +3,27 @@
 <head> </head>
 
 <body>
-
+<div class="content container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="page-title"> Bar Chat </h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-9 col-sm-6">
+      <section class="widget large">
+        <div id="sources-chart-bar" class="body chart">
+          <!-- <svg></svg>  -->
+        </div>
+        <div id="bar-responses" style="visibility: hidden">
+          <%= @counts %>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
 </body>
+
+<%= javascript_include_tag 'bar.js' %>
 
 </html>
