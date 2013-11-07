@@ -13,20 +13,12 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require realtime
-//= require bar
 //= require_tree .
-//= require_tree ../../../vendor/assets/javascripts/.
-//= require backbone/backbone
-//= require nvd3/lib/d3.v2
-//= require d3.layout.min
-//= require rickshaw/rickshaw
-//= require rickshaw/rickshaw-extensions
-//= require jquery-ui-1.10.1.custom
-//= require backbone/underscore-min
-//= require bootstrap/transition
-//= require bootstrap/collapse
-//= require bootstrap/tooltip
-//= require bootstrap/popover
-//= require bootstrap/button
-//= require bootstrap/dropdown
+//= require_tree ../../../vendor/assets/lib/backbone/.
+//= require_tree ../../../vendor/assets/lib/nvd3/lib/.
+//= require_tree ../../../vendor/assets/lib/rickshaw/.
+//= require_tree ../../../vendor/assets/lib/bootstrap/.
+//= require ../../../vendor/assets/lib/d3.layout.min
+//= require ../../../vendor/assets/lib/jquery-ui-1.10.1.custom
+
+

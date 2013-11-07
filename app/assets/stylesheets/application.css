@@ -9,6 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *= require ../../../vendor/assets/lib/nvd3/src/nv.d3
  *= require bootstrap-original/bootstrap
  *= require bootstrap-original/responsive
  *= require font-awesome/css/font-awesome.min

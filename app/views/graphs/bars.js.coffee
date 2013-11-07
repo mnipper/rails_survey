@@ -1,0 +1,1 @@
+$('#bar-responses').html('<%= @counts_html %>')

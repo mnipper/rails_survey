@@ -1,29 +1,26 @@
 
 $(function(){
+    var xAxisLabels;
     var seriesData = [[]];
-    var random = new Rickshaw.Fixtures.RandomData(150);
-   /**
+    var labels = [];
     var myArrayString = $("#bar-responses").text();
     myArrayString = myArrayString.trim();
     var myArray = myArrayString.split(",");
-    console.log(myArray);
+
     for (var k = 0; k < myArray.length; k++){
-        myArray[k].replace("")
-        var myString = myArray[k].replace("{"," ");
-        myString = myArray[k].replace("}"," ");
-        myString = myArray[k].replace("["," ");
-        myString = myArray[k].replace("["," ");
+        myArray[k].replace("");
+        var myString = myArray[k].replace("{","");
+        myString = myArray[k].replace("}","");
+        myString = myArray[k].replace("[","");
+        myString = myArray[k].replace("[","");
         var myStringArray = myString.split("=>");
-        console.log(myStringArray);
         seriesData[0].push({x: k, y: parseInt(myStringArray[1]) });
-    }
-       **/
-    for (var i = 0; i < 10; i++) {
-        random.addData(seriesData);
+        myStringArray[0].trim();
+        labels[k] = myStringArray[0].substr(1);
     }
 
-    var graph = new Rickshaw.Graph( {
-        element: document.getElementById("sources-chart-bar"),
+    var barGraph = new Rickshaw.Graph({
+        element: document.getElementById("survey-bar-chart"),
         height: 300,
         renderer: 'bar',
         series: [
@@ -32,12 +29,23 @@ $(function(){
                 data: seriesData[0]
             }
         ]
-    } );
+    });
+    barGraph.render();
 
-    graph.render();
+    xAxisLabels = function (n) {
+        var map = { };
+        for (var i = 0; i < labels.length; i++) {
+            map[i] = labels[i];
+        }
+        return map[n];
+    };
 
-    graph.xAxis
-        .showMaxMin(false)
-        .tickFormat(function(d) { return d3.time.format('%b %d')(new Date(d)) });
+    var xAxisBar;
+    xAxisBar = new Rickshaw.Graph.Axis.X({
+        graph: barGraph,
+        element: document.getElementById("survey-bar-chart-x"),
+        tickFormat: xAxisLabels
+    });
+    xAxisBar.render();
 
 });

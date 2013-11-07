@@ -1,0 +1,1 @@
+$('#num-responses').html('<%= @count_html %>')

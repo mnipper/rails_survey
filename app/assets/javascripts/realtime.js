@@ -27,67 +27,70 @@ $(function(){
 
     var palette = new Rickshaw.Color.Palette( { scheme: 'classic9' } );
 
-    var graph = new Rickshaw.Graph( {
-        element: document.getElementById("realtime-chart"),
+    var realtimeGraph;
+    realtimeGraph = new Rickshaw.Graph({
+        element: document.getElementById("survey-realtime-chart"),
         height: 300,
         renderer: 'area',
         stroke: true,
         preserve: true,
-        series: [{
-            color: $blue,
-            data: seriesData,
-            name: 'Responses'
-        } ]
-    } );
+        series: [
+            {
+                color: "blue",
+                data: seriesData,
+                name: 'Responses'
+            }
+        ]
+    });
 
-    graph.render();
+    realtimeGraph.render();
 
     $(window).resize(function(){
-        graph.width = $("#chart-container").width();
-        graph.render();
+        realtimeGraph.width = $("#chart-container").width();
+        realtimeGraph.render();
     });
 
     var hoverDetail = new Rickshaw.Graph.HoverDetail( {
-        graph: graph
+        graph: realtimeGraph
     } );
 
     var annotator = new Rickshaw.Graph.Annotate( {
-        graph: graph,
+        graph: realtimeGraph,
         element: document.getElementById('timeline')
     } );
 
     var legend = new Rickshaw.Graph.Legend( {
-        graph: graph,
+        graph: realtimeGraph,
         element: document.getElementById('legend')
 
     } );
 
     var shelving = new Rickshaw.Graph.Behavior.Series.Toggle( {
-        graph: graph,
+        graph: realtimeGraph,
         legend: legend
     } );
 
     var order = new Rickshaw.Graph.Behavior.Series.Order( {
-        graph: graph,
+        graph: realtimeGraph,
         legend: legend
     } );
 
     var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight( {
-        graph: graph,
+        graph: realtimeGraph,
         legend: legend
     } );
 
     var ticksTreatment = 'glow';
 
     var xAxis = new Rickshaw.Graph.Axis.Time( {
-        graph: graph,
+        graph: realtimeGraph,
         ticksTreatment: ticksTreatment
     } );
 
     xAxis.render();
 
     var yAxis = new Rickshaw.Graph.Axis.Y( {
-        graph: graph,
+        graph: realtimeGraph,
         tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
         ticksTreatment: ticksTreatment
     } );
@@ -112,10 +115,10 @@ $(function(){
         //random.addData(seriesData);
         //graph.series.data = populateData();
         populateData();
-        graph.update();
+        realtimeGraph.update();
         //console.log("updated graph");
     }, 1500 );
-/**
+
     function addAnnotation(force) {
         if (messages.length > 0 && (force || Math.random() >= 0.95)) {
             annotator.add(seriesData[2][seriesData[2].length-1].x, messages.shift());
@@ -124,5 +127,5 @@ $(function(){
 
     addAnnotation(true);
     setTimeout( function() { setInterval( addAnnotation, 3000 ) }, 3000 );
- **/
+
 });

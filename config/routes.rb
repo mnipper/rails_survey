@@ -20,7 +20,7 @@ RailsSurvey::Application.routes.draw do
   resources :notifications, only: [:index]
   resources :devices, only: [:index]
 
-  get '/realtime' => 'graphs#realtime'
+  get '/realtime' => 'graphs#real_time'
   get '/graphs/update' => 'graphs#update'
   get '/bars' => 'graphs#bars'
 

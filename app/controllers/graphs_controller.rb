@@ -1,11 +1,15 @@
 class GraphsController < ApplicationController
 
-  def realtime
-     @count = Response.count
+  def real_time
+    @count = Response.count
+    @count_html = render_to_string(partial: 'graphs/partials/realtime').html_safe
+    respond_to_ajax
   end
 
   def bars
     @counts = Instrument.instrument_response_count
+    @counts_html = render_to_string(partial: 'graphs/partials/bars').html_safe
+    respond_to_ajax
   end
 
   def update
@@ -15,6 +19,5 @@ class GraphsController < ApplicationController
   end
 
   def show
-
   end
 end
