@@ -189,7 +189,7 @@ DEPENDENCIES
   rspec-rails (~> 2.0)
   sass-rails (~> 4.0.0)
   sdoc
-  selenium-webdriver
+  selenium-webdriver (= 2.29.0)
   sqlite3
   therubyracer
   turbolinks
