@@ -1542,7 +1542,7 @@ pre code {
 @media (min-width: 1200px) {
   /* line 276, D:/projects/admin/sass/bootstrap-original/_grid.scss */
   .container {
-    max-width: 1170px;
+    max-width: 900px;
   }
 
   /* line 290, D:/projects/admin/sass/bootstrap-original/_grid.scss */
