@@ -1,4 +1,3 @@
-/*
 
 $(function(){
     var xAxisLabels;
@@ -7,22 +6,12 @@ $(function(){
     var myArrayString = $("#bar-responses").text();
     myArrayString = myArrayString.trim();
     var myArray = myArrayString.split(",");
-
     for (var k = 0; k < myArray.length; k++){
-        myArray[k].replace("");
-        var myString = myArray[k].replace("{","");
-        myString = myArray[k].replace("}","");
-        myString = myArray[k].replace("[","");
-        myString = myArray[k].replace("[","");
-        var myStringArray = myString.split("=>");
+        var myStringArray = myArray[k].split("=>");
         seriesData[0].push({x: k, y: parseInt(myStringArray[1]) });
         myStringArray[0].trim();
-        labels[k] = myStringArray[0].substr(1);
+        labels[k] = myStringArray[0].substring(3, myStringArray[0].length - 1);
     }
-
-    var testElement = document.getElementById("survey-bar-chart");
-    console.log(testElement);
-    console.log("is it null?");
 
     var barGraph;
     try {
@@ -39,9 +28,8 @@ $(function(){
         });
         barGraph.render();
     }
-    catch(err) {
+    catch(err) {}
 
-    }
     xAxisLabels = function (n) {
         var map = { };
         for (var i = 0; i < labels.length; i++) {
@@ -58,4 +46,13 @@ $(function(){
     });
     xAxisBar.render();
 
-});*/
+    var yAxisBar;
+    yAxisBar = new Rickshaw.Graph.Axis.Y({
+        graph: barGraph,
+        element: document.getElementById("survey-bar-chart-y"),
+        orientation: "left",
+        tickFormat: Rickshaw.Fixtures.Number.formatKMBT
+    })
+    yAxisBar.render();
+
+});

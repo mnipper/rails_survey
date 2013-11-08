@@ -25,4 +25,4 @@
 //= require ../../../vendor/assets/lib/bootstrap/dropdown
 //= require ../../../vendor/assets/lib/d3.layout.min
 //= require ../../../vendor/assets/lib/jquery-ui-1.10.1.custom
-//= require_tree .
+//= require_directory .
