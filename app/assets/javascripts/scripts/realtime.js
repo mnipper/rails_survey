@@ -1,4 +1,4 @@
-/*
+
 $(function(){
 
     var numDataPoints = 150;
@@ -86,7 +86,7 @@ $(function(){
     var ticksTreatment = 'glow';
 
     var xAxis = new Rickshaw.Graph.Axis.Time( {
-       graph: realtimeGraph,
+        graph: realtimeGraph,
         ticksTreatment: ticksTreatment
     } );
 
@@ -129,4 +129,4 @@ $(function(){
     addAnnotation(true);
     setTimeout( function() { setInterval( addAnnotation, 3000 ) }, 3000 );
 
-});*/
+});
