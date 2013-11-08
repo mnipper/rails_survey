@@ -1,7 +1,8 @@
 class GraphsController < ApplicationController
 
   def real_time
-    @count = Response.count
+    #@count = Response.count
+    @count = Instrument.instrument_response_count
     @count_html = render_to_string(partial: 'graphs/partials/realtime').html_safe
     respond_to_ajax
   end
