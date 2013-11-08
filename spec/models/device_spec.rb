@@ -6,10 +6,9 @@ describe Device do
   it { should respond_to(:last_survey) }
 
   describe "danger zone" do
-    
     before :each do
-      @device = Device.new
-      @survey = Survey.new
+      @device = create(:device) 
+      @survey = create(:survey)
       @device.stub(:last_survey).and_return(@survey)
     end
 
@@ -25,9 +24,8 @@ describe Device do
   end
 
   it "should not allow duplicate identifiers" do
-    device1 = Device.create(identifier: 'a')
-    device2 = Device.new(identifier: 'a')
-    device2.should_not be_valid
-    device1.destroy
+    device = create(:device) 
+    dup_device = Device.new(identifier: device.identifier)
+    dup_device.should_not be_valid
   end
 end
