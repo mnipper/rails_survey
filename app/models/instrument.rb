@@ -5,10 +5,9 @@ class Instrument < ActiveRecord::Base
 
   def self.instrument_response_count
     @response_map = []
-    all_instruments = Instrument.all
-    all_instruments.each do |instrument|
+    Instrument.all.each do |instrument|
       instrument.questions.each do |question|
-        @response_map << {instrument.title => question.response_count }
+        @response_map << {instrument.title => question.responses.count }
       end
     end
     @response_map
