@@ -29,6 +29,7 @@ class Response < ActiveRecord::Base
 
   def self.responses_by_question_ids(question_ids)
     responses = {}
+    map = {}
     question_ids.each do |id|
       words = Response.where('question_id == ?', id)
       answers = []
@@ -37,7 +38,12 @@ class Response < ActiveRecord::Base
       end
       responses[id.id] = answers
     end
-    responses
+    responses.each do |question_number, response_array|
+      hash = Hash.new(0)
+      response_array.each { |word| hash[word] += 1 }
+      map[question_number] = hash
+    end
+    map
   end
 
 end
