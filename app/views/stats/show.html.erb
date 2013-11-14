@@ -5,7 +5,8 @@
 
 <div class="row">
 
-  <div id="key-events-stats" class="col-md-6">
+  <div id="single-select-stats" class="col-md-6">
+
     <h4> <b> Single select events </b> </h4>
     <table>
       <tr>
@@ -13,6 +14,7 @@
         <th> Count </th>
       </tr>
       <% @single_select_responses.each do |question_number, response_array| %>
+
           <tr>
             <td> <b> Variable identifier: </b> </td>
             <td> <b> <%=  question_number  %> </b> </td>
@@ -23,8 +25,18 @@
                 <td> <%= count %> </td>
               </tr>
           <% end %>
+          <% stats = simple_descriptive_statistics(response_array.values) %>
+          <% stats.each do |statistic, value| %>
+              <tr id="descriptive-statistics">
+                <td> <%= statistic %> </td>
+                <td> <%= value %> </td>
+              </tr>
+          <% end %>
+
       <% end %>
     </table>
+
+
   </div>
 
   <div id="multiple-select-stats" class="col-md-6">

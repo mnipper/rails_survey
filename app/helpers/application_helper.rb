@@ -7,4 +7,14 @@ module ApplicationHelper
     end
     link_to(name, '#', class: "add_fields #{options[:class]}", data: {id: id, fields: fields.gsub("\n", "")})
   end
+
+  def simple_descriptive_statistics(array)
+    stats = DescriptiveStatistics::Stats.new(array)
+    {
+        'Mean' => stats.mean,
+        'Median' => stats.median,
+        'Mode' => stats.mode,
+        'Standard Deviation' => stats.standard_deviation
+    }
+  end
 end
