@@ -14,7 +14,7 @@
       </tr>
       <% @single_select_responses.each do |question_number, response_array| %>
           <tr>
-            <td> <b> Variable (question #): </b> </td>
+            <td> <b> Variable identifier: </b> </td>
             <td> <b> <%=  question_number  %> </b> </td>
           </tr>
           <% response_array.each do |answer, count|  %>
@@ -36,7 +36,7 @@
       </tr>
       <% @multiple_select_responses.each do |number, responses| %>
           <tr>
-            <td> <b> Variable (question #): </b> </td>
+            <td> <b> Variable identifier: </b> </td>
             <td> <b> <%= number %> </b> </td>
           </tr>
           <% responses.each do |event, count| %>

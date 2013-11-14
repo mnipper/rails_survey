@@ -31,12 +31,14 @@ class Response < ActiveRecord::Base
     responses = {}
     map = {}
     question_ids.each do |id|
-      words = Response.where('question_id == ?', id)
+      words = Response.includes(:question).where('question_id == ?', id)
       answers = []
+      question_identifier = ''
       words.each do |word|
+        question_identifier = word.question.question_identifier
         answers << word.to_s
       end
-      responses[id.id] = answers
+      responses[question_identifier] = answers
     end
     responses.each do |question_number, response_array|
       hash = Hash.new(0)
