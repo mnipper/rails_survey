@@ -12,7 +12,6 @@ $(function(){
 
     var graph = new Rickshaw.Graph( {
         element: document.getElementById("survey-line-chart"),
-        width: 400,
         height: 300,
         renderer: 'line',
         series: [

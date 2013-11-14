@@ -4,6 +4,7 @@ class GraphsController < ApplicationController
     #@count = Response.count
     @count = Instrument.instrument_response_count
     @count_html = render_to_string(partial: 'graphs/partials/realtime').html_safe
+    @responses = Response.responses_by_hour
     respond_to_ajax
   end
 

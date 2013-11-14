@@ -26,4 +26,6 @@ RailsSurvey::Application.routes.draw do
   get '/lines' => 'graphs#hourly'
 
   resources :graphs
+  resources :stats
+
 end

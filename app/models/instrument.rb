@@ -13,4 +13,15 @@ class Instrument < ActiveRecord::Base
     @response_map
   end
 
+  def self.general_statistics
+    {
+    'Percentage of completion' => 'TBD',
+    'Average time to complete survey' => 'TBD',
+    'Most skipped question' => 'TBD',
+    'Most answered question' => 'TBD',
+    'Most responsive respondents' => 'TBD',
+    'Least responsive respondents' => 'TBD'
+    }
+  end
+
 end

@@ -27,4 +27,17 @@ class Response < ActiveRecord::Base
     map
   end
 
+  def self.responses_by_question_ids(question_ids)
+    responses = {}
+    question_ids.each do |id|
+      words = Response.where('question_id == ?', id)
+      answers = []
+      words.each do |word|
+        answers << word.to_s
+      end
+      responses[id.id] = answers
+    end
+    responses
+  end
+
 end
