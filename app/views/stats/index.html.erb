@@ -7,8 +7,9 @@
     <th> # of questions </th>
     <th> # of participants </th>
     <th> Daily frequency </th>
-    <th> % of completion </th>
-    <th> Average time to complete</th>
+    <th> Completion rate </th>
+    <th> Avg. completion time </th>
+    <th> Number of times taken </th>
   </tr>
 
 <% @instruments.each do |instrument| %>
@@ -19,8 +20,9 @@
         <td> <%= instrument.questions.count %></td>
         <td> count 'em </td>
         <td> TBD </td>
+        <td> <%= instrument.completion_rate %> </td>
         <td> TBD </td>
-        <td> TBD </td>
+        <td> <%= instrument.surveys.count %> </td>
     </tr>
 <% end %>
 

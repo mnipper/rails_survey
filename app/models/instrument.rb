@@ -13,4 +13,12 @@ class Instrument < ActiveRecord::Base
     @response_map
   end
 
+  def completion_rate
+    sum = 0
+    self.surveys.each do |survey|
+        sum += survey.percent_complete
+    end
+    (sum / self.surveys.count).round(2)
+  end
+
 end
