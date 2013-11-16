@@ -50,7 +50,7 @@ $(function(){
                     seriesData[k].push({ x : timeBase + k, y : parseInt(array[1]) });
                 }
                 realtimeGraph.update();
-                console.log("updated");
+                //console.log("updated");
             }
         });
     }
@@ -75,8 +75,8 @@ $(function(){
     function drawGraph() {
 
         var palette = new Rickshaw.Color.Palette( { scheme: 'classic9' } );
-        var elem = document.getElementById("survey-realtime-chart");
-        console.log(elem);
+        //var elem = document.getElementById("survey-realtime-chart");
+        //console.log(elem);
 
         try {
             realtimeGraph = new Rickshaw.Graph({

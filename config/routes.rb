@@ -25,6 +25,7 @@ RailsSurvey::Application.routes.draw do
   get '/bars' => 'graphs#bars'
   get '/lines' => 'graphs#hourly'
   get '/individual' => 'stats#individual'
+  get '/daily' => 'graphs#daily_responses'
 
   resources :graphs
   resources :stats

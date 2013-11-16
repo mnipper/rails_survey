@@ -48,4 +48,8 @@ class Response < ActiveRecord::Base
     map
   end
 
+  def grouped_responses
+    self.group(:created_at)
+  end
+
 end

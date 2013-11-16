@@ -7,6 +7,9 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user_from_token!
   before_filter :authenticate_user!
 
+  #Avail to all controllers application helper methods
+  include ApplicationHelper
+
   def after_sign_in_path_for(resource_or_scope)
     instruments_path
   end
