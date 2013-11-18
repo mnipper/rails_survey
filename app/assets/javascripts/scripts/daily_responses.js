@@ -7,6 +7,10 @@ $(function(){
     var myColors = ['blue', 'yellow', 'green', 'red', 'brown', 'black', 'pink', 'orange'];
     var myDivElements = [];
     var myBarGraphs = [];
+    var myXAxisElements = [];
+    var myXAxes = [];
+    var xAxisLabels;
+    var counter;
 
     makeAjaxCall();
 
@@ -80,7 +84,12 @@ $(function(){
                 var divIdName = 'survey-bar-counts'+k;
                 newDivElement.setAttribute('id',divIdName);
                 parentDivElement.appendChild(newDivElement);
+                var newXAxisElement = document.createElement('div');
+                var xAxisName = 'x-axis'+divIdName;
+                newXAxisElement.setAttribute('id',xAxisName);
+                parentDivElement.appendChild(newXAxisElement);
                 myDivElements[k] = divIdName;
+                myXAxisElements[k] = xAxisName;
                 k++;
             }
         }
@@ -89,15 +98,19 @@ $(function(){
     function constructSeriesData(data) {
         var k = 0;
         for (var key in data) {
-            seriesLabels[k] = key;
-            var keyValue = data[key];
-            var i = 0;
-            for (var day in keyValue) {
-                seriesDays[k].push(day);
-                graphSeriesData[k].push({x: i, y: keyValue[day]});
-                i++;
+            if (data.hasOwnProperty(key))  {
+                seriesLabels[k] = key;
+                var keyValue = data[key];
+                var i = 0;
+                for (var day in keyValue) {
+                    if (keyValue.hasOwnProperty(day)) {
+                        seriesDays[k].push(day.substring(5));
+                        graphSeriesData[k].push({x: i, y: keyValue[day]});
+                        i++;
+                    }
+                }
+                k++;
             }
-            k++;
         }
         return true;
     }
@@ -116,12 +129,39 @@ $(function(){
             series: [
                 {
                     color: myColors[Math.floor(Math.random() * myColors.length)],
-                    data: graphSeriesData[i]
+                    data: graphSeriesData[i],
+                    name: seriesLabels[i]
                 }
             ]
         });
         myBarGraphs[i].render();
         }
+        drawXaxis();
     }
 
+    xAxisLabels = function (n) {
+        var map = { };
+        var days = seriesDays[counter];
+        console.log(days);
+        for (var i = 0; i < days.length; i++) {
+            map[i] = days[i];
+            console.log(map[i]);
+        }
+        return map[counter];
+    };
+
+    function drawXaxis(){
+        for (var k=0; k<myXAxisElements.length; k++) {
+           myXAxes[k] = 'xaxis'+k;
+        }
+        for(var j=0; j<myXAxes.length; j++) {
+            counter = j;
+            myXAxes[j] = new Rickshaw.Graph.Axis.X({
+                graph: myBarGraphs[j],
+                element: document.getElementById(myXAxisElements[j]),
+                tickFormat: xAxisLabels()
+            });
+            myXAxes[j].render();
+        }
+    }
 });
