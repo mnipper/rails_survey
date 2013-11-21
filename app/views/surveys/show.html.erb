@@ -27,7 +27,13 @@
           <td><%= response.question.question_type %></td>
           <td><%= response.question.question_identifier %></td>
           <td><%= response.question.text %></td>
-          <td><%= response.question.options.join(', ') %></td>
+          <td>
+            <ul class="squares">
+              <% response.question.options.each do |option| %>
+                <li><%= option %></li>
+              <% end %>
+            <ul>
+          </td>
           <td><%= response %>
           <td><%= response.other_response ? response.other_response : 'NA' %></td>
           <td><%= response.created_at %>
