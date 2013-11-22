@@ -33,6 +33,7 @@ class Instrument < ActiveRecord::Base
 
   private
   def set_language_alignment
-    self.alignment = Settings.left_align_languages.include? self.language ? 'left' : 'right'
+    self.alignment = Settings.right_align_languages.include? self.language ? 'right' : 'left'
+    nil
   end
 end

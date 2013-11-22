@@ -4,4 +4,4 @@ question_types: ['SELECT_ONE', 'SELECT_MULTIPLE', 'SELECT_ONE_WRITE_OTHER',
 question_with_options: ['SELECT_ONE', 'SELECT_MULTIPLE', 'SELECT_ONE_WRITE_OTHER',
         'SELECT_MULTIPLE_WRITE_OTHER']
 languages: ['english', 'khmer', 'arabic']
-left_align_languages: ['arabic']
+right_align_languages: ['arabic']
