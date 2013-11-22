@@ -2,6 +2,7 @@ class Instrument < ActiveRecord::Base
   has_many :questions
   has_many :surveys
   accepts_nested_attributes_for :questions, allow_destroy: true
+  before_save :set_language_alignment
 
   def self.instrument_response_count
     @response_map = []
@@ -28,5 +29,10 @@ class Instrument < ActiveRecord::Base
       responses << question.responses.select('DATE(created_at)').count(:group => 'DATE(created_at)')
     end
     responses.inject{|result, element| result.merge( element ){|k, old_v, new_v| old_v + new_v}}
+  end
+
+  private
+  def set_language_alignment
+    self.alignment = Settings.left_align_languages.include? self.language ? 'left' : 'right'
   end
 end

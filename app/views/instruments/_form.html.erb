@@ -19,6 +19,11 @@
         <%= f.label :title, 'Instrument Title' %><br />
         <%= f.text_field :title, class: 'form-control' %>
       </div>
+
+      <div class="field bottom-buffer">
+        <%= f.label :language %>
+        <%= f.select(:language, options_for_select(Settings.languages, @instrument.language)) %>
+      </div>
       
       <%= f.fields_for :questions do |builder| %>
         <%= render 'question_fields', f: builder %>
