@@ -11,6 +11,7 @@
 #
 
 class Survey < ActiveRecord::Base
+  attr_accessible :instrument_id, :uuid, :device_id
   belongs_to :instrument
   belongs_to :device
   

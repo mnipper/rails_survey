@@ -12,6 +12,7 @@
 #
 
 class Question < ActiveRecord::Base
+  attr_accessible :text, :question_type, :question_identifier, :instrument_id
   belongs_to :instrument
   has_many :responses
   has_many :options
