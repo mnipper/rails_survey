@@ -13,7 +13,7 @@
 class Instrument < ActiveRecord::Base
   has_many :questions
   has_many :surveys
-  attr_accessible :title, :language, :alignment
+  attr_accessible :title, :language, :alignment, :questions_attributes
   accepts_nested_attributes_for :questions, allow_destroy: true
   before_save :set_language_alignment
 
