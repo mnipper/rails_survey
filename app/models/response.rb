@@ -27,6 +27,20 @@ class Response < ActiveRecord::Base
     end
   end
 
+  def self.to_csv
+    CSV.generate do |csv|
+      export(csv)
+    end
+  end
+
+  def self.export(format)
+    format << ['qid', 'survey_uuid', 'response', 'other_response']
+    all.each do |response|
+      format << [response.question.question_identifier, response.survey_uuid,
+        response.text, response.other_response]
+    end
+  end
+
   def self.responses_by_hour
     map = {}
     (0..23).each do |hour|

@@ -42,7 +42,9 @@
     </li>
 
     <li class="panel">
-      <a href="#"><i class="icon-download"></i> <span class="name">Export</span></a>
+      <%= link_to responses_path(format: :csv) do %>
+          <i class="icon-download"></i><span class="name">Export</span>
+      <% end %>
     </li>
 
     <li class="visible-xs">

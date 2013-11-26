@@ -19,7 +19,7 @@ describe Response do
 
   describe "When there is a valid response" do
     before :each do
-      @response = build(:response)
+      @response = create(:response)
     end
 
     it "should return the survey by UUID" do
@@ -36,6 +36,13 @@ describe Response do
       question = build(:question)
       question.options << build(:option)
       @response.to_s.should == question.options.first.to_s
+    end
+
+    it "should export correctly" do
+      out = []
+      Response.export(out)
+      out.should == [["qid", "survey_uuid", "response", "other_response"],
+        ["q1", "00000000-0000-0000-0000-000000000000", "a", 'other']]
     end
   end
 end
