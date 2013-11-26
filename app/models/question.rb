@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: questions
+#
+#  id                  :integer          not null, primary key
+#  text                :string(255)
+#  question_type       :string(255)
+#  question_identifier :string(255)
+#  instrument_id       :integer
+#  created_at          :datetime
+#  updated_at          :datetime
+#
+
 class Question < ActiveRecord::Base
   belongs_to :instrument
   has_many :responses

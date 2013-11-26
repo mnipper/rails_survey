@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: instruments
+#
+#  id         :integer          not null, primary key
+#  title      :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#  language   :string(255)
+#  alignment  :string(255)
+#
+
 class Instrument < ActiveRecord::Base
   has_many :questions
   has_many :surveys

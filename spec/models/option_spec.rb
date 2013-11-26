@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: options
+#
+#  id            :integer          not null, primary key
+#  question_id   :integer
+#  text          :string(255)
+#  created_at    :datetime
+#  updated_at    :datetime
+#  next_question :string(255)
+#
+
 require "spec_helper"
 
 describe Option do

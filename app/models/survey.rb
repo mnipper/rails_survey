@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: surveys
+#
+#  id            :integer          not null, primary key
+#  instrument_id :integer
+#  created_at    :datetime
+#  updated_at    :datetime
+#  uuid          :string(255)
+#  device_id     :integer
+#
+
 class Survey < ActiveRecord::Base
   belongs_to :instrument
   belongs_to :device

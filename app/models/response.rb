@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: responses
+#
+#  id             :integer          not null, primary key
+#  question_id    :integer
+#  text           :string(255)
+#  other_response :string(255)
+#  created_at     :datetime
+#  updated_at     :datetime
+#  survey_uuid    :string(255)
+#
+
 class Response < ActiveRecord::Base
   belongs_to :question
 

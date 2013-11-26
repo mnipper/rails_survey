@@ -34,6 +34,8 @@ gem 'angularjs-rails', '~> 1.0.7'
 # Strong parameters is still glitchy with nested attributes
 gem 'protected_attributes'
 
+gem 'annotate', ">=2.5.0"
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
