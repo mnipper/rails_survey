@@ -13,7 +13,7 @@ script:
 notifications:
   email: false
   irc:
-    on_success: change
+    on_success: always
     on_failure: always
     channels:
       - "card.freenode.net#dukedevelopers"
