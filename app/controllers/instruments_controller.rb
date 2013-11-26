@@ -40,14 +40,4 @@ class InstrumentsController < ApplicationController
     @instrument.destroy
     redirect_to instruments_url, notice: "Successfully destroyed instrument."
   end
-
-  private
-
-  def instrument_params
-    # if current_user
-    #params.require(:instrument).permit(:title, questions_attributes: [:text, :question_type,
-    #    :question_identifier, :instrument_id, :_destroy, options_attributes: [:question_id, :text, :next_question]])
-    # end
-    params.require(:instrument).permit!
-  end
 end
