@@ -35,7 +35,8 @@ describe Device do
 
   it "should not allow duplicate identifiers" do
     device = create(:device) 
-    dup_device = Device.new(identifier: device.identifier)
+    dup_device = Device.new
+    dup_device.identifier = device.identifier
     dup_device.should_not be_valid
   end
 end

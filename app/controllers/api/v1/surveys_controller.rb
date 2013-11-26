@@ -10,7 +10,9 @@ module Api
         if @device
           @survey.device = @device
         else
-          device = Device.create(identifier: survey_params[:device_identifier])
+          device = Device.new
+          device.identifier = survey_params[:device_identifier]
+          device.save
           @survey.device = device
         end
         respond_with @survey if @survey.save 

@@ -9,8 +9,8 @@
 #
 
 class Device < ActiveRecord::Base
-  has_many :surveys
   attr_accessible :identifer
+  has_many :surveys
   validates :identifier, uniqueness: true  
 
   def danger_zone?
