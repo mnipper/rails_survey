@@ -14,13 +14,10 @@ class Survey < ActiveRecord::Base
   attr_accessible :instrument_id, :uuid, :device_id
   belongs_to :instrument
   belongs_to :device
+  has_many :responses, foreign_key: :survey_uuid, primary_key: :uuid
   
-  def responses
-    Response.where(survey_uuid: uuid)
-  end
-
   def percent_complete
-    (responses.uniq.pluck(:question_id).count.to_f / instrument.questions.count)
+    (responses.pluck(:question_id).uniq.count.to_f / instrument.questions.count)
       .round(2)
   end
 end
