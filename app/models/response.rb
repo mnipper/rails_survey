@@ -14,10 +14,8 @@
 class Response < ActiveRecord::Base
   attr_accessible :question_id, :text, :other_response, :survey_uuid
   belongs_to :question
-
-  def survey
-    Survey.find_by_uuid(survey_uuid)
-  end
+  belongs_to :survey, foreign_key: :survey_uuid, primary_key: :uuid
+  delegate :device, to: :survey 
 
   def to_s
     if question.options.empty?
@@ -34,10 +32,10 @@ class Response < ActiveRecord::Base
   end
 
   def self.export(format)
-    format << ['qid', 'survey_uuid', 'response', 'other_response']
+    format << ['qid', 'survey_uuid', 'device_id', 'response', 'other_response']
     all.each do |response|
       format << [response.question.question_identifier, response.survey_uuid,
-        response.text, response.other_response]
+        response.device.identifier, response.text, response.other_response]
     end
   end
 
@@ -79,5 +77,4 @@ class Response < ActiveRecord::Base
   def grouped_responses
     self.group(:created_at)
   end
-
 end

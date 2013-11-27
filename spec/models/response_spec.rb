@@ -41,8 +41,8 @@ describe Response do
     it "should export correctly" do
       out = []
       Response.export(out)
-      out.should == [["qid", "survey_uuid", "response", "other_response"],
-        ["q1", "00000000-0000-0000-0000-000000000000", "a", 'other']]
+      out.should == [["qid", "survey_uuid", "device_id", "response", "other_response"],
+        ["q1", @response.survey.uuid, @response.survey.device.identifier, "a", 'other']]
     end
   end
 end
