@@ -7,7 +7,7 @@
         <i class="icon-globe"></i> View Translations
       <% end %>
       <%= link_to instrument_versions_path(@instrument), class: 'btn btn-primary' do %>
-        <i class="icon-repeat"></i> View Versions
+        <i class="icon-repeat"></i> View Past Versions
       <% end %>
       <%= link_to edit_instrument_path(@instrument), class: 'btn btn-primary' do %>
         <i class="icon-edit"></i> Edit Instrument 
@@ -15,6 +15,7 @@
     </div>
   </header>
   <div class="body">
+    <strong>Current Version: <%= @instrument.current_version_number %></strong><br />
     <ol class="questions">
       <% @instrument.questions.each do |question| %>
         <li>

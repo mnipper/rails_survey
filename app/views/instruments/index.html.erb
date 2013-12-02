@@ -12,6 +12,7 @@
       <thead>
         <tr>
           <th>Title</th>
+          <th>Current Version</th>
           <th># questions</th>
           <th>Created at</th>
           <th>Last updated</th>
@@ -21,6 +22,7 @@
     <% @instruments.each do |instrument| %>
         <tr>
           <td><%= link_to instrument.title, instrument_path(instrument) %></td>
+          <td><%= instrument.current_version_number %></td>
           <td><%= instrument.questions.count %></td>
           <td><%= instrument.created_at %></td>
           <td><%= instrument.updated_at %></td>

@@ -16,7 +16,7 @@ class Instrument < ActiveRecord::Base
   attr_accessible :title, :language, :alignment, :questions_attributes
   accepts_nested_attributes_for :questions, allow_destroy: true
   before_save :set_language_alignment
-  has_paper_trail
+  has_paper_trail :on => [:update, :destroy]
 
   def self.instrument_response_count
     @response_map = []
@@ -46,7 +46,7 @@ class Instrument < ActiveRecord::Base
   end
 
   def current_version_number
-    versions.count - 1
+    versions.count
   end
 
   def as_json(options={})

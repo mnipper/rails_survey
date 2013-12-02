@@ -3,19 +3,19 @@
 <section class="widget">
   <div class="body">
     <ol class="questions">
-      <% @instrument.questions.each do |question| %>
+      <% @instrument_version.questions.each do |question| %>
+        <% question_version = question.version_at(@version.created_at - 1) %>
+        <% next unless question_version %>
         <li>
-          <% question_version = question.version_at(@version.created_at) %>
           <%= question_version.text %> <br />
           <span class="label label-info"><%= question_version.question_type %></span>
           <% unless question_version.options.empty? %>
             <br />Options:
             <ol class="options" start="0">
               <% question_version.options.each do |option| %>
-                <% option_version = option.version_at(@version.created_at) %>
-                <% if option_version %>
-                  <li><%= option_version.text %></li>
-                <% end %>
+                <% option_version = option.version_at(@version.created_at - 1) %>
+                <% next unless option_version %>
+                <li><%= option_version.text %></li>
               <% end %>
             </ol>
           <% end %>
