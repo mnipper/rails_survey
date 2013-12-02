@@ -41,8 +41,23 @@ describe Response do
     it "should export correctly" do
       out = []
       Response.export(out)
-      out.should == [["qid", "survey_uuid", "device_id", "response", "other_response"],
-        ["q1", @response.survey.uuid, @response.survey.device.identifier, "a", 'other']]
+      out.should == [
+        ["qid",
+          "instrument_id",
+          "instrument_title",
+          "survey_uuid",
+          "device_id",
+          "response",
+          "other_response"
+        ],
+        ["q1",
+          @response.instrument.id,
+          @response.instrument.title,
+          @response.survey.uuid,
+          @response.survey.device.identifier,
+          "a",
+          'other']
+        ]
     end
   end
 end
