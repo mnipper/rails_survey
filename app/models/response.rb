@@ -17,6 +17,7 @@ class Response < ActiveRecord::Base
   belongs_to :survey, foreign_key: :survey_uuid, primary_key: :uuid
   delegate :device, to: :survey 
   delegate :instrument, to: :survey
+  delegate :instrument_version_number, to: :survey
 
   def to_s
     if question.options.empty?
@@ -33,12 +34,13 @@ class Response < ActiveRecord::Base
   end
 
   def self.export(format)
-    format << ['qid', 'instrument_id', 'instrument_title', 'survey_uuid',
-      'device_id', 'response', 'other_response']
+    format << ['qid', 'instrument_id', 'instrument_version_number', 'instrument_title', 
+      'survey_uuid', 'device_id', 'response', 'other_response']
     all.each do |response|
       format << [response.question.question_identifier, response.instrument.id,
-        response.instrument.title, response.survey_uuid, response.device.identifier,
-        response.text, response.other_response]
+        response.instrument_version_number, response.instrument.title,
+        response.survey_uuid, response.device.identifier, response.text,
+        response.other_response]
     end
   end
 

@@ -44,6 +44,7 @@ describe Response do
       out.should == [
         ["qid",
           "instrument_id",
+          "instrument_version_number",
           "instrument_title",
           "survey_uuid",
           "device_id",
@@ -52,6 +53,7 @@ describe Response do
         ],
         ["q1",
           @response.instrument.id,
+          1,
           @response.instrument.title,
           @response.survey.uuid,
           @response.survey.device.identifier,
