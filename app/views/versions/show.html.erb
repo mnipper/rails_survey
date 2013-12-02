@@ -1,0 +1,24 @@
+<h1><%= @instrument_version.title %></h1>
+
+<section class="widget">
+  <div class="body">
+    <ol class="questions">
+      <% @instrument.questions.each do |question| %>
+        <li>
+          <% question_version = question.version_at(@version.created_at) %>
+          <%= question_version.text %> <br />
+          <span class="label label-info"><%= question_version.question_type %></span>
+          <% unless question_version.options.empty? %>
+            <br />Options:
+            <ol class="options" start="0">
+              <% question.options.each do |option| %>
+                <% option_version = option.version_at(@version.created_at) %>
+                <li><%= option_version.text %></li>
+              <% end %>
+            </ol>
+          <% end %>
+        </li>
+      <% end %>
+    </ol>
+  </div>
+</section>

@@ -48,6 +48,8 @@ gem "twitter-bootstrap-rails"
 # User authentication
 gem 'devise'
 
+gem 'paper_trail', '>= 3.0.0.rc2'
+
 group :test do
   gem 'rspec-rails', '~> 2.0'
   gem "factory_girl_rails", "~> 4.0"
