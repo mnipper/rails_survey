@@ -11,9 +11,11 @@
           <% unless question_version.options.empty? %>
             <br />Options:
             <ol class="options" start="0">
-              <% question.options.each do |option| %>
+              <% question_version.options.each do |option| %>
                 <% option_version = option.version_at(@version.created_at) %>
-                <li><%= option_version.text %></li>
+                <% if option_version %>
+                  <li><%= option_version.text %></li>
+                <% end %>
               <% end %>
             </ol>
           <% end %>
