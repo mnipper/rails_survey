@@ -11,7 +11,7 @@ class VersionsController < ApplicationController
     if @version
       @instrument_version = @version.reify
     else
-      redirect_to @instrument, alert: 'This is not a valid instrument version.'
+      redirect_to @instrument
     end
   end
 end
