@@ -8,6 +8,7 @@
         <tr>
           <th>UUID</th>
           <th>Instrument</th>
+          <th>Instrument Version</th>
           <th>Device</th>
           <th>% complete</th>
           <th>Responses</th>
@@ -19,6 +20,8 @@
         <tr>
           <td><%= survey.uuid %></td>
           <td><%= link_to survey.instrument.title, instrument_path(survey.instrument) %></td>
+          <td><%= link_to survey.instrument_version_number,
+              instrument_version_path(survey.instrument, survey.instrument_version_number) %></td>
           <td><%= survey.device.identifier %></td>
           <td><%= survey.percent_complete %>
           <td><%= link_to 'View Responses', survey_path(survey) %></td>

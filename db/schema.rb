@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131202164124) do
+ActiveRecord::Schema.define(version: 20131202202930) do
 
   create_table "devices", force: true do |t|
     t.string   "identifier"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20131202164124) do
     t.datetime "updated_at"
     t.string   "uuid"
     t.integer  "device_id"
+    t.integer  "instrument_version_number"
   end
 
   add_index "surveys", ["uuid"], name: "index_surveys_on_uuid"

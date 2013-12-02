@@ -11,7 +11,7 @@
 #
 
 class Survey < ActiveRecord::Base
-  attr_accessible :instrument_id, :uuid, :device_id
+  attr_accessible :instrument_id, :instrument_version_number, :uuid, :device_id
   belongs_to :instrument
   belongs_to :device
   has_many :responses, foreign_key: :survey_uuid, primary_key: :uuid

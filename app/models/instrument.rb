@@ -45,6 +45,16 @@ class Instrument < ActiveRecord::Base
     responses.inject{|result, element| result.merge( element ){|k, old_v, new_v| old_v + new_v}}
   end
 
+  def current_version_number
+    versions.count - 1
+  end
+
+  def as_json(options={})
+    super((options || {}).merge({
+        methods: [:current_version_number]
+    }))
+  end
+
   private
   def set_language_alignment
     self.alignment = Settings.right_align_languages.include? self.language ? 'right' : 'left'
