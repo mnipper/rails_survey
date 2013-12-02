@@ -12,10 +12,10 @@
         </tr>
       </thead>
       <tbody>
-        <% @instrument.versions.each_with_index do |version, index| %>
+        <% @instrument.versions.each do |version| %>
             <% unless version.reify.nil? %>
               <tr>
-                <td><%= link_to index, instrument_version_path(@instrument, index) %></td>
+                <td><%= link_to version.index, instrument_version_path(@instrument, version.index) %></td>
                 <td><%= version.reify.title %></td>
                 <td><%= User.find(version.whodunnit.to_i).email %></td>
                 <td><%= version.created_at %></td>
