@@ -48,7 +48,7 @@ gem "twitter-bootstrap-rails"
 # User authentication
 gem 'devise'
 
-group :development, :test do
+group :test do
   gem 'rspec-rails', '~> 2.0'
   gem "factory_girl_rails", "~> 4.0"
   gem 'database_cleaner', '~> 1.0'
@@ -69,4 +69,4 @@ gem 'descriptive-statistics'
 # gem 'capistrano', group: :development
 
 # Use debugger
-gem 'debugger', group: [:development, :test]
+gem 'debugger', group: [:development]

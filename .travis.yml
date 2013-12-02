@@ -1,4 +1,5 @@
 language: ruby
+bundler_args: --without development
 addons:
   firefox: "18.0"
 before_install:
