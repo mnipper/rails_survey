@@ -1,0 +1,30 @@
+<section class="widget">
+  <header>
+    <h4><i class="icon-edit"></i> Instruments</h4>
+    <div class="actions hidden-xs-portrait"> 
+      <%= link_to edit_instrument_instrument_translation_path(@instrument, @instrument_translation), class: 'btn btn-primary' do %>
+        <i class="icon-globe"></i> Edit Translation
+      <% end %>
+    </div>
+  </header>
+  <div class="body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Question Identifier</th>
+          <th><%= @instrument.language %></th>
+          <th><%= @instrument_translation.language %></th>
+        </tr>
+      </thead>
+      <tbody>
+    <% @instrument.questions.each do |question| %>
+        <tr>
+          <td><%= question.question_identifier %></td>
+          <td><%= question.text %></td>
+          <td><%= question.question_translations.find_by_language(@instrument_translation.language) %></td>
+        </tr>
+    <% end %>
+      </tbody>
+    </table>
+  </div>
+</section>

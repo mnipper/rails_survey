@@ -18,6 +18,7 @@ RailsSurvey::Application.routes.draw do
   root to: 'instruments#index'
   resources :instruments do
     resources :versions, only: [:index, :show]
+    resources :instrument_translations
   end
   resources :notifications, only: [:index]
   resources :devices, only: [:index]

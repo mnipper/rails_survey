@@ -1,0 +1,37 @@
+<section class="widget">
+  <header>
+    <h4><i class="icon-edit"></i> Translations</h4>
+  </header>
+  <div class="body">
+    <%= form_for [@instrument, @instrument_translation] do |f| %>
+      <% if @instrument_translation.errors.any? %>
+        <div class="error_messages">
+          <h2><%= pluralize(@instrument_translation.errors.count, "error") %> prohibited this translation from being saved:</h2>
+          <ul>
+          <% @instrument_translation.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="field bottom-buffer">
+        <%= f.label :title, 'Instrument Title' %><br />
+        <%= f.text_field :title, class: 'form-control' %>
+      </div>
+
+      <div>
+        <strong>Instrument language:</strong> <%= @instrument.language %>
+      </div>
+
+      <div class="field bottom-buffer">
+        <%= f.label :language, 'Translation Language' %>
+        <%= f.select(:language, options_for_select(Settings.languages, @instrument_translation.language)) %>
+      </div>
+
+      <div class="top-buffer pull-right">
+        <%= f.submit class: 'btn btn-primary btn-large' %>
+      </div>
+    <% end %>
+  </div>
+</section>

@@ -13,4 +13,6 @@
 class QuestionTranslation < ActiveRecord::Base
   attr_accessible :language, :text
   belongs_to :question
+  has_many :option_translations
+  accepts_nested_attributes_for :option_translations, allow_destroy: true
 end

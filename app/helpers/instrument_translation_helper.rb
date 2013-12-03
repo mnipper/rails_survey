@@ -1,0 +1,2 @@
+module InstrumentTranslationHelper
+end
