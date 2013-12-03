@@ -14,6 +14,4 @@
 class InstrumentTranslation < ActiveRecord::Base
   attr_accessible :title, :language, :alignment
   belongs_to :instrument
-  has_many :question_translations
-  accepts_nested_attributes_for :question_translations, allow_destroy: true
 end

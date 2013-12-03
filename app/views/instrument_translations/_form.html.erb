@@ -29,6 +29,11 @@
         <%= f.select(:language, options_for_select(Settings.languages, @instrument_translation.language)) %>
       </div>
 
+      <% @instrument.questions.each do |question| %>
+        <%= question.question_identifier  %>
+        <%= question.text %><br />
+      <% end %>
+
       <div class="top-buffer pull-right">
         <%= f.submit class: 'btn btn-primary btn-large' %>
       </div>
