@@ -1,6 +1,6 @@
 <section class="widget">
   <header>
-    <h4><i class="icon-edit"></i> Translations</h4>
+    <h4><i class="icon-globe"></i> Translation for <%= @instrument.title %></h4>
   </header>
   <div class="body">
     <%= form_for [@instrument, @instrument_translation] do |f| %>
@@ -30,8 +30,10 @@
       </div>
 
       <% @instrument.questions.each do |question| %>
-        <%= question.question_identifier  %>
-        <%= question.text %><br />
+        <%= question.question_identifier %>
+        <%= question.text %>
+        <%= text_field_tag "question_translations[#{question.id}]", question.translated_for(@instrument_translation.language) %>
+        <br />
       <% end %>
 
       <div class="top-buffer pull-right">

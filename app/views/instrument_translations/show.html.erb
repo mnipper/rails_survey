@@ -1,6 +1,6 @@
 <section class="widget">
   <header>
-    <h4><i class="icon-edit"></i> Instruments</h4>
+    <h4><i class="icon-globe"></i> <%= @instrument.title %> in <%= @instrument_translation.language %></h4>
     <div class="actions hidden-xs-portrait"> 
       <%= link_to edit_instrument_instrument_translation_path(@instrument, @instrument_translation), class: 'btn btn-primary' do %>
         <i class="icon-globe"></i> Edit Translation
@@ -21,7 +21,7 @@
         <tr>
           <td><%= question.question_identifier %></td>
           <td><%= question.text %></td>
-          <td><%= question.question_translations.find_by_language(@instrument_translation.language) %></td>
+          <td><%= question.translated_for @instrument_translation.language %></td>
         </tr>
     <% end %>
       </tbody>
