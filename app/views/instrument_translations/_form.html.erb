@@ -33,6 +33,12 @@
         <%= question.question_identifier %>
         <%= question.text %>
         <%= text_field_tag "question_translations[#{question.id}]", question.translated_for(@instrument_translation.language) %>
+        <% if question.has_options? %>
+          <% question.options.each do |option| %>
+            <%= option.text %>
+            <%= text_field_tag "option_translations[#{option.id}]", option.translated_for(@instrument_translation.language) %>
+          <% end %>
+        <% end %>
         <br />
       <% end %>
 

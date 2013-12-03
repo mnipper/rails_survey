@@ -27,4 +27,8 @@ class Question < ActiveRecord::Base
   def translated_for(language)
     self.question_translations.find_by_language(language).text if has_translation_for? language
   end
+
+  def has_options?
+    !options.empty?
+  end
 end

@@ -21,7 +21,7 @@
         <li>
           <%= question.text %> <br />
           <span class="label label-info"><%= question.question_type %></span>
-          <% unless question.options.empty? %>
+          <% if question.has_options? %>
             <br />Options:
             <ol class="options" start="0">
               <% question.options.each do |option| %>

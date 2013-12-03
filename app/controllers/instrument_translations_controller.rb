@@ -64,5 +64,15 @@ class InstrumentTranslationsController < ApplicationController
       question_translation.text = translation
       question_translation.save!
     end
+
+    params[:option_translations].each_pair do |option_id, translation|
+      option = Option.find(option_id)
+      option_translation = option.option_translations.where(
+        language: instrument_translation.language,
+        option_id: option.id
+      ).first_or_initialize
+      option_translation.text = translation
+      option_translation.save!
+    end
   end
 end

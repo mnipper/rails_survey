@@ -19,4 +19,12 @@ class Option < ActiveRecord::Base
   def to_s
     text
   end
+
+  def has_translation_for?(language)
+    self.option_translations.find_by_language(language)
+  end
+
+  def translated_for(language)
+    self.option_translations.find_by_language(language).text if has_translation_for? language
+  end
 end

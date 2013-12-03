@@ -23,6 +23,15 @@
           <td><%= question.text %></td>
           <td><%= question.translated_for @instrument_translation.language %></td>
         </tr>
+        <% if question.has_options? %>
+          <% question.options.each do |option| %>
+            <tr>
+              <td>Option for <%= question.question_identifier %></td>
+              <td><%= option.text %></td>
+              <td><%= option.translated_for @instrument_translation.language %></td>
+            </tr>
+          <% end %>
+        <% end %>
     <% end %>
       </tbody>
     </table>
