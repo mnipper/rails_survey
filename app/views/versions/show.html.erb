@@ -8,7 +8,7 @@
         <li>
           <%= @version.versioned(question).text %> <br />
           <span class="label label-info"><%= @version.versioned(question).question_type %></span>
-          <% unless @version.versioned(question).options.empty? %>
+          <% if @version.versioned(question).has_options? %>
             <br />Options:
             <ol class="options" start="0">
               <% @version.versioned(question).options.each do |option| %>
