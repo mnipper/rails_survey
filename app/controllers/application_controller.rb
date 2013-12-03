@@ -3,9 +3,9 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  #Devise authentication
-  # before_filter :authenticate_user_from_token!
-  # before_filter :authenticate_user!
+  # Devise authentication
+  before_filter :authenticate_user_from_token!
+  before_filter :authenticate_user!
 
   #Avail to all controllers application helper methods
   include ApplicationHelper

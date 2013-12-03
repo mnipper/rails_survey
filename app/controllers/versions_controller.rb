@@ -1,6 +1,4 @@
 class VersionsController < ApplicationController
-  before_filter :authenticate_user!
-
   def index
     @instrument = Instrument.find(params[:instrument_id])
   end

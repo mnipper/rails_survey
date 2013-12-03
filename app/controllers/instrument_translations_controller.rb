@@ -1,6 +1,4 @@
 class InstrumentTranslationsController < ApplicationController
-  before_filter :authenticate_user!
-
   def index
     @instrument = Instrument.find(params[:instrument_id])
     @instrument_translations = @instrument.translations.all

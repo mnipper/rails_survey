@@ -1,6 +1,6 @@
 module Api
   module V1
-    class OptionsController < ApplicationController
+    class OptionsController < ApiApplicationController
       respond_to :json
 
       def index

@@ -1,6 +1,6 @@
 module Api
   module V1
-    class InstrumentsController < ApplicationController
+    class InstrumentsController < ApiApplicationController
       respond_to :json
 
       def index
