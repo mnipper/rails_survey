@@ -29,18 +29,35 @@
         <%= f.select(:language, options_for_select(Settings.languages, @instrument_translation.language)) %>
       </div>
 
-      <% @instrument.questions.each do |question| %>
-        <%= question.question_identifier %>
-        <%= question.text %>
-        <%= text_field_tag "question_translations[#{question.id}]", question.translated_for(@instrument_translation.language) %>
-        <% if question.has_options? %>
-          <% question.options.each do |option| %>
-            <%= option.text %>
-            <%= text_field_tag "option_translations[#{option.id}]", option.translated_for(@instrument_translation.language) %>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Question Identifier</th>
+          <th><%= @instrument.language %></th>
+          <th>Translated Text</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @instrument.questions.each do |question| %>
+          <tr>
+            <td><%= question.question_identifier %></td>
+            <td><%= question.text %></td>
+            <td><%= text_area_tag "question_translations[#{question.id}]",
+              question.translated_for(@instrument_translation.language), size: '50x5' %></td>
+          </tr>
+          <% if question.has_options? %>
+            <% question.options.each do |option| %>
+              <tr>
+                <td>Option for <%= question.question_identifier %></td>
+                <td><%= option.text %></td>
+                <td><%= text_area_tag "option_translations[#{option.id}]",
+                  option.translated_for(@instrument_translation.language), size: '50x5' %></td>
+              </tr>
+            <% end %>
           <% end %>
         <% end %>
-        <br />
-      <% end %>
+      </tbody>
+    </table>
 
       <div class="top-buffer pull-right">
         <%= f.submit class: 'btn btn-primary btn-large' %>
