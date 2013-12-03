@@ -4,7 +4,7 @@ module Api
       respond_to :json
 
       def index
-        respond_with Question.all
+        respond_with Question.all, include: :question_translations
       end
 
       def show

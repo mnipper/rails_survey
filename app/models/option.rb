@@ -14,6 +14,7 @@ class Option < ActiveRecord::Base
   attr_accessible :question_id, :text, :next_question
   belongs_to :question
   has_paper_trail
+  has_many :option_translations
 
   def to_s
     text

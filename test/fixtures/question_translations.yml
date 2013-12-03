@@ -1,0 +1,23 @@
+# == Schema Information
+#
+# Table name: question_translations
+#
+#  id          :integer          not null, primary key
+#  question_id :integer
+#  language    :string(255)
+#  text        :string(255)
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  question_id: 1
+  text: MyString
+  language: MyString
+
+two:
+  question_id: 1
+  text: MyString
+  language: MyString

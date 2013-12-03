@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131202202930) do
+ActiveRecord::Schema.define(version: 20131203025855) do
 
   create_table "devices", force: true do |t|
     t.string   "identifier"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "instrument_translations", force: true do |t|
+    t.integer  "instrument_id"
+    t.string   "language"
+    t.string   "alignment"
+    t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -27,12 +36,28 @@ ActiveRecord::Schema.define(version: 20131202202930) do
     t.string   "alignment"
   end
 
+  create_table "option_translations", force: true do |t|
+    t.integer  "option_id"
+    t.string   "text"
+    t.string   "language"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "options", force: true do |t|
     t.integer  "question_id"
     t.string   "text"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "next_question"
+  end
+
+  create_table "question_translations", force: true do |t|
+    t.integer  "question_id"
+    t.string   "language"
+    t.string   "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "questions", force: true do |t|

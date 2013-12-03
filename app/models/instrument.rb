@@ -17,6 +17,7 @@ class Instrument < ActiveRecord::Base
   accepts_nested_attributes_for :questions, allow_destroy: true
   before_save :set_language_alignment
   has_paper_trail :on => [:update, :destroy]
+  has_many :instrument_translations
 
   def self.instrument_response_count
     @response_map = []
