@@ -11,13 +11,13 @@
 #
 
 class Instrument < ActiveRecord::Base
+  attr_accessible :title, :language, :alignment, :questions_attributes
   has_many :questions
   has_many :surveys
-  attr_accessible :title, :language, :alignment, :questions_attributes
-  accepts_nested_attributes_for :questions, allow_destroy: true
-  before_save :set_language_alignment
-  has_paper_trail :on => [:update, :destroy]
   has_many :translations, foreign_key: 'instrument_id', class_name: 'InstrumentTranslation'
+  accepts_nested_attributes_for :questions, allow_destroy: true
+  has_paper_trail :on => [:update, :destroy]
+  before_save :set_language_alignment
 
   def self.instrument_response_count
     @response_map = []

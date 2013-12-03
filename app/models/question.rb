@@ -16,9 +16,9 @@ class Question < ActiveRecord::Base
   belongs_to :instrument
   has_many :responses
   has_many :options
+  has_many :translations, foreign_key: 'question_id', class_name: 'QuestionTranslation'
   accepts_nested_attributes_for :options, allow_destroy: true
   has_paper_trail
-  has_many :translations, foreign_key: 'question_id', class_name: 'QuestionTranslation'
 
   def has_translation_for?(language)
     self.translations.find_by_language(language)

@@ -1,6 +1,6 @@
 <section class="widget">
   <header>
-    <h4><i class="icon-globe"></i> <%= @instrument.title %> in <%= @instrument_translation.language %></h4>
+    <h4><i class="icon-globe"></i> <%= link_to @instrument.title, instrument_path(@instrument) %> in <%= @instrument_translation.language %></h4>
     <div class="actions hidden-xs-portrait"> 
       <%= link_to edit_instrument_instrument_translation_path(@instrument, @instrument_translation), class: 'btn btn-primary' do %>
         <i class="icon-globe"></i> Edit Translation
