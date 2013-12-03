@@ -4,7 +4,7 @@ module Api
       respond_to :json
 
       def index
-        respond_with Option.all, include: :option_translations
+        respond_with Option.all, include: :translations
       end
 
       def show

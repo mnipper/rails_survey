@@ -4,7 +4,7 @@ module Api
       respond_to :json
 
       def index
-        respond_with Instrument.all, include: :instrument_translations
+        respond_with Instrument.all, include: :translations
       end
 
       def show

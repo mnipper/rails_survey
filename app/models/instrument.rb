@@ -17,7 +17,7 @@ class Instrument < ActiveRecord::Base
   accepts_nested_attributes_for :questions, allow_destroy: true
   before_save :set_language_alignment
   has_paper_trail :on => [:update, :destroy]
-  has_many :instrument_translations
+  has_many :translations, foreign_key: 'instrument_id', class_name: 'InstrumentTranslation'
 
   def self.instrument_response_count
     @response_map = []

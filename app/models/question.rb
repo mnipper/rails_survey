@@ -18,14 +18,14 @@ class Question < ActiveRecord::Base
   has_many :options
   accepts_nested_attributes_for :options, allow_destroy: true
   has_paper_trail
-  has_many :question_translations
+  has_many :translations, foreign_key: 'question_id', class_name: 'QuestionTranslation'
 
   def has_translation_for?(language)
-    self.question_translations.find_by_language(language)
+    self.translations.find_by_language(language)
   end
 
   def translated_for(language)
-    self.question_translations.find_by_language(language).text if has_translation_for? language
+    self.translations.find_by_language(language).text if has_translation_for? language
   end
 
   def has_options?

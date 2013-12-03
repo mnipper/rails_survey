@@ -15,16 +15,17 @@ class Option < ActiveRecord::Base
   belongs_to :question
   has_paper_trail
   has_many :option_translations
+  has_many :translations, foreign_key: 'option_id', class_name: 'OptionTranslation'
 
   def to_s
     text
   end
 
   def has_translation_for?(language)
-    self.option_translations.find_by_language(language)
+    self.translations.find_by_language(language)
   end
 
   def translated_for(language)
-    self.option_translations.find_by_language(language).text if has_translation_for? language
+    self.translations.find_by_language(language).text if has_translation_for? language
   end
 end
