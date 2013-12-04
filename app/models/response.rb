@@ -19,7 +19,7 @@ class Response < ActiveRecord::Base
   delegate :instrument, to: :survey
   delegate :instrument_version_number, to: :survey
 
-  validates :question_id, presence: true, allow_blank: false
+  validates :question, presence: true
   validates :survey, presence: true
 
   def to_s
