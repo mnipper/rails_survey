@@ -5,7 +5,7 @@ module Api
       respond_to :json
 
       def create
-        respond_with Response.create(params)
+        respond_with Response.create(params[:response])
       end
     end
   end
