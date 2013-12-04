@@ -20,7 +20,7 @@ class Response < ActiveRecord::Base
   delegate :instrument_version_number, to: :survey
 
   validates :question_id, presence: true, allow_blank: false
-  validates :survey_uuid, presence: true, allow_blank: false
+  validates :survey, presence: true
 
   def to_s
     if question.options.empty?
