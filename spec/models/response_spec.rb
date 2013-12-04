@@ -22,6 +22,10 @@ describe Response do
       @response = create(:response)
     end
 
+    it "should be valid" do
+      @response.should be_valid
+    end
+
     it "should return the survey by UUID" do
       @survey = create(:survey)
       @response.survey_uuid = @survey.uuid
@@ -60,6 +64,18 @@ describe Response do
           "a",
           'other']
         ]
+    end
+
+    describe "validations" do
+      it "should require a question" do
+        @response.question_id = nil
+        @response.should_not be_valid
+      end
+
+      it "should require a survey" do
+        @response.survey_uuid = nil
+        @response.should_not be_valid
+      end
     end
   end
 end

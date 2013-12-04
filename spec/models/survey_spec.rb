@@ -19,13 +19,62 @@ describe Survey do
   it { should respond_to(:responses) }
   it { should respond_to(:percent_complete) }
 
-  it "should return the correct responses" do
+  before :each do
     @survey = build(:survey) 
+  end
+
+  it "should be valid" do
+    @survey.should be_valid
+  end
+  
+  it "should return the correct responses" do
     @question = build(:question)
     response = Response.new(question_id: 1)
     response.survey = @survey
     response.question = @question
     response.save!
     @survey.responses.should == [response]
+  end
+
+  describe "validations" do
+    it "should require a device id" do
+      @survey.device_id = nil
+      @survey.should_not be_valid
+    end
+
+    it "should not allow a blank device id" do
+      @survey.device_id = " "
+      @survey.should_not be_valid
+    end
+
+    it "should require a uuid" do
+      @survey.uuid = nil
+      @survey.should_not be_valid
+    end
+
+    it "should not allow a blank uuid" do
+      @survey.uuid = " "
+      @survey.should_not be_valid
+    end
+
+    it "should require a instrument id" do
+      @survey.instrument_id = nil
+      @survey.should_not be_valid
+    end
+
+    it "should not allow a blank instrument id" do
+      @survey.instrument_id = " "
+      @survey.should_not be_valid
+    end
+
+    it "should require a instrument version number" do
+      @survey.instrument_version_number = nil
+      @survey.should_not be_valid
+    end
+
+    it "should not allow a blank instrument version number" do
+      @survey.instrument_version_number = " "
+      @survey.should_not be_valid
+    end
   end
 end

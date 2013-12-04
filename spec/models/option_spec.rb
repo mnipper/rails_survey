@@ -19,4 +19,22 @@ describe Option do
     option = build(:option)
     option.to_s.should == option.text
   end
+
+  describe "translations" do
+    before :each do
+      @translation = create(:option_translation)
+    end
+
+    it "should have a translation" do
+      @translation.option.has_translation_for?(@translation.language).should be_true
+    end
+
+    it "should have a translation" do
+      @translation.option.has_translation_for?('nope').should be_false
+    end
+
+    it "should return the correct translation" do
+      @translation.option.translated_for(@translation.language).should == @translation.text
+    end
+  end
 end

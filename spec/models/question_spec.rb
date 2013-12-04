@@ -16,4 +16,40 @@ require "spec_helper"
 describe Question do
   it { should respond_to(:options) }
   it { should respond_to(:instrument) }
+  
+  before :each do
+    @question = create(:question)
+  end
+
+  describe "translations" do
+    before :each do
+      @translation = create(:question_translation)
+    end
+
+    it "should have a translation" do
+      @translation.question.has_translation_for?(@translation.language).should be_true
+    end
+
+    it "should have a translation" do
+      @translation.question.has_translation_for?('nope').should be_false
+    end
+
+    it "should return the correct translation" do
+      @translation.question.translated_for(@translation.language).should == @translation.text
+    end
+  end
+
+  describe "options" do
+    before :each do
+      @option = create(:option)
+    end
+    
+    it "should respond true to has_options if has options" do
+      @option.question.has_options?.should be_true
+    end
+
+    it "should respond false to has_options if no options" do
+      @question.has_options?.should be_false
+    end
+  end
 end
