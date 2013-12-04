@@ -60,7 +60,10 @@ class Instrument < ActiveRecord::Base
 
   private
   def set_language_alignment
-    self.alignment = Settings.right_align_languages.include? self.language ? 'right' : 'left'
-    nil
+    if Settings.right_align_languages.include? self.language
+      self.alignment = 'right'
+    else
+      self.alignment = 'left'
+    end
   end
 end
