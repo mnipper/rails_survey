@@ -17,6 +17,11 @@ class Survey < ActiveRecord::Base
   belongs_to :device
   has_many :responses, foreign_key: :survey_uuid, primary_key: :uuid
   
+  validates :device_id, presence: true, allow_blank: false
+  validates :uuid, presence: true, allow_blank: false
+  validates :instrument_id, presence: true, allow_blank: false
+  validates :instrument_version_number, presence: true, allow_blank: false
+  
   def percent_complete
     (responses.pluck(:question_id).uniq.count.to_f / instrument.questions.count)
       .round(2)

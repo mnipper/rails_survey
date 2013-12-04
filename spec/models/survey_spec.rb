@@ -21,7 +21,7 @@ describe Survey do
 
   it "should return the correct responses" do
     @survey = build(:survey) 
-    response = Response.create(survey_uuid: @survey.uuid)
-    @survey.responses.should == [response] 
+    response = Response.create(survey_uuid: @survey.uuid, question_id: 1)
+    @survey.responses.should == [response]
   end
 end

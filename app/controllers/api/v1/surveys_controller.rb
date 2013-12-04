@@ -15,7 +15,12 @@ module Api
           device.save
           @survey.device = device
         end
-        respond_with @survey if @survey.save 
+
+        if @survey.save
+          respond_with @survey
+        else
+          render nothing: true, status: :unprocessable_entity
+        end
       end
     end
   end
