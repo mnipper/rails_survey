@@ -28,12 +28,8 @@ describe Survey do
   end
   
   it "should return the correct responses" do
-    @question = build(:question)
-    response = Response.new(question_id: 1)
-    response.survey = @survey
-    response.question = @question
-    response.save!
-    @survey.responses.should == [response]
+    response = create(:response)
+    response.survey.responses.should == [response]
   end
 
   describe "validations" do
