@@ -61,7 +61,7 @@ class InstrumentTranslationsController < ApplicationController
       ).first_or_initialize
       question_translation.text = translation
       question_translation.save!
-    end
+    end if params.has_key? :question_translations
 
     params[:option_translations].each_pair do |option_id, translation|
       option = Option.find(option_id)
@@ -71,6 +71,6 @@ class InstrumentTranslationsController < ApplicationController
       ).first_or_initialize
       option_translation.text = translation
       option_translation.save!
-    end
+    end if params.has_key? :option_translations
   end
 end
