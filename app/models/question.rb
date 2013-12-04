@@ -20,6 +20,8 @@ class Question < ActiveRecord::Base
   accepts_nested_attributes_for :options, allow_destroy: true
   has_paper_trail
 
+  validates :question_identifier, uniqueness: true
+
   def has_translation_for?(language)
     self.translations.find_by_language(language)
   end

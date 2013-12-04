@@ -55,7 +55,7 @@ describe Response do
           "response",
           "other_response"
         ],
-        ["q1",
+        [@response.question.question_identifier,
           @response.instrument.id,
           1,
           @response.instrument.title,

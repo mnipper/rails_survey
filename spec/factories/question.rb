@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :question do
-    question_identifier 'q1'
+    sequence(:question_identifier) { |n| "q#{n}" }
   end
 end

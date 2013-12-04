@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Questions API" do
   before :each do
-    FactoryGirl.create_list(:question, 5)
+    @questions = FactoryGirl.create_list(:question, 5)
     get '/api/v1/questions'
     @json = JSON.parse(response.body)
   end
@@ -26,6 +26,6 @@ describe "Questions API" do
 
   it "has a question_identifier" do
     @json.first.should have_key('question_identifier')
-    @json.first['question_identifier'].should == 'q1'
+    @json.first['question_identifier'].should == @questions.first.question_identifier
   end
 end
