@@ -28,4 +28,24 @@ describe "Questions API" do
     @json.first.should have_key('question_identifier')
     @json.first['question_identifier'].should == @questions.first.question_identifier
   end
+
+  describe "translation text" do
+    before :each do
+      @translation = create(:question_translation)
+      get '/api/v1/questions'
+      @json = JSON.parse(response.body)
+    end
+
+    it "should add a new question for the translation" do
+      expect(@json.length).to eq(6)
+    end
+
+    it "has the correct translation text" do
+      @json.last['translations'].first['text'].should == @translation.text
+    end
+
+    it "has the correct translation text" do
+      @json.last['translations'].first['language'].should == @translation.language
+    end
+  end
 end
