@@ -33,4 +33,28 @@ describe "Instruments API" do
     @json.first.should have_key('current_version_number')
     @json.first['current_version_number'].should == 0
   end
+
+  describe "translation text" do
+    before :each do
+      @translation = create(:instrument_translation)
+      get '/api/v1/instruments'
+      @json = JSON.parse(response.body)
+    end
+
+    it "should add a new instrument for the translation" do
+      expect(@json.length).to eq(6)
+    end
+
+    it "has the correct translation title" do
+      @json.last['translations'].first['title'].should == @translation.title
+    end
+
+    it "has the correct translation text" do
+      @json.last['translations'].first['language'].should == @translation.language
+    end
+
+    it "has the correct translation alignment" do
+      @json.last['translations'].first['alignment'].should == @translation.alignment
+    end
+  end
 end
