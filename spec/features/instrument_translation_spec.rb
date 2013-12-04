@@ -1,0 +1,30 @@
+require "spec_helper"
+
+feature "Instrument Translation", js: true do
+  before :each do
+    @user = FactoryGirl.create(:user)
+    visit '/users/sign_in'
+    fill_in 'user_email', :with => @user.email
+    fill_in 'user_password', :with => @user.password
+    click_button 'Sign in'
+    visit "/instruments/new"
+    fill_in 'instrument_title', :with => "Test Instrument"
+    click_link "Add Question"
+    find(:css, "input[id$='question_identifier']").set("qid")
+    find(:css, "textarea[id$='text']").set("Question text")
+    click_button "Create Instrument"
+    click_link "Translations"
+  end
+
+  scenario "clicking new translation shows new translation page" do
+    click_link "New Translation"
+    expect(page).to have_text("Translation for Test Instrument")
+  end
+
+  scenario "editing the title changes the title" do
+    click_link "New Translation"
+    fill_in 'instrument_translation_title', :with => 'New Title'
+    click_button 'Create Instrument translation'
+    expect(page).to have_text("Translation for Test Instrument")
+  end
+end

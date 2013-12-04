@@ -33,4 +33,22 @@ feature "Instrument Creation", js: true do
     click_link "Remove Option"
     expect(page).to_not have_text("Next question")
   end
+
+  scenario "user saves an instrument" do
+    fill_in 'instrument_title', :with => "Test Instrument"
+    click_button "Create Instrument"
+    expect(page).to have_text("Successfully created instrument.")
+    expect(page).to have_text("Test Instrument")
+  end
+
+  scenario "user saves an instrument with a question" do
+    fill_in 'instrument_title', :with => "Test Instrument"
+    click_link "Add Question"
+    find(:css, "input[id$='question_identifier']").set("qid")
+    find(:css, "textarea[id$='text']").set("Question text")
+    click_button "Create Instrument"
+    expect(page).to have_text("Successfully created instrument.")
+    expect(page).to have_text("Question text")
+    expect(page).to have_text("Test Instrument")
+  end
 end
