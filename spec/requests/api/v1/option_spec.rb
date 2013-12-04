@@ -31,4 +31,24 @@ describe "Options API" do
   it "has a next_question attribute" do
     @json.first.should have_key('next_question')
   end
+
+  describe "translation text" do
+    before :each do
+      @translation = create(:option_translation)
+      get '/api/v1/options'
+      @json = JSON.parse(response.body)
+    end
+
+    it "should add a new option for the translation" do
+      expect(@json.length).to eq(6)
+    end
+
+    it "has the correct translation text" do
+      @json.last['translations'].first['text'].should == @translation.text
+    end
+
+    it "has the correct translation text" do
+      @json.last['translations'].first['language'].should == @translation.language
+    end
+  end
 end
