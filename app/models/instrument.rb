@@ -19,6 +19,8 @@ class Instrument < ActiveRecord::Base
   has_paper_trail :on => [:update, :destroy]
   before_save :set_language_alignment
 
+  validates :title, presence: true, allow_blank: false
+
   def self.instrument_response_count
     @response_map = []
     Instrument.all.each do |instrument|
