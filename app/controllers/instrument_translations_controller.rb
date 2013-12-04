@@ -1,7 +1,7 @@
 class InstrumentTranslationsController < ApplicationController
   def index
     @instrument = Instrument.find(params[:instrument_id])
-    @instrument_translations = @instrument.translations.all
+    @instrument_translations = @instrument.translations.to_a
   end
 
   def show
