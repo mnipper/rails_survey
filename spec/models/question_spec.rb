@@ -52,4 +52,11 @@ describe Question do
       @question.has_options?.should be_false
     end
   end
+
+  it "should update the instrument version on update", versioning: true do
+    old_count = @question.instrument.versions.count
+    @question.update_attributes!(text: 'New text')
+    new_count = @question.instrument.versions.count
+    new_count.should == old_count + 1
+  end
 end

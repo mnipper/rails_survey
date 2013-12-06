@@ -1,7 +1,8 @@
 module PaperTrail
   class Version
     def creator
-      User.find(self.whodunnit.to_i).email
+      user = User.find_by_id(self.whodunnit.to_i)
+      user ? user.email : nil
     end
 
     def versioned(object)
