@@ -34,7 +34,7 @@ describe Option do
     end
 
     it "should return the correct translation" do
-      @translation.option.translated_for(@translation.language).should == @translation.text
+      @translation.option.translated_for(@translation.language, :text).should == @translation.text
     end
   end
 end

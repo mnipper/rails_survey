@@ -12,6 +12,7 @@
 #
 
 class Instrument < ActiveRecord::Base
+  include Translatable
   attr_accessible :title, :language, :alignment, :questions_attributes
   has_many :questions, dependent: :destroy
   has_many :surveys

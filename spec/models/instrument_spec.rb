@@ -70,4 +70,22 @@ describe Instrument do
       @instrument.should be_valid
     end
   end
+
+  describe "translations" do
+    before :each do
+      @translation = create(:instrument_translation)
+    end
+
+    it "should have a translation" do
+      @translation.instrument.has_translation_for?(@translation.language).should be_true
+    end
+
+    it "should have a translation" do
+      @translation.instrument.has_translation_for?('nope').should be_false
+    end
+
+    it "should return the correct translation" do
+      @translation.instrument.translated_for(@translation.language, :title).should == @translation.title
+    end
+  end
 end

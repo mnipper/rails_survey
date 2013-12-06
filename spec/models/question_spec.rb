@@ -35,7 +35,7 @@ describe Question do
     end
 
     it "should return the correct translation" do
-      @translation.question.translated_for(@translation.language).should == @translation.text
+      @translation.question.translated_for(@translation.language, :text).should == @translation.text
     end
   end
 
