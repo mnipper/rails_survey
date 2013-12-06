@@ -11,6 +11,7 @@
 #
 
 class Option < ActiveRecord::Base
+  include Translatable
   attr_accessible :question_id, :text, :next_question
   belongs_to :question
   has_many :option_translations
@@ -19,13 +20,5 @@ class Option < ActiveRecord::Base
 
   def to_s
     text
-  end
-
-  def has_translation_for?(language)
-    self.translations.find_by_language(language)
-  end
-
-  def translated_for(language)
-    self.translations.find_by_language(language).text if has_translation_for? language
   end
 end

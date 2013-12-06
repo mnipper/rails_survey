@@ -12,6 +12,7 @@
 #
 
 class Question < ActiveRecord::Base
+  include Translatable
   attr_accessible :text, :question_type, :question_identifier, :instrument_id, :options_attributes
   belongs_to :instrument
   has_many :responses
@@ -22,14 +23,6 @@ class Question < ActiveRecord::Base
   has_paper_trail
 
   validates :question_identifier, uniqueness: true
-
-  def has_translation_for?(language)
-    self.translations.find_by_language(language)
-  end
-
-  def translated_for(language)
-    self.translations.find_by_language(language).text if has_translation_for? language
-  end
 
   def has_options?
     !options.empty?

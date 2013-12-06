@@ -22,9 +22,11 @@ describe Instrument do
     @instrument = create(:instrument)
   end
 
-  describe "versioning" do
+  describe "versioning", versioning: true do
     it "should return the correct version number" do
       @instrument.current_version_number.should == 0
+      @instrument.update_attributes(title: 'New text')
+      @instrument.current_version_number.should == 1
     end
   end
 
