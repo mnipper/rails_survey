@@ -28,6 +28,19 @@ describe Instrument do
       @instrument.update_attributes(title: 'New text')
       @instrument.current_version_number.should == 1
     end
+
+    it "should be version 0 at first" do
+      questions = create_list(:question, 10, instrument: @instrument)
+      create_list(:option, 5, question: questions.first)
+      @instrument.current_version_number.should == 0
+    end
+
+    it "should create a new version if a question is updated" do
+      @instrument.current_version_number.should == 0
+      question = create(:question, instrument: @instrument)
+      question.update_attributes(text: 'New text')
+      @instrument.current_version_number.should == 1
+    end
   end
 
   describe "alignment" do
