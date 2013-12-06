@@ -16,8 +16,8 @@ class Question < ActiveRecord::Base
   attr_accessible :text, :question_type, :question_identifier, :instrument_id, :options_attributes
   belongs_to :instrument
   has_many :responses
-  has_many :options
-  has_many :translations, foreign_key: 'question_id', class_name: 'QuestionTranslation'
+  has_many :options, dependent: :destroy
+  has_many :translations, foreign_key: 'question_id', class_name: 'QuestionTranslation', dependent: :destroy
   accepts_nested_attributes_for :options, allow_destroy: true
   after_save :parent_update_count
   has_paper_trail
@@ -30,6 +30,6 @@ class Question < ActiveRecord::Base
 
   private
   def parent_update_count
-    instrument.increment!(:child_update_count)
+    instrument.increment!(:child_update_count) unless self.new_record?
   end
 end

@@ -13,9 +13,9 @@
 
 class Instrument < ActiveRecord::Base
   attr_accessible :title, :language, :alignment, :questions_attributes
-  has_many :questions
+  has_many :questions, dependent: :destroy
   has_many :surveys
-  has_many :translations, foreign_key: 'instrument_id', class_name: 'InstrumentTranslation'
+  has_many :translations, foreign_key: 'instrument_id', class_name: 'InstrumentTranslation', dependent: :destroy
   accepts_nested_attributes_for :questions, allow_destroy: true
   has_paper_trail :on => [:update, :destroy]
   before_save :set_language_alignment
