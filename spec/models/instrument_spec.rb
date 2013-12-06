@@ -66,6 +66,34 @@ describe Instrument do
       @instrument.should_not be_valid
     end
 
+    it "should not allow a blank language" do
+      @instrument.language = " "
+      @instrument.should_not be_valid
+    end
+
+    it "should require lowercase ISO-639-1 language code" do
+      invalid_codes = ['EN', 'english', '1e']
+      invalid_codes.each do |code|
+        @instrument.language = code
+        @instrument.should_not be_valid
+      end
+    end
+
+    it "should be valid for lowercase ISO-639-1 language codes" do
+      invalid_codes = ['en', 'sw', 'ar']
+      invalid_codes.each do |code|
+        @instrument.language = code
+        @instrument.should be_valid
+      end
+    end
+
+    it "should be valid for left and right alignment" do
+      @instrument.alignment = 'left'
+      @instrument.should be_valid
+      @instrument.alignment = 'right'
+      @instrument.should be_valid
+    end
+
     it "should be valid" do
       @instrument.should be_valid
     end

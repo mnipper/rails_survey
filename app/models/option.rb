@@ -17,6 +17,8 @@ class Option < ActiveRecord::Base
   has_many :translations, foreign_key: 'option_id', class_name: 'OptionTranslation', dependent: :destroy
   has_paper_trail
 
+  validates :text, presence: true, allow_blank: false
+
   def to_s
     text
   end

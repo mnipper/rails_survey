@@ -22,7 +22,8 @@ class Question < ActiveRecord::Base
   before_save :parent_update_count
   has_paper_trail
 
-  validates :question_identifier, uniqueness: true
+  validates :question_identifier, uniqueness: true, presence: true, allow_blank: false
+  validates :text, presence: true, allow_blank: false
 
   def has_options?
     !options.empty?

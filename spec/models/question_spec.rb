@@ -53,6 +53,23 @@ describe Question do
     end
   end
 
+  describe "validations" do
+    it "should require a question identifier" do
+      @question.question_identifier = nil
+      @question.should_not be_valid
+    end
+
+    it "should not allow a blank question identifier" do
+      @question.question_identifier = ' ' 
+      @question.should_not be_valid
+    end
+
+    it "should not allow blank text" do
+      @question.text = ' ' 
+      @question.should_not be_valid
+    end
+  end
+
   it "should update the instrument version on update", versioning: true do
     old_count = @question.instrument.versions.count
     @question.update_attributes!(text: 'New text')

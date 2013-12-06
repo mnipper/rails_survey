@@ -15,9 +15,19 @@ require "spec_helper"
 describe Option do
   it { should respond_to(:question) }
 
+  before :each do
+    @option = build(:option)
+  end
+
   it "should return the text when to_s" do
-    option = build(:option)
-    option.to_s.should == option.text
+    @option.to_s.should == @option.text
+  end
+
+  describe "validations" do
+    it "should not allow blank text" do
+      @option.text = ' ' 
+      @option.should_not be_valid
+    end
   end
 
   describe "translations" do

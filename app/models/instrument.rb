@@ -19,9 +19,13 @@ class Instrument < ActiveRecord::Base
   has_many :translations, foreign_key: 'instrument_id', class_name: 'InstrumentTranslation', dependent: :destroy
   accepts_nested_attributes_for :questions, allow_destroy: true
   has_paper_trail :on => [:update, :destroy]
-  before_save :set_language_alignment
+  before_validation :set_language_alignment
 
   validates :title, presence: true, allow_blank: false
+  validates :language, presence: true, allow_blank: false
+  validates :alignment, presence: true, allow_blank: false,
+              inclusion: { in: %w(left right), message: 'must be left or right' }
+  validates_format_of :language, with: /\A[a-z]{2}\z/, message: 'not valid lower-case ISO-639-1 code'
 
   def self.instrument_response_count
     @response_map = []
