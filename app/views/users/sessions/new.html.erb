@@ -31,7 +31,7 @@
 
               <div class="form-actions">
                   <%= f.submit "Sign in", class: 'btn btn-block btn-lg btn-danger'  %>
-                  <div class="forgot"><a class="forgot" href="#">Forgot Username or Password?</a></div>
+                  <div class="forgot"><%= link_to 'Forgot password?', new_user_password_path, class: 'forgot'%></div>
               </div>
           </fieldset>
         <% end %>
