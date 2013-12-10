@@ -10,3 +10,17 @@ jQuery ->
     regexp = new RegExp($(this).data('id'), 'g')
     $(this).before($(this).data('fields').replace(regexp, time))
     event.preventDefault()
+
+  $('form').on 'click', '.move-up', (event) ->
+    question = $(this).closest('div.question')
+    previousQuestion = question.prev('.question')
+    if previousQuestion.hasClass('question')
+      question.after(previousQuestion)
+    event.preventDefault()
+
+  $('form').on 'click', '.move-down', (event) ->
+    question = $(this).closest('div.question')
+    nextQuestion = question.next('.question')
+    if nextQuestion.hasClass('question')
+      question.before(nextQuestion)
+    event.preventDefault()

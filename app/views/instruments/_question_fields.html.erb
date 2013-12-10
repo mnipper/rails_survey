@@ -1,4 +1,4 @@
-<div class="well">
+<div class="well question">
   <fieldset>
     <div>
       <%= f.label :question_type %><br />
@@ -26,6 +26,8 @@
         <%= link_to_add_fields "Add Option", f, :options, class: 'pull-right btn btn-success' %>
       <% end %>
       <%= link_to "Remove Question", '#', class: "btn btn-danger remove_fields" %>
+      <%= link_to "Move up", '#', class: "btn btn-info move-up" %>
+      <%= link_to "Move Down", '#', class: "btn btn-info move-down" %>
     </div>
   </fieldset>
 </div>
