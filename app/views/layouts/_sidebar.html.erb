@@ -1,16 +1,18 @@
 <nav id="sidebar" class="sidebar nav-collapse collapse">
   <ul id="side-nav" class="side-nav">
-    <li class="active">
-      <a href="#"><i class="icon-home"></i> <span class="name">Dashboard</span></a>
+    <li class="<%= current_page?(root_path) ? 'active' : 'panel' %>">
+      <%= link_to root_path do %>
+          <i class="icon-home"></i><span class="name">Dashboard</span>
+      <% end %>
     </li>
 
-    <li class="panel">
+    <li class="<%= current_page?(devices_path) ? 'active' : 'panel' %>">
       <%= link_to devices_path do %>
           <i class="icon-mobile-phone"></i><span class="name">Devices</span>
       <% end %>
     </li>
 
-    <li class="panel">
+    <li class="<%= (current_page?(instruments_path) or current_page?(new_instrument_path)) ? 'active' : 'panel' %>">
       <a class="accordion-toggle collapsed" data-toggle="collapse"
          data-parent="#side-nav" href="#instruments-collapse"><i class="icon-edit"></i> <span class="name">Instruments</span></a>
       <ul id="instruments-collapse" class="panel-collapse collapse">
@@ -19,21 +21,21 @@
       </ul>
     </li>
 
-    <li class="panel">
+    <li class="<%= current_page?(surveys_path) ? 'active' : 'panel' %>">
       <%= link_to surveys_path do %>
           <i class="icon-download-alt"></i><span class="name">Survey Results</span>
       <% end %>
     </li>
 
-    <li class="panel">
+    <li class="<%= current_page?(realtime_path) ? 'active' : 'panel' %>">
       <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#side-nav" href="#stats-collapse"><i class="icon-bar-chart"></i> <span class="name">Statistics</span></a>
       <ul id="stats-collapse" class="panel-collapse collapse">
-        <li><%= link_to 'Charts', bars_path %> </li>
+        <!--<li>< #%= link_to 'Charts', bars_path %> </li>-->
         <li><%= link_to 'Realtime', realtime_path %> </li>
       </ul>
     </li>
 
-    <li class="panel">
+      <li class="<%= current_page?(notifications_path) ? 'active' : 'panel' %>">
       <%= link_to notifications_path do %>
           <i class="icon-bell-alt"></i><span class="name">Notifications</span>
       <% end %>
