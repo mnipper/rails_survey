@@ -44,7 +44,7 @@ feature "Instrument Creation", js: true do
   scenario "user saves an instrument with a question" do
     fill_in 'instrument_title', :with => "Test Instrument"
     click_link "Add Question"
-    find(:css, "input[id$='question_identifier']").set("qid")
+    first(:css, "input[id$='question_identifier']").set("qid")
     find(:css, "textarea[id$='text']").set("Question text")
     click_button "Create Instrument"
     expect(page).to have_text("Successfully created instrument.")

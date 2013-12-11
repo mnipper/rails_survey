@@ -10,7 +10,7 @@ feature "Instrument Translation", js: true do
     visit "/instruments/new"
     fill_in 'instrument_title', :with => "Test Instrument"
     click_link "Add Question"
-    find(:css, "input[id$='question_identifier']").set("qid")
+    first(:css, "input[id$='_question_identifier']").set("qid")
     find(:css, "textarea[id$='text']").set("Question text")
     click_button "Create Instrument"
     click_link "Translations"
