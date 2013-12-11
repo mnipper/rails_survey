@@ -1,8 +1,8 @@
+#PENDING QUESTION TYPES: FRONT_PIcTURE, REAR_PICTURE
 question_types: ['SELECT_ONE', 'SELECT_MULTIPLE', 'SELECT_ONE_WRITE_OTHER',
-        'SELECT_MULTIPLE_WRITE_OTHER', 'FREE_RESPONSE', 'SLIDER', 'FRONT_PICTURE',
-        'REAR_PICTURE']
+        'SELECT_MULTIPLE_WRITE_OTHER', 'FREE_RESPONSE', 'SLIDER']
 question_with_options: ['SELECT_ONE', 'SELECT_MULTIPLE', 'SELECT_ONE_WRITE_OTHER',
         'SELECT_MULTIPLE_WRITE_OTHER']
 # ISO 639-1 codes of supported languages
-languages: ['en', 'km', 'ar', 'te', 'sw', 'am']
+languages: ['en', 'es', 'km', 'ar', 'te', 'sw', 'am']
 right_align_languages: ['ar']
