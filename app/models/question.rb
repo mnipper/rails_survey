@@ -13,7 +13,8 @@
 
 class Question < ActiveRecord::Base
   include Translatable
-  attr_accessible :text, :question_type, :question_identifier, :instrument_id, :options_attributes
+  attr_accessible :text, :question_type, :question_identifier, :instrument_id,
+          :options_attributes, :following_up_question_identifier
   belongs_to :instrument
   has_many :responses
   has_many :options, dependent: :destroy

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131206161529) do
+ActiveRecord::Schema.define(version: 20131211201526) do
 
   create_table "devices", force: true do |t|
     t.string   "identifier"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20131206161529) do
     t.integer  "instrument_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "following_up_question_identifier"
   end
 
   create_table "responses", force: true do |t|

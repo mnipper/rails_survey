@@ -9,6 +9,11 @@
       <%= f.label :question_identifier %><br />
       <%= f.text_field :question_identifier %>
     </div>
+    
+    <div class="field bottom-buffer">
+      <%= f.label :following_up_question_identifier, 'Follow up question to question identifier (optional):' %><br />
+      <%= f.text_field :following_up_question_identifier, class: 'form-control' %>
+    </div>
 
     <div class="top-buffer">
       <%= f.label :text %><br />

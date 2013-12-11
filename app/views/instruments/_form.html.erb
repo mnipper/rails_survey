@@ -24,7 +24,7 @@
         <%= f.label :language %>
         <%= f.select(:language, options_for_select(Settings.languages, @instrument.language)) %>
       </div>
-      
+
       <%= f.fields_for :questions do |builder| %>
         <%= render 'question_fields', f: builder %>
       <% end %>
