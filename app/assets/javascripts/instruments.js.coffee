@@ -13,16 +13,14 @@ jQuery ->
 
   $('form').on 'click', '.move-up', (event) ->
     question = $(this).closest('div.question')
-    previousQuestion = question.prev('.question')
-    if previousQuestion.hasClass('question')
-      question.after(previousQuestion)
+    previousQuestion = question.prevAll('.question').first()
+    question.after(previousQuestion)
     event.preventDefault()
 
   $('form').on 'click', '.move-down', (event) ->
     question = $(this).closest('div.question')
-    nextQuestion = question.next('.question')
-    if nextQuestion.hasClass('question')
-      question.before(nextQuestion)
+    nextQuestion = question.nextAll('.question').first()
+    question.before(nextQuestion)
     event.preventDefault()
 
   $('form').on 'click', '.show-follow-up-btn', (event) ->
