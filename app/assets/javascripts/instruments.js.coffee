@@ -24,3 +24,9 @@ jQuery ->
     if nextQuestion.hasClass('question')
       question.before(nextQuestion)
     event.preventDefault()
+
+  $('form').on 'click', '.show-follow-up-btn', (event) ->
+    $(this).hide("slow")
+    $(this).siblings('div.follow-up-question').show("slow")
+    $(this).siblings('div.follow-up-explanation').show("slow")
+    event.preventDefault()
