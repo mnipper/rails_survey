@@ -10,10 +10,7 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//= require jquery_ujs
 //= require twitter/bootstrap
-//= require angular
 //= require ../../../vendor/assets/lib/backbone/underscore-min
 //= require ../../../vendor/assets/lib/nvd3/lib/d3.v2
 //= require ../../../vendor/assets/lib/rickshaw/rickshaw
@@ -26,4 +23,6 @@
 //= require ../../../vendor/assets/lib/bootstrap/dropdown
 //= require ../../../vendor/assets/lib/d3.layout.min
 //= require ../../../vendor/assets/lib/jquery-ui-1.10.1.custom
+//= require app
+//= require_tree ./angular
 //= require_directory .

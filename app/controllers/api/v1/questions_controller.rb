@@ -10,6 +10,10 @@ module Api
       def show
         respond_with Question.find(params[:id])
       end
+
+      def create
+        respond_with Question.create(params)
+      end
     end
   end
 end

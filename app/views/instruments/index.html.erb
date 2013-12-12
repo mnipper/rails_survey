@@ -1,4 +1,4 @@
-<section class="widget">
+<section class="widget" ng-controller="InstrumentsCtrl">
   <header>
     <h4><i class="icon-edit"></i> Instruments</h4>
     <div class="actions hidden-xs-portrait"> 
@@ -8,6 +8,7 @@
     </div>
   </header>
   <div class="body">
+    <input type="search" ng-model="q.title" placeholder="Filter instruments..." class="form-control top-buffer">
     <table class="table table-hover">
       <thead>
         <tr>
@@ -20,16 +21,14 @@
         </tr>
       </thead>
       <tbody>
-    <% @instruments.each do |instrument| %>
-        <tr>
-          <td><%= link_to instrument.title, instrument_path(instrument) %></td>
-          <td><%= instrument.id %></td>
-          <td><%= instrument.current_version_number %></td>
-          <td><%= instrument.questions.count %></td>
-          <td><%= instrument.created_at %></td>
-          <td><%= instrument.updated_at %></td>
+        <tr ng-repeat="instrument in instruments | filter:q">
+          <td><a href="/instruments/{{instrument.id}}">{{instrument.title}}</a></td>
+          <td>{{instrument.id}}</td>
+          <td>{{instrument.current_version_number}}</td>
+          <td>{{instrument.question_count}}</td>
+          <td>{{instrument.created_at}}</td>
+          <td>{{instrument.updated_at}}</td>
         </tr>
-    <% end %>
       </tbody>
     </table>
   </div>

@@ -7,7 +7,11 @@ RailsSurvey::Application.routes.draw do
 
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
-      resources :instruments, only: [:index, :show]
+      resources :instruments, only: [:index, :show] do
+        resources :questions do
+          resources :options
+        end
+      end
       resources :questions, only: [:index, :show]
       resources :options, only: [:index, :show]
       resources :surveys, only: [:create]

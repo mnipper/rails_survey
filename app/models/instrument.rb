@@ -58,9 +58,13 @@ class Instrument < ActiveRecord::Base
     versions.count
   end
 
+  def question_count
+    questions.count
+  end
+
   def as_json(options={})
     super((options || {}).merge({
-        methods: [:current_version_number]
+        methods: [:current_version_number, :question_count]
     }))
   end
 
