@@ -74,3 +74,7 @@ gem 'debugger', group: [:development]
 gem 'exception_notification'
 # Use sqlite3 as the database for development and test
 gem 'sqlite3', group: [:development, :test]
+
+group :production do
+  gem 'rails_12factor'
+end
