@@ -77,4 +77,23 @@ RailsSurvey::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+  
+  config.middleware.use ExceptionNotification::Rack,
+    :email => {
+      :email_prefix => Settings.exception_notifications.email_prefix,
+      :sender_address => Settings.exception_notifications.sender,
+      :exception_recipients => Settings.exception_notifications.recipients
+  }
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.smtp_settings = {
+       :authentication => :plain,
+       :address => "smtp.mailgun.org",
+       :port => 587,
+       :domain => ENV['SMTP_DOMAIN'],
+       :user_name => ENV['SMTP_USERNAME'],
+       :password => ENV['SMTP_PASSWORD']
+  }
 end

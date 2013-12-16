@@ -7,3 +7,8 @@ question_with_options: ['SELECT_ONE', 'SELECT_MULTIPLE', 'SELECT_ONE_WRITE_OTHER
 # ISO 639-1 codes of supported languages
 languages: ['en', 'es', 'km', 'ar', 'te', 'sw', 'am']
 right_align_languages: ['ar']
+
+exception_notifications:
+  email_prefix: '[RailsSurvey] '
+  sender: 'noreply@chpir.org'
+  recipients: ['michael@chpir.org']

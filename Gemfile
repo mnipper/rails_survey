@@ -72,3 +72,4 @@ gem 'descriptive-statistics'
 
 # Use debugger
 gem 'debugger', group: [:development]
+gem 'exception_notification'
