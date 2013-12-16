@@ -53,24 +53,16 @@ class InstrumentTranslationsController < ApplicationController
   private
 
   def update_translations(params, instrument, instrument_translation)
-    params[:question_translations].each_pair do |question_id, translation|
-      question = instrument.questions.find(question_id)
-      question_translation = question.translations.where(
-        language: instrument_translation.language,
-        question_id: question.id
-      ).first_or_initialize
-      question_translation.text = translation
-      question_translation.save!
+    language = instrument_translation.language
+
+    params[:question_translations].each_pair do |id, translation|
+      question = instrument.questions.find(id)
+      question.add_or_update_translation_for(language, translation)
     end if params.has_key? :question_translations
 
-    params[:option_translations].each_pair do |option_id, translation|
-      option = Option.find(option_id)
-      option_translation = option.translations.where(
-        language: instrument_translation.language,
-        option_id: option.id
-      ).first_or_initialize
-      option_translation.text = translation
-      option_translation.save!
+    params[:option_translations].each_pair do |id, translation|
+      option = Option.find(id)
+      option.add_or_update_translation_for(language, translation)
     end if params.has_key? :option_translations
   end
 end
