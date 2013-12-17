@@ -26,8 +26,8 @@
           <td>{{instrument.id}}</td>
           <td>{{instrument.current_version_number}}</td>
           <td>{{instrument.question_count}}</td>
-          <td>{{instrument.created_at}}</td>
-          <td>{{instrument.updated_at}}</td>
+          <td>{{instrument.created_at | date:'short'}}</td>
+          <td>{{instrument.updated_at | date:'short'}}</td>
         </tr>
       </tbody>
     </table>
