@@ -8,7 +8,7 @@
 #  updated_at         :datetime
 #  language           :string(255)
 #  alignment          :string(255)
-#  child_update_count :integer
+#  child_update_count :integer          default(0)
 #
 
 require "spec_helper"
