@@ -62,6 +62,18 @@ class Instrument < ActiveRecord::Base
     questions.count
   end
 
+  def is_version?(version_number)
+    current_version_number == version_number 
+  end
+
+  def question_count_for_version(version)
+    count = 0
+    version.reify.questions.each do |question|
+      count += 1 if version.versioned(question)
+    end
+    count
+  end
+
   def as_json(options={})
     super((options || {}).merge({
         methods: [:current_version_number, :question_count]

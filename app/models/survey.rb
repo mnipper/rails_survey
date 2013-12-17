@@ -23,7 +23,23 @@ class Survey < ActiveRecord::Base
   validates :instrument_version_number, presence: true, allow_blank: false
   
   def percent_complete
-    (responses.pluck(:question_id).uniq.count.to_f / instrument.questions.count)
+    (responses.pluck(:question_id).uniq.count.to_f / instrument_version_question_count)
       .round(2)
+  end
+
+  def instrument_version
+    if instrument.is_version? instrument_version_number
+      instrument
+    else
+      instrument.versions[instrument_version_number].reify
+    end
+  end
+
+  def instrument_version_question_count
+    if instrument.is_version? instrument_version_number
+      instrument.question_count
+    else
+      instrument.question_count_for_version(instrument_version.version)
+    end
   end
 end
