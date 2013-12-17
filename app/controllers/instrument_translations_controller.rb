@@ -35,7 +35,7 @@ class InstrumentTranslationsController < ApplicationController
     @instrument = Instrument.find(params[:instrument_id])
     @instrument_translation = @instrument.translations.find(params[:id])
     update_translations(params, @instrument, @instrument_translation)
-    if @instrument_translation.update_attributes!(params[:instrument_translation])
+    if @instrument_translation.update_attributes(params[:instrument_translation])
       redirect_to instrument_instrument_translation_path(@instrument, @instrument_translation),
         notice: "Successfully updated instrument translation."
     else

@@ -12,6 +12,9 @@
 #
 
 class InstrumentTranslation < ActiveRecord::Base
+  include Alignable
+  include LanguageAssignable
+
   attr_accessible :title, :language, :alignment
   belongs_to :instrument
 end

@@ -13,4 +13,6 @@
 class QuestionTranslation < ActiveRecord::Base
   attr_accessible :language, :text
   belongs_to :question
+
+  validates :text, presence: true, allow_blank: false
 end

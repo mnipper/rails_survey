@@ -10,8 +10,10 @@ module Translatable
   end
 
   def add_or_update_translation_for(language, translated_text)
-    translated = translations.where(language: language).first_or_initialize
-    translated.text = translated_text
-    translated.save
+    unless translated_text.blank?
+      translated = translations.where(language: language).first_or_initialize
+      translated.text = translated_text
+      translated.save
+    end
   end
 end
