@@ -23,7 +23,21 @@ jQuery ->
     event.preventDefault()
 
   $('form').on 'click', '.show-follow-up-btn', (event) ->
+    followUpQuestion = $(this).siblings('div.follow-up-question')
+    followUpSelect = followUpQuestion.find('select.question-identifier-list')
     $(this).hide("slow")
-    $(this).siblings('div.follow-up-question').show("slow")
     $(this).siblings('div.follow-up-explanation').show("slow")
+    followUpQuestion.show("slow")
+    $.each(questionIdentifiers().splice(0, questionNumber(followUpQuestion)), (index, item) ->
+      followUpSelect.append(new Option(item, item))
+    )
     event.preventDefault()
+
+  questionIdentifiers = ->
+    identifiers = []
+    $('.question-identifier').each ->
+      identifiers.push($(this).val())
+    identifiers
+
+  questionNumber = (el) ->
+    el.closest('div.question').prevAll('.question').size()

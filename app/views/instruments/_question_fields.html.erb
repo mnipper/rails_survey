@@ -7,13 +7,13 @@
 
     <div class="top-buffer">
       <%= f.label :question_identifier %><br />
-      <%= f.text_field :question_identifier %>
+      <%= f.text_field :question_identifier, class: 'question-identifier' %>
     </div>
     
     <a href="#" class="btn btn-info show-follow-up-btn top-buffer">Follow Up Question</a>
     <div class="field follow-up-question top-buffer">
       <%= f.label :following_up_question_identifier, 'Question identifier to follow up' %><br />
-      <%= f.text_field :following_up_question_identifier, class: 'form-control' %>
+      <%= f.select :following_up_question_identifier, [], {}, { class: 'form-control question-identifier-list' } %>
     </div>
 
     <div class="top-buffer">
