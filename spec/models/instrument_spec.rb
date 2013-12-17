@@ -41,6 +41,13 @@ describe Instrument do
       question.update_attributes(text: 'New text')
       @instrument.current_version_number.should == 1
     end
+
+    it "should create a new version if a question is created" do
+      @instrument.current_version_number.should == 0
+      question = create(:question, instrument: @instrument)
+      @instrument.save
+      @instrument.current_version_number.should == 1
+    end
   end
 
   describe "alignment" do

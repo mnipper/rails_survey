@@ -12,7 +12,7 @@ class InstrumentsController < ApplicationController
   end
 
   def create
-   @instrument = Instrument.new(params[:instrument])
+    @instrument = Instrument.new(params[:instrument])
     if @instrument.save
       redirect_to @instrument, notice: "Successfully created instrument."
     else

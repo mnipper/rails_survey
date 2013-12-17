@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131211201526) do
+ActiveRecord::Schema.define(version: 20131217181356) do
 
   create_table "devices", force: true do |t|
     t.string   "identifier"
@@ -34,7 +34,8 @@ ActiveRecord::Schema.define(version: 20131211201526) do
     t.datetime "updated_at"
     t.string   "language"
     t.string   "alignment"
-    t.integer  "child_update_count", default: 0
+    t.integer  "child_update_count",      default: 0
+    t.integer  "previous_question_count"
   end
 
   create_table "option_translations", force: true do |t|
