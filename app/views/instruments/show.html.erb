@@ -15,7 +15,12 @@
     </div>
   </header>
   <div class="body">
-    <strong>Current Version: <%= @instrument.current_version_number %></strong><br />
+    <div class="bottom-buffer">
+      <span class="label label-success">
+        <i class="icon-bookmark"></i>
+        <strong>Current Version: <%= @instrument.current_version_number %></strong>
+      </span>
+    </div>
     <ol class="questions">
       <% @instrument.questions.each do |question| %>
         <li>
