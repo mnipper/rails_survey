@@ -2,12 +2,12 @@
   <fieldset>
     <div>
       <%= f.label :question_type %><br />
-      <%= f.select(:question_type, options_for_select(Settings.question_types, f.object.question_type)) %>
+      <%= f.select(:question_type, options_for_select(Settings.question_types, f.object.question_type), {}, { class: 'form-control' }) %>
     </div>
 
     <div class="top-buffer">
       <%= f.label :question_identifier %><br />
-      <%= f.text_field :question_identifier, class: 'question-identifier' %>
+      <%= f.text_field :question_identifier, class: 'form-control question-identifier' %>
     </div>
     
     <% if f.object.following_up_question_identifier.blank? %>
