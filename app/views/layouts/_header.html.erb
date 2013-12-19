@@ -11,7 +11,7 @@
         <div class="navbar">
           <ul class="nav navbar-nav navbar-right pull-right">
             <li class="hidden-xs">
-            <%= link_to destroy_user_session_path, :method => :delete do %>
+            <%= button_to destroy_user_session_path, :method => :delete, class: 'btn btn-default' do %>
               <i class="icon-signout"></i>
             <% end %>
             </li>
