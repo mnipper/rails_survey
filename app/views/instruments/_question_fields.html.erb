@@ -22,6 +22,11 @@
     <% end %>
 
     <div class="top-buffer">
+      <%= f.label :reg_ex_validation %><br />
+      <%= f.text_field :reg_ex_validation, class: 'form-control' %>
+    </div>
+
+    <div class="top-buffer">
       <%= f.label :text %><br />
       <%= f.text_area :text, rows: 4, class: 'form-control' %>
     </div>

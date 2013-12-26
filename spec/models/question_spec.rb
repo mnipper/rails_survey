@@ -10,6 +10,7 @@
 #  created_at                       :datetime
 #  updated_at                       :datetime
 #  following_up_question_identifier :string(255)
+#  reg_ex_validation                :string(255)
 #
 
 require "spec_helper"

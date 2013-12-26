@@ -2,13 +2,14 @@
 #
 # Table name: instruments
 #
-#  id                 :integer          not null, primary key
-#  title              :string(255)
-#  created_at         :datetime
-#  updated_at         :datetime
-#  language           :string(255)
-#  alignment          :string(255)
-#  child_update_count :integer          default(0)
+#  id                      :integer          not null, primary key
+#  title                   :string(255)
+#  created_at              :datetime
+#  updated_at              :datetime
+#  language                :string(255)
+#  alignment               :string(255)
+#  child_update_count      :integer          default(0)
+#  previous_question_count :integer
 #
 
 class Instrument < ActiveRecord::Base

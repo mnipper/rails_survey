@@ -10,12 +10,13 @@
 #  created_at                       :datetime
 #  updated_at                       :datetime
 #  following_up_question_identifier :string(255)
+#  reg_ex_validation                :string(255)
 #
 
 class Question < ActiveRecord::Base
   include Translatable
   attr_accessible :text, :question_type, :question_identifier, :instrument_id,
-          :options_attributes, :following_up_question_identifier
+          :options_attributes, :following_up_question_identifier, :reg_ex_validation
   belongs_to :instrument
   has_many :responses
   has_many :options, dependent: :destroy

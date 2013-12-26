@@ -19,6 +19,10 @@ describe "Questions API" do
     @json.first.should have_key('text')
   end
 
+  it 'has a reg ex validation attribute' do
+    @json.first.should have_key('reg_ex_validation')
+  end
+
   it 'has a translations attribute' do
     @json.first.should have_key('translations')
     @json.first['translations'].should be_a Array

@@ -7,7 +7,7 @@ namespace :db do
         alignment: "left"
       )
       p "Created #{i.title}"
-      1000.times do |q_n|
+      10000.times do |q_n|
         question_type = Settings.question_types.sample
         question = i.questions.create!(text: "Question #{q_n}",
           question_identifier: "#{i_n}_q_#{q_n}",
