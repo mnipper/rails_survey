@@ -32,6 +32,16 @@ class Question < ActiveRecord::Base
     !options.empty?
   end
 
+  def option_count
+    options.count
+  end
+
+  def as_json(options={})
+    super((options || {}).merge({
+        methods: [:option_count]
+    }))
+  end
+
   private
   def parent_update_count
     instrument.increment!(:child_update_count) unless self.new_record?

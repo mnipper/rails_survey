@@ -33,6 +33,10 @@ describe "Questions API" do
     @json.first['question_identifier'].should == @questions.first.question_identifier
   end
 
+  it 'has an option count attribute' do
+    @json.first.should have_key('option_count')
+  end
+
   describe "translation text" do
     before :each do
       @translation = create(:question_translation)
