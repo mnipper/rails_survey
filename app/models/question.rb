@@ -46,32 +46,16 @@ class Question < ActiveRecord::Base
     }))
   end
 
-  def current_version_number
-    versions.count
-  end
-
-  def is_version?(version_number)
-    versions.count == version_number
-  end
-
   def question_version(inst_version)
     v_number = 0
     version = question_associations.where("instrument_id = ? AND instrument_version = ? AND question_id = ?", instrument.id, inst_version, self.id)
     version.each do |v|
       v_number = v.question_version
-      puts v_number
-      puts inst_version
     end
-    counts = self.versions.count
-    puts counts
-    puts "COUNTED"
-    if counts < 2
-      puts "NIL"
+    if v_number == (self.versions.length - 1)
       self
     else
-      puts "VERSION"
-      puts self.versions.length
-      self.versions[v_number].reify
+      self.versions[v_number + 1].reify
     end
   end
 
@@ -92,7 +76,7 @@ class Question < ActiveRecord::Base
     if version_number > 0
       version_number = version_number - 1
     end
-    QuestionAssociation.create(:instrument_id => instrument_id, :question_id => self.id, :instrument_version => instrument.current_version_number, :question_version => version_number)
+    QuestionAssociation.create(:instrument_id => instrument.id, :question_id => self.id, :instrument_version => instrument.current_version_number, :question_version => version_number)
   end
 
 end
