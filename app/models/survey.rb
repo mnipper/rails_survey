@@ -29,8 +29,10 @@ class Survey < ActiveRecord::Base
 
   def instrument_version
     if instrument.is_version? instrument_version_number
+      puts "LIVE"
       instrument
     else
+      puts "VERSIONED"
       instrument.versions[instrument_version_number].reify
     end
   end
@@ -42,4 +44,5 @@ class Survey < ActiveRecord::Base
       instrument.question_count_for_version(instrument_version.version)
     end
   end
+
 end

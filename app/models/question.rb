@@ -21,6 +21,7 @@ class Question < ActiveRecord::Base
   has_many :responses
   has_many :options, dependent: :destroy
   has_many :translations, foreign_key: 'question_id', class_name: 'QuestionTranslation', dependent: :destroy
+  has_many :question_associations
   accepts_nested_attributes_for :options, allow_destroy: true
   before_save :parent_update_count
   has_paper_trail
@@ -28,7 +29,7 @@ class Question < ActiveRecord::Base
   validates :question_identifier, uniqueness: true, presence: true, allow_blank: false
   validates :text, presence: true, allow_blank: false
 
-  after_save :check_version_number
+  after_save :check_version_number, :update_associations
   @previous_version_counter = 0
 
   def has_options?
@@ -45,6 +46,35 @@ class Question < ActiveRecord::Base
     }))
   end
 
+  def current_version_number
+    versions.count
+  end
+
+  def is_version?(version_number)
+    versions.count == version_number
+  end
+
+  def question_version(inst_version)
+    v_number = 0
+    version = question_associations.where("instrument_id = ? AND instrument_version = ? AND question_id = ?", instrument.id, inst_version, self.id)
+    version.each do |v|
+      v_number = v.question_version
+      puts v_number
+      puts inst_version
+    end
+    counts = self.versions.count
+    puts counts
+    puts "COUNTED"
+    if counts < 2
+      puts "NIL"
+      self
+    else
+      puts "VERSION"
+      puts self.versions.length
+      self.versions[v_number].reify
+    end
+  end
+
   private
   def parent_update_count
     @previous_version_counter = instrument.current_version_number
@@ -55,6 +85,14 @@ class Question < ActiveRecord::Base
     if @previous_version_counter == instrument.current_version_number
       instrument.increment!(:child_update_count)
     end
+  end
+
+  def update_associations
+    version_number = self.versions.count
+    if version_number > 0
+      version_number = version_number - 1
+    end
+    QuestionAssociation.create(:instrument_id => instrument_id, :question_id => self.id, :instrument_version => instrument.current_version_number, :question_version => version_number)
   end
 
 end

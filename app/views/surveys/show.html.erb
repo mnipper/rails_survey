@@ -26,11 +26,13 @@
           <tr>
           <td><%= response.question.question_type %></td>
           <td><%= response.question.question_identifier %></td>
-          <td><%= response.question.text %></td>
+          <td>
+            <%= response.question.question_version(@survey.instrument_version_number).text %>
+          </td>
           <td>
             <ul class="squares">
               <% response.question.options.each do |option| %>
-                <li><%= option %></li>
+                <li> <%= option %> </li>
               <% end %>
             <ul>
           </td>
