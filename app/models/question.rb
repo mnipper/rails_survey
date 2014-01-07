@@ -59,6 +59,19 @@ class Question < ActiveRecord::Base
     end
   end
 
+  def current_version_number
+    self.versions.count
+  end
+
+  def get_version_number(inst_version)
+    version_number = 0
+    version = question_associations.where("instrument_id = ? AND instrument_version = ? AND question_id = ?", instrument.id, inst_version, self.id)
+    version.each do |v|
+      version_number = v.question_version
+    end
+    version_number
+  end
+
   private
   def parent_update_count
     @previous_version_counter = instrument.current_version_number

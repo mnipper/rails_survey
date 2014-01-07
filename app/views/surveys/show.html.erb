@@ -32,7 +32,10 @@
           <td>
             <ul class="squares">
               <% response.question.options.each do |option| %>
-                <li> <%= option %> </li>
+                <li>
+                 <% version_number = response.question.get_version_number(@survey.instrument_version_number) %>
+                 <%= option.option_version(version_number) %>
+                </li>
               <% end %>
             <ul>
           </td>
