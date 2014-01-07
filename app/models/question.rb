@@ -24,12 +24,12 @@ class Question < ActiveRecord::Base
   has_many :question_associations
   accepts_nested_attributes_for :options, allow_destroy: true
   before_save :parent_update_count
+  after_save :update_associations
   has_paper_trail
 
   validates :question_identifier, uniqueness: true, presence: true, allow_blank: false
   validates :text, presence: true, allow_blank: false
 
-  after_save :check_version_number, :update_associations
   @previous_version_counter = 0
 
   def has_options?
@@ -74,14 +74,7 @@ class Question < ActiveRecord::Base
 
   private
   def parent_update_count
-    @previous_version_counter = instrument.current_version_number
     instrument.increment!(:child_update_count) unless self.new_record?
-  end
-
-  def check_version_number
-    if @previous_version_counter == instrument.current_version_number
-      instrument.increment!(:child_update_count)
-    end
   end
 
   def update_associations

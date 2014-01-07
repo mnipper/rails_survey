@@ -17,7 +17,7 @@ class Instrument < ActiveRecord::Base
   include Alignable
   include LanguageAssignable
 
-  attr_accessible :title, :language, :alignment, :questions_attributes, :previous_question_count
+  attr_accessible :title, :language, :alignment, :questions_attributes, :previous_question_count, :child_update_count
   has_many :questions, dependent: :destroy
   has_many :surveys
   has_many :translations, foreign_key: 'instrument_id', class_name: 'InstrumentTranslation', dependent: :destroy
@@ -85,4 +85,5 @@ class Instrument < ActiveRecord::Base
   def update_question_count
     self.previous_question_count = questions.count
   end
+
 end

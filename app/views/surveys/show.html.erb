@@ -34,7 +34,7 @@
               <% response.question.options.each do |option| %>
                 <li>
                  <% version_number = response.question.get_version_number(@survey.instrument_version_number) %>
-                 <%= option.option_version(version_number) %>
+                 <%= option.option_version(0, @survey.instrument_version_number) %>
                 </li>
               <% end %>
             <ul>
