@@ -19,7 +19,7 @@ class Option < ActiveRecord::Base
 
   validates :text, presence: true, allow_blank: false
 
-  has_many :option_associations
+  has_many :option_associations, dependent: :destroy
   after_save :update_version_associations
 
   def to_s
@@ -28,7 +28,7 @@ class Option < ActiveRecord::Base
 
   def option_version(qst_version, inst_version)
     option_version_number = (self.versions.count - 1)
-    version_relation = OptionAssociation.where("question_version = ? AND instrument_version = ? AND option_id = ? AND question_id = ? AND instrument_id = ?", qst_version, inst_version, self.id, question_id, question.instrument_id)
+    version_relation = option_associations.where("instrument_version = ? AND option_id = ?", inst_version, self.id) #TODO Question version changes though question text might not be changed
     version_relation.each do |ver|
       option_version_number = ver.option_version
     end

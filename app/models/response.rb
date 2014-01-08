@@ -90,8 +90,11 @@ class Response < ActiveRecord::Base
     if question.options.empty?
       text
     else
+      instrument_version = (survey.instrument_version.current_version_number - 1) #TODO
+      puts instrument_version
+      puts "VERSION ABOVE"
       option = question.options[text.to_i]
-      option.option_version(question.get_version_number(survey.instrument_version.current_version_number), survey.instrument_version.current_version_number)
+      option.option_version(question.get_version_number(instrument_version), instrument_version)
     end
   end
 

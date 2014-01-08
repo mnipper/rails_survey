@@ -57,6 +57,13 @@ class Instrument < ActiveRecord::Base
 
   def current_version_number
     versions.count
+=begin
+    if versions.count == 0
+      versions.count
+    else
+      versions.count - 1
+    end
+=end
   end
 
   def question_count
