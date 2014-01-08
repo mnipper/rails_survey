@@ -85,4 +85,14 @@ class Response < ActiveRecord::Base
   def grouped_responses
     self.group(:created_at)
   end
+
+  def versioned_response
+    if question.options.empty?
+      text
+    else
+      option = question.options[text.to_i]
+      option.option_version(question.get_version_number(survey.instrument_version.current_version_number), survey.instrument_version.current_version_number)
+    end
+  end
+
 end

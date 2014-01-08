@@ -33,15 +33,15 @@
             <ul class="squares">
               <% response.question.options.each do |option| %>
                 <li>
-                 <% version_number = response.question.get_version_number(@survey.instrument_version_number) %>
-                 <%= option.option_version(0, @survey.instrument_version_number) %>
+                 <% question_version_number = response.question.get_version_number(@survey.instrument_version_number) %>
+                 <%= option.option_version(question_version_number, @survey.instrument_version_number) %>
                 </li>
               <% end %>
             <ul>
           </td>
-          <td><%= response %>
+          <td><%= response.versioned_response %> </td>
           <td><%= response.other_response ? response.other_response : 'NA' %></td>
-          <td><%= response.created_at %>
+          <td><%= response.created_at %> </td>
         </tr>
         <% end %>
     <% end %>
