@@ -1,6 +1,11 @@
 <div class="well question">
   <fieldset>
     <div>
+      <%= f.label :number_in_instrument %><br />
+      <%= f.text_field :number_in_instrument, class: 'form-control number-in-instrument', readonly: 'readonly' %>
+    </div>
+    
+    <div class="top-buffer">
       <%= f.label :question_type %><br />
       <%= f.select(:question_type, options_for_select(Settings.question_types, f.object.question_type), {}, { class: 'form-control' }) %>
     </div>
@@ -10,11 +15,6 @@
       <%= f.text_field :question_identifier, class: 'form-control question-identifier' %>
     </div>
 
-    <div class="top-buffer">
-      <%= f.label :number_in_instrument %>
-      <%= f.text_field :number_in_instrument, class: 'form-control number-in-instrument' %>
-    </div>
-    
     <% if f.object.following_up_question_identifier.blank? %>
       <a href="#" class="btn btn-info show-follow-up-btn top-buffer">Follow Up Question</a>
       <div class="field follow-up-question top-buffer">

@@ -71,6 +71,11 @@ describe Question do
       @question.text = ' ' 
       @question.should_not be_valid
     end
+
+    it "should require a sequence number in the instrument" do
+      @question.number_in_instrument = nil
+      @question.should_not be_valid
+    end
   end
 
   it "should update the instrument version on update", versioning: true do

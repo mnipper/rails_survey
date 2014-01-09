@@ -16,7 +16,7 @@
 
 class Question < ActiveRecord::Base
   include Translatable
-  default_scope order('number_in_instrument ASC')
+  default_scope { order('number_in_instrument ASC') }
   attr_accessible :text, :question_type, :question_identifier, :instrument_id,
           :options_attributes, :following_up_question_identifier, :reg_ex_validation,
           :number_in_instrument
