@@ -9,6 +9,11 @@
       <%= f.label :question_identifier %><br />
       <%= f.text_field :question_identifier, class: 'form-control question-identifier' %>
     </div>
+
+    <div class="top-buffer">
+      <%= f.label :number_in_instrument %>
+      <%= f.text_field :number_in_instrument, class: 'form-control' %>
+    </div>
     
     <% if f.object.following_up_question_identifier.blank? %>
       <a href="#" class="btn btn-info show-follow-up-btn top-buffer">Follow Up Question</a>

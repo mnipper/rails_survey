@@ -11,12 +11,15 @@
 #  updated_at                       :datetime
 #  following_up_question_identifier :string(255)
 #  reg_ex_validation                :string(255)
+#  number_in_instrument             :integer
 #
 
 class Question < ActiveRecord::Base
   include Translatable
+  default_scope order('number_in_instrument ASC')
   attr_accessible :text, :question_type, :question_identifier, :instrument_id,
-          :options_attributes, :following_up_question_identifier, :reg_ex_validation
+          :options_attributes, :following_up_question_identifier, :reg_ex_validation,
+          :number_in_instrument
   belongs_to :instrument
   has_many :responses
   has_many :options, dependent: :destroy
@@ -27,6 +30,7 @@ class Question < ActiveRecord::Base
 
   validates :question_identifier, uniqueness: true, presence: true, allow_blank: false
   validates :text, presence: true, allow_blank: false
+  validates :number_in_instrument, presence: true, allow_blank: false
 
   after_save :check_version_number
   @previous_version_counter = 0
@@ -60,5 +64,4 @@ class Question < ActiveRecord::Base
       instrument.increment!(:child_update_count)
     end
   end
-
 end

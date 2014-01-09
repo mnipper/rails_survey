@@ -11,6 +11,7 @@
 #  updated_at                       :datetime
 #  following_up_question_identifier :string(255)
 #  reg_ex_validation                :string(255)
+#  number_in_instrument             :integer
 #
 
 require "spec_helper"
