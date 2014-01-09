@@ -76,22 +76,23 @@ class Question < ActiveRecord::Base
   end
 
   def delete_extra_instrument_version
-    if has_options?
-      puts "START"
-      puts instrument.versions.count
+    if !self.options.empty?
+      puts "HAS OPTIONS"
       index = 0
-      seen = []
+      time_strings_array = []
       instrument.versions.each do |ver|
-        if seen.include? ver.created_at
+        time_string = ver.created_at.to_s
+        if time_strings_array.include? time_string
+          duplicate_version = instrument.versions[index]
+          duplicate_version.destroy!
+          puts "DELETED"
           break
         else
-          seen << ver.created_at
+          time_strings_array << time_string
+          puts "ADDED"
         end
         index += 1
       end
-      instrument.versions.delete_at(index)
-      puts "END"
-      puts instrument.versions.count
     end
   end
 

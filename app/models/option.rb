@@ -17,7 +17,6 @@ class Option < ActiveRecord::Base
   has_many :translations, foreign_key: 'option_id', class_name: 'OptionTranslation', dependent: :destroy
   has_many :option_associations, dependent: :destroy
   after_save :update_version_associations
-  before_save :update_parent_count
   has_paper_trail
 
   validates :text, presence: true, allow_blank: false
