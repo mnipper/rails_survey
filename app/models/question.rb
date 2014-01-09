@@ -24,13 +24,11 @@ class Question < ActiveRecord::Base
   has_many :question_associations, dependent: :destroy
   accepts_nested_attributes_for :options, allow_destroy: true
   before_save :parent_update_count
-  after_save :update_associations, :check_version_count
+  after_save :update_associations, :delete_extra_instrument_version
   has_paper_trail
 
   validates :question_identifier, uniqueness: true, presence: true, allow_blank: false
   validates :text, presence: true, allow_blank: false
-
-  @previous_version_counter = 0
 
   def has_options?
     !options.empty?
@@ -75,20 +73,26 @@ class Question < ActiveRecord::Base
   private
   def parent_update_count
     instrument.increment!(:child_update_count) unless self.new_record?
-=begin
-    if self.new_record?
-      if Option.all.empty?
-        instrument.increment!(:child_update_count)
-      end
-    else
-      instrument.increment!(:child_update_count)
-    end
-=end
   end
 
-  def check_version_count
-    puts "VERSION COUNT"
-    puts instrument.versions.count
+  def delete_extra_instrument_version
+    if has_options?
+      puts "START"
+      puts instrument.versions.count
+      index = 0
+      seen = []
+      instrument.versions.each do |ver|
+        if seen.include? ver.created_at
+          break
+        else
+          seen << ver.created_at
+        end
+        index += 1
+      end
+      instrument.versions.delete_at(index)
+      puts "END"
+      puts instrument.versions.count
+    end
   end
 
   def update_associations
