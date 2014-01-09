@@ -13,12 +13,14 @@ jQuery ->
   $('form').on 'click', '.move-up', (event) ->
     question = $(this).closest('div.question')
     previousQuestion = question.prevAll('.question').first()
+    switchValues(question.find('.number-in-instrument'), previousQuestion.find('.number-in-instrument'))
     question.after(previousQuestion)
     event.preventDefault()
 
   $('form').on 'click', '.move-down', (event) ->
     question = $(this).closest('div.question')
     nextQuestion = question.nextAll('.question').first()
+    switchValues(question.find('.number-in-instrument'), nextQuestion.find('.number-in-instrument'))
     question.before(nextQuestion)
     event.preventDefault()
 
@@ -41,3 +43,9 @@ jQuery ->
 
   questionNumber = (el) ->
     el.closest('div.question').prevAll('.question').size()
+
+  switchValues = (first, second) ->
+    firstVal = first.val()
+    secondVal = second.val()
+    first.val(secondVal)
+    second.val(firstVal)
