@@ -25,6 +25,10 @@ class Option < ActiveRecord::Base
     text
   end
 
+  def version_at_time(time)
+    self.version_at(time + 1)
+  end
+
   def option_version(qst_version, inst_version)
     option_version_number = (self.versions.count - 1)
     version_relation = option_associations.where("instrument_version = ? AND option_id = ?", inst_version, self.id) #TODO Question version changes though question text might not be changed
@@ -43,10 +47,9 @@ class Option < ActiveRecord::Base
 
   private
   def update_version_associations
-    version_number = (self.versions.count - 1)
     inst_version = question.instrument.current_version_number
     OptionAssociation.create(:question_id => question.id, :option_id => self.id, :question_version => question.current_version_number,
-                             :option_version => version_number, :instrument_version => inst_version, :instrument_id => question.instrument_id)
+                             :option_version => self.versions.count, :instrument_version => inst_version, :instrument_id => question.instrument_id)
   end
 
 end

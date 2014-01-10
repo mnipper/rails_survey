@@ -24,7 +24,7 @@ class Question < ActiveRecord::Base
   has_many :question_associations, dependent: :destroy
   accepts_nested_attributes_for :options, allow_destroy: true
   before_save :parent_update_count
-  after_save :update_associations, :delete_extra_instrument_version
+  after_save :update_associations#, :delete_extra_instrument_version
   has_paper_trail
 
   validates :question_identifier, uniqueness: true, presence: true, allow_blank: false
@@ -44,16 +44,27 @@ class Question < ActiveRecord::Base
     }))
   end
 
+  def version_at_time(time)
+    self.version_at(time + 1)
+  end
+
   def question_version(inst_version)
     v_number = 0
     version = question_associations.where("instrument_id = ? AND instrument_version = ? AND question_id = ?", instrument.id, inst_version, self.id)
     version.each do |v|
       v_number = v.question_version
     end
-    if v_number == (self.versions.length - 1)
+    if v_number == (self.versions.length)
+      puts "IF"
       self
     else
-      self.versions[v_number + 1].reify
+      if !self.versions[v_number].nil?
+        puts "NOT NIL"
+        self.versions[v_number].reify
+      else
+        puts "NIL"
+        self
+      end
     end
   end
 
@@ -77,7 +88,6 @@ class Question < ActiveRecord::Base
 
   def delete_extra_instrument_version
     if !self.options.empty?
-      puts "HAS OPTIONS"
       index = 0
       time_strings_array = []
       instrument.versions.each do |ver|
@@ -85,11 +95,9 @@ class Question < ActiveRecord::Base
         if time_strings_array.include? time_string
           duplicate_version = instrument.versions[index]
           duplicate_version.destroy!
-          puts "DELETED"
           break
         else
           time_strings_array << time_string
-          puts "ADDED"
         end
         index += 1
       end
@@ -97,11 +105,7 @@ class Question < ActiveRecord::Base
   end
 
   def update_associations
-    version_number = self.versions.count
-    if version_number > 0
-      version_number = version_number - 1
-    end
-    QuestionAssociation.create(:instrument_id => instrument.id, :question_id => self.id, :instrument_version => instrument.current_version_number, :question_version => version_number)
+    QuestionAssociation.create(:instrument_id => instrument.id, :question_id => self.id, :instrument_version => instrument.current_version_number, :question_version => self.versions.count)
   end
 
 end
