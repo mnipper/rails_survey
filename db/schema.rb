@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 20140110153949) do
     t.datetime "updated_at"
     t.string   "following_up_question_identifier"
     t.string   "reg_ex_validation"
+    t.integer  "number_in_instrument"
   end
 
   create_table "responses", force: true do |t|

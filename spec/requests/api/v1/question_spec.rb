@@ -37,6 +37,10 @@ describe "Questions API" do
     @json.first.should have_key('option_count')
   end
 
+  it 'has an instrument version attribute' do
+    @json.first.should have_key('instrument_version')
+  end
+
   describe "translation text" do
     before :each do
       @translation = create(:question_translation)

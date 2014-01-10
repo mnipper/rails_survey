@@ -11,6 +11,7 @@
 #  updated_at                       :datetime
 #  following_up_question_identifier :string(255)
 #  reg_ex_validation                :string(255)
+#  number_in_instrument             :integer
 #
 
 require "spec_helper"
@@ -68,6 +69,11 @@ describe Question do
 
     it "should not allow blank text" do
       @question.text = ' ' 
+      @question.should_not be_valid
+    end
+
+    it "should require a sequence number in the instrument" do
+      @question.number_in_instrument = nil
       @question.should_not be_valid
     end
   end
