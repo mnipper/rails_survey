@@ -26,7 +26,6 @@ class Question < ActiveRecord::Base
   has_many :translations, foreign_key: 'question_id', class_name: 'QuestionTranslation', dependent: :destroy
   accepts_nested_attributes_for :options, allow_destroy: true
   before_save :parent_update_count
-  #after_save :delete_extra_instrument_version
   has_paper_trail
 
   validates :question_identifier, uniqueness: true, presence: true, allow_blank: false
@@ -58,23 +57,5 @@ class Question < ActiveRecord::Base
   private
   def parent_update_count
     instrument.increment!(:child_update_count) unless self.new_record?
-  end
-
-  def delete_extra_instrument_version
-    if !self.options.empty?
-      index = 0
-      time_strings_array = []
-      instrument.versions.each do |ver|
-        time_string = ver.created_at.to_s
-        if time_strings_array.include? time_string
-          duplicate_version = instrument.versions[index]
-          duplicate_version.destroy!
-          break
-        else
-          time_strings_array << time_string
-        end
-        index += 1
-      end
-    end
   end
 end
