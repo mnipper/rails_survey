@@ -21,13 +21,15 @@
         </tr>
       </thead>
       <tbody>
-      <% instrument_version_created_at = @survey.instrument_version.updated_at %>
+      <%= instrument_version_created_at = @survey.instrument_version.updated_at %>
     <% @survey.responses.each do |response| %>
           <% if response.question %>
           <tr>
           <td><%= response.question.question_type %></td>
           <td><%= response.question.question_identifier %></td>
-          <td> <%= response.question.version_at_time(instrument_version_created_at).text %> </td>
+          <td>
+               <%= response.question.version_at_time(@survey.instrument_version_number, instrument_version_created_at).text %>
+          </td>
           <td>
             <ul class="squares">
               <% response.question.options.each do |option| %>
