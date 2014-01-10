@@ -20,7 +20,7 @@ gem 'therubyracer', platforms: :ruby
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
-gem 'rubyzip',  "~> 0.9.9"
+gem "rubyzip", "~> 1.1.0"
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
@@ -54,7 +54,7 @@ group :test do
   gem "factory_girl_rails", "~> 4.0"
   gem 'database_cleaner', '~> 1.0'
   gem 'capybara'
-  gem 'selenium-webdriver', '~> 2.35'
+  gem 'selenium-webdriver', '~> 2.39'
 end
 
 # Simple statistics

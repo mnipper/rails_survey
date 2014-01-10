@@ -50,8 +50,12 @@ class Question < ActiveRecord::Base
     }))
   end
 
-  def version_at_time(time)
-    self.version_at(time + 1)
+  def version_at_time(instrument_version_number, time)
+    if instrument_version_number == 0
+      self.version_at(time)
+    else
+      self.version_at(time + 1)
+    end
   end
 
   private
