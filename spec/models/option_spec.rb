@@ -47,4 +47,23 @@ describe Option do
       @translation.option.translated_for(@translation.language, :text).should == @translation.text
     end
   end
+
+  describe "versioning", :versioning => true do
+    it "should turn on PaperTrail" do
+      PaperTrail.should be_enabled
+    end
+
+    it "should have one version" do
+      option = create(:option)
+      option.text = "edited"
+      option.versions.count.should == 1
+    end
+
+    it "should return correct version" do
+      option = create(:option)
+      option.text = "edited"
+      option.version_at_time(option.updated_at).should == option
+    end
+  end
+
 end
