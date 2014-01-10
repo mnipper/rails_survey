@@ -21,7 +21,6 @@ class Question < ActiveRecord::Base
   has_many :responses
   has_many :options, dependent: :destroy
   has_many :translations, foreign_key: 'question_id', class_name: 'QuestionTranslation', dependent: :destroy
-  has_many :question_associations, dependent: :destroy
   accepts_nested_attributes_for :options, allow_destroy: true
   before_save :parent_update_count
   #after_save :delete_extra_instrument_version

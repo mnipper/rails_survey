@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140107160134) do
+ActiveRecord::Schema.define(version: 20140110153949) do
 
   create_table "devices", force: true do |t|
     t.string   "identifier"
@@ -38,17 +38,6 @@ ActiveRecord::Schema.define(version: 20140107160134) do
     t.integer  "previous_question_count"
   end
 
-  create_table "option_associations", force: true do |t|
-    t.integer  "option_version"
-    t.integer  "question_version"
-    t.integer  "option_id"
-    t.integer  "question_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "instrument_id"
-    t.integer  "instrument_version"
-  end
-
   create_table "option_translations", force: true do |t|
     t.integer  "option_id"
     t.string   "text"
@@ -63,15 +52,6 @@ ActiveRecord::Schema.define(version: 20140107160134) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "next_question"
-  end
-
-  create_table "question_associations", force: true do |t|
-    t.integer  "instrument_version"
-    t.integer  "question_version"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "question_id"
-    t.integer  "instrument_id"
   end
 
   create_table "question_translations", force: true do |t|

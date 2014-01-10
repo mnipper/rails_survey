@@ -15,7 +15,6 @@ class Option < ActiveRecord::Base
   attr_accessible :question_id, :text, :next_question
   belongs_to :question
   has_many :translations, foreign_key: 'option_id', class_name: 'OptionTranslation', dependent: :destroy
-  has_many :option_associations, dependent: :destroy
   has_paper_trail
 
   validates :text, presence: true, allow_blank: false
