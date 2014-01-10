@@ -21,7 +21,7 @@
         </tr>
       </thead>
       <tbody>
-      <%= instrument_version_created_at = @survey.instrument_version.updated_at %>
+      <% instrument_version_created_at = @survey.instrument_version.updated_at %>
     <% @survey.responses.each do |response| %>
           <% if response.question %>
           <tr>
