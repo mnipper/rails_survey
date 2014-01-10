@@ -24,7 +24,7 @@ class Question < ActiveRecord::Base
   has_many :question_associations, dependent: :destroy
   accepts_nested_attributes_for :options, allow_destroy: true
   before_save :parent_update_count
-  after_save :update_associations#, :delete_extra_instrument_version
+  #after_save :delete_extra_instrument_version
   has_paper_trail
 
   validates :question_identifier, uniqueness: true, presence: true, allow_blank: false
@@ -48,39 +48,6 @@ class Question < ActiveRecord::Base
     self.version_at(time + 1)
   end
 
-  def question_version(inst_version)
-    v_number = 0
-    version = question_associations.where("instrument_id = ? AND instrument_version = ? AND question_id = ?", instrument.id, inst_version, self.id)
-    version.each do |v|
-      v_number = v.question_version
-    end
-    if v_number == (self.versions.length)
-      puts "IF"
-      self
-    else
-      if !self.versions[v_number].nil?
-        puts "NOT NIL"
-        self.versions[v_number].reify
-      else
-        puts "NIL"
-        self
-      end
-    end
-  end
-
-  def current_version_number
-    self.versions.count
-  end
-
-  def get_version_number(inst_version)
-    version_number = 0
-    version = question_associations.where("instrument_id = ? AND instrument_version = ? AND question_id = ?", instrument.id, inst_version, self.id)
-    version.each do |v|
-      version_number = v.question_version
-    end
-    version_number
-  end
-
   private
   def parent_update_count
     instrument.increment!(:child_update_count) unless self.new_record?
@@ -102,10 +69,6 @@ class Question < ActiveRecord::Base
         index += 1
       end
     end
-  end
-
-  def update_associations
-    QuestionAssociation.create(:instrument_id => instrument.id, :question_id => self.id, :instrument_version => instrument.current_version_number, :question_version => self.versions.count)
   end
 
 end

@@ -27,23 +27,15 @@
           <tr>
           <td><%= response.question.question_type %></td>
           <td><%= response.question.question_identifier %></td>
-          <td>
-            <%= response.question.version_at_time(instrument_version_created_at).text %>
-          </td>
+          <td> <%= response.question.version_at_time(instrument_version_created_at).text %> </td>
           <td>
             <ul class="squares">
               <% response.question.options.each do |option| %>
-                <li>
-                 <%# question_version_number = response.question.get_version_number(@survey.instrument_version_number) %>
-                 <%#= option.option_version(question_version_number, @survey.instrument_version_number) %>
-                     <%= option.version_at_time(instrument_version_created_at) %>
-                </li>
+                <li> <%= option.version_at_time(instrument_version_created_at) %> </li>
               <% end %>
             <ul>
           </td>
-          <td>
-          <%= response.versioned_response %>
-          </td>
+          <td> <%= response.versioned_response %> </td>
           <td><%= response.other_response ? response.other_response : 'NA' %></td>
           <td><%= response.created_at %> </td>
         </tr>
