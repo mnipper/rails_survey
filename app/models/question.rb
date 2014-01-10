@@ -32,9 +32,6 @@ class Question < ActiveRecord::Base
   validates :text, presence: true, allow_blank: false
   validates :number_in_instrument, presence: true, allow_blank: false
 
-  after_save :check_version_number
-  @previous_version_counter = 0
-
   def has_options?
     !options.empty?
   end
@@ -55,13 +52,6 @@ class Question < ActiveRecord::Base
 
   private
   def parent_update_count
-    @previous_version_counter = instrument.current_version_number
     instrument.increment!(:child_update_count) unless self.new_record?
-  end
-
-  def check_version_number
-    if @previous_version_counter == instrument.current_version_number
-      instrument.increment!(:child_update_count)
-    end
   end
 end
