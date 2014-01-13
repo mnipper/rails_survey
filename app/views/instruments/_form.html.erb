@@ -25,6 +25,27 @@
         <%= f.select(:language, options_for_select(Settings.languages, @instrument.language)) %>
       </div>
 
+      <div class="sortable hidden">
+        <% @instrument.questions.each do |question| %>
+        <div class="row top-buffer question-row">
+          <div class="span-1">
+            <input class="selected-checkbox" type="checkbox">
+          </div>
+          <div class="span-1">
+            <strong><p class="question-number"><%= question.number_in_instrument %></p></strong>
+          </div>
+          <div class="span-2">
+            <a class="btn btn-default move-question"><i class="icon-move"></i></a>
+            <a class="btn btn-default edit-question"><i class="icon-pencil"></i></a>
+            <a class="btn btn-danger delete-question"><i class="icon-trash"></i></a>
+          </div>
+          <div class="span-8">
+            <p><%= question.text %></p>
+          </div>
+        </div>
+        <% end %>
+      </div>
+
       <%= f.fields_for :questions do |builder| %>
         <%= render 'question_fields', f: builder %>
       <% end %>
