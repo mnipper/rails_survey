@@ -27,6 +27,7 @@ class Instrument < ActiveRecord::Base
   before_save :update_question_count
 
   validates :title, presence: true, allow_blank: false
+  belongs_to :project
 
   def self.instrument_response_count
     @response_map = []
