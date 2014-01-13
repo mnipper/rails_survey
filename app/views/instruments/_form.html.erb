@@ -70,6 +70,7 @@
                             <div class="controls form-group">
                               <select 
                                 chosen
+                                class="select2-container select-block-level"
                                 data-placeholder="Select a question type..."
                                 no-results-text="'This does not match any valid question type'"
                                 name="question-type"
@@ -106,7 +107,22 @@
                       </form>
                     </div>
                     <div class="tab-logic tab-pane">Logic</div>
-                    <div class="tab-advanced tab-pane">Advanced</div>
+                    <div class="tab-advanced tab-pane">
+                      <fieldset>
+                        <legend class="section">
+                          Regular Expression Match
+                        </legend>
+                        <div>
+                          <p class="text-muted">A regular expression is a standard for describing text format.  If a regular expression
+                          is provided for this question, then the response must match this regular expression for it
+                          to be considered valid.</p>
+                          <label for="question-regex" class="control-label">Regular Expression</label>
+                          <div class="controls form-group">
+                            <input type="text" name="question-regex" class="form-control" ng-model="question.reg_ex_validation">
+                          </div>
+                        </div>
+                      </fieldset>
+                    </div>
                     <div class="form-actions">
                       <a class="btn btn-success pull-right" ng-click="saveQuestion()">Save</a>
                       <a class="btn btn-danger pull-right" ng-click="cancelQuestion()">Cancel</a>
