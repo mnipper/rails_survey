@@ -64,7 +64,7 @@
                           <div class="control-group">
                             <label for="question-identifier" class="control-label">Question Identifier</label>
                             <div class="controls form-group">
-                              <input type="text" name="question-identifier" ng-model="question.question_identifier">
+                              <input type="text" class="form-control" name="question-identifier" ng-model="question.question_identifier">
                             </div>
                             <label for="question-type" class="control-label">Question Type</label>
                             <div class="controls form-group">
@@ -92,10 +92,16 @@
                                   </a>
                                 </legend>
                                   <div class="controls form-group">
-                                    <ol class="options">
+                                    <ol>
                                       <li ng-repeat="option in options">
-                                        <input type="text" ng-model="option.text"> 
-                                        <a ng-click="removeOption(option)" class="btn btn-xs btn-danger">Remove</a>
+                                        <div class="input-group">
+                                          <input type="text" class="form-control" ng-model="option.text"> 
+                                          <div class="input-group-btn">
+                                            <button ng-click="removeOption(option)" class="btn btn-danger">
+                                              <i class="icon-trash"></i>
+                                            </button>
+                                          </div>
+                                        </div>
                                       </li>
                                     </ol>
                                 </div>
