@@ -89,7 +89,7 @@ describe Response do
     end
 
     it "should return versioned option text" do
-      @test_response.versioned_response.should == 'a' #TODO fix/understand factory associations 
+      @test_response.versioned_response.should == 'a' #TODO fix/understand factory associations
     end
   end
 
