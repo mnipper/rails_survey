@@ -82,22 +82,14 @@ describe Response do
   describe "versioned response", versioning: true do
     before :each do
       @test_response = create(:response)
-      @test_response.text = 'text'
-      @test_survey = create(:survey)
-      @test_question = create(:question)
-      @test_option = create(:option)
-      @test_response.survey_uuid = @test_survey.uuid
-      @test_response.question_id = @test_question.id
     end
-    
+
     it "should return text" do
-      @test_response.versioned_response == 'text'
+      @test_response.versioned_response.should == @test_response.text
     end
 
     it "should return versioned option text" do
-      @test_option.text = 'option text'
-      @test_option.question_id = @test_question.id
-      @test_response.versioned_response == 'option text'
+      @test_response.versioned_response.should == 'a' #TODO fix/understand factory associations 
     end
   end
 

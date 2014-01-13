@@ -5,4 +5,5 @@ FactoryGirl.define do
     text 'a'
     other_response 'other'
   end
+
 end
