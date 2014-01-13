@@ -17,7 +17,12 @@ module Api
       end
 
       def create
-        respond_with Option.create(params)
+        @option = Option.new(params)
+        if @option.save
+          render nothing: true, status: :created
+        else
+          render nothing: true, status: :unprocessable_entity
+        end
       end
 
       def update
