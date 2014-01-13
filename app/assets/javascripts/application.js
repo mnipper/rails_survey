@@ -23,7 +23,9 @@
 //= require ../../../vendor/assets/lib/bootstrap/dropdown
 //= require ../../../vendor/assets/lib/d3.layout.min
 //= require ../../../vendor/assets/lib/jquery-ui-1.10.1.custom
+//= require chosen-jquery
 //= require app
 //= require ../../../vendor/assets/javascripts/ui-sortable
+//= require ../../../vendor/assets/javascripts/chosen
 //= require_tree ./angular
 //= require_directory .

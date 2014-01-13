@@ -15,6 +15,7 @@
  *= require font-awesome/css/font-awesome.min
  *= require fontello/css/fontello
  *= require lib/bootstrap-switch
+ *= require chosen
  *= require_tree .
  *= require application.commented
  */
@@ -22,3 +23,4 @@
 .top-buffer { margin-top:20px; }
 .bottom-buffer { margin-bottom:20px; }
 ul.squares { list-style: square }
+li.active-result { color:#333; }
