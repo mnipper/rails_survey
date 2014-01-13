@@ -1,14 +1,17 @@
-<p id="notice"><%= notice %></p>
+<h1><%= @project.name %> </h1>
 
-<p>
-  <strong>Name:</strong>
-  <%= @project.name %>
-</p>
+<section class="widget">
+  <header>
+    <div class="actions hidden-xs-portrait">
+      <%= link_to edit_project_path(@project), class: 'btn btn-primary' do %>
+          <i class="icon-edit"></i> Edit Project
+      <% end %>
+    </div>
+  </header>
+  <strong>Description:</strong> <br />
+  <p>
+    <%= @project.description %>
+  </p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @project.description %>
-</p>
-
-<%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %>
+  <%= link_to 'Back', projects_path %>
+</section>

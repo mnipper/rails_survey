@@ -1,29 +1,32 @@
-<h1>Listing projects</h1>
+<section class="widget">
+  <header>
+    <h3><i class="icon-folder-open"></i> Projects </h3>
+    <div class="actions hidden-xs-portrait">
+      <%= link_to new_project_path, class: 'btn btn-primary' do %>
+          <i class="icon-plus"></i> New Project
+      <% end %>
+    </div>
+  </header>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @projects.each do |project| %>
+  <div class="body">
+    <table class="table table-hover">
+      <thead>
       <tr>
-        <td><%= project.name %></td>
-        <td><%= project.description %></td>
-        <td><%= link_to 'Show', project %></td>
-        <td><%= link_to 'Edit', edit_project_path(project) %></td>
-        <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Instruments</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      </thead>
 
-<br>
-
-<%= link_to 'New Project', new_project_path %>
+      <tbody>
+      <% @projects.each do |project| %>
+          <tr>
+            <td><%= link_to project.name, project %></td>
+            <td><%= project.description %></td>
+            <td><%= link_to 'Instruments', instruments_path %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</section>
