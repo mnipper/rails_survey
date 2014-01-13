@@ -1,0 +1,32 @@
+<section class="widget">
+  <header>
+    <h4><i class="icon-edit"></i> Projects</h4>
+  </header>
+  <div class="body">
+    <%= form_for(@project) do |f| %>
+        <% if @project.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+              <ul>
+                <% @project.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <div class="field top-buffer">
+          <%= f.label :name, 'Project Name' %> <br />
+          <%= f.text_field :name, class: 'form-control' %>
+        </div>
+        <div class="field top-buffer">
+          <%= f.label :description, 'Project Description' %> <br />
+          <%= f.text_area :description, class: 'form-control' %>
+        </div>
+        <div class="top-buffer">
+          <%= f.submit class: 'btn btn-primary' %>
+        </div>
+    <% end %>
+  </div>
+</section>

@@ -25,6 +25,7 @@ class User < ActiveRecord::Base
           :trackable, :validatable
 
   before_save :ensure_authentication_token
+  has_many :projects
 
   def ensure_authentication_token
     if authentication_token.blank?
