@@ -1,0 +1,46 @@
+App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
+  $scope.questions = []
+  $scope.selectedQuestions = []
+  $scope.init = (instrument_id) ->
+    $scope.questions = Question.query({"instrument_id": instrument_id})
+
+  $scope.sortableOptions = {
+    cursor: 'move',
+    handle: '.move-question',
+    axis: 'y',
+    stop: (e, ui) ->
+      angular.forEach $scope.questions, (question, index) ->
+        question.number_in_instrument = index + 1
+        question.$update()
+  }
+
+  $scope.editQuestion = (question) ->
+    $scope.edit_question = question
+
+  $scope.saveQuestion = ->
+    $scope.edit_question.$update()
+    $scope.edit_question = null
+
+  $scope.cancelQuestion = ->
+    $scope.edit_question = null
+
+  $scope.toggleSelection = (question) ->
+    if $scope.questionSelected(question)
+      $scope.selectedQuestions.splice($scope.selectedQuestions.indexOf(question), 1)
+    else
+      $scope.selectedQuestions.push question
+
+  $scope.questionSelected = (question) ->
+    question in $scope.selectedQuestions
+
+  $scope.deleteQuestion = (question) ->
+    if confirm("Are you sure you want to delete this question?")
+      question.$delete()
+      $scope.questions.splice($scope.questions.indexOf(question), 1)
+
+  $scope.questionTypes = ->
+    <%= Settings.question_types %>
+
+  $scope.questionTypesWithOptions = (questionType)->
+    questionType in <%= Settings.question_with_options %>
+]

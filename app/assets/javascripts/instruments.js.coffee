@@ -1,12 +1,4 @@
 jQuery ->
-  $('.sortable').sortable({
-    cursor: 'move',
-    handle: '.move-question'
-    update: ->
-      $('.question-number:visible').each (index, el)->
-        $(el).text(index+1)
-  })
-
   $('form').on 'click', '.remove_fields', (event) ->
     $(this).siblings('input[type=hidden]').val('1')
     $(this).closest('div.well').hide()
