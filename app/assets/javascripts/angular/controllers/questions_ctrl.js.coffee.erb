@@ -18,10 +18,12 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
     $scope.edit_question = question
 
   $scope.saveQuestion = ->
+    $scope.$broadcast('SAVE_QUESTION')
     $scope.edit_question.$update()
     $scope.edit_question = null
 
   $scope.cancelQuestion = ->
+    $scope.$broadcast('CANCEL_QUESTION')
     $scope.edit_question = null
 
   $scope.toggleSelection = (question) ->
