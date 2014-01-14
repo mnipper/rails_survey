@@ -2,8 +2,9 @@ App.controller 'ProjectsCtrl', ['$scope', '$location', 'Project', ($scope, $loca
   $scope.projects = Project.query()
 
   $scope.viewProject = (projectId) ->
-    $location.path('/projects/'+projectId)
+    $location.url('/projects/'+projectId).replace()
+    #$scope.$apply()
 
   $scope.viewInstruments = ->
-    $location.path('/instruments')
+    $location.url('/instruments').replace()
 ]

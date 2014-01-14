@@ -20,9 +20,10 @@
 
       <tbody>
       <tr ng-repeat="project in projects">
-        <td><a ng-click="viewProject(project.id)">{{project.name}}</a></td>
+        <!-- <td><a ng-click="viewProject(project.id)">{{project.name}}</a></td> -->
+        <td><a href="/projects/{{project.id}}">{{project.name}}</a></td>
         <td>{{project.description}}</td>
-        <td><a ng-click="viewInstruments()">Instruments</a></td>
+        <td> <a ng-click="viewInstruments()">Instruments</a></td>
       </tr>
       </tbody>
     </table>
