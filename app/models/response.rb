@@ -88,7 +88,7 @@ class Response < ActiveRecord::Base
   end
 
   def versioned_response
-    if question.options.empty?
+    if question.options.empty? or text.empty?
       text
     else
       question.options[text.to_i].version_at_time(survey.instrument_version.updated_at)
