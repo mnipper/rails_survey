@@ -1,11 +1,6 @@
 RailsSurvey::Application.routes.draw do
 
-  resources :projects
-
   devise_for :users
-  resources :responses
-
-  resources :surveys
 
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
@@ -22,13 +17,18 @@ RailsSurvey::Application.routes.draw do
     end
   end
 
-  root to: 'instruments#index'
-  resources :instruments do
-    resources :versions, only: [:index, :show]
-    resources :instrument_translations
+  root to: 'projects#index'
+  resources :projects do
+    resources :instruments do
+      resources :versions, only: [:index, :show]
+      resources :instrument_translations
+    end
+
+    resources :responses
+    resources :surveys
+    resources :notifications, only: [:index]
+    resources :devices, only: [:index]
   end
-  resources :notifications, only: [:index]
-  resources :devices, only: [:index]
 
   get '/realtime' => 'graphs#real_time'
   get '/graphs/update' => 'graphs#update'

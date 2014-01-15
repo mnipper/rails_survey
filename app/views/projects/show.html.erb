@@ -7,11 +7,14 @@
           <i class="icon-edit"></i> Edit Project
       <% end %>
     </div>
-  </header>
-  <strong>Description:</strong> <br />
-  <p>
-    <%= @project.description %>
-  </p>
+  </header> <br />
 
-  <%= link_to 'Back', projects_path %>
+  <div>
+    <strong>Description:</strong> <br />
+    <p> <%= @project.description %> </p>
+  </div>
+
+  <div class="body">
+    <%= render 'instruments/index' %>
+  </div>
 </section>

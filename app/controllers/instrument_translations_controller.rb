@@ -1,25 +1,29 @@
 class InstrumentTranslationsController < ApplicationController
   def index
+    @project = Project.find(params[:project_id])
     @instrument = Instrument.find(params[:instrument_id])
     @instrument_translations = @instrument.translations.to_a
   end
 
   def show
+    @project = Project.find(params[:project_id])
     @instrument = Instrument.find(params[:instrument_id])
     @instrument_translation = @instrument.translations.find(params[:id])
   end
 
   def new
+    @project = Project.find(params[:project_id])
     @instrument = Instrument.find(params[:instrument_id])
     @instrument_translation = @instrument.translations.new
   end
 
   def create
+    @project = Project.find(params[:project_id])
     @instrument = Instrument.find(params[:instrument_id])
     @instrument_translation = @instrument.translations.new(params[:instrument_translation])
     if @instrument_translation.save
       update_translations(params, @instrument, @instrument_translation)
-      redirect_to instrument_instrument_translation_path(@instrument, @instrument_translation),
+      redirect_to project_instrument_instrument_translation_path(@project, @instrument, @instrument_translation),
         notice: "Successfully created instrument translation."
     else
       render :new
@@ -27,16 +31,18 @@ class InstrumentTranslationsController < ApplicationController
   end
 
   def edit
+    @project = Project.find(params[:project_id])
     @instrument = Instrument.find(params[:instrument_id])
     @instrument_translation = @instrument.translations.find(params[:id])
   end
 
   def update
+    @project = Project.find(params[:project_id])
     @instrument = Instrument.find(params[:instrument_id])
     @instrument_translation = @instrument.translations.find(params[:id])
     update_translations(params, @instrument, @instrument_translation)
     if @instrument_translation.update_attributes(params[:instrument_translation])
-      redirect_to instrument_instrument_translation_path(@instrument, @instrument_translation),
+      redirect_to project_instrument_instrument_translation_path(@project, @instrument, @instrument_translation),
         notice: "Successfully updated instrument translation."
     else
       render :edit
@@ -47,7 +53,7 @@ class InstrumentTranslationsController < ApplicationController
     @instrument = Instrument.find(params[:instrument_id])
     @instrument_translation = @instrument.translations.find(params[:id])
     @instrument_translation.destroy
-    redirect_to instrument_translations_url, notice: "Successfully destroyed instrument translation."
+    redirect_to project_instrument_instrument_translations_url, notice: "Successfully destroyed instrument translation."
   end
 
   private
