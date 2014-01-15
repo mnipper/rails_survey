@@ -64,12 +64,12 @@
                   </header>
                   <div class="body tab-content">
                     <div class="tab-general tab-pane active">
-                      <form class="form-horizontal label-left">
+                      <form class="form-horizontal label-left" novalidate name="question_form">
                         <fieldset>
                           <div class="control-group">
                             <label for="question-identifier" class="control-label">Question Identifier</label>
                             <div class="controls form-group">
-                              <input type="text" class="form-control" name="question-identifier" ng-model="question.question_identifier">
+                              <input type="text" class="form-control" name="question-identifier" ng-model="question.question_identifier" required>
                             </div>
                             <label for="question-type" class="control-label">Question Type</label>
                             <div class="controls form-group">
@@ -80,7 +80,8 @@
                                 no-results-text="'This does not match any valid question type'"
                                 name="question-type"
                                 ng-model="question.question_type"
-                                ng-options="type for type in questionTypes()">
+                                ng-options="type for type in questionTypes()"
+                              >
                               </select>
                             </div>
                             <label for="content" class="control-label">Content</label>
@@ -117,7 +118,58 @@
                         </fieldset>
                       </form>
                     </div>
-                    <div class="tab-logic tab-pane">Logic</div>
+                    <div class="tab-logic tab-pane">Logic
+                      <fieldset ng-show="!$first">
+                        <legend class="section">
+                          Follow-up Question
+                        </legend>
+                        <div>
+                          <p class="text-muted">A follow up question is a question that asks for more information about a previous answer.
+                          You may re-use the response to the previous question in the creation of the new question.  Specify the question
+                          to follow up below, and insert a [followup] in the location to insert the previous response.</p>
+                          <label for="follow-up" class="control-label">Follow up on</label>
+                          <div class="controls form-group">
+                            <select 
+                              chosen
+                              width="'500px'"
+                              class="select2-container select-block-level"
+                              data-placeholder="Select a question type..."
+                              no-results-text="'This does not match any valid question type'"
+                              name="follow-up"
+                              ng-model="question.following_up_question_identifier"
+                              ng-options="q.identifier as q.question_identifier + ': ' + q.text for q in questionsBefore(question) track by q.question_identifier"
+                            >
+                            </select>
+                          </div>
+                        </div>
+                      </fieldset>
+                      <fieldset ng-show="!$last">
+                        <legend class="section">
+                          Skip Patterns
+                        </legend>
+                        <div>
+                          <p class="text-muted">A skip pattern goes to a specific question based on if the user selects a specific option
+                          when responding to a question.  Select the desired pattern for each option to this question.</p>
+                        <div ng-controller="OptionsCtrl" ng-init="init(<%= @instrument.id %>, question.id)">
+                          <div ng-repeat="option in options">
+                            <label for="follow-up" class="control-label">If {{option.text}} is selected, skip to:</label>
+                            <div class="controls form-group">
+                              <select 
+                                chosen
+                                width="'500px'"
+                                class="select2-container select-block-level"
+                                data-placeholder="Select a question identifier..."
+                                no-results-text="'This does not match any valid question identifier'"
+                                name="skip-pattern"
+                                ng-model="option.next_question"
+                                ng-options="q.identifier as q.question_identifier + ': ' + q.text for q in questionsAfter(question) track by q.question_identifier"
+                              >
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </fieldset>
+                    </div>
                     <div class="tab-advanced tab-pane">
                       <fieldset>
                         <legend class="section">

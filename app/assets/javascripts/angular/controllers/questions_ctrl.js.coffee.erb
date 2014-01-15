@@ -57,6 +57,12 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
       question.$delete()
       $scope.questions.splice($scope.questions.indexOf(question), 1)
 
+  $scope.questionsBefore = (question) ->
+    $scope.questions.slice(0, $scope.questions.indexOf(question))
+
+  $scope.questionsAfter = (question) ->
+    $scope.questions.slice($scope.questions.indexOf(question) + 1, $scope.questions.length)
+
   $scope.questionTypes = ->
     <%= Settings.question_types %>
 
