@@ -118,7 +118,7 @@
                         </fieldset>
                       </form>
                     </div>
-                    <div class="tab-logic tab-pane">Logic
+                    <div class="tab-logic tab-pane">
                       <fieldset ng-show="!$first">
                         <legend class="section">
                           Follow-up Question
@@ -133,11 +133,11 @@
                               chosen
                               width="'500px'"
                               class="select2-container select-block-level"
-                              data-placeholder="Select a question type..."
-                              no-results-text="'This does not match any valid question type'"
+                              data-placeholder="Select a question identifier..."
+                              no-results-text="'This does not match any valid question'"
                               name="follow-up"
                               ng-model="question.following_up_question_identifier"
-                              ng-options="q.identifier as q.question_identifier + ': ' + q.text for q in questionsBefore(question) track by q.question_identifier"
+                              ng-options="q.question_identifier as q.question_identifier + ': ' + q.text for q in questionsBefore(question)"
                             >
                             </select>
                           </div>
@@ -162,7 +162,7 @@
                                 no-results-text="'This does not match any valid question identifier'"
                                 name="skip-pattern"
                                 ng-model="option.next_question"
-                                ng-options="q.identifier as q.question_identifier + ': ' + q.text for q in questionsAfter(question) track by q.question_identifier"
+                                ng-options="q.question_identifier as q.question_identifier + ': ' + q.text for q in questionsAfter(question)"
                               >
                               </select>
                             </div>
