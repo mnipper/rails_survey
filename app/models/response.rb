@@ -9,10 +9,11 @@
 #  created_at     :datetime
 #  updated_at     :datetime
 #  survey_uuid    :string(255)
+#  special_response :string(255)
 #
 
 class Response < ActiveRecord::Base
-  attr_accessible :question_id, :text, :other_response, :survey_uuid
+  attr_accessible :question_id, :text, :other_response, :special_response, :survey_uuid
   belongs_to :question
   belongs_to :survey, foreign_key: :survey_uuid, primary_key: :uuid
   delegate :device, to: :survey 

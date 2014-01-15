@@ -16,6 +16,7 @@
           <th>Question Text</th>
           <th>Question Options</th>
           <th>Response</th>
+          <th>Special Response</th>
           <th>Other Response</th>
           <th>Created at</th>
         </tr>
@@ -37,7 +38,8 @@
               <% end %>
             <ul>
           </td>
-          <td> <%= response.versioned_response %> </td>
+          <td><%= response.versioned_response %> </td>
+          <td><%= response.special_response ? response.special_response : 'NA' %></td>
           <td><%= response.other_response ? response.other_response : 'NA' %></td>
           <td><%= response.created_at %> </td>
         </tr>

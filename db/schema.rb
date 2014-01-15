@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140113155453) do
+ActiveRecord::Schema.define(version: 20140114203035) do
 
   create_table "devices", force: true do |t|
     t.string   "identifier"
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 20140113155453) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "survey_uuid"
+    t.string   "special_response"
   end
 
   create_table "surveys", force: true do |t|
