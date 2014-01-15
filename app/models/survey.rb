@@ -15,7 +15,7 @@ class Survey < ActiveRecord::Base
   attr_accessible :instrument_id, :instrument_version_number, :uuid, :device_id
   belongs_to :instrument
   belongs_to :device
-  has_many :responses, foreign_key: :survey_uuid, primary_key: :uuid
+  has_many :responses, foreign_key: :survey_uuid, primary_key: :uuid, dependent: :destroy
   
   validates :device_id, presence: true, allow_blank: false
   validates :uuid, presence: true, allow_blank: false
