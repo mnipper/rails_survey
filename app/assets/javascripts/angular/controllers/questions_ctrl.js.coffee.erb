@@ -35,7 +35,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
     else
       $scope.edit_question.$save({},
         (data, headers) -> $scope.$broadcast('SAVE_QUESTION', data.id),
-        (data, headers) -> alert "Error saving question"
+        (data, headers) -> alert 'Error saving question'
       )
     $scope.edit_question = null
 
@@ -56,6 +56,12 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
     if confirm("Are you sure you want to delete this question?")
       question.$delete()
       $scope.questions.splice($scope.questions.indexOf(question), 1)
+
+  $scope.questionsBefore = (question) ->
+    $scope.questions.slice(0, $scope.questions.indexOf(question))
+
+  $scope.questionsAfter = (question) ->
+    $scope.questions.slice($scope.questions.indexOf(question) + 1, $scope.questions.length)
 
   $scope.questionTypes = ->
     <%= Settings.question_types %>
