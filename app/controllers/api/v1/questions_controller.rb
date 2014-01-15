@@ -17,7 +17,13 @@ module Api
       end
 
       def create
-        respond_with Question.create(params)
+        instrument = Instrument.find(params[:instrument_id])
+        question = instrument.questions.create(params[:question])
+        if question.save
+          render json: question, status: :created
+        else
+          render json: question, status: :unprocessable_entity
+        end
       end
 
       def update

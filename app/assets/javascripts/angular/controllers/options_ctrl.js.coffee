@@ -3,10 +3,11 @@ App.controller 'OptionsCtrl', ['$scope', 'Option', ($scope, Option) ->
   $scope.init = (instrument_id, question_id) ->
     $scope.instrument_idx = instrument_id
     $scope.question_idx = question_id
-    $scope.options = Option.query({"instrument_id": instrument_id, "question_id": question_id})
+    if instrument_id and question_id
+      $scope.options = Option.query({"instrument_id": instrument_id, "question_id": question_id})
 
   $scope.$on('SAVE_QUESTION', (event, id) ->
-    if ($scope.question_idx == id)
+    if ($scope.question_idx == id or !$scope.question_idx)
       angular.forEach $scope.options, (option, index) ->
         $scope.question_idx = id
         option.instrument_id = $scope.instrument_idx
