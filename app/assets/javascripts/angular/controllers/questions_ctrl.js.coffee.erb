@@ -2,6 +2,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
   $scope.questions = []
   $scope.selectedQuestions = []
   $scope.init = (instrument_id) ->
+    $scope.instrument_id = instrument_id
     $scope.questions = Question.query({"instrument_id": instrument_id})
 
   $scope.sortableOptions = {
@@ -17,9 +18,23 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
   $scope.editQuestion = (question) ->
     $scope.edit_question = question
 
+  $scope.newQuestion = ->
+    question = new Question()
+    question.instrument_id = $scope.instrument_id
+    $scope.questions.push(question)
+    $scope.edit_question = question
+
   $scope.saveQuestion = ->
-    $scope.$broadcast('SAVE_QUESTION')
-    $scope.edit_question.$update()
+    if $scope.edit_question.id
+      $scope.edit_question.$update({},
+        (data, headers) -> $scope.$broadcast('SAVE_QUESTION', data.id),
+        (data, headers) -> alert 'Error updating question'
+      )
+    else
+      $scope.edit_question.$save({},
+        (data, headers) -> $scope.$broadcast('SAVE_QUESTION', data.id),
+        (data, headers) -> alert 'Error saving question'
+      )
     $scope.edit_question = null
 
   $scope.cancelQuestion = ->
