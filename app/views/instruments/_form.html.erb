@@ -119,7 +119,7 @@
                       </form>
                     </div>
                     <div class="tab-logic tab-pane">
-                      <fieldset ng-show="!$first">
+                      <fieldset ng-hide="$first">
                         <legend class="section">
                           Follow-up Question
                         </legend>
@@ -143,7 +143,7 @@
                           </div>
                         </div>
                       </fieldset>
-                      <fieldset ng-show="!$last">
+                      <fieldset ng-hide="$last">
                         <legend class="section">
                           Skip Patterns
                         </legend>
