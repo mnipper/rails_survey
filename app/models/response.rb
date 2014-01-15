@@ -39,12 +39,12 @@ class Response < ActiveRecord::Base
 
   def self.export(format)
     format << ['qid', 'instrument_id', 'instrument_version_number', 'instrument_title', 
-      'survey_uuid', 'device_id', 'response', 'other_response', 'special_response']
+      'survey_uuid', 'device_id', 'response', 'other_response']
     all.each do |response|
       format << [response.question.question_identifier, response.instrument.id,
         response.instrument_version_number, response.instrument.title,
         response.survey_uuid, response.device.identifier, response.text,
-        response.other_response, response.special_response]
+        response.other_response]
     end
   end
 
