@@ -14,7 +14,6 @@
           </ul>
         </div>
       <% end %>
-
       <div class="field bottom-buffer">
         <%= f.label :title, 'Instrument Title' %><br />
         <%= f.text_field :title, class: 'form-control' %>
@@ -24,6 +23,12 @@
         <%= f.label :language %>
         <%= f.select(:language, options_for_select(Settings.languages, @instrument.language)) %>
       </div>
+
+      <div class="top-buffer pull-right">
+        <%= f.submit class: 'btn btn-primary btn-large' %>
+      </div>
+    <% end %>
+
 
       <div ng-controller="QuestionsCtrl" ng-init="init(<%= @instrument.id %>)">
         <input type="search" ng-model="q" placeholder="Search questions..." class="form-control bottom-buffer">
@@ -139,19 +144,9 @@
             </div>
           </div>
         </div>
+        <div class="top-buffer">
+          <a class="btn btn-success" ng-click="newQuestion()"><i class="icon-plus"></i> Add Question</a>
+        </div>
       </div>
-      <div class="top-buffer">
-        <a class="btn btn-success" ng-click="newQuestion()"><i class="icon-plus"></i> Add Question</a>
-      </div>
-
-      <%= f.fields_for :questions do |builder| %>
-        <%= render 'question_fields', f: builder %>
-      <% end %>
-      <%= link_to_add_fields "Add Question", f, :questions, class: 'btn btn-success top-buffer' %>
-      
-      <div class="top-buffer pull-right">
-        <%= f.submit class: 'btn btn-primary btn-large' %>
-      </div>
-    <% end %>
   </div>
 </section>
