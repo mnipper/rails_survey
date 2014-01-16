@@ -4,11 +4,13 @@ module Api
       respond_to :json
 
       def index
-        respond_with Instrument.all, include: :translations
+        project = Project.find(params[:project_id])
+        respond_with project.instruments, include: :translations
       end
 
       def show
-        respond_with Instrument.find(params[:id])
+        project = Project.find(params[:project_id])
+        respond_with project.instruments.find(params[:id])
       end
     end
   end

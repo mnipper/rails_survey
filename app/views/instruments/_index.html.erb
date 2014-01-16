@@ -1,4 +1,4 @@
-<section class="widget" ng-controller="InstrumentsCtrl">
+<section class="widget" ng-controller="InstrumentsCtrl" ng-init="initialize(<%= @project.id %>)">
   <header>
     <h4><i class="icon-edit"></i> Instruments</h4>
     <div class="actions hidden-xs-portrait">

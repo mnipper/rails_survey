@@ -1,7 +1,7 @@
 class InstrumentsController < ApplicationController
   def index
     @project = Project.find(params[:project_id])
-    @instruments = Instrument.all
+    @instruments = Instrument.where(:project_id => params[:project_id])
   end
 
   def show
@@ -16,6 +16,7 @@ class InstrumentsController < ApplicationController
 
   def create
     @instrument = Instrument.new(params[:instrument])
+    @instrument.project_id = params[:project_id]
     if @instrument.save
       redirect_to project_instrument_path(:project_id => params[:project_id], :id => @instrument), notice: "Successfully created instrument."
     else
@@ -41,6 +42,6 @@ class InstrumentsController < ApplicationController
   def destroy
     @instrument = Instrument.find(params[:id])
     @instrument.destroy
-    redirect_to instruments_url, notice: "Successfully destroyed instrument."
+    redirect_to project_instruments_url, notice: "Successfully destroyed instrument."
   end
 end
