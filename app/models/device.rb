@@ -9,12 +9,15 @@
 #
 
 class Device < ActiveRecord::Base
-  attr_accessible :identifer
+  attr_accessible :identifier
   has_many :surveys
+  has_many :projects
   validates :identifier, uniqueness: true, presence: true, allow_blank: false
 
   def danger_zone?
-    last_survey.updated_at < 1.day.ago
+    unless last_survey.nil?
+      last_survey.updated_at < 1.day.ago
+    end
   end
 
   def last_survey

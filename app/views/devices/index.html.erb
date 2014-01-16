@@ -17,8 +17,10 @@
         <tr class="<%= "danger" if device.danger_zone? %>">
           <td><%= device.identifier %></td>
           <td><%= device.surveys.count %></td>
-          <td><%= link_to device.last_survey.uuid, survey_path(device.last_survey) %></td>
-          <td><%= time_ago_in_words(device.last_survey.updated_at) %> ago</td>
+          <% unless device.last_survey.nil? %>
+            <td><%= link_to device.last_survey.uuid, project_survey_path(@project, device.last_survey) %></td>
+            <td><%= time_ago_in_words(device.last_survey.updated_at) %> ago </td>
+          <% end %>
         </tr>
     <% end %>
       </tbody>

@@ -1,5 +1,6 @@
 class DevicesController < ApplicationController
   def index
-    @devices = Device.all 
+    @project = Project.find(params[:project_id])
+    @devices = Device.all # TODO Fix
   end
 end
