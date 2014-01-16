@@ -2,13 +2,13 @@
 #
 # Table name: responses
 #
-#  id             :integer          not null, primary key
-#  question_id    :integer
-#  text           :string(255)
-#  other_response :string(255)
-#  created_at     :datetime
-#  updated_at     :datetime
-#  survey_uuid    :string(255)
+#  id               :integer          not null, primary key
+#  question_id      :integer
+#  text             :string(255)
+#  other_response   :string(255)
+#  created_at       :datetime
+#  updated_at       :datetime
+#  survey_uuid      :string(255)
 #  special_response :string(255)
 #
 
@@ -18,6 +18,7 @@ class Response < ActiveRecord::Base
   belongs_to :survey, foreign_key: :survey_uuid, primary_key: :uuid
   delegate :device, to: :survey 
   delegate :instrument, to: :survey
+  delegate :project, to: :survey
   delegate :instrument_version_number, to: :survey
 
   validates :question, presence: true

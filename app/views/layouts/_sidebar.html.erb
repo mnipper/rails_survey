@@ -1,7 +1,5 @@
-
 <nav id="sidebar" class="sidebar nav-collapse collapse">
   <ul id="side-nav" class="side-nav">
-    <% if current_project %>
         <li class="<%= current_page?(root_path) ? 'active' : 'panel' %>">
           <%= link_to root_path do %>
               <i class="icon-home"></i><span class="name">Dashboard</span>
@@ -52,6 +50,5 @@
         <li class="visible-xs">
           <a href="login.html"><i class="icon-signout"></i> <span class="name">Sign Out</span></a>
         </li>
-    <% end %>
   </ul>
 </nav>

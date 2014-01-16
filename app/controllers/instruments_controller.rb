@@ -1,23 +1,24 @@
 class InstrumentsController < ApplicationController
   def index
     @project = Project.find(params[:project_id])
-    @instruments = Instrument.where(:project_id => params[:project_id])
+    @instruments = @project.instruments
   end
 
   def show
-    @instrument = Instrument.find(params[:id])
     @project = Project.find(params[:project_id])
+    @instrument = @project.instruments.find(params[:id])
   end
 
   def new
     @project = Project.find(params[:project_id])
-    @instrument = Instrument.new
+    @instrument = @project.instruments.new
   end
 
   def create
-    @instrument = Instrument.new(params[:instrument])
+    @project = Project.find(params[:project_id])
+    @instrument = @project.instruments.new(params[:instrument])
     if @instrument.save
-      redirect_to project_instrument_path(:project_id => params[:project_id], :id => @instrument), notice: "Successfully created instrument."
+      redirect_to project_instrument_path(@project, @instrument), notice: "Successfully created instrument."
     else
       render :new
     end
@@ -25,12 +26,12 @@ class InstrumentsController < ApplicationController
 
   def edit
     @project = Project.find(params[:project_id])
-    @instrument = Instrument.find(params[:id])
+    @instrument = @project.instruments.find(params[:id])
   end
 
   def update
     @project = Project.find(params[:project_id])
-    @instrument = Instrument.find(params[:id])
+    @instrument = @project.instruments.find(params[:id])
     if @instrument.update_attributes(params[:instrument])
       redirect_to project_instrument_path(@project, @instrument), notice: "Successfully updated instrument."
     else
@@ -39,7 +40,8 @@ class InstrumentsController < ApplicationController
   end
 
   def destroy
-    @instrument = Instrument.find(params[:id])
+    @project = Project.find(params[:project_id])
+    @instrument = @project.instruments.find(params[:id])
     @instrument.destroy
     redirect_to project_instruments_url, notice: "Successfully destroyed instrument."
   end
