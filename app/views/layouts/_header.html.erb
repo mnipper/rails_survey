@@ -4,7 +4,7 @@
       <h4><%= link_to 'Rails Survey', root_path %></h4>
     </div>
 
-    <%= render 'layouts/sidebar' %>
+    <%= render 'layouts/sidebar' if current_project %>
 
     <div class="wrap">
       <header class="page-header">
