@@ -3,7 +3,7 @@
     <h4><i class="icon-globe"></i> Translation for <%= @instrument.title %></h4>
   </header>
   <div class="body">
-    <%= form_for [@instrument, @instrument_translation] do |f| %>
+    <%= form_for [@project, @instrument, @instrument_translation] do |f| %>
       <% if @instrument_translation.errors.any? %>
         <div class="error_messages">
           <h2><%= pluralize(@instrument_translation.errors.count, "error") %> prohibited this translation from being saved:</h2>

@@ -1,5 +1,5 @@
 <body class="background-dark">
-  <% if user_signed_in? %>
+<% if user_signed_in? %>
     <div class="logo">
       <h4><%= link_to 'Rails Survey', root_path %></h4>
     </div>
@@ -11,9 +11,9 @@
         <div class="navbar">
           <ul class="nav navbar-nav navbar-right pull-right">
             <li class="hidden-xs">
-            <%= button_to destroy_user_session_path, :method => :delete, class: 'btn btn-default' do %>
-              <i class="icon-signout"></i>
-            <% end %>
+              <%= button_to destroy_user_session_path, :method => :delete, class: 'btn btn-default' do %>
+                  <i class="icon-signout"></i>
+              <% end %>
             </li>
           </ul>
           <div class="notifications pull-right">
@@ -24,4 +24,4 @@
           </div>
         </div>
       </header>
-    <% end %>
+<% end %>

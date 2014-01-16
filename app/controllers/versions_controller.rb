@@ -1,5 +1,6 @@
 class VersionsController < ApplicationController
   def index
+    @project = Project.find(params[:project_id])
     @instrument = Instrument.find(params[:instrument_id])
   end
 

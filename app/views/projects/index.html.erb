@@ -1,4 +1,4 @@
-<section class="widget" ng-controller="ProjectsCtrl">
+<section class="widget">
   <header>
     <h3><i class="icon-folder-open"></i> Projects </h3>
     <div class="actions hidden-xs-portrait">
@@ -14,17 +14,16 @@
       <tr>
         <th>Name</th>
         <th>Description</th>
-        <th>Instruments</th>
       </tr>
       </thead>
 
       <tbody>
-      <tr ng-repeat="project in projects">
-        <!-- <td><a ng-click="viewProject(project.id)">{{project.name}}</a></td> -->
-        <td><a href="/projects/{{project.id}}">{{project.name}}</a></td>
-        <td>{{project.description}}</td>
-        <td> <a ng-click="viewInstruments()">Instruments</a></td>
-      </tr>
+      <% @projects.each do |project| %>
+          <tr>
+            <td><%= link_to project.name, project %></td>
+            <td><%= project.description %></td>
+          </tr>
+      <% end %>
       </tbody>
     </table>
   </div>

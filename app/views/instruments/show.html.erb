@@ -3,13 +3,13 @@
 <section class="widget">
   <header>
     <div class="actions hidden-xs-portrait"> 
-      <%= link_to instrument_instrument_translations_path(@instrument), class: 'btn btn-primary' do %>
+      <%= link_to project_instrument_instrument_translations_path(@project, @instrument), class: 'btn btn-primary' do %>
         <i class="icon-globe"></i> Translations
       <% end %>
-      <%= link_to instrument_versions_path(@instrument), class: 'btn btn-primary' do %>
+      <%= link_to project_instrument_versions_path(@project, @instrument), class: 'btn btn-primary' do %>
         <i class="icon-repeat"></i> Past Versions
       <% end %>
-      <%= link_to edit_instrument_path(@instrument), class: 'btn btn-primary' do %>
+      <%= link_to edit_project_instrument_path(@project, @instrument), class: 'btn btn-primary' do %>
         <i class="icon-edit"></i> Edit Instrument 
       <% end %>
     </div>
