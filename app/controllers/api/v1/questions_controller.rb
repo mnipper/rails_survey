@@ -17,8 +17,9 @@ module Api
       end
 
       def create
-        instrument = Instrument.find(params[:instrument_id])
-        question = instrument.questions.create(params[:question])
+        project = Project.find(params[:project_id])
+        instrument = project.instruments.find(params[:instrument_id])
+        question = instrument.questions.new(params[:question])
         if question.save
           render json: question, status: :created
         else

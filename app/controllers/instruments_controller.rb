@@ -16,7 +16,6 @@ class InstrumentsController < ApplicationController
 
   def create
     @instrument = Instrument.new(params[:instrument])
-    @instrument.project_id = params[:project_id]
     if @instrument.save
       redirect_to project_instrument_path(:project_id => params[:project_id], :id => @instrument), notice: "Successfully created instrument."
     else
