@@ -9,11 +9,14 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
     cursor: 'move',
     handle: '.move-question',
     axis: 'y',
-    stop: (e, ui) ->
-      angular.forEach $scope.questions, (question, index) ->
-        question.number_in_instrument = index + 1
-        question.$update()
+    stop: (e, ui) -> $scope.updateQuestionNumbers()
   }
+
+  $scope.updateQuestionNumbers = ->
+    angular.forEach $scope.questions, (question, index) ->
+      question.number_in_instrument = index + 1
+      if question.id
+        question.$update()
 
   $scope.editQuestion = (question) ->
     $scope.edit_question = question
@@ -56,6 +59,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
     if confirm("Are you sure you want to delete this question?")
       question.$delete()
       $scope.questions.splice($scope.questions.indexOf(question), 1)
+      $scope.updateQuestionNumbers()
 
   $scope.questionsBefore = (question) ->
     $scope.questions.slice(0, $scope.questions.indexOf(question))
