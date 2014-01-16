@@ -10,6 +10,7 @@
 #  alignment               :string(255)
 #  child_update_count      :integer          default(0)
 #  previous_question_count :integer
+#  project_id              :integer
 #
 
 require "spec_helper"
