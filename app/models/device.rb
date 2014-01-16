@@ -11,6 +11,7 @@
 class Device < ActiveRecord::Base
   attr_accessible :identifier
   has_many :surveys
+  has_many :project_devices
   has_many :projects, through: :project_devices
   validates :identifier, uniqueness: true, presence: true, allow_blank: false
 

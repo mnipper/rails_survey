@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   include ProjectsHelper
 
   def after_sign_in_path_for(resource_or_scope)
-    instruments_path
+    root_path
   end
 
   def respond_to_ajax
