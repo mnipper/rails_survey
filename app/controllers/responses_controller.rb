@@ -1,6 +1,7 @@
 class ResponsesController < ApplicationController
   def index
-    @responses = Response.all
+    @project = Project.find(params[:project_id])
+    @responses = @project.responses.all
     respond_to do |format|
       format.csv { render text: @responses.to_csv }
     end
