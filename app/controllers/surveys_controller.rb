@@ -1,6 +1,7 @@
 class SurveysController < ApplicationController
   def index
-    @surveys = Survey.all
+    @project = Project.find(params[:project_id])
+    @surveys = @project.surveys
   end
 
   def show

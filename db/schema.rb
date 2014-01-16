@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140116204915) do
+ActiveRecord::Schema.define(version: 20140116221149) do
 
   create_table "devices", force: true do |t|
     t.string   "identifier"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 20140116204915) do
     t.datetime "updated_at"
     t.string   "survey_uuid"
     t.string   "special_response"
+    t.integer  "project_id"
   end
 
   create_table "surveys", force: true do |t|
@@ -106,6 +107,7 @@ ActiveRecord::Schema.define(version: 20140116204915) do
     t.string   "uuid"
     t.integer  "device_id"
     t.integer  "instrument_version_number"
+    t.integer  "project_id"
   end
 
   add_index "surveys", ["uuid"], name: "index_surveys_on_uuid"
