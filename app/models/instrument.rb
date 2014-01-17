@@ -19,6 +19,7 @@ class Instrument < ActiveRecord::Base
   include LanguageAssignable
 
   attr_accessible :title, :language, :alignment, :questions_attributes, :previous_question_count, :child_update_count
+  belongs_to :project
   has_many :questions, dependent: :destroy
   has_many :surveys
   has_many :translations, foreign_key: 'instrument_id', class_name: 'InstrumentTranslation', dependent: :destroy
@@ -28,7 +29,6 @@ class Instrument < ActiveRecord::Base
   before_save :update_question_count
 
   validates :title, presence: true, allow_blank: false
-  belongs_to :project
 
   def self.instrument_response_count
     @response_map = []

@@ -9,7 +9,6 @@
 #  uuid                      :string(255)
 #  device_id                 :integer
 #  instrument_version_number :integer
-#  project_id                :integer
 #
 
 require "spec_helper"
