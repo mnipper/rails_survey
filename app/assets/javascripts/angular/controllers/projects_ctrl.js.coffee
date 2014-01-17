@@ -3,7 +3,6 @@ App.controller 'ProjectsCtrl', ['$scope', '$location', 'Project', ($scope, $loca
 
   $scope.viewProject = (projectId) ->
     $location.url('/projects/'+projectId).replace()
-    #$scope.$apply()
 
   $scope.viewInstruments = ->
     $location.url('/instruments').replace()
