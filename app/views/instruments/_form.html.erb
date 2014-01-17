@@ -93,15 +93,15 @@
                               <fieldset>
                                 <legend class="section">
                                   Options 
-                                  <a ng-click="addOption()" class="btn btn-xs btn-primary pull-right">
+                                  <button type="submit" ng-click="addOption()" class="btn btn-xs btn-primary pull-right">
                                     <i class="icon-plus"></i> Add Option
-                                  </a>
+                                  </button>
                                 </legend>
                                   <div class="controls form-group">
                                     <ol>
                                       <li ng-repeat="option in options">
                                         <div class="input-group">
-                                          <input type="text" class="form-control" ng-model="option.text"> 
+                                          <input type="text" class="form-control" ng-model="option.text" autofocus="autofocus"> 
                                           <div class="input-group-btn">
                                             <button ng-click="removeOption(option)" class="btn btn-danger">
                                               <i class="icon-trash"></i>
