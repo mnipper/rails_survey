@@ -15,6 +15,7 @@ class Project < ActiveRecord::Base
   has_many :surveys, through: :instruments
   has_many :project_devices, dependent: :destroy
   has_many :devices, through: :project_devices
+  has_many :responses, through: :surveys
 
   validates :name, presence: true, allow_blank: false
   validates :description, presence: true, allow_blank: true
