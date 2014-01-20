@@ -3,6 +3,7 @@ FactoryGirl.define do
     question
     survey
     text 'a'
+    special_response 'SKIP'
     other_response 'other'
   end
 

@@ -54,6 +54,7 @@ describe Response do
           "survey_uuid",
           "device_id",
           "response",
+          "special_response",
           "other_response"
         ],
         [@response.question.question_identifier,
@@ -63,6 +64,7 @@ describe Response do
           @response.survey.uuid,
           @response.survey.device.identifier,
           "a",
+          "SKIP",
           'other']
         ]
     end
