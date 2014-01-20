@@ -27,5 +27,6 @@
 //= require app
 //= require ../../../vendor/assets/javascripts/ui-sortable
 //= require ../../../vendor/assets/javascripts/chosen
+//= require ../../../vendor/assets/javascripts/loading-bar
 //= require_tree ./angular
 //= require_directory .
