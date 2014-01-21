@@ -30,7 +30,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
     question.project_id = $scope.project_id
     question.instrument_id = $scope.instrument_id
     question.number_in_instrument = $scope.questions.length + 1
-    question.question_identifier = "q_#{question.project_id}_#{question.instrument_id}_#{question.number_in_instrument}"
+    question.question_identifier = "q_#{question.project_id}_#{question.instrument_id}_#{$scope.uniqueId()}"
     $scope.questions.push(question)
     $scope.edit_question = question
 
@@ -72,6 +72,9 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
       question.$delete()
       $scope.questions.splice($scope.questions.indexOf(question), 1)
       $scope.updateQuestionNumbers()
+
+  $scope.uniqueId = ->
+    new Date().getTime().toString(36).split("").reverse().join("")
 
   $scope.questionsBefore = (question) ->
     $scope.questions.slice(0, $scope.questions.indexOf(question))
