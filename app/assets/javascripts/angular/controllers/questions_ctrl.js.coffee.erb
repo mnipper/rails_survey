@@ -17,6 +17,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
     angular.forEach $scope.questions, (question, index) ->
       question.number_in_instrument = index + 1
       if question.id
+        question.project_id = $scope.project_id
         question.$update()
 
   $scope.editQuestion = (question) ->
@@ -36,12 +37,18 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
   $scope.saveQuestion = ->
     if $scope.edit_question.id
       $scope.edit_question.$update({},
-        (data, headers) -> $scope.$broadcast('SAVE_QUESTION', data.id),
+        (data, headers) ->
+          $scope.$broadcast('SAVE_QUESTION', data.id)
+          $scope.updateQuestionNumbers()
+        ,
         (data, headers) -> alert 'Error updating question'
       )
     else
       $scope.edit_question.$save({},
-        (data, headers) -> $scope.$broadcast('SAVE_QUESTION', data.id),
+        (data, headers) ->
+          $scope.$broadcast('SAVE_QUESTION', data.id)
+          $scope.updateQuestionNumbers()
+        ,
         (data, headers) -> alert 'Error saving question'
       )
     $scope.edit_question = null
@@ -61,6 +68,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
 
   $scope.deleteQuestion = (question) ->
     if confirm("Are you sure you want to delete this question?")
+      question.project_id = $scope.project_id
       question.$delete()
       $scope.questions.splice($scope.questions.indexOf(question), 1)
       $scope.updateQuestionNumbers()
