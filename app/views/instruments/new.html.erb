@@ -1,3 +1,34 @@
 <h1>New Instrument</h1>
 
-<%= render "form" %>
+<section class="widget">
+  <header>
+    <h4><i class="icon-edit"></i> Instruments</h4>
+  </header>
+  <div class="body">
+    <%= form_for [@project, @instrument] do |f| %>
+      <% if @instrument.errors.any? %>
+        <div class="error_messages">
+          <h2><%= pluralize(@instrument.errors.count, "error") %> prohibited this survey from being saved:</h2>
+          <ul>
+          <% @instrument.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class="field bottom-buffer">
+        <%= f.label :title, 'Instrument Title' %><br />
+        <%= f.text_field :title, class: 'form-control' %>
+      </div>
+
+      <div class="field bottom-buffer">
+        <%= f.label :language %>
+        <%= f.select(:language, options_for_select(Settings.languages, @instrument.language)) %>
+      </div>
+
+      <div class="top-buffer pull-right">
+        <%= f.submit class: 'btn btn-primary btn-large' %>
+      </div>
+    <% end %>
+  </div>
+</section>
