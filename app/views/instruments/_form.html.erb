@@ -132,6 +132,7 @@
                             <select 
                               chosen
                               width="'500px'"
+                              allow-single-deselect="true"
                               class="select2-container select-block-level"
                               data-placeholder="Select a question identifier..."
                               no-results-text="'This does not match any valid question'"
@@ -139,6 +140,7 @@
                               ng-model="question.following_up_question_identifier"
                               ng-options="q.question_identifier as q.question_identifier + ': ' + q.text for q in questionsBefore(question)"
                             >
+                              <option value=""></option>
                             </select>
                           </div>
                         </div>
@@ -157,6 +159,7 @@
                               <select 
                                 chosen
                                 width="'500px'"
+                                allow-single-deselect="true"
                                 class="select2-container select-block-level"
                                 data-placeholder="Select a question identifier..."
                                 no-results-text="'This does not match any valid question identifier'"
@@ -164,6 +167,7 @@
                                 ng-model="option.next_question"
                                 ng-options="q.question_identifier as q.question_identifier + ': ' + q.text for q in questionsAfter(question)"
                               >
+                                <option value=""></option>
                               </select>
                             </div>
                           </div>
