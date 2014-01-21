@@ -10,6 +10,7 @@
  *
  *= require_self
  *= require ../../../vendor/assets/lib/nvd3/src/nv.d3
+ *= require ../../../vendor/assets/stylesheets/loading-bar
  *= require bootstrap-original/bootstrap
  *= require bootstrap-original/responsive
  *= require font-awesome/css/font-awesome.min

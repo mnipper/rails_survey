@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Questions API" do
   before :each do
     @questions = FactoryGirl.create_list(:question, 5)
-    get '/api/v1/questions'
+    get "/api/v1/projects/#{@questions.first.project.id}/questions"
     @json = JSON.parse(response.body)
   end
 
@@ -44,12 +44,8 @@ describe "Questions API" do
   describe "translation text" do
     before :each do
       @translation = create(:question_translation)
-      get '/api/v1/questions'
+      get "/api/v1/projects/#{@questions.first.project.id}/questions"
       @json = JSON.parse(response.body)
-    end
-
-    it "should add a new question for the translation" do
-      expect(@json.length).to eq(6)
     end
 
     it "has the correct translation text" do

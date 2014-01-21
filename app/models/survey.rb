@@ -9,15 +9,14 @@
 #  uuid                      :string(255)
 #  device_id                 :integer
 #  instrument_version_number :integer
-#  project_id                :integer
 #
 
 class Survey < ActiveRecord::Base
   attr_accessible :instrument_id, :instrument_version_number, :uuid, :device_id
-  belongs_to :project
   belongs_to :instrument
   belongs_to :device
   has_many :responses, foreign_key: :survey_uuid, primary_key: :uuid, dependent: :destroy
+  delegate :project, to: :instrument
   
   validates :device_id, presence: true, allow_blank: false
   validates :uuid, presence: true, allow_blank: false

@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe "Instruments API" do
   before :each do
-    FactoryGirl.create_list(:instrument, 5)
-    get '/api/v1/instruments'
+    @project = FactoryGirl.create(:project)
+    @instruments = FactoryGirl.create_list(:instrument, 5, project: @project)
+    get "/api/v1/projects/#{@project.id}/instruments"
     @json = JSON.parse(response.body)
   end
 
@@ -37,12 +38,8 @@ describe "Instruments API" do
   describe "translation text" do
     before :each do
       @translation = create(:instrument_translation)
-      get '/api/v1/instruments'
+      get "/api/v1/projects/#{@translation.instrument.project.id}/instruments"
       @json = JSON.parse(response.body)
-    end
-
-    it "should add a new instrument for the translation" do
-      expect(@json.length).to eq(6)
     end
 
     it "has the correct translation title" do

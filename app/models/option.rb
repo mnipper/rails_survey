@@ -14,6 +14,8 @@ class Option < ActiveRecord::Base
   include Translatable
   attr_accessible :question_id, :text, :next_question
   belongs_to :question
+  delegate :instrument, to: :question
+  delegate :project, to: :question
   has_many :translations, foreign_key: 'option_id', class_name: 'OptionTranslation', dependent: :destroy
   has_paper_trail
 
