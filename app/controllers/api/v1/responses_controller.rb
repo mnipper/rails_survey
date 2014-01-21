@@ -7,7 +7,7 @@ module Api
       def create
         @response = Response.new(params[:response])
         if @response.save
-          respond_with @response
+          render json: @response, status: :created
         else
           render nothing: true, status: :unprocessable_entity
         end
