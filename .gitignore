@@ -31,3 +31,5 @@ vcs.xml
 
 #Ignore bin
 bin/
+
+tests_angular/
