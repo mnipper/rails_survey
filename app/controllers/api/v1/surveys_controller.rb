@@ -17,7 +17,7 @@ module Api
         end
 
         if @survey.save
-          respond_with @survey
+          render nothing: :true, status: :created
         else
           render nothing: true, status: :unprocessable_entity
         end
