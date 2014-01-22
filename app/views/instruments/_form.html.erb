@@ -91,7 +91,7 @@
                       <label for="content" class="control-label">Content</label>
                       <div class="controls form-group">
                         <%= render partial: 'layouts/toolbar' %>
-                        <textarea id="content" rows="4" ng-model="question.text" class="form-control"></textarea>
+                        <textarea id="content" rows="4" ng-model="question.text" class="form-control wysihtml5-area"></textarea>
                       </div>
                       <div ng-show="questionTypesWithOptions(question.question_type)">
                         <div ng-controller="OptionsCtrl" ng-init="init(<%= current_project.id %>, <%= @instrument.id %>, question.id)">
@@ -209,12 +209,14 @@
 <%#= javascript_include_tag 'scripts/toolbar' %>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        var editor = new wysihtml5.Editor("content", {
-            toolbar:      "wysihtml5-toolbar",
-            parserRules:  wysihtml5ParserRules
-        });
-    })
+    //$(document).ready(function() {
+        //$('.wysihtml5-area').each(function(i, elem) {
+            var editor = new wysihtml5.Editor("content", {
+                toolbar:      "wysihtml5-toolbar",
+                parserRules:  wysihtml5ParserRules
+            });
+        //});
+    //})
 </script>
 
 </div>
