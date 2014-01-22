@@ -29,6 +29,7 @@
     </div>
 <% end %>
 
+
 <div ng-controller="QuestionsCtrl" ng-init="init(<%= current_project.id %>, <%= @instrument.id %>)">
   <input type="search" ng-model="q" placeholder="Search questions..." class="form-control bottom-buffer">
   <div ui-sortable="sortableOptions" ng-model="questions">
@@ -59,11 +60,6 @@
                 <li><a href=".tab-general" data-toggle="tab">General</a></li>
                 <li><a href=".tab-logic" data-toggle="tab">Logic</a></li>
                 <li><a href=".tab-advanced" data-toggle="tab">Advanced</a></li>
-
-                <li>
-
-                </li>
-
               </ul>
             </header>
             <div class="body tab-content">
@@ -137,6 +133,7 @@
                       <select
                       chosen
                       width="'500px'"
+                      allow-single-deselect="true"
                       class="select2-container select-block-level"
                       data-placeholder="Select a question identifier..."
                       no-results-text="'This does not match any valid question'"
@@ -144,24 +141,26 @@
                       ng-model="question.following_up_question_identifier"
                       ng-options="q.question_identifier as q.question_identifier + ': ' + q.text for q in questionsBefore(question)"
                       >
+                        <option value=""></option>
                       </select>
                     </div>
                   </div>
                 </fieldset>
-                <fieldset ng-hide="$last">
+                <fieldset ng-hide="$last || !questionTypesWithOptions(question.question_type)">
                   <legend class="section">
                     Skip Patterns
                   </legend>
                   <div>
                     <p class="text-muted">A skip pattern goes to a specific question based on if the user selects a specific option
                       when responding to a question.  Select the desired pattern for each option to this question.</p>
-                    <div ng-controller="OptionsCtrl" ng-init="init(<%= @instrument.id %>, question.id)">
+                    <div ng-controller="OptionsCtrl" ng-init="init(<%= current_project.id %>, <%= @instrument.id %>, question.id)">
                       <div ng-repeat="option in options">
                         <label for="follow-up" class="control-label">If {{option.text}} is selected, skip to:</label>
                         <div class="controls form-group">
                           <select
                           chosen
                           width="'500px'"
+                          allow-single-deselect="true"
                           class="select2-container select-block-level"
                           data-placeholder="Select a question identifier..."
                           no-results-text="'This does not match any valid question identifier'"
@@ -169,6 +168,7 @@
                           ng-model="option.next_question"
                           ng-options="q.question_identifier as q.question_identifier + ': ' + q.text for q in questionsAfter(question)"
                           >
+                            <option value=""></option>
                           </select>
                         </div>
                       </div>
@@ -207,19 +207,16 @@
 </div>
 
 <%#= javascript_include_tag 'scripts/toolbar' %>
-
 <script type="text/javascript">
     //$(document).ready(function() {
-        //$('.wysihtml5-area').each(function(i, elem) {
-            var editor = new wysihtml5.Editor("content", {
-                toolbar:      "wysihtml5-toolbar",
-                parserRules:  wysihtml5ParserRules
-            });
-        //});
+    //$('.wysihtml5-area').each(function(i, elem) {
+    var editor = new wysihtml5.Editor("content", {
+        toolbar:      "wysihtml5-toolbar",
+        parserRules:  wysihtml5ParserRules
+    });
+    //});
     //})
 </script>
 
 </div>
-
 </section>
-
