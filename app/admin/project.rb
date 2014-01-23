@@ -1,17 +1,34 @@
 ActiveAdmin.register Project do
 
-  
-  # See permitted parameters documentation:
-  # https://github.com/gregbell/active_admin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # permit_params :list, :of, :attributes, :on, :model
-  #
-  # or
-  #
-  # permit_params do
-  #  permitted = [:permitted, :attributes]
-  #  permitted << :other if resource.something?
-  #  permitted
-  # end
-  
+  index do
+    column "Name" do |text|
+      truncate(text.name, length: 50)
+    end
+    column "Description" do |text|
+      truncate(text.description, length: 100)
+    end
+    column :created_at
+    column :updated_at
+    default_actions
+  end
+
+  show do |project|
+    attributes_table do
+      row :id
+      row :name
+      row :description
+      row :created_at
+      row :updated_at
+      row :users do
+        ul do
+          project.users.each do |user|
+            li {user.email}
+          end
+        end
+      end
+    end
+    active_admin_comments
+  end
+
+
 end

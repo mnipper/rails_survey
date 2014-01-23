@@ -21,4 +21,5 @@ class Project < ActiveRecord::Base
 
   validates :name, presence: true, allow_blank: false
   validates :description, presence: true, allow_blank: true
+
 end
