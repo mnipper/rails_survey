@@ -4,12 +4,11 @@ module ProjectsHelper
     self.current_project = project
   end
 
-  #TODO Incorporate current_user!!!
   def current_project
     @current_project = if session[:project_id]
-      Project.find(session[:project_id])
+      current_user.projects.find(session[:project_id])
     else
-      Project.first
+      current_user.projects.first
     end
   end
 
