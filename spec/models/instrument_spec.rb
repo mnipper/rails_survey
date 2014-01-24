@@ -11,6 +11,7 @@
 #  child_update_count      :integer          default(0)
 #  previous_question_count :integer
 #  project_id              :integer
+#  published               :boolean
 #
 
 require "spec_helper"

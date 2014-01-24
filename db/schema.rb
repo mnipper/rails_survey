@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140124153647) do
+ActiveRecord::Schema.define(version: 20140124200842) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20140124153647) do
     t.integer  "child_update_count",      default: 0
     t.integer  "previous_question_count"
     t.integer  "project_id"
+    t.boolean  "published"
   end
 
   create_table "option_translations", force: true do |t|

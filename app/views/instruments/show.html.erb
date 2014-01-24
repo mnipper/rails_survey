@@ -20,6 +20,17 @@
         <i class="icon-bookmark"></i>
         <strong>Current Version: <%= @instrument.current_version_number %></strong>
       </span>
+      <% if @instrument.published %>
+        <span class="label label-success">
+          <i class="icon-eye-open"></i>
+          <strong>Published</strong>
+        </span>
+      <% else %>
+        <span class="label label-danger">
+          <i class="icon-eye-close"></i>
+          <strong>Not Published</strong>
+        </span>
+      <% end %>
     </div>
   </div>
 
