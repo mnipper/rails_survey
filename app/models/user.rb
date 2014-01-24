@@ -19,13 +19,12 @@
 #
 
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :recoverable, :rememberable,
-          :trackable, :validatable
 
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
+  attr_accessible :email, :password, :password_confirmation, :project_ids
   before_save :ensure_authentication_token
-  has_many :projects
+  has_many :user_projects 
+  has_many :projects, through: :user_projects
 
   def ensure_authentication_token
     if authentication_token.blank?

@@ -80,3 +80,7 @@ gem 'chosen-rails'
 group :production do
   gem 'rails_12factor'
 end
+
+#active admin
+gem 'activeadmin', github: 'gregbell/active_admin'
+
