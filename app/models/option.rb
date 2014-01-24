@@ -13,6 +13,7 @@
 
 class Option < ActiveRecord::Base
   include Translatable
+  default_scope { order('number_in_question ASC') }
   attr_accessible :question_id, :text, :next_question, :number_in_question
   belongs_to :question
   delegate :instrument, to: :question
