@@ -13,7 +13,7 @@
 
 class Option < ActiveRecord::Base
   include Translatable
-  attr_accessible :question_id, :text, :next_question
+  attr_accessible :question_id, :text, :next_question, :number_in_question
   belongs_to :question
   delegate :instrument, to: :question
   delegate :project, to: :question
