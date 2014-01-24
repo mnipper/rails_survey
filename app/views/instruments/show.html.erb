@@ -30,7 +30,7 @@
     <div class="row" ng-repeat="question in questions | filter:q">
       <div class="col-md-3">
         <span class="tiny-column"><h4 style="display:inline"><strong>{{question.number_in_instrument}}</strong></h4></span>
-        <div class="icheckbox_square-grey" ng-click="toggleSelection(question)" ng-class="{checked: questionSelected(question)}"></div>
+        <!--<div class="icheckbox_square-grey" ng-click="toggleSelection(question)" ng-class="{checked: questionSelected(question)}"></div>-->
         <a class="btn btn-default move-question"><i class="icon-move"></i></a>
         <a class="btn btn-default" ng-click="editQuestion(question)"><i class="icon-edit"></i></a>
         <a class="btn btn-danger" ng-click="deleteQuestion(question)"><i class="icon-trash"></i></a>
@@ -40,7 +40,7 @@
           <header>
             <strong><h4>{{question.question_identifier}}</h4></strong>
             <div class="actions">
-              <a class="btn btn-xs btn-inverse"><i class="icon-arrow-down"></i> View more</a>
+              <!--<a class="btn btn-xs btn-inverse"><i class="icon-arrow-down"></i> View more</a>-->
             </div>
           </header>
           <div class="body">
