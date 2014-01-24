@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140124200842) do
+ActiveRecord::Schema.define(version: 20140124212146) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(version: 20140124200842) do
     t.string   "text"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "reg_ex_validation_message"
   end
 
   create_table "questions", force: true do |t|
@@ -122,6 +123,7 @@ ActiveRecord::Schema.define(version: 20140124200842) do
     t.string   "following_up_question_identifier"
     t.string   "reg_ex_validation"
     t.integer  "number_in_instrument"
+    t.string   "reg_ex_validation_message"
   end
 
   create_table "responses", force: true do |t|

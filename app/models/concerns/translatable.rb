@@ -9,10 +9,10 @@ module Translatable
     self.translations.find_by_language(language).send(field) if has_translation_for? language
   end
 
-  def add_or_update_translation_for(language, translated_text)
+  def add_or_update_translation_for(language, translated_text, field)
     unless translated_text.blank?
       translated = translations.where(language: language).first_or_initialize
-      translated.text = translated_text
+      translated.send("#{field}=".to_sym, translated_text)
       translated.save
     end
   end

@@ -63,12 +63,17 @@ class InstrumentTranslationsController < ApplicationController
 
     params[:question_translations].each_pair do |id, translation|
       question = instrument.questions.find(id)
-      question.add_or_update_translation_for(language, translation)
+      question.add_or_update_translation_for(language, translation, :text)
     end if params.has_key? :question_translations
+
+    params[:validation_translations].each_pair do |id, translation|
+      question = instrument.questions.find(id)
+      question.add_or_update_translation_for(language, translation, :reg_ex_validation_message)
+    end if params.has_key? :validation_translations
 
     params[:option_translations].each_pair do |id, translation|
       option = Option.find(id)
-      option.add_or_update_translation_for(language, translation)
+      option.add_or_update_translation_for(language, translation, :text)
     end if params.has_key? :option_translations
   end
 end
