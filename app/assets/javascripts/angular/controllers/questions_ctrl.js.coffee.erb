@@ -34,24 +34,26 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
     $scope.questions.push(question)
     $scope.edit_question = question
 
+  $scope.saveQuestionSuccess = (data, headers) ->
+    $scope.$broadcast('SAVE_QUESTION', data.id)
+    $scope.updateQuestionNumbers()
+    $scope.edit_question = null
+
+  $scope.saveQuestionFailure = (result, headers) ->
+    angular.forEach result.data.errors, (error, field) ->
+      alert error
+
   $scope.saveQuestion = ->
     if $scope.edit_question.id
       $scope.edit_question.$update({},
-        (data, headers) ->
-          $scope.$broadcast('SAVE_QUESTION', data.id)
-          $scope.updateQuestionNumbers()
-        ,
-        (data, headers) -> alert 'Error updating question'
+        (data, headers) -> $scope.saveQuestionSuccess(data, headers),
+        (result, headers) -> $scope.saveQuestionFailure(result, headers)
       )
     else
       $scope.edit_question.$save({},
-        (data, headers) ->
-          $scope.$broadcast('SAVE_QUESTION', data.id)
-          $scope.updateQuestionNumbers()
-        ,
-        (data, headers) -> alert 'Error saving question'
+        (data, headers) -> $scope.saveQuestionSuccess(data, headers),
+        (result, headers) -> $scope.saveQuestionFailure(result, headers)
       )
-    $scope.edit_question = null
 
   $scope.cancelQuestion = ->
     $scope.$broadcast('CANCEL_QUESTION')
