@@ -45,4 +45,10 @@ class InstrumentsController < ApplicationController
     @instrument.destroy
     redirect_to project_instruments_url, notice: "Successfully destroyed instrument."
   end
+
+  def mercury_update
+
+    render text: ''
+  end
+
 end

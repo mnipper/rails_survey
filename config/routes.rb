@@ -1,5 +1,7 @@
 RailsSurvey::Application.routes.draw do
 
+  mount Mercury::Engine => '/'
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :users
@@ -26,6 +28,7 @@ RailsSurvey::Application.routes.draw do
     resources :instruments do
       resources :versions, only: [:index, :show]
       resources :instrument_translations
+      member { post :mercury_update }
     end
 
     resources :responses

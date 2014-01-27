@@ -1,11 +1,11 @@
 <nav id="sidebar" class="sidebar nav-collapse collapse">
   <ul id="side-nav" class="side-nav">
-        <li class="<%= current_page?(root_path) ? 'active' : 'panel' %>">
-          <%= link_to root_path do %>
-              <i class="icon-home"></i><span class="name">Dashboard</span>
-          <% end %>
-        </li>
-
+    <li class="<%= current_page?(root_path) ? 'active' : 'panel' %>">
+      <%= link_to root_path do %>
+          <i class="icon-home"></i><span class="name">Dashboard</span>
+      <% end %>
+    </li>
+    <% if current_project.id %>
         <li class="<%= current_page?(project_devices_path(current_project)) ? 'active' : 'panel' %>">
           <%= link_to project_devices_path(current_project) do %>
               <i class="icon-mobile-phone"></i><span class="name">Devices</span>
@@ -46,9 +46,10 @@
               <i class="icon-download"></i><span class="name">Export</span>
           <% end %>
         </li>
+    <% end %>
 
-        <li class="visible-xs">
-          <a href="login.html"><i class="icon-signout"></i> <span class="name">Sign Out</span></a>
-        </li>
+    <li class="visible-xs">
+      <a href="login.html"><i class="icon-signout"></i> <span class="name">Sign Out</span></a>
+    </li>
   </ul>
 </nav>

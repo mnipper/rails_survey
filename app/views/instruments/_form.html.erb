@@ -14,9 +14,10 @@
           </ul>
         </div>
     <% end %>
+
     <div class="field bottom-buffer">
       <%= f.label :title, 'Instrument Title' %><br />
-      <%= f.text_field :title, class: 'form-control' %>
+      <%= raw f.text_field :title, class: 'form-control' %>
     </div>
 
     <div class="field bottom-buffer">
@@ -29,6 +30,7 @@
     </div>
 <% end %>
 
+<div id="editable-page" class="mercury-region" data-type="editable">
 
 <div ng-controller="QuestionsCtrl" ng-init="init(<%= current_project.id %>, <%= @instrument.id %>)">
   <input type="search" ng-model="q" placeholder="Search questions..." class="form-control bottom-buffer">
@@ -40,6 +42,8 @@
         <a class="btn btn-default move-question"><i class="icon-move"></i></a>
         <a class="btn btn-default" ng-click="editQuestion(question)"><i class="icon-edit"></i></a>
         <a class="btn btn-danger" ng-click="deleteQuestion(question)"><i class="icon-trash"></i></a>
+        <%#= link_to 'Editor', '/editor' + request.path, class: 'tab' %>
+
       </div>
       <div class="col-md-9">
         <div ng-hide="edit_question == question" class="widget">
@@ -60,6 +64,7 @@
                 <li><a href=".tab-general" data-toggle="tab">General</a></li>
                 <li><a href=".tab-logic" data-toggle="tab">Logic</a></li>
                 <li><a href=".tab-advanced" data-toggle="tab">Advanced</a></li>
+                <li><%= link_to 'Editor', '/editor' + request.path, :class => 'tab'  %></li>
               </ul>
             </header>
             <div class="body tab-content">
@@ -85,10 +90,11 @@
                         </select>
                       </div>
                       <label for="content" class="control-label">Content</label>
-                      <div class="controls form-group">
-                        <%= render partial: 'layouts/toolbar' %>
-                        <textarea id="content" rows="4" ng-model="question.text" class="form-control wysihtml5-area"></textarea>
-                      </div>
+                      <!-- <div id="question-contents" class="mercury-region" data-type="editable"> -->
+                        <div class="controls form-group" data-type="editable">
+                          <textarea id="content" rows="4" ng-model="question.text" class="form-control mercury-region" data-type="editable"></textarea>
+                        </div>
+                      <!-- </div> -->
                       <div ng-show="questionTypesWithOptions(question.question_type)">
                         <div ng-controller="OptionsCtrl" ng-init="init(<%= current_project.id %>, <%= @instrument.id %>, question.id)">
                           <fieldset>
@@ -205,18 +211,8 @@
     <a class="btn btn-success" ng-click="newQuestion()"><i class="icon-plus"></i> Add Question</a>
   </div>
 </div>
-
-<%#= javascript_include_tag 'scripts/toolbar' %>
-<script type="text/javascript">
-    //$(document).ready(function() {
-    //$('.wysihtml5-area').each(function(i, elem) {
-    var editor = new wysihtml5.Editor("content", {
-        toolbar:      "wysihtml5-toolbar",
-        parserRules:  wysihtml5ParserRules
-    });
-    //});
-    //})
-</script>
+</div>
 
 </div>
+
 </section>
