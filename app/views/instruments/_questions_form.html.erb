@@ -18,9 +18,7 @@
               <!--<a class="btn btn-xs btn-inverse"><i class="icon-arrow-down"></i> View more</a>-->
             </div>
           </header>
-          <div class="body">
-            {{question.text}}
-          </div>
+          <div class="body" ng-bind-html="question.text"></div>
         </div>
         <div ng-show="edit_question == question">
           <section class="widget widget-tabs">
@@ -55,8 +53,10 @@
                       </div>
                       <label for="content" class="control-label">Content</label>
                       <div class="controls form-group">
-                        <%= render partial: 'layouts/toolbar' %>
-                        <textarea id="content" rows="4" ng-model="question.text" class="form-control wysihtml5-area"></textarea>
+                          <!--<textarea id="content" rows="4" ng-model="question.text" class="form-control"> </textarea>-->
+                        <div id="content" rows="4" text-angular="text-angular" ta-toolbar="[['bold','italics','underline','insertLink'],['redo','undo','clear'],['html']]" ng-model="question.text">
+                        </div>
+
                       </div>
                       <div ng-show="questionTypesWithOptions(question.question_type)">
                         <div ng-controller="OptionsCtrl" ng-init="init(<%= current_project.id %>, <%= @instrument.id %>, question.id)">
@@ -178,17 +178,5 @@
     <a class="btn btn-success" ng-click="newQuestion()"><i class="icon-plus"></i> Add Question</a>
   </div>
 </div>
-
-<%#= javascript_include_tag 'scripts/toolbar' %>
-<script type="text/javascript">
-    //$(document).ready(function() {
-    //$('.wysihtml5-area').each(function(i, elem) {
-    var editor = new wysihtml5.Editor("content", {
-        toolbar:      "wysihtml5-toolbar",
-        parserRules:  wysihtml5ParserRules
-    });
-    //});
-    //})
-</script>
 
 </div>

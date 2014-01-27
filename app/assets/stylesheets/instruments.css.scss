@@ -6,3 +6,11 @@ ol.questions { list-style: decimal; padding-left: 40px; }
 ol.options { list-style: square; padding-left: 40px;}
 div.follow-up-question { display: none }
 div.follow-up-explanation { display: none }
+
+.ta-editor {
+  min-height: 200px;
+  height: auto;
+  overflow: auto;
+  font-family: inherit;
+  font-size: 100%;
+}
