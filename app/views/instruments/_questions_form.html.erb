@@ -53,10 +53,7 @@
                       </div>
                       <label for="content" class="control-label">Content</label>
                       <div class="controls form-group">
-                          <!--<textarea id="content" rows="4" ng-model="question.text" class="form-control"> </textarea>-->
-                        <div id="content" rows="4" text-angular="text-angular" ta-toolbar="[['bold','italics','underline','insertLink'],['redo','undo','clear'],['html']]" ng-model="question.text">
-                        </div>
-
+                        <div id="content" rows="4" text-angular="text-angular" ta-toolbar="[['bold','italics','underline','insertLink'],['redo','undo','clear'],['html']]" ng-model="question.text"></div>
                       </div>
                       <div ng-show="questionTypesWithOptions(question.question_type)">
                         <div ng-controller="OptionsCtrl" ng-init="init(<%= current_project.id %>, <%= @instrument.id %>, question.id)">

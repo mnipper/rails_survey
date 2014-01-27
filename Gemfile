@@ -84,5 +84,3 @@ end
 #active admin
 gem 'activeadmin', github: 'gregbell/active_admin'
 
-#Mercury Editor
-gem 'mercury-rails', :git => 'https://github.com/jejacks0n/mercury.git'
