@@ -20,22 +20,19 @@
         <i class="icon-bookmark"></i>
         <strong>Current Version: <%= @instrument.current_version_number %></strong>
       </span>
-    </div>
-    <ol class="questions">
-      <% @instrument.questions.each do |question| %>
-        <li>
-          <%= question.text %> <br />
-          <span class="label label-info"><%= question.question_type %></span>
-          <% if question.has_options? %>
-            <br />Options:
-            <ol class="options" start="0">
-              <% question.options.each do |option| %>
-                <li><%= option.text %></li>
-              <% end %>
-            </ol>
-          <% end %>
-        </li>
+      <% if @instrument.published %>
+        <span class="label label-success">
+          <i class="icon-eye-open"></i>
+          <strong>Published</strong>
+        </span>
+      <% else %>
+        <span class="label label-danger">
+          <i class="icon-eye-close"></i>
+          <strong>Not Published</strong>
+        </span>
       <% end %>
-    </ol>
+    </div>
   </div>
+
+  <%= render 'questions_form' %>
 </section>

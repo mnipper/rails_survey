@@ -11,14 +11,17 @@
 #  child_update_count      :integer          default(0)
 #  previous_question_count :integer
 #  project_id              :integer
+#  published               :boolean
 #
 
 class Instrument < ActiveRecord::Base
   include Translatable
   include Alignable
   include LanguageAssignable
+  scope :published, -> { where(published: true) }
 
-  attr_accessible :title, :language, :alignment, :questions_attributes, :previous_question_count, :child_update_count
+  attr_accessible :title, :language, :alignment, :questions_attributes, :previous_question_count, :child_update_count,
+      :published
   belongs_to :project
   has_many :questions, dependent: :destroy
   has_many :surveys

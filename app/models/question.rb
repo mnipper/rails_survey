@@ -12,6 +12,7 @@
 #  following_up_question_identifier :string(255)
 #  reg_ex_validation                :string(255)
 #  number_in_instrument             :integer
+#  reg_ex_validation_message        :string(255)
 #
 
 class Question < ActiveRecord::Base
@@ -19,7 +20,7 @@ class Question < ActiveRecord::Base
   default_scope { order('number_in_instrument ASC') }
   attr_accessible :text, :question_type, :question_identifier, :instrument_id,
           :options_attributes, :following_up_question_identifier, :reg_ex_validation,
-          :number_in_instrument
+          :number_in_instrument, :reg_ex_validation_message
   belongs_to :instrument
   has_many :responses
   has_many :options, dependent: :destroy

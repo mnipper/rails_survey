@@ -12,6 +12,7 @@
 #  following_up_question_identifier :string(255)
 #  reg_ex_validation                :string(255)
 #  number_in_instrument             :integer
+#  reg_ex_validation_message        :string(255)
 #
 
 require "spec_helper"

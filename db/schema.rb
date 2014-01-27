@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140122214035) do
+ActiveRecord::Schema.define(version: 20140124212146) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20140122214035) do
     t.integer  "child_update_count",      default: 0
     t.integer  "previous_question_count"
     t.integer  "project_id"
+    t.boolean  "published"
   end
 
   create_table "option_translations", force: true do |t|
@@ -86,6 +87,7 @@ ActiveRecord::Schema.define(version: 20140122214035) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "next_question"
+    t.integer  "number_in_question"
   end
 
   create_table "project_devices", force: true do |t|
@@ -108,6 +110,7 @@ ActiveRecord::Schema.define(version: 20140122214035) do
     t.string   "text"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "reg_ex_validation_message"
   end
 
   create_table "questions", force: true do |t|
@@ -120,6 +123,7 @@ ActiveRecord::Schema.define(version: 20140122214035) do
     t.string   "following_up_question_identifier"
     t.string   "reg_ex_validation"
     t.integer  "number_in_instrument"
+    t.string   "reg_ex_validation_message"
   end
 
   create_table "responses", force: true do |t|

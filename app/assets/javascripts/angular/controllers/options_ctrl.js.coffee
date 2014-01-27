@@ -20,6 +20,7 @@ App.controller 'OptionsCtrl', ['$scope', 'Option', ($scope, Option) ->
     if ($scope.question_id == id or !$scope.question_id)
       angular.forEach $scope.options, (option, index) ->
         $scope.question_id = id
+        option.number_in_question = index + 1
         option.project_id = $scope.project_id
         option.instrument_id = $scope.instrument_id
         option.question_id = $scope.question_id

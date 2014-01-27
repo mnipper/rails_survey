@@ -7,8 +7,6 @@ module ProjectsHelper
   def current_project
     @current_project = if session[:project_id]
       current_user.projects.find(session[:project_id])
-    else
-      current_user.projects.first
     end
   end
 
