@@ -5,10 +5,11 @@ describe "Responses API" do
     @question = FactoryGirl.create(:question)
     @survey = FactoryGirl.create(:survey)
     @response = FactoryGirl.build(:response)
+    @api_key = FactoryGirl.create(:api_key)
   end
 
   it 'returns a successful response if response is valid' do
-    post '/api/v1/responses',
+    post "/api/v1/projects/#{@question.instrument.project.id}/responses?access_token=#{@api_key.access_token}",
       response:
         {
           'question_id' => @question.id,
@@ -18,7 +19,7 @@ describe "Responses API" do
   end
 
   it 'returns an unsuccessful response if missing question id' do
-    post '/api/v1/responses',
+    post "/api/v1/projects/#{@question.instrument.project.id}/responses?access_token=#{@api_key.access_token}",
       response:
         {
           'survey_uuid' => @survey.uuid
@@ -27,7 +28,7 @@ describe "Responses API" do
   end
 
   it 'returns an unsuccessful response if missing survey uuid' do
-    post '/api/v1/responses',
+    post "/api/v1/projects/#{@question.instrument.project.id}/responses?access_token=#{@api_key.access_token}",
       response:
         {
           'question_id' => @question.id
@@ -36,7 +37,7 @@ describe "Responses API" do
   end
 
   it 'returns an unsuccessful response if invalid survey uuid' do
-    post '/api/v1/responses',
+    post "/api/v1/projects/#{@question.instrument.project.id}/responses?access_token=#{@api_key.access_token}",
       response:
         {
           'question_id' => @question.id,
@@ -46,7 +47,7 @@ describe "Responses API" do
   end
 
   it 'returns an unsuccessful response if invalid question id' do
-    post '/api/v1/responses',
+    post "/api/v1/projects/#{@question.instrument.project.id}/responses?access_token=#{@api_key.access_token}",
       response:
         {
           'question_id' => '-1',
@@ -56,6 +57,16 @@ describe "Responses API" do
   end
 
   it 'should not respond to a get request' do
-    lambda { get '/api/v1/responses' }.should raise_error
+    lambda { get "/api/v1/projects/#{@question.instrument.project.id}/resposnes?access_token=#{@api_key.access_token}" }.should raise_error
+  end
+
+  it 'should require an access token' do
+    post "/api/v1/projects/#{@question.instrument.project.id}/responses",
+      response:
+        {
+          'question_id' => @question.id,
+          'survey_uuid' => @survey.uuid
+        }
+        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:unauthorized])
   end
 end
