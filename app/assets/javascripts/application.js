@@ -23,9 +23,6 @@
 //= require ../../../vendor/assets/lib/bootstrap/dropdown
 //= require ../../../vendor/assets/lib/d3.layout.min
 //= require ../../../vendor/assets/lib/jquery-ui-1.10.1.custom
-//= require ../../../vendor/assets/lib/wysihtml5/advanced
-//= require ../../../vendor/assets/lib/wysihtml5/wysihtml5-0.3.0_rc2
-//= require ../../../vendor/assets/lib/bootstrap-wysihtml5/bootstrap-wysihtml5
 //= require chosen-jquery
 //= require app
 //= require ../../../vendor/assets/javascripts/ui-sortable

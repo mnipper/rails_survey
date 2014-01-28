@@ -1,40 +1,39 @@
 <section class="widget">
-<header>
-  <h4><i class="icon-edit"></i> Instrument</h4>
-</header>
-<div class="body">
-<%= form_for [@project, @instrument], html: {class: 'form-horizontal label-left'} do |f| %>
-    <% if @instrument.errors.any? %>
-        <div class="error_messages">
-          <h2><%= pluralize(@instrument.errors.count, "error") %> prohibited this survey from being saved:</h2>
-          <ul>
-            <% @instrument.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-            <% end %>
-          </ul>
-        </div>
+  <header>
+    <h4><i class="icon-edit"></i> Instrument</h4>
+  </header>
+  <div class="body">
+    <%= form_for [@project, @instrument], html: {class: 'form-horizontal label-left'} do |f| %>
+        <% if @instrument.errors.any? %>
+            <div class="error_messages">
+              <h2><%= pluralize(@instrument.errors.count, "error") %> prohibited this survey from being saved:</h2>
+              <ul>
+                <% @instrument.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+        <fieldset>
+          <%= f.label :title, 'Instrument Title', class: 'control-label' %><br />
+          <div class="controls form-group">
+            <%= f.text_field :title, class: 'form-control' %>
+          </div>
+
+          <%= f.label :language, class: 'control-label' %><br />
+          <div class="controls form-group">
+            <%= f.select(:language, options_for_select(Settings.languages, @instrument.language)) %>
+          </div>
+
+          <%= f.label :published, class: 'control-label' %><br />
+          <div class="controls form-group">
+            <%= f.check_box :published %>
+          </div>
+
+          <div class="pull-right">
+            <%= f.submit class: 'btn btn-primary btn-large' %>
+          </div>
+        </fieldset>
     <% end %>
-    <fieldset>
-      <%= f.label :title, 'Instrument Title', class: 'control-label' %><br />
-      <div class="controls form-group">
-        <%= f.text_field :title, class: 'form-control' %>
-      </div>
-
-      <%= f.label :language, class: 'control-label' %><br />
-      <div class="controls form-group">
-        <%= f.select(:language, options_for_select(Settings.languages, @instrument.language)) %>
-      </div>
-
-      <%= f.label :published, class: 'control-label' %><br />
-      <div class="controls form-group">
-        <%= f.check_box :published %>
-      </div>
-
-      <div class="pull-right">
-        <%= f.submit class: 'btn btn-primary btn-large' %>
-      </div>
-    </fieldset>
-<% end %>
-</div>
+  </div>
 </section>
-
