@@ -27,7 +27,7 @@ RailsSurvey::Application.configure do
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
+  config.assets.compile = true
 
   # Generate digests for assets URLs.
   config.assets.digest = true
@@ -74,7 +74,7 @@ RailsSurvey::Application.configure do
 
   # Disable automatic flushing of the log to improve performance.
   # config.autoflush_log = false
-  config.assets.precompile += %w( '.woff', '.eot', '.svg', '.ttf' )
+  config.assets.precompile += %w(.woff .eot .svg .ttf)
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
