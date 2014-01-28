@@ -69,6 +69,14 @@ describe "Surveys API" do
   end
 
   it 'should require an access token' do
-    lambda { get "/api/v1/projects/#{@instrument.project.id}/surveys" }.should raise_error
+    post "/api/v1/projects/#{@instrument.project.id}/surveys",
+      survey:
+        {
+          'instrument_id' => @instrument.id,
+          'instrument_version_number' => 0,
+          'device_identifier' => @device.identifier,
+          'uuid' => @survey.uuid
+        }
+    expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:unauthorized])
   end
 end
