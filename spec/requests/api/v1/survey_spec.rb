@@ -5,10 +5,11 @@ describe "Surveys API" do
     @instrument = FactoryGirl.create(:instrument)
     @device = FactoryGirl.create(:device)
     @survey = FactoryGirl.build(:survey)
+    @api_key = FactoryGirl.create(:api_key)
   end
 
   it 'returns a successful response if survey is invalid' do
-    post '/api/v1/surveys',
+    post "/api/v1/projects/#{@instrument.project.id}/surveys?access_token=#{@api_key.access_token}",
       survey:
         {
           'instrument_id' => @instrument.id,
@@ -20,7 +21,7 @@ describe "Surveys API" do
   end
 
   it 'returns an invalid response if survey is missing device identifier' do
-    post '/api/v1/surveys',
+    post "/api/v1/projects/#{@instrument.project.id}/surveys?access_token=#{@api_key.access_token}",
       survey:
         {
           'instrument_id' => @instrument.id,
@@ -31,7 +32,7 @@ describe "Surveys API" do
   end
 
   it 'returns an invalid response if survey is missing instrument id' do
-    post '/api/v1/surveys',
+    post "/api/v1/projects/#{@instrument.project.id}/surveys?access_token=#{@api_key.access_token}",
       survey:
         {
           'instrument_version_number' => 0,
@@ -42,7 +43,7 @@ describe "Surveys API" do
   end
 
   it 'returns an invalid response if survey is missing uuid' do
-    post '/api/v1/surveys',
+    post "/api/v1/projects/#{@instrument.project.id}/surveys?access_token=#{@api_key.access_token}",
       survey:
         {
           'instrument_id' => @instrument.id,
@@ -53,7 +54,7 @@ describe "Surveys API" do
   end
 
   it 'returns an invalid response if survey is missing instrument version number' do
-    post '/api/v1/surveys',
+    post "/api/v1/projects/#{@instrument.project.id}/surveys?access_token=#{@api_key.access_token}",
       survey:
         {
           'instrument_id' => @instrument.id,
@@ -64,6 +65,18 @@ describe "Surveys API" do
   end
 
   it 'should not respond to a get request' do
-    lambda { get '/api/v1/surveys' }.should raise_error
+    lambda { get "/api/v1/projects/#{@instrument.project.id}/surveys?access_token=#{@api_key.access_token}" }.should raise_error
+  end
+
+  it 'should require an access token' do
+    post "/api/v1/projects/#{@instrument.project.id}/surveys",
+      survey:
+        {
+          'instrument_id' => @instrument.id,
+          'instrument_version_number' => 0,
+          'device_identifier' => @device.identifier,
+          'uuid' => @survey.uuid
+        }
+    expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:unauthorized])
   end
 end

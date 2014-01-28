@@ -4,7 +4,8 @@ describe "Instruments API" do
   before :each do
     @project = FactoryGirl.create(:project)
     @instruments = FactoryGirl.create_list(:instrument, 5, project: @project)
-    get "/api/v1/projects/#{@project.id}/instruments"
+    @api_key = FactoryGirl.create(:api_key)
+    get "/api/v1/projects/#{@project.id}/instruments?access_token=#{@api_key.access_token}"
     @json = JSON.parse(response.body)
   end
 
@@ -38,7 +39,7 @@ describe "Instruments API" do
   describe "translation text" do
     before :each do
       @translation = create(:instrument_translation)
-      get "/api/v1/projects/#{@translation.instrument.project.id}/instruments"
+      get "/api/v1/projects/#{@translation.instrument.project.id}/instruments?access_token=#{@api_key.access_token}"
       @json = JSON.parse(response.body)
     end
 
@@ -53,5 +54,16 @@ describe "Instruments API" do
     it "has the correct translation alignment" do
       @json.last['translations'].first['alignment'].should == @translation.alignment
     end
+  end
+
+  it 'should require an access token' do
+    get "/api/v1/projects/#{@project.id}/instruments"
+    expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:unauthorized])
+  end
+
+  it 'should only show published instruments' do
+    @instruments.last.update_attributes!(published: false)
+    get "/api/v1/projects/#{@project.id}/instruments?access_token=#{@api_key.access_token}"
+    expect(JSON.parse(response.body).length).to eq(4)
   end
 end
