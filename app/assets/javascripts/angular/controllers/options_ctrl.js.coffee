@@ -36,11 +36,12 @@ App.controller 'OptionsCtrl', ['$scope', 'Option', ($scope, Option) ->
   )
 
   $scope.removeOption = (option) ->
-    $scope.options.splice($scope.options.indexOf(option), 1)
-    option.project_id = $scope.project_id
-    option.instrument_id = $scope.instrument_id
-    option.question_id = $scope.question_id
-    option.$delete()
+    if confirm("Are you sure you want to delete this option?")
+      $scope.options.splice($scope.options.indexOf(option), 1)
+      option.project_id = $scope.project_id
+      option.instrument_id = $scope.instrument_id
+      option.question_id = $scope.question_id
+      option.$delete()
 
   $scope.addOption = ->
     option = new Option
