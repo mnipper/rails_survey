@@ -4,5 +4,6 @@ FactoryGirl.define do
     language 'en'
     alignment 'left'
     project
+    published true
   end
 end
