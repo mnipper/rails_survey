@@ -19,6 +19,7 @@
           <th>Special Response</th>
           <th>Other Response</th>
           <th>Created at</th>
+          <th>Time taken(sec)</th>
         </tr>
       </thead>
       <tbody>
@@ -42,6 +43,7 @@
           <td><%= response.special_response ? response.special_response : 'NA' %></td>
           <td><%= response.other_response ? response.other_response : 'NA' %></td>
           <td><%= response.created_at %> </td>
+          <td><%= response.time_taken_in_seconds ? response.time_taken_in_seconds : 'NA' %></td>
         </tr>
         <% end %>
     <% end %>

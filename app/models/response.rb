@@ -10,10 +10,12 @@
 #  updated_at       :datetime
 #  survey_uuid      :string(255)
 #  special_response :string(255)
+#  time_started     :datetime
+#  time_ended       :datetime
 #
 
 class Response < ActiveRecord::Base
-  attr_accessible :question_id, :text, :other_response, :special_response, :survey_uuid
+  attr_accessible :question_id, :text, :other_response, :special_response, :survey_uuid, :time_started, :time_ended
   belongs_to :question
   belongs_to :survey, foreign_key: :survey_uuid, primary_key: :uuid
   delegate :device, to: :survey 
@@ -93,6 +95,12 @@ class Response < ActiveRecord::Base
       text
     else
       question.options[text.to_i].version_at_time(survey.instrument_version.updated_at)
+    end
+  end
+
+  def time_taken_in_seconds
+    if time_ended && time_started
+      time_ended - time_started
     end
   end
 
