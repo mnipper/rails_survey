@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe "Options API" do
   before :each do
-    FactoryGirl.create_list(:option, 5)
-    get '/api/v1/options'
+    @api_key = create(:api_key)
+    @options = FactoryGirl.create_list(:option, 5)
+    get "/api/v1/projects/#{@options.first.question.project.id}/options?access_token=#{@api_key.access_token}"
     @json = JSON.parse(response.body)
   end
 
@@ -35,7 +36,7 @@ describe "Options API" do
   describe "translation text" do
     before :each do
       @translation = create(:option_translation)
-      get '/api/v1/options'
+      get "/api/v1/projects/#{@options.first.question.project.id}/options?access_token=#{@api_key.access_token}"
       @json = JSON.parse(response.body)
     end
 
