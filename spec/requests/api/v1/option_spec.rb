@@ -52,4 +52,9 @@ describe "Options API" do
       @json.last['translations'].first['language'].should == @translation.language
     end
   end
+
+  it 'should require an access token' do
+    get "/api/v1/projects/#{@options.first.question.project.id}/options"
+    expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:unauthorized])
+  end
 end
