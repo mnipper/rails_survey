@@ -40,10 +40,10 @@
             <ul>
           </td>
           <td><%= response.versioned_response %> </td>
-          <td><%= response.special_response ? response.special_response : 'NA' %></td>
-          <td><%= response.other_response ? response.other_response : 'NA' %></td>
+          <td><%= response.special_response %></td>
+          <td><%= response.other_response %></td>
           <td><%= response.created_at %> </td>
-          <td><%= response.time_taken_in_seconds ? response.time_taken_in_seconds : 'NA' %></td>
+          <td><%= response.time_taken_in_seconds %></td>
         </tr>
         <% end %>
     <% end %>
