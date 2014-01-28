@@ -25,7 +25,9 @@ module Api
         end
 
         def check_version_code
-          head :upgrade_required unless params[:version_code].to_i >= Settings.minimum_android_version_code
+          if params[:version_code]
+            head :upgrade_required unless params[:version_code].to_i >= Settings.minimum_android_version_code
+          end
         end
     end
   end
