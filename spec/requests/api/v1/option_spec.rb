@@ -33,6 +33,10 @@ describe "Options API" do
     @json.first.should have_key('next_question')
   end
 
+  it "has a number_in_question attribute" do
+    @json.first.should have_key('number_in_question')
+  end
+
   it "has a instrument_version attribute" do
     @json.first.should have_key('instrument_version')
   end
