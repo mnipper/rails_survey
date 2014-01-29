@@ -25,10 +25,15 @@ App.controller 'OptionsCtrl', ['$scope', 'Option', ($scope, Option) ->
         option.instrument_id = $scope.instrument_id
         option.question_id = $scope.question_id
         if option.id
-          option.$update()
+          option.$update({},
+            (data, headers) -> $scope.options = $scope.queryOptions(),
+            (result, headers) -> alert "Error updating option"
+          )
         else
-          option.$save()
-      $scope.options = $scope.queryOptions()
+          option.$save({},
+            (data, headers) -> $scope.options = $scope.queryOptions(),
+            (result, headers) -> alert "Error updating option"
+          )
   )
 
   $scope.$on('CANCEL_QUESTION', ->
