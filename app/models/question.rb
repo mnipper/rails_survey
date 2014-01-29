@@ -30,6 +30,7 @@ class Question < ActiveRecord::Base
   accepts_nested_attributes_for :options, allow_destroy: true
   before_save :parent_update_count
   has_paper_trail
+  acts_as_paranoid
 
   validates :question_identifier, uniqueness: true, presence: true, allow_blank: false
   validates :text, presence: true, allow_blank: false

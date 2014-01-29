@@ -28,6 +28,7 @@ class Instrument < ActiveRecord::Base
   has_many :translations, foreign_key: 'instrument_id', class_name: 'InstrumentTranslation', dependent: :destroy
   accepts_nested_attributes_for :questions, allow_destroy: true
   has_paper_trail :on => [:update, :destroy]
+  acts_as_paranoid
 
   before_save :update_question_count
 
