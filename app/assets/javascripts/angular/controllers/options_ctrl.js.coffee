@@ -34,6 +34,7 @@ App.controller 'OptionsCtrl', ['$scope', 'Option', ($scope, Option) ->
             (data, headers) -> $scope.options = $scope.queryOptions(),
             (result, headers) -> alert "Error updating option"
           )
+      $scope.options = $scope.queryOptions()
   )
 
   $scope.$on('CANCEL_QUESTION', ->
@@ -46,7 +47,10 @@ App.controller 'OptionsCtrl', ['$scope', 'Option', ($scope, Option) ->
       option.project_id = $scope.project_id
       option.instrument_id = $scope.instrument_id
       option.question_id = $scope.question_id
-      option.$delete()
+      option.$delete({},
+        (data, headers) -> $scope.options = $scope.queryOptions(),
+        (result, headers) -> alert "Error deleting option"
+      )
 
   $scope.addOption = ->
     option = new Option
