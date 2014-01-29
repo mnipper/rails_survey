@@ -1,7 +1,11 @@
 class ProjectsController < ApplicationController
 
+  after_filter :verify_authorized,  except: [:index]
+  after_filter :verify_policy_scoped, only: [:index]
+
   def index
     @projects = current_user.projects
+    @projects = policy_scope(@projects)
   end
 
   def show
@@ -19,6 +23,7 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(project_params)
+    authorize(@project)
     if @project.save && @project.user_projects.create(:user_id => current_user.id, :project_id => @project.id)
       redirect_to @project, notice: 'Project was successfully created.'
     else

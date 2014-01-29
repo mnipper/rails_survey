@@ -10,6 +10,12 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   include ProjectsHelper
 
+  #Pundit authorization & verification
+  include Pundit
+  after_filter :verify_authorized,  except: :index
+  after_filter :verify_policy_scoped, only: :index
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   def after_sign_in_path_for(resource_or_scope)
     root_path
   end
@@ -32,5 +38,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def user_not_authorized
+    flash[:error] = 'You are not authorized to perform this action.'
+    #redirect_to request.referer || root_path
+  end
 
 end

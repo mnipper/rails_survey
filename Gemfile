@@ -84,3 +84,6 @@ end
 #active admin
 gem 'activeadmin', github: 'gregbell/active_admin'
 
+#authorization gem
+gem "pundit", "~> 0.2.1"
+
