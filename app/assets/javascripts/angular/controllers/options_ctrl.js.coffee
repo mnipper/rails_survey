@@ -34,6 +34,7 @@ App.controller 'OptionsCtrl', ['$scope', 'Option', ($scope, Option) ->
             (data, headers) -> $scope.options = $scope.queryOptions(),
             (result, headers) -> alert "Error updating option"
           )
+      $scope.options = $scope.queryOptions()
   )
 
   $scope.$on('CANCEL_QUESTION', ->
