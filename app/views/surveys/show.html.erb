@@ -32,13 +32,6 @@
           <td>
                <%= raw response.question.version_at_time(@survey.instrument_version_number, instrument_version_created_at).text %>
           </td>
-          <td>
-            <ul class="squares">
-              <% response.question.options.each do |option| %>
-                <li> <%= option.version_at_time(instrument_version_created_at) %> </li>
-              <% end %>
-            <ul>
-          </td>
           <td><%= response.text %> </td>
           <td><%= response.versioned_response %> </td>
           <td><%= response.special_response %></td>
