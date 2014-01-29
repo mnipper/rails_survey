@@ -19,6 +19,7 @@ class Option < ActiveRecord::Base
   delegate :instrument, to: :question
   delegate :project, to: :question
   has_many :translations, foreign_key: 'option_id', class_name: 'OptionTranslation', dependent: :destroy
+  before_destroy :parent_update_count
   has_paper_trail
 
   validates :text, presence: true, allow_blank: false
@@ -39,5 +40,10 @@ class Option < ActiveRecord::Base
     super((options || {}).merge({
         methods: [:instrument_version]
     }))
+  end
+
+  private
+  def parent_update_count
+    instrument.increment!(:child_update_count) unless self.new_record?
   end
 end
