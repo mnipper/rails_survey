@@ -28,6 +28,13 @@ ActiveAdmin.register User do
           end
         end
       end
+      row "User Roles" do
+        ul do
+          user.roles.each do |role|
+            li {role.name}
+          end
+        end
+      end
     end
 
     active_admin_comments
@@ -40,6 +47,7 @@ ActiveAdmin.register User do
       f.input :password_confirmation
 
       f.input :projects, :as => :check_boxes
+      f.input :roles, :as => :check_boxes
     end
     f.actions
   end
