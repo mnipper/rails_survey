@@ -61,19 +61,13 @@ end
 # Simple statistics
 gem 'descriptive-statistics'
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
 # Use unicorn as the app server
 # gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 
-# Use debugger
-gem 'debugger', group: [:development]
 gem 'exception_notification'
-# Use sqlite3 as the database for development and test
 gem 'sqlite3', group: [:development, :test]
 gem 'chosen-rails'
 gem 'activeadmin', github: 'gregbell/active_admin'
@@ -81,4 +75,10 @@ gem 'paranoia', '~> 2.0'
 
 group :production do
   gem 'rails_12factor'
+end
+
+group :development do
+  gem 'debugger', group: [:development]
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
