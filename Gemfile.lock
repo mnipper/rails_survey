@@ -147,6 +147,8 @@ GEM
     paper_trail (3.0.0)
       activerecord (>= 3.0, < 5.0)
       activesupport (>= 3.0, < 5.0)
+    paranoia (2.0.2)
+      activerecord (~> 4.0)
     pg (0.17.1)
     polyamorous (0.6.4)
       activerecord (>= 3.0)
@@ -268,6 +270,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   paper_trail (>= 3.0.0.rc2)
+  paranoia (~> 2.0)
   pg
   protected_attributes
   rails (= 4.0.0)

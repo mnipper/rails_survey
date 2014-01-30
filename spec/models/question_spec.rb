@@ -14,6 +14,8 @@
 #  number_in_instrument             :integer
 #  reg_ex_validation_message        :string(255)
 #  follow_up_position               :integer
+#  follow_up_position               :integer          default(0)
+#  deleted_at                       :datetime
 #
 
 require "spec_helper"

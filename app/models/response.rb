@@ -2,20 +2,22 @@
 #
 # Table name: responses
 #
-#  id               :integer          not null, primary key
-#  question_id      :integer
-#  text             :string(255)
-#  other_response   :string(255)
-#  created_at       :datetime
-#  updated_at       :datetime
-#  survey_uuid      :string(255)
-#  special_response :string(255)
-#  time_started     :datetime
-#  time_ended       :datetime
+#  id                  :integer          not null, primary key
+#  question_id         :integer
+#  text                :string(255)
+#  other_response      :string(255)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  survey_uuid         :string(255)
+#  special_response    :string(255)
+#  time_started        :datetime
+#  time_ended          :datetime
+#  question_identifier :string(255)
 #
 
 class Response < ActiveRecord::Base
-  attr_accessible :question_id, :text, :other_response, :special_response, :survey_uuid, :time_started, :time_ended
+  attr_accessible :question_id, :text, :other_response, :special_response, :survey_uuid,
+    :time_started, :time_ended, :question_identifier
   belongs_to :question
   belongs_to :survey, foreign_key: :survey_uuid, primary_key: :uuid
   delegate :device, to: :survey 
@@ -44,9 +46,9 @@ class Response < ActiveRecord::Base
     format << ['qid', 'instrument_id', 'instrument_version_number', 'instrument_title', 
       'survey_uuid', 'device_id', 'response', 'special_response', 'other_response']
     all.each do |response|
-      format << [response.question.question_identifier, response.instrument.id,
-        response.instrument_version_number, response.instrument.title,
-        response.survey_uuid, response.device.identifier, response.text,
+      format << [response.question_identifier, response.survey.instrument_id,
+        response.instrument_version_number, response.survey.instrument_title,
+        response.survey_uuid, response.survey.device_uuid, response.text,
         response.special_response, response.other_response]
     end
   end
@@ -103,5 +105,4 @@ class Response < ActiveRecord::Base
       time_ended - time_started
     end
   end
-
 end

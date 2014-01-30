@@ -5,13 +5,13 @@ module Api
       respond_to :json
 
       def create
-        @survey = Survey.new(params[:survey].except(:device_identifier))
-        @device = Device.find_by identifier: params[:survey][:device_identifier]
+        @survey = Survey.new(params[:survey])
+        @device = Device.find_by identifier: params[:survey][:device_uuid]
         if @device
           @survey.device = @device
         else
           device = Device.new
-          device.identifier = params[:survey][:device_identifier]
+          device.identifier = params[:survey][:device_uuid]
           device.save
           @survey.device = device
         end
