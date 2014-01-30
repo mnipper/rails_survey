@@ -19,10 +19,10 @@
         <% if survey.instrument %>
         <tr>
           <td><%= survey.uuid %></td>
-          <td><%= link_to survey.instrument.title, project_instrument_path(current_project, survey.instrument) %></td>
+          <td><%= link_to survey.instrument_title, project_instrument_path(current_project, survey.instrument) %></td>
           <td><%= link_to survey.instrument_version_number,
               project_instrument_version_path(current_project, survey.instrument, survey.instrument_version_number) %></td>
-          <td><%= survey.device.identifier %></td>
+          <td><%= survey.device_uuid %></td>
           <td><%= survey.percent_complete %>
           <td><%= link_to 'View Responses', project_survey_path(current_project, survey) %></td>
         </tr>
