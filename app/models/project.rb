@@ -18,8 +18,13 @@ class Project < ActiveRecord::Base
   has_many :responses, through: :surveys
   has_many :user_projects
   has_many :users, through: :user_projects
+  has_many :user_roles
+  has_many :roles, through: :user_roles
 
   validates :name, presence: true, allow_blank: false
   validates :description, presence: true, allow_blank: true
 
+  def user_roles_in_project(user)
+    user.roles.where(:project_id => self.id)
+  end
 end

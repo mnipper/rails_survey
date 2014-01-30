@@ -34,6 +34,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def has_role?(role_sym)
+    roles.any? { |r| r.name.underscore.to_sym == role_sym }
+  end
+
   private
   def generate_authentication_token
     loop do

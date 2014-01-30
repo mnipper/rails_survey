@@ -22,7 +22,11 @@
       <tbody>
       <% policy_scope(@projects).each do |project| %>
           <tr>
-            <td><%= link_to project.name, project %></td>
+            <td>
+              <% if policy(project).show? %>
+                <%= link_to project.name, project %>
+              <% end %>
+            </td>
             <td><%= project.description %></td>
           </tr>
       <% end %>

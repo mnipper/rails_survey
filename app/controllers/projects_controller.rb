@@ -11,6 +11,7 @@ class ProjectsController < ApplicationController
   def show
     @project = current_user.projects.find(params[:id])
     set_current_project @project
+    authorize(@project)
   end
 
   def new
@@ -19,6 +20,7 @@ class ProjectsController < ApplicationController
 
   def edit
     @project = current_user.projects.find(params[:id])
+    authorize(@project)
   end
 
   def create
@@ -49,5 +51,10 @@ class ProjectsController < ApplicationController
   private
     def project_params
       params.require(:project).permit(:name, :description)
+    end
+
+    def update_associations(project)
+      project.user_projects.create(:user_id => current_user.id, :project_id => project.id) &&
+      user.roles.create(:user_id => current_user.id, :role_id => Role.select(:id).where(:name => 'project_manager'))
     end
 end
