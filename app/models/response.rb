@@ -46,7 +46,7 @@ class Response < ActiveRecord::Base
     format << ['qid', 'instrument_id', 'instrument_version_number', 'instrument_title', 
       'survey_uuid', 'device_id', 'response', 'special_response', 'other_response']
     all.each do |response|
-      format << [response.question.question_identifier, response.survey.instrument_id,
+      format << [response.question_identifier, response.survey.instrument_id,
         response.instrument_version_number, response.survey.instrument_title,
         response.survey_uuid, response.survey.device_uuid, response.text,
         response.special_response, response.other_response]
