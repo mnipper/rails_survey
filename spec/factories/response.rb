@@ -6,5 +6,4 @@ FactoryGirl.define do
     special_response 'SKIP'
     other_response 'other'
   end
-
 end

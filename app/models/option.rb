@@ -9,6 +9,7 @@
 #  updated_at         :datetime
 #  next_question      :string(255)
 #  number_in_question :integer
+#  deleted_at         :datetime
 #
 
 class Option < ActiveRecord::Base

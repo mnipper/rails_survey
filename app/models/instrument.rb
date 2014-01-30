@@ -12,6 +12,7 @@
 #  previous_question_count :integer
 #  project_id              :integer
 #  published               :boolean
+#  deleted_at              :datetime
 #
 
 class Instrument < ActiveRecord::Base
