@@ -60,7 +60,7 @@ describe Response do
           "special_response",
           "other_response"
         ],
-        [@response.question.question_identifier,
+        [@response.question_identifier,
           @response.instrument.id,
           1,
           @response.survey.instrument_title,
