@@ -132,8 +132,8 @@ ActiveRecord::Schema.define(version: 20140130001544) do
     t.string   "reg_ex_validation"
     t.integer  "number_in_instrument"
     t.string   "reg_ex_validation_message"
-    t.integer  "follow_up_position",               default: 0
     t.datetime "deleted_at"
+    t.integer  "follow_up_position",               default: 0
   end
 
   create_table "responses", force: true do |t|
@@ -147,6 +147,12 @@ ActiveRecord::Schema.define(version: 20140130001544) do
     t.datetime "time_started"
     t.datetime "time_ended"
     t.string   "question_identifier"
+  end
+
+  create_table "roles", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "surveys", force: true do |t|
@@ -167,6 +173,14 @@ ActiveRecord::Schema.define(version: 20140130001544) do
     t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "user_roles", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "role_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "project_id"
   end
 
   create_table "users", force: true do |t|
