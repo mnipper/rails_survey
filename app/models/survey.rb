@@ -11,11 +11,13 @@
 #  instrument_version_number :integer
 #  instrument_title          :string(255)
 #  device_uuid               :string(255)
+#  latitude                  :string(255)
+#  longitude                 :string(255)
 #
 
 class Survey < ActiveRecord::Base
   attr_accessible :instrument_id, :instrument_version_number, :uuid, :device_id, :instrument_title,
-    :device_uuid
+    :device_uuid, :latitude, :longitude
   belongs_to :instrument
   belongs_to :device
   has_many :responses, foreign_key: :survey_uuid, primary_key: :uuid, dependent: :destroy
@@ -44,6 +46,12 @@ class Survey < ActiveRecord::Base
       instrument.question_count
     else
       instrument.question_count_for_version(instrument_version.version)
+    end
+  end
+
+  def location
+    unless latitude.nil? or longitude.nil?
+      latitude + ' / ' + longitude
     end
   end
 
