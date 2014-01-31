@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :emai, :password, :password_confirmation, :project_ids
+  permit_params :email, :password, :password_confirmation, :project_ids
 
   index do
     column :email
