@@ -5,7 +5,7 @@ class VersionsController < ApplicationController
   end
 
   def show
-    @instrument = Instrument.find(params[:instrument_id])
+    @instrument = current_project.find(params[:instrument_id])
     @version = @instrument.versions[params[:id].to_i]
     if @version
       @instrument_version = @version.reify
