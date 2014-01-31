@@ -9,7 +9,7 @@ class VersionsController < ApplicationController
     if @version
       @instrument_version = @version.reify
     else
-      redirect_to @instrument
+      redirect_to project_instrument_path(current_project, @instrument)
     end
   end
 end
