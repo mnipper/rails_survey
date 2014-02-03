@@ -105,4 +105,5 @@ class Response < ActiveRecord::Base
       time_ended - time_started
     end
   end
+  
 end

@@ -72,6 +72,7 @@ gem 'sqlite3', group: [:development, :test]
 gem 'chosen-rails'
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'paranoia', '~> 2.0'
+gem 'groupdate', github: 'mieko/groupdate', :branch => 'sqlite3'
 
 group :production do
   gem 'rails_12factor'

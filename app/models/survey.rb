@@ -54,5 +54,9 @@ class Survey < ActiveRecord::Base
       latitude + ' / ' + longitude
     end
   end
+  
+  def group_responses_by_day
+    self.responses.group_by_day(:created_at).count 
+  end
 
 end

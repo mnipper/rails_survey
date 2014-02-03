@@ -22,4 +22,19 @@ class Project < ActiveRecord::Base
   validates :name, presence: true, allow_blank: false
   validates :description, presence: true, allow_blank: true
 
+  def daily_response_count 
+    grouped_responses = []
+    self.instruments.each do |instrument|
+      instrument.surveys.each do |survey|
+        grouped_responses << survey.group_responses_by_day
+      end
+    end
+    grouped_responses = grouped_responses.map(&:to_a).flatten(1).reduce({}) {|h,(k,v)| (h[k] ||= []) << v; h}
+    hash = {}
+    grouped_responses.each do |key, value|
+      hash[key] = value.inject{|sum,x| sum + x}
+    end
+    hash
+  end
+  
 end
