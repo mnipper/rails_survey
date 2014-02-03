@@ -11,6 +11,8 @@
 #  instrument_version_number :integer
 #  instrument_title          :string(255)
 #  device_uuid               :string(255)
+#  latitude                  :string(255)
+#  longitude                 :string(255)
 #
 
 require "spec_helper"

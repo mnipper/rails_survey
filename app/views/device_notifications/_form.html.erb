@@ -1,0 +1,51 @@
+<section class="widget">
+  <header>
+    <h4><i class="icon-alert"></i> Device Notification for <%= @instrument.title %></h4>
+  </header>
+  <div class="body">
+    <%= form_for [current_project, @instrument, @device_notification] do |f| %>
+      <% if @device_notification.errors.any? %>
+        <div class="error_messages">
+          <h2><%= pluralize(@device_notification.errors.count, "error") %> prohibited this device notification from being saved:</h2>
+          <ul>
+          <% @device_notification.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= f.label :time, class: 'control-label' %><br />
+      <div class="controls form-group">
+        <%= f.time_field :time %>
+      </div>
+
+      <%= f.label :message, class: 'control-label' %><br />
+      <div class="controls form-group">
+        <%= f.text_field :message %>
+      </div>
+
+      <p class="control-label">Day of Week:</p>
+      <div class="controls form-group">
+        <%= f.check_box :monday %>
+        <%= f.label :monday %><br />
+        <%= f.check_box :tuesday %>
+        <%= f.label :tuesday %><br />
+        <%= f.check_box :wednesday %>
+        <%= f.label :wednesday %><br />
+        <%= f.check_box :thursday %>
+        <%= f.label :thursday %><br />
+        <%= f.check_box :friday %>
+        <%= f.label :friday %><br />
+        <%= f.check_box :saturday %>
+        <%= f.label :saturday %><br />
+        <%= f.check_box :sunday %>
+        <%= f.label :sunday %><br />
+      </div>
+
+      <div class="top-buffer pull-right">
+        <%= f.submit class: 'btn btn-primary btn-large' %>
+      </div>
+    <% end %>
+  </div>
+</section>
