@@ -20,6 +20,7 @@ class Option < ActiveRecord::Base
   delegate :instrument, to: :question
   delegate :project, to: :question
   has_many :translations, foreign_key: 'option_id', class_name: 'OptionTranslation', dependent: :destroy
+  before_save :parent_update_count, if: Proc.new { |option| option.changed? }
   before_destroy :parent_update_count
   has_paper_trail
   acts_as_paranoid
@@ -46,6 +47,6 @@ class Option < ActiveRecord::Base
 
   private
   def parent_update_count
-    instrument.increment!(:child_update_count) unless self.new_record?
+    instrument.increment!(:child_update_count)
   end
 end
