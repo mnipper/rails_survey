@@ -33,6 +33,14 @@ describe "Options API" do
     @json.first.should have_key('next_question')
   end
 
+  it "has a number_in_question attribute" do
+    @json.first.should have_key('number_in_question')
+  end
+
+  it "has a instrument_version attribute" do
+    @json.first.should have_key('instrument_version')
+  end
+
   describe "translation text" do
     before :each do
       @translation = create(:option_translation)
@@ -56,5 +64,17 @@ describe "Options API" do
   it 'should require an access token' do
     get "/api/v1/projects/#{@options.first.question.project.id}/options"
     expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:unauthorized])
+  end
+
+  it 'should not allow an outdated android app to obtain options' do
+    Settings.minimum_android_version_code = 2
+    get "/api/v1/projects/#{@options.first.project.id}/options?access_token=#{@api_key.access_token}&version_code=1"
+    expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:upgrade_required])
+  end
+
+  it 'should allow a current android app to obtain options' do
+    Settings.minimum_android_version_code = 2
+    get "/api/v1/projects/#{@options.first.project.id}/options?access_token=#{@api_key.access_token}&version_code=2"
+    expect(response).to be_success
   end
 end

@@ -31,4 +31,13 @@ class Option < ActiveRecord::Base
     self.version_at(time + 1)
   end
 
+  def instrument_version
+    instrument.current_version_number
+  end
+
+  def as_json(options={})
+    super((options || {}).merge({
+        methods: [:instrument_version]
+    }))
+  end
 end

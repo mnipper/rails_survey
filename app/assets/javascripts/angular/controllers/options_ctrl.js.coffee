@@ -25,10 +25,15 @@ App.controller 'OptionsCtrl', ['$scope', 'Option', ($scope, Option) ->
         option.instrument_id = $scope.instrument_id
         option.question_id = $scope.question_id
         if option.id
-          option.$update()
+          option.$update({},
+            (data, headers) -> $scope.options = $scope.queryOptions(),
+            (result, headers) -> alert "Error updating option"
+          )
         else
-          option.$save()
-      $scope.options = $scope.queryOptions()
+          option.$save({},
+            (data, headers) -> $scope.options = $scope.queryOptions(),
+            (result, headers) -> alert "Error updating option"
+          )
   )
 
   $scope.$on('CANCEL_QUESTION', ->
@@ -36,11 +41,12 @@ App.controller 'OptionsCtrl', ['$scope', 'Option', ($scope, Option) ->
   )
 
   $scope.removeOption = (option) ->
-    $scope.options.splice($scope.options.indexOf(option), 1)
-    option.project_id = $scope.project_id
-    option.instrument_id = $scope.instrument_id
-    option.question_id = $scope.question_id
-    option.$delete()
+    if confirm("Are you sure you want to delete this option?")
+      $scope.options.splice($scope.options.indexOf(option), 1)
+      option.project_id = $scope.project_id
+      option.instrument_id = $scope.instrument_id
+      option.question_id = $scope.question_id
+      option.$delete()
 
   $scope.addOption = ->
     option = new Option

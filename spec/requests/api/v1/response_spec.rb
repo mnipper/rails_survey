@@ -69,4 +69,26 @@ describe "Responses API" do
         }
         expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:unauthorized])
   end
+
+  it 'should not allow an outdated android app to send responses' do
+    Settings.minimum_android_version_code = 2
+    post "/api/v1/projects/#{@question.instrument.project.id}/responses?access_token=#{@api_key.access_token}&version_code=1",
+      response:
+        {
+          'question_id' => @question.id,
+          'survey_uuid' => @survey.uuid
+        }
+    expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:upgrade_required])
+  end
+
+  it 'should allow a current android app to send responses' do
+    Settings.minimum_android_version_code = 2
+    post "/api/v1/projects/#{@question.instrument.project.id}/responses?access_token=#{@api_key.access_token}&version_code=2",
+      response:
+        {
+          'question_id' => @question.id,
+          'survey_uuid' => @survey.uuid
+        }
+    expect(response).to be_success
+  end
 end

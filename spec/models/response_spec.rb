@@ -10,6 +10,8 @@
 #  updated_at       :datetime
 #  survey_uuid      :string(255)
 #  special_response :string(255)
+#  time_started     :datetime
+#  time_ended       :datetime
 #
 
 require "spec_helper"
