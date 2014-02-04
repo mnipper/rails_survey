@@ -93,5 +93,4 @@ class Instrument < ActiveRecord::Base
   def update_question_count
     self.previous_question_count = questions.count
   end
-
 end
