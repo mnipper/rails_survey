@@ -17,6 +17,8 @@ RailsSurvey::Application.routes.draw do
         resources :options, only: [:index, :show]
         resources :surveys, only: [:create]
         resources :responses, only: [:create]
+        resources :graphs, only: [:index, :show]
+        get 'daily/' => 'graphs#daily_responses'
       end
     end
   end
