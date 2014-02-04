@@ -27,7 +27,7 @@ modules.xml
 rails_survey.iml
 vcs.xml
 .idea/
-
+.project
 
 #Ignore bin
 bin/
