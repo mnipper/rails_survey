@@ -77,7 +77,7 @@ class Instrument < ActiveRecord::Base
 
   def question_count_for_version(version)
     count = 0
-    version.reify.questions.each do |question|
+    version.reify.questions.with_deleted.each do |question|
       count += 1 if version.versioned(question)
     end
     count
