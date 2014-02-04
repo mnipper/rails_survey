@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140129164833) do
+ActiveRecord::Schema.define(version: 20140131222407) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20140129164833) do
     t.integer  "previous_question_count"
     t.integer  "project_id"
     t.boolean  "published"
+    t.datetime "deleted_at"
   end
 
   create_table "option_translations", force: true do |t|
@@ -94,6 +95,7 @@ ActiveRecord::Schema.define(version: 20140129164833) do
     t.datetime "updated_at"
     t.string   "next_question"
     t.integer  "number_in_question"
+    t.datetime "deleted_at"
   end
 
   create_table "project_devices", force: true do |t|
@@ -130,6 +132,7 @@ ActiveRecord::Schema.define(version: 20140129164833) do
     t.string   "reg_ex_validation"
     t.integer  "number_in_instrument"
     t.string   "reg_ex_validation_message"
+    t.datetime "deleted_at"
     t.integer  "follow_up_position",               default: 0
   end
 
@@ -143,6 +146,13 @@ ActiveRecord::Schema.define(version: 20140129164833) do
     t.string   "special_response"
     t.datetime "time_started"
     t.datetime "time_ended"
+    t.string   "question_identifier"
+  end
+
+  create_table "roles", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "surveys", force: true do |t|
@@ -152,6 +162,10 @@ ActiveRecord::Schema.define(version: 20140129164833) do
     t.string   "uuid"
     t.integer  "device_id"
     t.integer  "instrument_version_number"
+    t.string   "instrument_title"
+    t.string   "device_uuid"
+    t.string   "latitude"
+    t.string   "longitude"
   end
 
   add_index "surveys", ["uuid"], name: "index_surveys_on_uuid"
@@ -161,6 +175,14 @@ ActiveRecord::Schema.define(version: 20140129164833) do
     t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "user_roles", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "role_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "project_id"
   end
 
   create_table "users", force: true do |t|
