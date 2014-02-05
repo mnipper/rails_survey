@@ -21,21 +21,16 @@
 class User < ActiveRecord::Base
 
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
-  attr_accessible :email, :password, :password_confirmation, :project_ids, :role_ids
+  attr_accessible :email, :password, :password_confirmation, :project_ids, :role_id
   before_save :ensure_authentication_token
   has_many :user_projects 
   has_many :projects, through: :user_projects
-  has_many :user_roles
-  has_many :roles, through: :user_roles
+  has_one :role
 
   def ensure_authentication_token
     if authentication_token.blank?
       self.authentication_token = generate_authentication_token
     end
-  end
-
-  def has_role?(role_sym)
-    roles.any? { |r| r.name.underscore.to_sym == role_sym }
   end
 
   private

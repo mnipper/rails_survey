@@ -26,23 +26,14 @@ ActiveAdmin.register User do
         ul do
           user.projects.each do |project|
             li {project.name}
-            ul "User Roles" do
+            ul "User Role" do
               ul do
-                user.roles.each do |role|
-                  li {role.name}
-                end
+                li {user.role}
               end
             end
           end
         end
       end
-      #row "User Roles" do
-      #  ul do
-      #    user.roles.each do |role|
-      #      li {role.name}
-      #    end
-      #  end
-      #end
     end
 
     active_admin_comments
