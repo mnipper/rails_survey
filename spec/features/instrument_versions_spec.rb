@@ -4,6 +4,7 @@ feature "Instrument Versions", js: true, versioning: true do
   before :each do
     @user = FactoryGirl.create(:user)
     @project = FactoryGirl.create(:project)
+    ApplicationController.any_instance.stub(:current_project).and_return(@project)
     @user_project = UserProject.create!(user_id: @user.id, project_id: @project.id)
     visit '/users/sign_in'
     fill_in 'user_email', :with => @user.email
@@ -16,7 +17,7 @@ feature "Instrument Versions", js: true, versioning: true do
   end
 
   scenario "to list past versions" do
-    within('table.table') do
+    within('section.widget') do
       expect(page).to have_text("0")
       expect(page).to have_text(@old_title)
       expect(page).to have_text(@user.email)
