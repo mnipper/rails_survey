@@ -46,7 +46,7 @@ ActiveAdmin.register User do
       f.input :password_confirmation
 
       f.input :projects, :as => :check_boxes
-      f.input :role, :as => :check_boxes
+      #f.input :role, :as => :check_boxes
       
     end
     f.actions

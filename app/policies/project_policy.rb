@@ -1,13 +1,10 @@
-class ProjectPolicy 
-
+class ProjectPolicy < ApplicationPolicy
+  attr_reader :user, :project
   class Scope < Struct.new(:user, :scope)
     def resolve
-      #TODO check for user roles then scope
-        scope
+      scope
     end
   end
-
-  attr_reader :user, :project
 
   def initialize(user, project)
     @user = user
@@ -15,11 +12,11 @@ class ProjectPolicy
   end
 
   def create?
-    all_control
+    project_permissions
   end
 
   def destroy?
-    all_control
+    project_permissions
   end
 
   def show?
@@ -36,11 +33,9 @@ class ProjectPolicy
 
   private
   def project_permissions
-    true 
-  end
-
-  def all_control
-    true
+    if user.role.name == 'project_manager'
+      true
+    end 
   end
 
 end

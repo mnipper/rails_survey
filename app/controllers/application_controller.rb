@@ -10,7 +10,6 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   include ProjectsHelper
 
-  #Pundit authorization & verification
   include Pundit
   after_filter :verify_authorized,  except: :index
   after_filter :verify_policy_scoped, only: :index
@@ -39,8 +38,9 @@ class ApplicationController < ActionController::Base
   end
 
   def user_not_authorized
+    self.response_body = nil
     flash[:error] = 'You are not authorized to perform this action.'
-    #redirect_to request.referer || root_path
+    redirect_to root_path
   end
 
 end
