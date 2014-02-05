@@ -81,12 +81,10 @@ class Instrument < ActiveRecord::Base
     all_questions = version.reify.questions.with_deleted
     filtered_qst = all_questions.where("created_at < ?", time_at_version)
     filtered_qst.each do |question|
-      if version.versioned(question)
-        if question.deleted_at
-          count += 1 if question.deleted_at > time_at_version - 1
-        else
-          count += 1
-        end
+      if question.deleted_at
+        count += 1 if question.deleted_at > time_at_version 
+      else
+        count += 1
       end
     end
     count
