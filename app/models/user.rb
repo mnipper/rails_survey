@@ -21,11 +21,12 @@
 class User < ActiveRecord::Base
 
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
-  attr_accessible :email, :password, :password_confirmation, :project_ids, :role_id
+  attr_accessible :email, :password, :password_confirmation, :project_ids, :name, :user_id 
   before_save :ensure_authentication_token
   has_many :user_projects 
   has_many :projects, through: :user_projects
   has_one :role
+  accepts_nested_attributes_for :role 
 
   def ensure_authentication_token
     if authentication_token.blank?

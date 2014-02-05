@@ -1,11 +1,11 @@
 ActiveAdmin.register Role do
 
-  index do
+  index do |role|
     column :name
     column :created_at
     column :updated_at
     column 'Number of Users' do |number|
-      number.users.count
+      Role.where('name = ? AND user_id != ?', number.name, '').count 
     end
 
     default_actions
@@ -21,8 +21,8 @@ ActiveAdmin.register Role do
       row :updated_at
       row 'Users with role' do
         ul do
-          role.users.each do |user|
-            li {user.email}
+          Role.where('name' => role.name).each do |user|
+            li{user.user_id}
           end
         end
       end

@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :email, :password, :password_confirmation, :project_ids
+  permit_params :email, :password, :password_confirmation, :project_ids, :user_id, :name 
 
   index do
     column :email
@@ -15,6 +15,11 @@ ActiveAdmin.register User do
     attributes_table do
       row :id
       row :email
+      row 'Role' do
+        if user.role
+          user.role.name
+        end 
+      end
       row :sign_in_count
       row :current_sign_in_at
       row :last_sign_in_at
@@ -26,11 +31,6 @@ ActiveAdmin.register User do
         ul do
           user.projects.each do |project|
             li {project.name}
-            ul "User Role" do
-              ul do
-                li {user.role}
-              end
-            end
           end
         end
       end
@@ -46,7 +46,8 @@ ActiveAdmin.register User do
       f.input :password_confirmation
 
       f.input :projects, :as => :check_boxes
-      f.input :roles, :as => :check_boxes
+      f.input :role, :as => :check_boxes
+      
     end
     f.actions
   end

@@ -1,11 +1,9 @@
-class ProjectPolicy < ApplicationPolicy
+class ProjectPolicy 
 
   class Scope < Struct.new(:user, :scope)
     def resolve
       #TODO check for user roles then scope
-      #if user.has_role?(:project_manager) or user.has_role?(:collaborator)
         scope
-      #end
     end
   end
 
@@ -38,11 +36,11 @@ class ProjectPolicy < ApplicationPolicy
 
   private
   def project_permissions
-    #user.has_role?(:project_manager) or user.has_role?(:collaborator)
+    true 
   end
 
   def all_control
-    #user.has_role?(:project_manager) or user.admin?
+    true
   end
 
 end
