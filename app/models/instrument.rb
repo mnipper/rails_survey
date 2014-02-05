@@ -75,10 +75,19 @@ class Instrument < ActiveRecord::Base
     current_version_number == version_number 
   end
 
-  def question_count_for_version(version)
+  def question_count_for_version(version, number)
     count = 0
-    version.reify.questions.with_deleted.each do |question|
-      count += 1 if version.versioned(question)
+    time_at_version = self.versions[number].created_at 
+    all_questions = version.reify.questions.with_deleted
+    filtered_qst = all_questions.where("created_at < ?", time_at_version)
+    filtered_qst.each do |question|
+      if version.versioned(question)
+        if question.deleted_at
+          count += 1 if question.deleted_at > time_at_version - 1
+        else
+          count += 1
+        end
+      end
     end
     count
   end
