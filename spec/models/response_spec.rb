@@ -2,14 +2,17 @@
 #
 # Table name: responses
 #
-#  id               :integer          not null, primary key
-#  question_id      :integer
-#  text             :string(255)
-#  other_response   :string(255)
-#  created_at       :datetime
-#  updated_at       :datetime
-#  survey_uuid      :string(255)
-#  special_response :string(255)
+#  id                  :integer          not null, primary key
+#  question_id         :integer
+#  text                :string(255)
+#  other_response      :string(255)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  survey_uuid         :string(255)
+#  special_response    :string(255)
+#  time_started        :datetime
+#  time_ended          :datetime
+#  question_identifier :string(255)
 #
 
 require "spec_helper"
@@ -57,12 +60,12 @@ describe Response do
           "special_response",
           "other_response"
         ],
-        [@response.question.question_identifier,
+        [@response.question_identifier,
           @response.instrument.id,
           1,
-          @response.instrument.title,
+          @response.survey.instrument_title,
           @response.survey.uuid,
-          @response.survey.device.identifier,
+          @response.survey.device_uuid,
           "a",
           "SKIP",
           'other']

@@ -66,4 +66,16 @@ describe "Instruments API" do
     get "/api/v1/projects/#{@project.id}/instruments?access_token=#{@api_key.access_token}"
     expect(JSON.parse(response.body).length).to eq(4)
   end
+
+  it 'should not allow an outdated android app to obtain instruments' do
+    Settings.minimum_android_version_code = 2
+    get "/api/v1/projects/#{@project.id}/instruments?access_token=#{@api_key.access_token}&version_code=1"
+    expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:upgrade_required])
+  end
+
+  it 'should allow a current android app to obtain instruments' do
+    Settings.minimum_android_version_code = 2
+    get "/api/v1/projects/#{@project.id}/instruments?access_token=#{@api_key.access_token}&version_code=2"
+    expect(response).to be_success
+  end
 end

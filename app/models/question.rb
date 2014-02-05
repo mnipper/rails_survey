@@ -13,6 +13,9 @@
 #  reg_ex_validation                :string(255)
 #  number_in_instrument             :integer
 #  reg_ex_validation_message        :string(255)
+#  follow_up_position               :integer
+#  follow_up_position               :integer          default(0)
+#  deleted_at                       :datetime
 #
 
 class Question < ActiveRecord::Base
@@ -27,8 +30,10 @@ class Question < ActiveRecord::Base
   has_many :translations, foreign_key: 'question_id', class_name: 'QuestionTranslation', dependent: :destroy
   delegate :project, to: :instrument
   accepts_nested_attributes_for :options, allow_destroy: true
-  before_save :parent_update_count
+  before_save :parent_update_count, if: Proc.new { |question| question.changed? }
+  before_destroy :parent_update_count
   has_paper_trail
+  acts_as_paranoid
 
   validates :question_identifier, uniqueness: true, presence: true, allow_blank: false
   validates :text, presence: true, allow_blank: false
@@ -62,6 +67,6 @@ class Question < ActiveRecord::Base
 
   private
   def parent_update_count
-    instrument.increment!(:child_update_count) unless self.new_record?
+    instrument.increment!(:child_update_count)
   end
 end

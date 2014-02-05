@@ -14,7 +14,7 @@
       <tbody>
         <% @instrument.versions.each do |version| %>
             <tr>
-              <td><%= link_to version.index, project_instrument_version_path(@project, @instrument, version.index) %></td>
+              <td><%= link_to version.index, project_instrument_version_path(current_project, @instrument, version.index) %></td>
               <td><%= version.reify.title %></td>
               <td><%= version.creator %></td>
               <td><%= version.created_at %></td>

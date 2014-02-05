@@ -12,6 +12,7 @@
 #  previous_question_count :integer
 #  project_id              :integer
 #  published               :boolean
+#  deleted_at              :datetime
 #
 
 class Instrument < ActiveRecord::Base
@@ -28,6 +29,7 @@ class Instrument < ActiveRecord::Base
   has_many :translations, foreign_key: 'instrument_id', class_name: 'InstrumentTranslation', dependent: :destroy
   accepts_nested_attributes_for :questions, allow_destroy: true
   has_paper_trail :on => [:update, :destroy]
+  acts_as_paranoid
 
   before_save :update_question_count
 
@@ -73,10 +75,19 @@ class Instrument < ActiveRecord::Base
     current_version_number == version_number 
   end
 
-  def question_count_for_version(version)
+  def question_count_for_version(version, number)
     count = 0
-    version.reify.questions.each do |question|
-      count += 1 if version.versioned(question)
+    time_at_version = self.versions[number].created_at 
+    all_questions = version.reify.questions.with_deleted
+    filtered_qst = all_questions.where("created_at < ?", time_at_version)
+    filtered_qst.each do |question|
+      if version.versioned(question)
+        if question.deleted_at
+          count += 1 if question.deleted_at > time_at_version - 1
+        else
+          count += 1
+        end
+      end
     end
     count
   end
@@ -91,5 +102,4 @@ class Instrument < ActiveRecord::Base
   def update_question_count
     self.previous_question_count = questions.count
   end
-
 end

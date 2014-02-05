@@ -52,6 +52,11 @@ GEM
     arel (4.0.1)
     atomic (1.1.14)
     bcrypt-ruby (3.1.2)
+    better_errors (0.9.0)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     bourbon (3.1.8)
       sass (>= 3.2.0)
       thor
@@ -70,6 +75,7 @@ GEM
       railties (>= 3.0)
       sass-rails (>= 3.2)
     chunky_png (1.2.9)
+    coderay (1.0.9)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -85,6 +91,7 @@ GEM
     compass-rails (1.1.3)
       compass (>= 0.12.2)
     database_cleaner (1.2.0)
+    debug_inspector (0.0.2)
     debugger (1.6.5)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.2.0)
@@ -147,6 +154,8 @@ GEM
     paper_trail (3.0.0)
       activerecord (>= 3.0, < 5.0)
       activesupport (>= 3.0, < 5.0)
+    paranoia (2.0.2)
+      activerecord (~> 4.0)
     pg (0.17.1)
     polyamorous (0.6.4)
       activerecord (>= 3.0)
@@ -258,6 +267,8 @@ DEPENDENCIES
   activeadmin!
   angularjs-rails (~> 1.0.7)
   annotate (>= 2.5.0)
+  better_errors
+  binding_of_caller
   capybara
   chosen-rails
   coffee-rails (~> 4.0.0)
@@ -270,6 +281,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   paper_trail (>= 3.0.0.rc2)
+  paranoia (~> 2.0)
   pg
   protected_attributes
   pundit (~> 0.2.1)
