@@ -6,7 +6,7 @@ module PaperTrail
     end
 
     def versioned(object)
-      object.version_at(self.created_at - 1)
+      object.version_at(self.created_at)
     end
   end
 end
