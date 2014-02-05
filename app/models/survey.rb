@@ -45,7 +45,7 @@ class Survey < ActiveRecord::Base
     if instrument.is_version? instrument_version_number
       instrument.question_count
     else
-      instrument.question_count_for_version(instrument_version.version)
+      instrument.question_count_for_version(instrument_version.version, instrument_version_number)
     end
   end
 
