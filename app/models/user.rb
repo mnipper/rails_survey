@@ -33,6 +33,18 @@ class User < ActiveRecord::Base
       self.authentication_token = generate_authentication_token
     end
   end
+  
+  def project_manager
+    self.role.name == 'project_manager'
+  end
+  
+  def translator
+    self.role.name == 'translator'
+  end
+  
+  def data_analyst
+    self.role.name == 'data_analyst'
+  end
 
   private
   def generate_authentication_token

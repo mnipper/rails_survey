@@ -12,15 +12,15 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def create?
-    project_permissions
+    write_permissions
   end
 
   def destroy?
-    project_permissions
+    write_permissions
   end
 
   def show?
-    project_permissions
+    read_permissions
   end
 
   def edit?
@@ -28,14 +28,18 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def update?
-    project_permissions
+    write_permissions
   end
 
   private
-  def project_permissions
-    if user.role.name == 'project_manager'
+  def write_permissions
+    if current_admin_user or current_user.project_manager
       true
     end 
+  end
+  
+  def read_permissions
+    true 
   end
 
 end
