@@ -38,8 +38,7 @@ App.controller 'OptionsCtrl', ['$scope', 'Option', ($scope, Option) ->
   )
 
   $scope.$on('CANCEL_QUESTION', ->
-    if $scope.question_id == id
-      $scope.options = $scope.queryOptions()
+    $scope.options = $scope.queryOptions()
   )
 
   $scope.$on('EDIT_QUESTION', (event, id) ->
