@@ -4,7 +4,7 @@ App.controller 'OptionsCtrl', ['$scope', 'Option', ($scope, Option) ->
     $scope.project_id = project_id
     $scope.instrument_id = instrument_id
     $scope.question_id = question_id
-    if instrument_id and question_id
+    if $scope.instrument_id and $scope.question_id
       $scope.options = $scope.queryOptions()
 
   $scope.queryOptions = ->
@@ -18,8 +18,8 @@ App.controller 'OptionsCtrl', ['$scope', 'Option', ($scope, Option) ->
 
   $scope.$on('SAVE_QUESTION', (event, id) ->
     if ($scope.question_id == id or !$scope.question_id)
+      $scope.question_id = id
       angular.forEach $scope.options, (option, index) ->
-        $scope.question_id = id
         option.number_in_question = index + 1
         option.project_id = $scope.project_id
         option.instrument_id = $scope.instrument_id
@@ -32,9 +32,8 @@ App.controller 'OptionsCtrl', ['$scope', 'Option', ($scope, Option) ->
         else
           option.$save({},
             (data, headers) -> $scope.options = $scope.queryOptions(),
-            (result, headers) -> alert "Error updating option"
+            (result, headers) -> alert "Error saving option"
           )
-      $scope.options = $scope.queryOptions()
   )
 
   $scope.$on('CANCEL_QUESTION', ->
