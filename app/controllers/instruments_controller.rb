@@ -46,9 +46,14 @@ class InstrumentsController < ApplicationController
     redirect_to project_instruments_url, notice: "Successfully destroyed instrument."
   end
 
-  def mercury_update
-
-    render text: ''
+  def export
+    @instrument = current_project.instruments.find(params[:id])
+    respond_to do |format|
+      format.csv do 
+        send_data @instrument.to_csv, 
+          type: 'text/csv; charset=iso-8859-1; header=present',
+          disposition: "attachment; filename=#{@instrument.title}_#{@instrument.current_version_number}.csv"
+      end
+    end
   end
-
 end
