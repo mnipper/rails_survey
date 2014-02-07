@@ -78,7 +78,7 @@ describe Instrument do
     end
 
     it "should set alignment to left for left-aligned languages" do
-      @instrument.update_attributes!(language: (Settings.languages - Settings.right_align_languages).first)
+      @instrument.update_attributes!(language: 'en')
       @instrument.alignment.should == "left"
     end
   end
