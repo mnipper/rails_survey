@@ -144,4 +144,23 @@ describe Instrument do
       @translation.instrument.translated_for(@translation.language, :title).should == @translation.title
     end
   end
+
+  describe "export" do
+    before :each do
+      @question = create(:question, instrument: @instrument)
+    end
+
+    it "should export correctly" do
+      out = []
+      @instrument.export(out)
+      out.should == [
+        ["Instrument id:", @instrument.id],
+        ["Instrument title:", @instrument.title],
+        ["Version number:", @instrument.current_version_number],
+        ["\n"],
+        ["number", "qid", @instrument.language],
+        [@question.number_in_instrument, @question.question_identifier, @question.text]
+      ]
+    end
+  end
 end

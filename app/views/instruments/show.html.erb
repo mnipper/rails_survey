@@ -3,6 +3,9 @@
 <section class="widget">
   <header>
     <div class="actions hidden-xs-portrait"> 
+      <%= link_to export_project_instrument_path(@project, @instrument, format: :csv, filename: "#{@instrument.title}_#{@instrument.current_version_number}.csv"), class: 'btn btn-primary' do %>
+        <i class="icon-circle-arrow-down"></i> Export Instrument
+      <% end %>
       <%= link_to project_instrument_instrument_translations_path(@project, @instrument), class: 'btn btn-primary' do %>
         <i class="icon-globe"></i> Translations
       <% end %>

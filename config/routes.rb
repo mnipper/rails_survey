@@ -26,7 +26,9 @@ RailsSurvey::Application.routes.draw do
     resources :instruments do
       resources :versions, only: [:index, :show]
       resources :instrument_translations
-      member { post :mercury_update }
+      member do
+        get :export
+      end
     end
 
     resources :responses
