@@ -294,6 +294,7 @@ DEPENDENCIES
   rails (= 4.0.0)
   rails_12factor
   rails_config
+  rspec-mocks
   rspec-rails (~> 2.0)
   rubyzip (~> 1.1.0)
   sass-rails (~> 4.0.0)

@@ -34,22 +34,26 @@ describe Instrument do
     end
 
     it "should be version 0 at first" do
+      @instrument.current_version_number.should == 0
+    end
+
+    it "should create a new version when adding questions and options" do
       questions = create_list(:question, 10, instrument: @instrument)
       create_list(:option, 5, question: questions.first)
-      @instrument.current_version_number.should == 0
+      @instrument.current_version_number.should == 15 
     end
 
     it "should create a new version if a question is updated" do
       @instrument.current_version_number.should == 0
       question = create(:question, instrument: @instrument)
-      question.update_attributes(text: 'New text')
       @instrument.current_version_number.should == 1
+      question.update_attributes(text: 'New text')
+      @instrument.current_version_number.should == 2
     end
 
     it "should create a new version if a question is created" do
       @instrument.current_version_number.should == 0
       question = create(:question, instrument: @instrument)
-      @instrument.save
       @instrument.current_version_number.should == 1
     end
 
