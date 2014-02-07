@@ -97,4 +97,6 @@ RailsSurvey::Application.configure do
        :user_name => ENV['SMTP_USERNAME'],
        :password => ENV['SMTP_PASSWORD']
   }
+
+  config.action_mailer.default_url_options = { :host => 'chpir-survey-staging.herokuapp.com' }
 end
