@@ -10,7 +10,7 @@ App.directive 'scDailyResponses', [ ->
 
 createGraph = (scope, element) ->
   scope.w = 400
-  scope.h = 200
+  scope.h = 250
 
   if not scope.svg?
     scope.svg = d3.select(element[0])

@@ -1,11 +1,8 @@
 <section class="widget" ng-controller="GraphsCtrl" ng-init="initialize(<%= current_project.id %>)">
   <header>
-    <h4><i class="icon-calendar"></i> Response count per day </h4>
+    <h4><i class="icon-calendar"></i> Response count per day for project <b> <%= current_project.name %> </b> </h4>
   </header>
   <div class="body">
-    <!--<a href="" ng-click=(updateData())>Click here to get new data</a><br>-->
     <sc-Daily-Responses val="data"> </sc-Daily-Responses>
-    <div>responses below</div>
-    <div ng-bind="responses">{{ responses }}</div>
   </div>
 </section>
