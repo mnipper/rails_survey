@@ -31,10 +31,11 @@ class Project < ActiveRecord::Base
     end
     grouped_responses = grouped_responses.map(&:to_a).flatten(1).reduce({}) {|h,(k,v)| (h[k] ||= []) << v; h}
     hash = {}
+    array = []
     grouped_responses.each do |key, value|
-      hash[key] = value.inject{|sum,x| sum + x}
+      hash[key[0..9]] = value.inject{|sum,x| sum + x}
     end
-    hash
+    array << hash
   end
   
 end

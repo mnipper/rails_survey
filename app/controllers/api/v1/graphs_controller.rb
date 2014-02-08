@@ -5,13 +5,7 @@ module Api
       respond_to :json
       
       def index
-        puts "INDEX DAILY"
-        respond_with current_project.daily_response_count 
-      end
-      
-      def show
-        puts "SHOW DAILY"
-        respond_with current_project.daily_response_count
+        respond_with current_project.daily_response_count  
       end
       
     end

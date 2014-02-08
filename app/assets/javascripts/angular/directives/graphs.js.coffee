@@ -46,14 +46,6 @@ updateGraph = (newVal, oldVal, scope) ->
     .duration(0)
     .ease("cubic-out")
     .attr("x", (newVal.length + 2) * scope.xScale.rangeBand())
-
-    # Remove bars exiting to left
-    #bars.exit()
-    #.transition()
-    #.duration(200)
-    #.ease("cubic-out")
-    #.attr("x", -scope.xScale.rangeBand())
-    #.remove()
     
     # Apply attributes
     for bar in [existingBars, newBars]    
@@ -69,7 +61,6 @@ updateGraph = (newVal, oldVal, scope) ->
     .duration(200)
     .ease("cubic-out")
 
-
     # Create new text labels for those entering
     newLabels = textLabels
     .enter()
@@ -79,18 +70,11 @@ updateGraph = (newVal, oldVal, scope) ->
     .duration(0)
     .ease("cubic-out")
     .attr("x", (newVal.length + 2) * scope.xScale.rangeBand())
-
-    # Remove labels exiting to left
-    #textLabels.exit()
-    #.transition()
-    #.attr("x", -scope.xScale.rangeBand())
-    #.remove()
     
     # Apply attributes
     for label in [updateLabels, newLabels]
         updateTextAttr(label, scope)
-    
-
+ 
 updateBarAttr = (bar, scope) ->
     bar.attr("x", (d, i) -> scope.xScale(i))
         .attr("y", (d) -> scope.h - scope.yScale(d.data))
@@ -106,3 +90,4 @@ updateTextAttr = (label, scope) ->
         .attr("font-family", "sans-serif")
         .attr("font-size", "8px")
         .attr("fill", "white")
+      
