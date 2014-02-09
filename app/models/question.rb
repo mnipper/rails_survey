@@ -22,14 +22,13 @@ class Question < ActiveRecord::Base
   include Translatable
   default_scope { order('number_in_instrument ASC') }
   attr_accessible :text, :question_type, :question_identifier, :instrument_id,
-          :options_attributes, :following_up_question_identifier, :reg_ex_validation,
+          :following_up_question_identifier, :reg_ex_validation,
           :number_in_instrument, :reg_ex_validation_message
   belongs_to :instrument
   has_many :responses
   has_many :options, dependent: :destroy
   has_many :translations, foreign_key: 'question_id', class_name: 'QuestionTranslation', dependent: :destroy
   delegate :project, to: :instrument
-  accepts_nested_attributes_for :options, allow_destroy: true
   before_save :parent_update_count, if: Proc.new { |question| question.changed? }
   before_destroy :parent_update_count
   has_paper_trail

@@ -21,13 +21,12 @@ class Instrument < ActiveRecord::Base
   include LanguageAssignable
   scope :published, -> { where(published: true) }
 
-  attr_accessible :title, :language, :alignment, :questions_attributes, :previous_question_count, :child_update_count,
+  attr_accessible :title, :language, :alignment, :previous_question_count, :child_update_count,
       :published
   belongs_to :project
   has_many :questions, dependent: :destroy
   has_many :surveys
   has_many :translations, foreign_key: 'instrument_id', class_name: 'InstrumentTranslation', dependent: :destroy
-  accepts_nested_attributes_for :questions, allow_destroy: true
   has_paper_trail :on => [:update, :destroy]
   acts_as_paranoid
 
