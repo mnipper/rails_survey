@@ -36,6 +36,13 @@ class Instrument < ActiveRecord::Base
   validates :title, presence: true, allow_blank: false
   validates :project_id, presence: true, allow_blank: false
 
+  def version(version_number)
+    InstrumentVersion.build(
+      instrument_id: id,
+      version_number: version_number
+    )
+  end
+
   def self.instrument_response_count
     @response_map = []
     Instrument.all.each do |instrument|
@@ -73,21 +80,6 @@ class Instrument < ActiveRecord::Base
 
   def is_version?(version_number)
     current_version_number == version_number 
-  end
-
-  def question_count_for_version(version, number)
-    count = 0
-    time_at_version = self.versions[number].created_at 
-    all_questions = version.reify.questions.with_deleted
-    filtered_qst = all_questions.where("created_at < ?", time_at_version)
-    filtered_qst.each do |question|
-      if question.deleted_at
-        count += 1 if question.deleted_at > time_at_version
-      else
-        count += 1
-      end
-    end
-    count
   end
 
   def as_json(options={})

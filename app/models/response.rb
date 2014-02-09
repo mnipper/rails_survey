@@ -92,14 +92,6 @@ class Response < ActiveRecord::Base
     self.group(:created_at)
   end
 
-  def versioned_response
-    if question.options.empty? or text.empty? or text !~ /^[-+]?[0-9]+$/
-      text
-    else
-      question.options[text.to_i].version_at_time(survey.instrument_version.updated_at)
-    end
-  end
-
   def time_taken_in_seconds
     if time_ended && time_started
       time_ended - time_started

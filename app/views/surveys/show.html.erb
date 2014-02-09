@@ -22,14 +22,13 @@
         </tr>
       </thead>
       <tbody>
-      <% instrument_version_created_at = @survey.instrument_version.updated_at %>
     <% @survey.responses.each do |response| %>
           <% if response.question %>
           <tr>
           <td><%= response.question.question_type %></td>
           <td><%= response.question.question_identifier %></td>
           <td>
-               <%= raw response.question.version_at_time(@survey.instrument_version_number, instrument_version_created_at).text %>
+            <%= raw @instrument_version.versioned(response.question).text %>
           </td>
           <td><%= response.text %> </td>
           <td><%= response.special_response %></td>

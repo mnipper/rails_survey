@@ -84,19 +84,4 @@ describe Response do
       end
     end
   end
-
-  describe "versioned response", versioning: true do
-    before :each do
-      @test_response = create(:response)
-    end
-
-    it "should return text" do
-      @test_response.versioned_response.should == @test_response.text
-    end
-
-    it "should return versioned option text" do
-      @test_response.versioned_response.should == 'a' #TODO fix/understand factory associations
-    end
-  end
-
 end

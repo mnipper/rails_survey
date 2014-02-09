@@ -6,5 +6,6 @@ class SurveysController < ApplicationController
 
   def show
     @survey = Survey.find(params[:id])
+    @instrument_version = @survey.instrument.version(@survey.instrument_version_number)
   end
 end
