@@ -15,15 +15,15 @@ class InstrumentVersion
 
   def self.build(params = {})
     @instrument = Instrument.find(params[:instrument_id])
-    if @instrument.current_version_number == params[:version_number].to_i
-      @instrument
-    else
+    instrument_version = InstrumentVersion.new
+    instrument_version.instrument = @instrument
+
+    unless @instrument.current_version_number == params[:version_number].to_i
       @version = @instrument.versions[params[:version_number].to_i]
-      instrument_version = InstrumentVersion.new
-      instrument_version.instrument = @instrument
       instrument_version.version = @version
-      instrument_version
     end
+
+    instrument_version
   end
   
   def questions
@@ -36,6 +36,7 @@ class InstrumentVersion
   end
 
   def options_for_question(question)
+    return question.options unless @version
     options = []
     versioned(question).options.each do |option|
       options << versioned(option) if versioned(option)
