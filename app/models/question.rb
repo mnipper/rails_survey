@@ -56,14 +56,6 @@ class Question < ActiveRecord::Base
     }))
   end
 
-  def version_at_time(instrument_version_number, time)
-    if instrument_version_number == 0
-      self.version_at(time)
-    else
-      self.version_at(time + 1)
-    end
-  end
-
   private
   def parent_update_count
     instrument.increment!(:child_update_count)

@@ -31,10 +31,6 @@ class Option < ActiveRecord::Base
     text
   end
 
-  def version_at_time(time)
-    self.version_at(time + 1)
-  end
-
   def instrument_version
     instrument.current_version_number
   end
