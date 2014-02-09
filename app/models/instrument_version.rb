@@ -14,15 +14,13 @@ class InstrumentVersion
   end
 
   def self.build(params = {})
-    @instrument = Instrument.find(params[:instrument_id])
+    instrument = Instrument.find(params[:instrument_id])
+    version_number = params[:version_number].to_i
     instrument_version = InstrumentVersion.new
-    instrument_version.instrument = @instrument
-
-    unless @instrument.current_version_number == params[:version_number].to_i
-      @version = @instrument.versions[params[:version_number].to_i]
-      instrument_version.version = @version
+    instrument_version.instrument = instrument
+    if instrument.current_version_number > version_number
+      instrument_version.version = instrument.versions[version_number]
     end
-
     instrument_version
   end
   
