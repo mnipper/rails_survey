@@ -56,6 +56,26 @@ describe Instrument do
       question = create(:question, instrument: @instrument)
       @instrument.current_version_number.should == 1
     end
+
+    it "should return the correct title for the new version" do
+      @instrument.update_attributes(title: 'New title')
+      @instrument.version(1).title = 'New title'
+    end
+
+    it "should return the correct question text for the old version" do
+      question = create(:question, instrument: @instrument)
+      old_text = question.text
+      question.update_attributes(text: 'New text')
+      @instrument.version(1).questions.first.text.should == old_text
+      @instrument.current_version_number.should == 2
+    end
+
+    it "should return the correct option for the instrument version" do
+      question = create(:question, instrument: @instrument)
+      option = create(:option, question: question)
+      @instrument.version(1).questions.first.options.should == []
+      @instrument.version(2).questions.first.options.should == [option]
+    end
   end
 
   describe "alignment" do
