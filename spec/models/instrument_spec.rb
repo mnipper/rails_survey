@@ -67,7 +67,7 @@ describe Instrument do
       old_text = question.text
       question.update_attributes(text: 'New text')
       @instrument.version(1).questions.first.text.should == old_text
-      @instrument.current_version_number.should == 2
+      @instrument.version(2).questions.first.text.should == 'New text'
     end
 
     it "should return the correct option for the instrument version" do
