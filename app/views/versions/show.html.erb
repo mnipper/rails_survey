@@ -10,7 +10,7 @@
           <% if question.has_options? %>
             <br />Options:
             <ol class="options" start="0">
-              <% @instrument_version.options_for_question(question).each do |option| %>
+              <% question.options.each do |option| %>
                 <li><%= option.text %></li>
               <% end %>
             </ol>
