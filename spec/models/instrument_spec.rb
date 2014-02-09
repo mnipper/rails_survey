@@ -56,19 +56,6 @@ describe Instrument do
       question = create(:question, instrument: @instrument)
       @instrument.current_version_number.should == 1
     end
-
-    it "should return true if current_version_number" do
-      @instrument.current_version_number.should == 0
-      @instrument.is_version?(0).should be_true
-      @instrument.update_attributes(title: 'New text')
-      @instrument.current_version_number.should == 1
-      @instrument.is_version?(1).should be_true
-    end
-
-    it "should return false if not current_version_number" do
-      @instrument.current_version_number.should == 0
-      @instrument.is_version?(1).should be_false
-    end
   end
 
   describe "alignment" do

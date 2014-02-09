@@ -69,10 +69,6 @@ class Instrument < ActiveRecord::Base
     questions.count
   end
 
-  def is_version?(version_number)
-    current_version_number == version_number 
-  end
-
   def as_json(options={})
     super((options || {}).merge({
         methods: [:current_version_number, :question_count]
