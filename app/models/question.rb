@@ -29,8 +29,8 @@ class Question < ActiveRecord::Base
   has_many :options, dependent: :destroy
   has_many :translations, foreign_key: 'question_id', class_name: 'QuestionTranslation', dependent: :destroy
   delegate :project, to: :instrument
-  before_save :parent_update_count, if: Proc.new { |question| question.changed? }
-  before_destroy :parent_update_count
+  before_save :update_instrument_version, if: Proc.new { |question| question.changed? }
+  before_destroy :update_instrument_version
   has_paper_trail
   acts_as_paranoid
 
@@ -57,7 +57,7 @@ class Question < ActiveRecord::Base
   end
 
   private
-  def parent_update_count
-    instrument.increment!(:child_update_count)
+  def update_instrument_version
+    instrument.update_instrument_version
   end
 end

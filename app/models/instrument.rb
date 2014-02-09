@@ -97,6 +97,11 @@ class Instrument < ActiveRecord::Base
     end
   end
 
+  def update_instrument_version
+    # Force update for paper trail
+    increment!(:child_update_count)
+  end
+
   private
   def update_question_count
     self.previous_question_count = questions.count
