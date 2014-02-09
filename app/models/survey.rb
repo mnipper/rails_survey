@@ -29,10 +29,14 @@ class Survey < ActiveRecord::Base
   validates :instrument_version_number, presence: true, allow_blank: false
   
   def percent_complete
-    (responses.pluck(:question_id).uniq.count.to_f / instrument.version(instrument_version_number).questions.count).round(2)
+    (responses.pluck(:question_id).uniq.count.to_f / instrument_version.questions.count).round(2)
   end
 
   def location
     "#{latitude} / #{longitude}" if latitude and longitude
+  end
+
+  def instrument_version
+    instrument.version(instrument_version_number)
   end
 end
