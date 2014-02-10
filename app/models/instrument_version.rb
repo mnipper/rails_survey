@@ -27,7 +27,7 @@ class InstrumentVersion
   def questions
     return @instrument.questions unless @version
     questions = []
-    @version.reify.questions.each do |question|
+    @version.reify.questions.with_deleted.each do |question|
       versioned_question = versioned(question)
       if versioned_question
         questions << versioned_question
@@ -47,7 +47,7 @@ class InstrumentVersion
   def options_for_question(question)
     return question.options unless @version
     options = []
-    question.options.each do |option|
+    question.options.with_deleted.each do |option|
       options << versioned(option) if versioned(option)
     end
     options
