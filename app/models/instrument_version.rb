@@ -28,10 +28,11 @@ class InstrumentVersion
     return @instrument.questions unless @version
     questions = []
     @version.reify.questions.each do |question|
-      if versioned(question)
-        questions << versioned(question)
-        options = options_for_question(versioned(question))
-        question.define_singleton_method(:options) { options }
+      versioned_question = versioned(question)
+      if versioned_question
+        questions << versioned_question
+        options = options_for_question(versioned_question)
+        versioned_question.define_singleton_method(:options) { options }
       end
     end
     questions
