@@ -46,7 +46,7 @@ class InstrumentVersion
   def options_for_question(question)
     return question.options unless @version
     options = []
-    versioned(question).options.each do |option|
+    question.options.each do |option|
       options << versioned(option) if versioned(option)
     end
     options
