@@ -1,3 +1,3 @@
 App.factory 'Project', ['$resource', ($resource) ->
-  $resource '/api/v1/projects/:id', id: '@id'
+  $resource '/api/v1/frontend/projects/:id', id: '@id'
 ]
