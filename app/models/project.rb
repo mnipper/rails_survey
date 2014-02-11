@@ -23,36 +23,21 @@ class Project < ActiveRecord::Base
   validates :description, presence: true, allow_blank: true
 
   def daily_response_count 
-    grouped_responses = []
-    self.instruments.each do |instrument|
-      instrument.surveys.each do |survey|
-        grouped_responses << survey.group_responses_by_day
-      end
-    end
-    grouped_responses = grouped_responses.map(&:to_a).flatten(1).reduce({}) {|h,(k,v)| (h[k] ||= []) << v; h}
-    hash = {}
+    count_per_day = {}
     array = []
-    grouped_responses.each do |key, value|
-      hash[key[0..9]] = value.inject{|sum,x| sum + x}
+    response_count_per_period(:group_responses_by_day).each do |day, count|
+      count_per_day[day[0..9]] = count.inject{|sum,x| sum + x}
     end
-    array << hash
+    array << count_per_day
   end
   
   def hourly_response_count
-    responses = []
-    self.instruments.each do |instrument|
-      instrument.surveys.each do |survey|
-        responses << survey.group_responses_by_hour
-      end
+    count_per_hour = {}
+    array = []
+    response_count_per_period(:group_responses_by_hour).each do |hour, count|
+      count_per_hour[hour] = count.inject{|sum,x| sum + x}
     end
-    responses = responses.map(&:to_a).flatten(1).reduce({}) {|h,(k,v)| (h[k] ||= []) << v; h}
-    hash = {}
-    sorted_array = []
-    responses.each do |key, value|
-      hash[key] = value.inject{|sum,x| sum + x}
-    end
-    array = sanitize(hash)
-    sorted_array << array
+    array << sanitize(count_per_hour)
   end
   
   private
@@ -68,10 +53,21 @@ class Project < ActiveRecord::Base
         hash[hour] = 0
       end
     end
-    array = hash.sort_by {|k, v| k}
-    new_hash = Hash.new{ |h,k| h[k]=[] }
-    array.each{ |k,v| new_hash[k] = v }
-    new_hash
+    hash
+  end
+  
+  def response_count_per_period(method)
+    grouped_responses = []
+    self.instruments.each do |instrument|
+      instrument.surveys.each do |survey|
+        grouped_responses << survey.send(method)
+      end
+    end
+    merge_period_counts(grouped_responses)
+  end
+  
+  def merge_period_counts(grouped_responses)
+    grouped_responses.map(&:to_a).flatten(1).reduce({}) {|h,(k,v)| (h[k] ||= []) << v; h}
   end
   
 end
