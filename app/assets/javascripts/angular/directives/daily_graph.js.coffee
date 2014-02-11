@@ -11,8 +11,8 @@ App.directive 'scDailyResponses', [ ->
 ]
 
 createGraph = (scope, element) ->
-  scope.w = 400
-  scope.h = 250
+  scope.w = 700
+  scope.h = 400
   scope.padding =
       top: 20
       right: 20
@@ -28,6 +28,8 @@ createGraph = (scope, element) ->
     .attr("height", scope.h)
     .append("g")
     .attr("transform", "translate(" + scope.padding.left + ", " + scope.padding.top + ")")
+    .style("width", scope.w)
+    .style("height", scope.h)
   
 updateGraph = (newVal, oldVal, scope) ->
     scope.xLabels = newVal.map (pair) -> pair.time
