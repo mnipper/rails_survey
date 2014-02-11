@@ -36,8 +36,6 @@ class Project < ActiveRecord::Base
       hash[key[0..9]] = value.inject{|sum,x| sum + x}
     end
     array << hash
-    puts array
-    array
   end
   
   def hourly_response_count
@@ -55,8 +53,6 @@ class Project < ActiveRecord::Base
     end
     array = sanitize(hash)
     sorted_array << array
-    puts sorted_array
-    sorted_array 
   end
   
   private
