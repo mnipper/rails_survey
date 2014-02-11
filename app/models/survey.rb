@@ -35,6 +35,14 @@ class Survey < ActiveRecord::Base
   def location
     "#{latitude} / #{longitude}" if latitude and longitude
   end
+  
+  def group_responses_by_day
+    self.responses.group_by_day(:created_at).count 
+  end
+  
+  def group_responses_by_hour
+    self.responses.group_by_hour_of_day(:created_at).count
+  end
 
   def instrument_version
     instrument.version(instrument_version_number)

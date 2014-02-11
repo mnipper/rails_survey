@@ -17,6 +17,8 @@ RailsSurvey::Application.routes.draw do
         resources :options, only: [:index, :show]
         resources :surveys, only: [:create]
         resources :responses, only: [:create]
+        get 'graphs/daily/' => 'graphs#daily'
+        get 'graphs/hourly/' => 'graphs#hourly'
       end
     end
   end
@@ -35,14 +37,8 @@ RailsSurvey::Application.routes.draw do
     resources :surveys
     resources :notifications, only: [:index]
     resources :devices, only: [:index]
+    get 'graphs/daily/' => 'graphs#daily_responses'
+    get 'graphs/hourly/' => 'graphs#hourly_responses'
   end
-
-  get '/realtime' => 'graphs#real_time'
-  get '/graphs/update' => 'graphs#update'
-  get '/bars' => 'graphs#bars'
-  get '/lines' => 'graphs#hourly'
-  get '/daily' => 'graphs#daily_responses'
-
-  resources :graphs
 
 end

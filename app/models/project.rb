@@ -22,4 +22,56 @@ class Project < ActiveRecord::Base
   validates :name, presence: true, allow_blank: false
   validates :description, presence: true, allow_blank: true
 
+  def daily_response_count 
+    grouped_responses = []
+    self.instruments.each do |instrument|
+      instrument.surveys.each do |survey|
+        grouped_responses << survey.group_responses_by_day
+      end
+    end
+    grouped_responses = grouped_responses.map(&:to_a).flatten(1).reduce({}) {|h,(k,v)| (h[k] ||= []) << v; h}
+    hash = {}
+    array = []
+    grouped_responses.each do |key, value|
+      hash[key[0..9]] = value.inject{|sum,x| sum + x}
+    end
+    array << hash
+  end
+  
+  def hourly_response_count
+    responses = []
+    self.instruments.each do |instrument|
+      instrument.surveys.each do |survey|
+        responses << survey.group_responses_by_hour
+      end
+    end
+    responses = responses.map(&:to_a).flatten(1).reduce({}) {|h,(k,v)| (h[k] ||= []) << v; h}
+    hash = {}
+    sorted_array = []
+    responses.each do |key, value|
+      hash[key] = value.inject{|sum,x| sum + x}
+    end
+    array = sanitize(hash)
+    sorted_array << array
+  end
+  
+  private
+  def sanitize(hash)
+    (0..23).each do |h|
+      hour = ''
+      if h < 10
+        hour = '0'+h.to_s 
+      else
+        hour = h.to_s
+      end
+      unless hash.has_key?(hour) 
+        hash[hour] = 0
+      end
+    end
+    array = hash.sort_by {|k, v| k}
+    new_hash = Hash.new{ |h,k| h[k]=[] }
+    array.each{ |k,v| new_hash[k] = v }
+    new_hash
+  end
+  
 end
