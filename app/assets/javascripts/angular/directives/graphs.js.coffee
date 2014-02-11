@@ -74,7 +74,32 @@ updateGraph = (newVal, oldVal, scope) ->
     # Apply attributes
     for label in [updateLabels, newLabels]
         updateTextAttr(label, scope)
- 
+        
+###
+    dateLabels = scope.svg.selectAll("text")
+    .data(newVal, (d) -> d.time)
+        
+    # Update existing labels
+    updateDateLabels = dateLabels
+    .transition()
+    .duration(200)
+    .ease("cubic-out")
+
+    # Create new text labels for those entering
+    newDateLabels = dateLabels
+    .enter()
+    .append("text")
+    .transition()
+    .delay(100)
+    .duration(0)
+    .ease("cubic-out")
+    .attr("x", (newVal.length + 2) * scope.xScale.rangeBand())
+    
+    # Apply attributes
+    for label in [updateDateLabels, newDateLabels]
+        updateDateAttr(label, scope)
+###
+
 updateBarAttr = (bar, scope) ->
     bar.attr("x", (d, i) -> scope.xScale(i))
         .attr("y", (d) -> scope.h - scope.yScale(d.data))
@@ -86,6 +111,15 @@ updateTextAttr = (label, scope) ->
     label.text((d) -> d.data)
         .attr("x", (d, i) -> scope.xScale(i) + scope.xScale.rangeBand() / 2)
         .attr("y", (d) -> scope.h - scope.yScale(d.data) + 15)
+        .attr("text-anchor", "middle")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "8px")
+        .attr("fill", "white")
+        
+updateDateAttr = (label, scope) ->
+    label.text((d) -> d.time)
+        .attr("x", (d, i) -> scope.xScale(i) + scope.xScale.rangeBand() / 2)
+        .attr("y", (d) -> scope.h)
         .attr("text-anchor", "middle")
         .attr("font-family", "sans-serif")
         .attr("font-size", "8px")

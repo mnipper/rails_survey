@@ -58,5 +58,9 @@ class Survey < ActiveRecord::Base
   def group_responses_by_day
     self.responses.group_by_day(:created_at).count 
   end
+  
+  def group_responses_by_hour
+    self.responses.group_by_hour_of_day(:created_at).count
+  end
 
 end

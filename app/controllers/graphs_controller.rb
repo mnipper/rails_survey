@@ -42,7 +42,6 @@ class GraphsController < ApplicationController
     #respond_to_ajax
     #@project = current_project 
     @responses = current_project.daily_response_count 
-    puts @responses 
   end
 
   def update
@@ -51,7 +50,9 @@ class GraphsController < ApplicationController
     respond_to_ajax
   end
 
-  def hourly
-    @responses = Response.responses_by_hour
+  def hourly_responses
+    #@responses = Response.responses_by_hour
+    @responses = current_project.hourly_response_count
+    puts @responses 
   end
 end
