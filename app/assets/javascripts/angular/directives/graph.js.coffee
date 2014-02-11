@@ -1,4 +1,4 @@
-App.directive 'scDailyResponses', [ ->
+App.directive 'scGraphResponses', [ ->
   return {
     restrict: 'E',
     scope: {val: '='},
