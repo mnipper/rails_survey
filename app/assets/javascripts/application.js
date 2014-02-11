@@ -13,6 +13,7 @@
 //= require twitter/bootstrap
 //= require chosen-jquery
 //= require app
+//= require ../../../vendor/assets/lib/jquery-ui-1.10.1.custom
 //= require ../../../vendor/assets/javascripts/ui-sortable
 //= require ../../../vendor/assets/javascripts/chosen
 //= require ../../../vendor/assets/javascripts/loading-bar
