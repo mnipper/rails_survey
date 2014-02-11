@@ -3,15 +3,21 @@ App.controller 'DailyGraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', ($scope, 
   $scope.hourData = []
   $scope.initialize = (project_id) ->
     $scope.project_id = project_id
-    
-    DailyGraph.query( {"project_id": project_id}, (result) ->
+    $scope.fetchData()
+    #setTimeout -> 
+    #  $scope.fetchData()
+    #, 60000
+ 
+  $scope.fetchData = ->
+    console.log "Called Called"
+    DailyGraph.query( {"project_id": $scope.project_id}, (result) ->
       hash = result[0]
       for k, v of hash
         if k[0] != '$'
           $scope.dayData.push {time:k , data:v}
     )
         
-    HourGraph.query( {"project_id": project_id}, (result) ->
+    HourGraph.query( {"project_id": $scope.project_id}, (result) ->
       array = []
       for key, value of result[0]  
         if key[0] != '$'
