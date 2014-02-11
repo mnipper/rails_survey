@@ -43,15 +43,8 @@ class Project < ActiveRecord::Base
   private
   def sanitize(hash)
     (0..23).each do |h|
-      hour = ''
-      if h < 10
-        hour = '0'+h.to_s 
-      else
-        hour = h.to_s
-      end
-      unless hash.has_key?(hour) 
-        hash[hour] = 0
-      end
+      hour = sprintf '%02d', h
+      hash[hour] = 0 unless hash.has_key?(hour)
     end
     hash
   end
