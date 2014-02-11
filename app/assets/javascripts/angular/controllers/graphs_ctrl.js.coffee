@@ -9,7 +9,6 @@ App.controller 'DailyGraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', ($scope, 
     #, 60000
  
   $scope.fetchData = ->
-    console.log "Called Called"
     DailyGraph.query( {"project_id": $scope.project_id}, (result) ->
       hash = result[0]
       for k, v of hash
