@@ -18,6 +18,5 @@
 //= require ../../../vendor/assets/javascripts/loading-bar
 //= require ../../../vendor/assets/javascripts/d3
 //= require ../../../vendor/assets/javascripts/nv.d3
-//= require ../../../vendor/assets/javascripts/angularjs-nvd3-directives
 //= require_tree ./angular
 //= require_directory .

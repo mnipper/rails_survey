@@ -32,16 +32,8 @@ class GraphsController < ApplicationController
     respond_to_ajax
   end
 
-  def daily_responses
-    #@responses = {}
-    #instruments = Instrument.all
-    #instruments.each do |instrument|
-     # @responses[instrument.title] = instrument.response_count_per_day
-    #end
-    #@responses_html = render_to_string(partial: 'graphs/partials/daily_ajax').html_safe
-    #respond_to_ajax
-    #@project = current_project 
-    @responses = current_project.daily_response_count 
+  def daily_responses 
+    current_project.daily_response_count 
   end
 
   def update
@@ -51,8 +43,6 @@ class GraphsController < ApplicationController
   end
 
   def hourly_responses
-    #@responses = Response.responses_by_hour
-    @responses = current_project.hourly_response_count
-    puts @responses 
+    current_project.hourly_response_count
   end
 end

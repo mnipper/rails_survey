@@ -1,7 +1,7 @@
 module Api
   module V1
     class GraphsController < ApiApplicationController
-      #protect_from_forgery with: :null_session
+      protect_from_forgery with: :null_session
       respond_to :json
       
       def daily

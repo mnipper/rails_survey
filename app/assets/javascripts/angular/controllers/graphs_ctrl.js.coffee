@@ -16,19 +16,10 @@ App.controller 'DailyGraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', ($scope, 
       for key, value of result[0]  
         if key[0] != '$'
           array.push {hour: key, data: value}
-          #$scope.lineData.push {hour: key, data: value}
-          #hourCount = []
-          #hourCount.push parseInt(key, 10)
-          #hourCount.push value
-          #console.log hourCount 
-          #array.push hourCount 
       first = array[0..13]
       second = array[14..23]
       $scope.hourData = second.concat first
-      #console.log array
-      #console.log array.length
     )
-
 ]
 
 
