@@ -13,6 +13,8 @@ RailsSurvey::Application.routes.draw do
               resources :options
             end
           end
+          get 'graphs/daily/' => 'graphs#daily'
+          get 'graphs/hourly/' => 'graphs#hourly'
         end
       end
 
@@ -22,8 +24,6 @@ RailsSurvey::Application.routes.draw do
         resources :options, only: [:index, :show]
         resources :surveys, only: [:create]
         resources :responses, only: [:create]
-        get 'graphs/daily/' => 'graphs#daily'
-        get 'graphs/hourly/' => 'graphs#hourly'
       end
     end
   end
