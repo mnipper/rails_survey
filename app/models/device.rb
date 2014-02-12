@@ -24,4 +24,13 @@ class Device < ActiveRecord::Base
   def last_survey
     surveys.order('updated_at ASC').last
   end
+  
+  def completion_rate
+    percentages = []
+    surveys.each do |survey|
+      percentages << survey.percent_complete
+    end
+    (percentages.sum/percentages.length).round(2) 
+  end
+  
 end

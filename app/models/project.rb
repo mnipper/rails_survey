@@ -39,7 +39,7 @@ class Project < ActiveRecord::Base
     end
     array << sanitize(count_per_hour)
   end
-  
+
   private
   def sanitize(hash)
     (0..23).each do |h|
