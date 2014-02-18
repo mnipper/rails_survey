@@ -1,8 +1,8 @@
-<section class="widget" ng-controller="InstrumentsCtrl" ng-init="initialize(<%= @project.id %>)">
+<section class="widget" ng-controller="InstrumentsCtrl" ng-init="initialize(<%= current_project.id %>)">
   <header>
     <h4><i class="icon-edit"></i> Instruments</h4>
     <div class="actions hidden-xs-portrait">
-      <%= link_to new_project_instrument_path(@project), class: 'btn btn-primary' do %>
+      <%= link_to new_project_instrument_path(current_project), class: 'btn btn-primary' do %>
           <i class="icon-plus"></i> New Instrument
       <% end %>
     </div>
@@ -22,7 +22,7 @@
       </thead>
       <tbody>
       <tr ng-repeat="instrument in instruments | filter:q">
-        <td><a href="/projects/<%= @project.id %>/instruments/{{instrument.id}}">{{instrument.title}}</a></td>
+        <td><a href="/projects/<%= current_project.id %>/instruments/{{instrument.id}}">{{instrument.title}}</a></td>
         <td>{{instrument.id}}</td>
         <td>{{instrument.current_version_number}}</td>
         <td>{{instrument.question_count}}</td>
