@@ -56,4 +56,11 @@ class InstrumentsController < ApplicationController
       end
     end
   end
+
+  def export_responses
+    @instrument = current_project.instruments.find(params[:id])
+    respond_to do |format|
+      format.csv { render text: @instrument.responses.to_csv }
+    end
+  end
 end

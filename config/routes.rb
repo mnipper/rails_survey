@@ -35,15 +35,15 @@ RailsSurvey::Application.routes.draw do
       resources :instrument_translations
       member do
         get :export
+        get :export_responses
       end
+    end
+    member do 
+      get :export
     end
 
     resources :responses
-    resources :surveys do
-      member do
-        get :export
-      end
-    end
+    resources :surveys
     resources :notifications, only: [:index]
     resources :devices, only: [:index]
     get 'graphs/daily/' => 'graphs#daily_responses'
