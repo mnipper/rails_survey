@@ -26,6 +26,7 @@ class Instrument < ActiveRecord::Base
   belongs_to :project
   has_many :questions, dependent: :destroy
   has_many :surveys
+  has_many :responses, through: :surveys
   has_many :translations, foreign_key: 'instrument_id', class_name: 'InstrumentTranslation', dependent: :destroy
   has_paper_trail :on => [:update, :destroy]
   acts_as_paranoid
