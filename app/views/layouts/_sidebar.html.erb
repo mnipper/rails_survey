@@ -41,7 +41,7 @@
         </li>
 
         <li class="<%= current_page?(project_responses_path(current_project)) ? 'active' : 'panel' %>">
-          <%= link_to project_responses_path(current_project, format: :csv) do %>
+          <%= link_to project_responses_path(current_project) do %>
               <i class="icon-download"></i><span class="name">Export</span>
           <% end %>
         </li>

@@ -41,6 +41,12 @@ class ProjectsController < ApplicationController
     redirect_to projects_url
   end
 
+  def export
+    respond_to do |format|
+      format.csv { render text: current_project.responses.to_csv }
+    end
+  end
+
   private
     def project_params
       params.require(:project).permit(:name, :description)
