@@ -12,8 +12,8 @@ RailsSurvey::Application.routes.draw do
             resources :questions do
               resources :options
             end
+            post 'new_image/:id', :controller => 'images', :action =>'create'
           end
-          resources :images, only: [:index, :show]
           get 'graphs/daily/' => 'graphs#daily'
           get 'graphs/hourly/' => 'graphs#hourly'
         end
