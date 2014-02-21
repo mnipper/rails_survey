@@ -56,6 +56,15 @@
                       <div class="controls form-group">
                         <div id="content" rows="4" text-angular="text-angular" ta-toolbar="[['bold','italics','underline','insertLink'],['redo','undo','clear'],['html']]" ng-model="question.text"></div>
                       </div>
+                      <label for="content" class="control-label">File Upload</label>
+                      <div ng-controller="FileUploadCtrl" ng-init="initialize(<%= current_project.id %>, <%= @instrument.id %>)">
+                        <input type="text" ng-model="images">
+                        <input type="file" ng-file-select="onFileSelect($files)" >
+                        <input type="file" ng-file-select="onFileSelect($files)" multiple>
+                        <div ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="optional-css-class" ng-show="dropSupported">drop files here</div>
+                        <div ng-file-drop-available="dropSupported=true" ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
+                        <button ng-click="upload.abort()">Cancel Upload</button>
+                      </div>
                       <div ng-show="questionTypesWithOptions(question.question_type)">
                         <div ng-controller="OptionsCtrl" ng-init="init(<%= current_project.id %>, <%= @instrument.id %>, question.id)">
                           <fieldset>

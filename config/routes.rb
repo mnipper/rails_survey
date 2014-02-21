@@ -13,6 +13,7 @@ RailsSurvey::Application.routes.draw do
               resources :options
             end
           end
+          resources :images, only: [:index, :show]
           get 'graphs/daily/' => 'graphs#daily'
           get 'graphs/hourly/' => 'graphs#hourly'
         end
