@@ -58,7 +58,7 @@
                       </div>
                       
                       <label for="content" class="control-label">File Upload</label>
-                      <div ng-controller="FileUploadCtrl" ng-init="initialize(<%= current_project.id %>, <%= @instrument.id %>)">
+                      <div ng-controller="FileUploadCtrl" ng-init="initialize(<%= current_project.id %>, <%= @instrument.id %>, question.id)">
                         <div ng-show="uploader.isHTML5">
                           <input ng-file-select type="file" multiple/>
                         </div>
@@ -86,19 +86,19 @@
                                     </div>
                                 </td>
                                 <td class="text-center">
-                                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-                                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                    <span ng-show="item.isSuccess"><i class="eicon-check"></i></span>
+                                    <span ng-show="item.isCancel"><i class="eicon-cancel"></i></span>
+                                    <span ng-show="item.isError"><i class="eicon-trash"></i></span>
                                 </td>
                                 <td nowrap>
                                     <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                                        <span class="glyphicon glyphicon-upload"></span> Upload
+                                        <span class="eicon-upload-cloud"></span> Upload
                                     </button>
                                     <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
-                                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                                        <span class="eicon-cancel"></span> Cancel
                                     </button>
                                     <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                        <span class="eicon-trash"></span> Remove
                                     </button>
                                 </td>
                             </tr>

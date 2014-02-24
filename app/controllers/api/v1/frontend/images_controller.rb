@@ -18,6 +18,9 @@ module Api
         end
         
         def create
+          puts params[:project_id]
+          puts params[:instrument_id]
+          puts params[:question_id] 
           @image = Image.new(params)
           if @image.save
             render nothing: true, status: :created
