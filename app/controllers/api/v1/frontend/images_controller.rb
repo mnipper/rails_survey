@@ -7,7 +7,11 @@ module Api
         def index
           if current_user
             question = Question.find(params[:question_id])
-            respond_with question.images         
+            images = []
+            question.images.each do |img|
+              images << img.as_json
+            end
+            respond_with images       
           end
         end
 
@@ -18,10 +22,7 @@ module Api
         end
         
         def create
-          puts params[:project_id]
-          puts params[:instrument_id]
-          puts params[:question_id] 
-          @image = Image.new(params)
+          @image = Image.new(:photo => params[:file], :question_id => params[:question_id])
           if @image.save
             render nothing: true, status: :created
           else

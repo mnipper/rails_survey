@@ -56,13 +56,16 @@
                       <div class="controls form-group">
                         <div id="content" rows="4" text-angular="text-angular" ta-toolbar="[['bold','italics','underline','insertLink'],['redo','undo','clear'],['html']]" ng-model="question.text"></div>
                       </div>
-                      
-                      <label for="content" class="control-label">File Upload</label>
+                      <label for="content" class="control-label">Images</label> </br>
                       <div ng-controller="FileUploadCtrl" ng-init="initialize(<%= current_project.id %>, <%= @instrument.id %>, question.id)">
+                        <div ng-repeat="image in images">
+                            <b>{{image.file_name}}</b>
+                            <div>{{image}}</div>
+                            <div ng-show="uploader.isHTML5" ng-thumb="{ file: image.image_url, height: 100 }"></div>
+                        </div>
                         <div ng-show="uploader.isHTML5">
                           <input ng-file-select type="file" multiple/>
-                        </div>
-                          
+                        </div>        
                     <table class="table">
                         <thead>
                             <tr>
