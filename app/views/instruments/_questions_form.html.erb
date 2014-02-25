@@ -54,19 +54,10 @@
                       </div>
                       <label for="content" class="control-label">Content</label>
                       <div class="controls form-group">
-                        <div id="content" rows="4" text-angular="text-angular" ta-toolbar="[['bold','italics','underline','insertLink'],['redo','undo','clear'],['html']]" ng-model="question.text"></div>
+                        <div id="content" rows="4" text-angular="text-angular" ta-toolbar="[['bold','italics','underline','insertLink'],['redo','undo','clear'],['html'], ['insertImage']]" ng-model="question.text"></div>
                       </div>
                       <label for="content" class="control-label">Images</label> </br>
                       <div ng-controller="FileUploadCtrl" ng-init="initialize(<%= current_project.id %>, <%= @instrument.id %>, question.id)">
-                        <div ng-repeat="img in images">
-                            <div ng-class-odd="'odd'" ng-class-even="'even'">
-                            <div class="col-md-6">
-                                <b>{{img.name}}</b></br>
-                                <img ng-src="{{img.image_url}}"></img> </br>
-                                <button ng-click="deleteImage(img)" class="btn btn-danger">Delete image</button>
-                            </div>
-                            </div>
-                        </div>
                        <div ng-show="uploader.isHTML5">
                           <input ng-file-select type="file" multiple/>
                         </div>       
@@ -111,6 +102,15 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div ng-repeat="img in images">
+                        <div ng-class-odd="'odd'" ng-class-even="'even'">
+                            <div class="col-md-6">
+                                <b>{{img.name}}</b></br>
+                                <img ng-src="{{img.image_url}}"></img> </br>
+                                <button ng-click="deleteImage(img)" class="btn btn-danger">Delete image</button>
+                            </div>
+                        </div>
+                    </div>
                         
                       </div>
                       <div ng-show="questionTypesWithOptions(question.question_type)">
