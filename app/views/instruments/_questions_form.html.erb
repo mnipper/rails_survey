@@ -59,12 +59,17 @@
                       <label for="content" class="control-label">Images</label> </br>
                       <div ng-controller="FileUploadCtrl" ng-init="initialize(<%= current_project.id %>, <%= @instrument.id %>, question.id)">
                         <div ng-repeat="img in images">
-                            <b>{{img.name}}</b>
-                            <img ng-src="{{img.image_url}}">
+                            <div ng-class-odd="'odd'" ng-class-even="'even'">
+                            <div class="col-md-6">
+                                <b>{{img.name}}</b></br>
+                                <img ng-src="{{img.image_url}}"></img> </br>
+                                <button ng-click="deleteImage(img)" class="btn btn-danger">Delete image</button>
+                            </div>
+                            </div>
                         </div>
-                        <div ng-show="uploader.isHTML5">
+                       <div ng-show="uploader.isHTML5">
                           <input ng-file-select type="file" multiple/>
-                        </div>        
+                        </div>       
                     <table class="table">
                         <thead>
                             <tr>

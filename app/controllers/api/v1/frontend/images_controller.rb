@@ -30,6 +30,10 @@ module Api
           end
         end
         
+        def destroy
+          respond_with Image.find(params[:id]).destroy
+        end
+        
       end
     end
   end

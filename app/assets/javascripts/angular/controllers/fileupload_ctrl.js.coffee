@@ -1,4 +1,4 @@
-App.controller 'FileUploadCtrl', ['$scope', '$fileUploader', 'Images', ($scope, $fileUploader, Images) ->
+App.controller 'FileUploadCtrl', ['$scope', '$fileUploader', 'Image', ($scope, $fileUploader, Image) ->
   $scope.images = []
   $scope.initialize = (project_id, instrument_id, question_id) ->
     $scope.project_id = project_id
@@ -22,7 +22,7 @@ App.controller 'FileUploadCtrl', ['$scope', '$fileUploader', 'Images', ($scope, 
       "|jpg|png|jpeg|bmp|gif|".indexOf(type) isnt -1
       
   $scope.queryImages = ->
-    Images.query(
+    Image.query(
       {
         "project_id": $scope.project_id,
         "instrument_id": $scope.instrument_id,
@@ -30,5 +30,11 @@ App.controller 'FileUploadCtrl', ['$scope', '$fileUploader', 'Images', ($scope, 
       }, (result) ->
         console.log result 
     )
-    
+   
+  $scope.deleteImage = (image) ->
+    image.project_id = $scope.project_id
+    image.instrument_id = $scope.instrument_id
+    image.question_id = $scope.question_id
+    image.$delete()
+    $scope.images.splice($scope.images.indexOf(image), 1)
 ]
