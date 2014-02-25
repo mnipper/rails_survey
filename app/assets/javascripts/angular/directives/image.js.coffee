@@ -10,7 +10,7 @@ App.directive 'ngThumb', ['$window'
         "|jpg|png|jpeg|bmp|gif|".indexOf(type) isnt -1
 
     return (
-      restrict: "A"
+      restrict: "A",
       template: "<canvas/>"
       
       link: (scope, element, attributes) ->
@@ -19,7 +19,6 @@ App.directive 'ngThumb', ['$window'
           img = new Image()
           img.onload = onLoadImage
           img.src = event.target.result
-          return
         
         onLoadImage = ->
           width = params.width or @width / @height * params.height
@@ -29,7 +28,6 @@ App.directive 'ngThumb', ['$window'
             height: height
 
           canvas[0].getContext("2d").drawImage this, 0, 0, width, height
-          return
         
         return  unless helper.support
         
@@ -42,6 +40,5 @@ App.directive 'ngThumb', ['$window'
         reader = new FileReader()
         reader.onload = onLoadFile
         reader.readAsDataURL params.file
-        return
     )
 ]

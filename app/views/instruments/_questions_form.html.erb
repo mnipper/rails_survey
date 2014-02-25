@@ -58,10 +58,9 @@
                       </div>
                       <label for="content" class="control-label">Images</label> </br>
                       <div ng-controller="FileUploadCtrl" ng-init="initialize(<%= current_project.id %>, <%= @instrument.id %>, question.id)">
-                        <div ng-repeat="image in images">
-                            <b>{{image.file_name}}</b>
-                            <div>{{image}}</div>
-                            <div ng-show="uploader.isHTML5" ng-thumb="{ file: image.image_url, height: 100 }"></div>
+                        <div ng-repeat="img in images">
+                            <b>{{img.name}}</b>
+                            <img ng-src="{{img.image_url}}">
                         </div>
                         <div ng-show="uploader.isHTML5">
                           <input ng-file-select type="file" multiple/>
