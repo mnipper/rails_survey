@@ -68,7 +68,7 @@ class Response < ActiveRecord::Base
   def option_labels
     labels = [] 
     if question and question.has_options?
-      text.split(',').each do |option_index|
+      text.split(Settings.list_delimiter).each do |option_index|
         if question.has_other? and option_index.to_i == question.other_index
           labels << "Other"
         else
@@ -76,7 +76,7 @@ class Response < ActiveRecord::Base
         end
       end
     end
-    labels.join(',')
+    labels.join(Settings.list_delimiter)
   end
 
   def dictionary
@@ -87,7 +87,6 @@ class Response < ActiveRecord::Base
       end
       labels << "#{question.other_index}=\"Other\"" if question.has_other?
     end
-    labels.join(';')
+    labels.join(Settings.dictionary_delimiter)
   end
-
 end

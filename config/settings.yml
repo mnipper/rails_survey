@@ -12,6 +12,12 @@ question_types:
 question_with_options: ['SELECT_ONE', 'SELECT_MULTIPLE', 'SELECT_ONE_WRITE_OTHER', 'SELECT_MULTIPLE_WRITE_OTHER', 'LIST_OF_TEXT_BOXES']
 question_with_other: ['SELECT_ONE_WRITE_OTHER', 'SELECT_MULTIPLE_WRITE_OTHER']
 
+# List delimiter for options
+list_delimiter: ','
+
+# Delimiter for items in option dictionary
+dictionary_delimiter: ';'
+
 # ISO 639-1 codes of supported languages
 languages: [
              ['English', 'en'],
