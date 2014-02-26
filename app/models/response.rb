@@ -29,7 +29,7 @@ class Response < ActiveRecord::Base
   validates :survey, presence: true
 
   def to_s
-    if question.options.empty?
+    if question.nil? or question.options.empty?
       text
     else
       question.options[text.to_i].to_s
@@ -44,12 +44,14 @@ class Response < ActiveRecord::Base
 
   def self.export(format)
     format << ['qid', 'instrument_id', 'instrument_version_number', 'instrument_title', 
-      'survey_uuid', 'device_id', 'response', 'special_response', 'other_response']
+      'survey_uuid', 'device_id', 'response', 'response_labels', 'dictionary',
+      'special_response', 'other_response']
     all.each do |response|
       format << [response.question_identifier, response.survey.instrument_id,
         response.instrument_version_number, response.survey.instrument_title,
         response.survey_uuid, response.survey.device_uuid, response.text,
-        response.special_response, response.other_response]
+        response.option_labels, response.dictionary, response.special_response,
+        response.other_response]
     end
   end
 
@@ -62,5 +64,30 @@ class Response < ActiveRecord::Base
       time_ended - time_started
     end
   end
-  
+
+  def option_labels
+    labels = [] 
+    if question and question.has_options?
+      text.split(',').each do |option_index|
+        if question.has_other? and option_index.to_i == question.other_index
+          labels << "Other"
+        else
+          labels << question.options.with_deleted[option_index.to_i].to_s
+        end
+      end
+    end
+    labels.join(',')
+  end
+
+  def dictionary
+    labels = [] 
+    if question and question.has_options?
+      question.options.with_deleted.each_with_index do |option, index|
+        labels << "#{index}=\"#{option}\""
+      end
+      labels << "#{question.other_index}=\"Other\"" if question.has_other?
+    end
+    labels.join(';')
+  end
+
 end

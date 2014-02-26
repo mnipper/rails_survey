@@ -57,6 +57,8 @@ describe Response do
           "survey_uuid",
           "device_id",
           "response",
+          "response_labels",
+          "dictionary",
           "special_response",
           "other_response"
         ],
@@ -67,6 +69,8 @@ describe Response do
           @response.survey.uuid,
           @response.survey.device_uuid,
           "a",
+          @response.option_labels,
+          @response.dictionary,
           "SKIP",
           'other']
         ]

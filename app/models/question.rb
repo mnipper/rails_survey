@@ -56,6 +56,14 @@ class Question < ActiveRecord::Base
     }))
   end
 
+  def has_other?
+    Settings.question_with_options.include? question_type
+  end
+
+  def other_index
+    options.length
+  end
+
   private
   def update_instrument_version
     instrument.update_instrument_version
