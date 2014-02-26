@@ -33,3 +33,6 @@ vcs.xml
 bin/
 
 tests_angular/
+
+#pictures
+public/system/ 
