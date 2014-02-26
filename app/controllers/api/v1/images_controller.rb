@@ -5,8 +5,7 @@ module Api
       
       def index
         respond_with Image.all.to_a
-      end
-      
+      end     
     end  
   end
 end

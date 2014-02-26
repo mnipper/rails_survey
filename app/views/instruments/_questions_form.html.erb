@@ -105,7 +105,7 @@
                     <div ng-repeat="img in images">
                         <div ng-class-odd="'odd'" ng-class-even="'even'">
                             <div class="col-md-6">
-                                <b>{{img.name}}</b></br>
+                                <b>{{img.photo_file_name}}</b></br>
                                 <img ng-src="{{img.photo_url}}"></img> </br>
                                 <button ng-click="deleteImage(img)" class="btn btn-danger">Delete image</button>
                             </div>
