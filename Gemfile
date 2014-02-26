@@ -59,9 +59,6 @@ group :test do
   gem 'selenium-webdriver', '~> 2.39'
 end
 
-# Simple statistics
-gem 'descriptive-statistics'
-
 # Use unicorn as the app server
 # gem 'unicorn'
 
@@ -74,6 +71,7 @@ gem 'chosen-rails'
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'paranoia', '~> 2.0'
 gem 'groupdate', github: 'mieko/groupdate', :branch => 'sqlite3'
+gem 'paperclip', '~> 4.1.0'
 
 group :production do
   gem 'rails_12factor'
