@@ -23,6 +23,7 @@ RailsSurvey::Application.routes.draw do
         resources :instruments, only: [:index, :show]
         resources :questions, only: [:index, :show]
         resources :options, only: [:index, :show]
+        resources :images, only:[:index]
         resources :surveys, only: [:create]
         resources :responses, only: [:create]
       end
