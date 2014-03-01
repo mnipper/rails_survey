@@ -17,7 +17,7 @@
 
 class Response < ActiveRecord::Base
   attr_accessible :question_id, :text, :other_response, :special_response, :survey_uuid,
-    :time_started, :time_ended, :question_identifier
+    :time_started, :time_ended, :question_identifier, :uuid
   belongs_to :question
   belongs_to :survey, foreign_key: :survey_uuid, primary_key: :uuid
   delegate :device, to: :survey 
