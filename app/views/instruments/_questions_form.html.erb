@@ -54,7 +54,64 @@
                       </div>
                       <label for="content" class="control-label">Content</label>
                       <div class="controls form-group">
-                        <div id="content" rows="4" text-angular="text-angular" ta-toolbar="[['bold','italics','underline','insertLink'],['redo','undo','clear'],['html']]" ng-model="question.text"></div>
+                        <div id="content" rows="4" text-angular="text-angular" ta-toolbar="[['bold','italics','underline','insertLink'],['redo','undo','clear'],['html'], ['insertImage']]" ng-model="question.text"></div>
+                      </div>
+                      <label for="content" class="control-label">Images</label> </br>
+                      <div ng-controller="FileUploadCtrl" ng-init="initialize(<%= current_project.id %>, <%= @instrument.id %>, question.id)">
+                       <div ng-show="uploader.isHTML5">
+                          <input ng-file-select type="file" multiple/>
+                        </div>       
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="50%">Name</th>
+                                <th ng-show="uploader.isHTML5">Size</th>
+                                <th ng-show="uploader.isHTML5">Progress</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in uploader.queue">
+                                <td>
+                                    <strong>{{ item.file.name }}</strong>
+                                    <div ng-show="uploader.isHTML5" ng-thumb="{ file: item.file, height: 100 }"></div>
+                                </td>
+                                <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                <td ng-show="uploader.isHTML5">
+                                    <div class="progress" style="margin-bottom: 0;">
+                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span ng-show="item.isSuccess"><i class="eicon-check"></i></span>
+                                    <span ng-show="item.isCancel"><i class="eicon-cancel"></i></span>
+                                    <span ng-show="item.isError"><i class="eicon-trash"></i></span>
+                                </td>
+                                <td nowrap>
+                                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                        <span class="eicon-upload-cloud"></span> Upload
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                                        <span class="eicon-cancel"></span> Cancel
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                        <span class="eicon-trash"></span> Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div ng-repeat="img in images">
+                        <div ng-class-odd="'odd'" ng-class-even="'even'">
+                            <div class="col-md-6">
+                                <b>{{img.photo_file_name}}</b></br>
+                                <img ng-src="{{img.photo_url}}"></img> </br>
+                                <button ng-click="deleteImage(img)" class="btn btn-danger">Delete image</button>
+                            </div>
+                        </div>
+                    </div>
+                        
                       </div>
                       <div ng-show="questionTypesWithOptions(question.question_type)">
                         <div ng-controller="OptionsCtrl" ng-init="init(<%= current_project.id %>, <%= @instrument.id %>, question.id)">

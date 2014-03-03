@@ -19,5 +19,6 @@
 //= require ../../../vendor/assets/javascripts/loading-bar
 //= require ../../../vendor/assets/javascripts/d3
 //= require ../../../vendor/assets/javascripts/nv.d3
+//= require ../../../vendor/assets/javascripts/angular-file-upload.min
 //= require_tree ./angular
 //= require_directory .
