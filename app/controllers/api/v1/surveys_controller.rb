@@ -15,6 +15,7 @@ module Api
           device = Device.new
           device.projects << Project.find_by_id(params[:project_id])
           device.identifier = params[:survey][:device_uuid]
+          device.label = params[:survey][:device_label]
           device.save
           @survey.device = device
         end
