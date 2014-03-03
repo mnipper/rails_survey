@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140212160141) do
+ActiveRecord::Schema.define(version: 20140303150028) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -50,6 +50,21 @@ ActiveRecord::Schema.define(version: 20140212160141) do
     t.string   "access_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "device_notifications", force: true do |t|
+    t.text     "time"
+    t.boolean  "monday"
+    t.boolean  "tuesday"
+    t.boolean  "wednesday"
+    t.boolean  "thursday"
+    t.boolean  "friday"
+    t.boolean  "saturday"
+    t.boolean  "sunday"
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "instrument_id"
   end
 
   create_table "devices", force: true do |t|
@@ -139,7 +154,7 @@ ActiveRecord::Schema.define(version: 20140212160141) do
 
   create_table "responses", force: true do |t|
     t.integer  "question_id"
-    t.string   "text"
+    t.text     "text"
     t.string   "other_response"
     t.datetime "created_at"
     t.datetime "updated_at"
