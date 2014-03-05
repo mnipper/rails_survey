@@ -52,21 +52,6 @@ ActiveRecord::Schema.define(version: 20140303170456) do
     t.datetime "updated_at"
   end
 
-  create_table "device_notifications", force: true do |t|
-    t.text     "time"
-    t.boolean  "monday"
-    t.boolean  "tuesday"
-    t.boolean  "wednesday"
-    t.boolean  "thursday"
-    t.boolean  "friday"
-    t.boolean  "saturday"
-    t.boolean  "sunday"
-    t.text     "message"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "instrument_id"
-  end
-
   create_table "devices", force: true do |t|
     t.string   "identifier"
     t.datetime "created_at"
@@ -158,9 +143,19 @@ ActiveRecord::Schema.define(version: 20140303170456) do
     t.string   "reg_ex_validation"
     t.integer  "number_in_instrument"
     t.string   "reg_ex_validation_message"
-    t.integer  "follow_up_position",               default: 0
     t.datetime "deleted_at"
+    t.integer  "follow_up_position",               default: 0
     t.boolean  "identifies_survey",                default: false
+  end
+
+  create_table "response_images", force: true do |t|
+    t.string   "response_uuid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
   end
 
   create_table "responses", force: true do |t|
@@ -174,6 +169,14 @@ ActiveRecord::Schema.define(version: 20140303170456) do
     t.datetime "time_started"
     t.datetime "time_ended"
     t.string   "question_identifier"
+    t.string   "uuid"
+  end
+
+  create_table "roles", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   create_table "surveys", force: true do |t|
