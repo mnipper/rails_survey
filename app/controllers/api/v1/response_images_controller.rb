@@ -5,7 +5,7 @@ module Api
       respond_to :json
 
       def create
-        @response = ResponseImage.new(:response_uuid => params[:response_uuid], :picture => params[:picture])
+        @response = ResponseImage.new(params[:response_image])
         if @response.save
           render json: @response, status: :created
         else
