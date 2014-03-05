@@ -16,6 +16,7 @@ class ResponseImage < ActiveRecord::Base
   has_attached_file :picture, :styles => { :small => ["150x150>", :medium => "300x300>"] } 
   validates_attachment_content_type :picture, :content_type => /\Aimage\/.*\Z/
   belongs_to :response, :foreign_key => :response_uuid, :primary_key => :uuid
+  delegate :project, to: :response 
   validates :response_uuid, presence: true
   
   def picture_data=(data_value)
