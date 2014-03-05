@@ -4,7 +4,7 @@
 #
 #  id                  :integer          not null, primary key
 #  question_id         :integer
-#  text                :string(255)
+#  text                :text
 #  other_response      :string(255)
 #  created_at          :datetime
 #  updated_at          :datetime
