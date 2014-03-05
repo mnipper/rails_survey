@@ -26,6 +26,7 @@ class InstrumentVersion
   
   def questions
     return @instrument.questions unless @version
+    return @questions if @questions
     questions = []
     @version.reify.questions.with_deleted.each do |question|
       versioned_question = versioned(question)
@@ -35,7 +36,19 @@ class InstrumentVersion
         versioned_question.define_singleton_method(:options) { options }
       end
     end
-    questions
+    @questions = questions
+  end
+
+  def find_question_by(options = {})
+    finder, value = options.first
+    return @instrument.questions.send("find_by_#{finder}".to_sym, value) unless @version
+    question = @version.reify.questions.send("find_by_#{finder}".to_sym, value)
+    if question
+      versioned_question = versioned(question)
+      options = options_for_question(versioned_question)
+      versioned_question.define_singleton_method(:options) { options }
+      versioned_question
+    end
   end
 
   def versioned(object)
