@@ -19,6 +19,7 @@
           <th>Other Response</th>
           <th>Created at</th>
           <th>Time taken(sec)</th>
+          <th>Response Image</th>
         </tr>
       </thead>
       <tbody>
@@ -35,6 +36,11 @@
           <td><%= response.other_response %></td>
           <td><%= response.created_at %> </td>
           <td><%= response.time_taken_in_seconds %></td>
+          <td>
+              <% if response.response_image %>
+                    <%= link_to 'View Image', project_response_image_path(current_project, response.response_image.id)  %>
+              <% end %>
+          </td>
         </tr>
         <% end %>
     <% end %>
