@@ -15,6 +15,7 @@ describe "Surveys API" do
           'instrument_id' => @instrument.id,
           'instrument_version_number' => 0,
           'device_uuid' => @survey.uuid, 
+          'device_label' => 'label',
           'uuid' => @survey.uuid
         }
     expect(response).to be_success
