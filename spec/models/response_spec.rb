@@ -51,26 +51,30 @@ describe Response do
       Response.export(out)
       out.should == [
         ["qid",
+          "short_qid",
           "instrument_id",
           "instrument_version_number",
           "instrument_title",
           "survey_uuid",
           "device_id",
+          "question_type",
+          "question_text",
           "response",
           "response_labels",
-          "dictionary",
           "special_response",
           "other_response"
         ],
         [@response.question_identifier,
+          "q_#{@response.question_id}",
           @response.instrument.id,
           1,
           @response.survey.instrument_title,
           @response.survey.uuid,
           @response.survey.device_uuid,
+          @response.question.question_type,
+          @response.versioned_question.try(:text),
           "a",
           @response.option_labels,
-          @response.dictionary,
           "SKIP",
           'other']
         ]

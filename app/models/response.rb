@@ -24,6 +24,7 @@ class Response < ActiveRecord::Base
   delegate :instrument, to: :survey
   delegate :project, to: :survey
   delegate :instrument_version_number, to: :survey
+  delegate :instrument_version, to: :survey
 
   validates :question, presence: true
   validates :survey, presence: true
@@ -43,15 +44,15 @@ class Response < ActiveRecord::Base
   end
 
   def self.export(format)
-    format << ['qid', 'instrument_id', 'instrument_version_number', 'instrument_title', 
-      'survey_uuid', 'device_id', 'response', 'response_labels', 'dictionary',
-      'special_response', 'other_response']
+    format << ['qid', 'short_qid', 'instrument_id', 'instrument_version_number', 'instrument_title', 
+      'survey_uuid', 'device_id', 'question_type', 'question_text', 'response', 'response_labels', 'special_response',
+      'other_response']
     all.each do |response|
-      format << [response.question_identifier, response.survey.instrument_id,
-        response.instrument_version_number, response.survey.instrument_title,
-        response.survey_uuid, response.survey.device_uuid, response.text,
-        response.option_labels, response.dictionary, response.special_response,
-        response.other_response]
+      format << [response.question_identifier, "q_#{response.question_id}", response.survey.instrument_id,
+        response.instrument_version_number, response.survey.instrument_title, response.survey_uuid, 
+        response.survey.device_uuid, response.versioned_question.try(:question_type), 
+        response.versioned_question.try(:text), response.text, response.option_labels,
+        response.special_response, response.other_response]
     end
   end
 
@@ -67,12 +68,12 @@ class Response < ActiveRecord::Base
 
   def option_labels
     labels = [] 
-    if question and question.has_options?
+    if question and versioned_question and versioned_question.has_options? 
       text.split(Settings.list_delimiter).each do |option_index|
-        if question.has_other? and option_index.to_i == question.other_index
+        if versioned_question.has_other? and option_index.to_i == versioned_question.other_index
           labels << "Other"
         else
-          labels << question.options.with_deleted[option_index.to_i].to_s
+          labels << versioned_question.options[option_index.to_i].to_s
         end
       end
     end
@@ -88,5 +89,9 @@ class Response < ActiveRecord::Base
       labels << "#{question.other_index}=\"Other\"" if question.has_other?
     end
     labels.join(Settings.dictionary_delimiter)
+  end
+
+  def versioned_question
+    @versioned_question ||= instrument_version.find_question_by(question_identifier: question_identifier)
   end
 end
