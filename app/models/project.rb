@@ -16,6 +16,7 @@ class Project < ActiveRecord::Base
   has_many :project_devices, dependent: :destroy
   has_many :devices, through: :project_devices
   has_many :responses, through: :surveys
+  has_many :response_images, through: :responses
   has_many :user_projects
   has_many :users, through: :user_projects
 

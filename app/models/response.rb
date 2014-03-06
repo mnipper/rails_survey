@@ -25,6 +25,7 @@ class Response < ActiveRecord::Base
   delegate :project, to: :survey
   delegate :instrument_version_number, to: :survey
   delegate :instrument_version, to: :survey
+  has_one :response_image, foreign_key: :response_uuid, primary_key: :uuid
 
   validates :question, presence: true
   validates :survey, presence: true
