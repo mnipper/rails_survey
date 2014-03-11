@@ -1,0 +1,35 @@
+<section class="widget">
+    <header>
+        Does PubSub work?
+    </header>
+    <div class="body">
+        <table id="responses">
+            <tr>
+                <th>Response</th>
+            </tr>
+            <% @responses.each do |response|%>
+                <tr>
+                    <td> response.survey_uuid </td>
+                </tr>
+            <% end %>
+        </table>
+    </div>
+</section>
+
+<script type="text/javascript" charset="utf-8">
+$(function(){
+  var socket = io.connect('//localhost:5001/');
+
+  socket.on('message', function (data) {
+    data = JSON.parse(data);
+    console.log(data);
+
+    var response = $("<tr/>", {
+      html: $("<td/>", { text: data.survey_uuid })
+    });
+    $('#responses').append(response)
+
+  });
+
+});
+</script>

@@ -50,6 +50,7 @@ RailsSurvey::Application.routes.draw do
     resources :notifications, only: [:index]
     resources :devices, only: [:index]
     resources :response_images, only:[:show]
+    resources :graphs, only:[:index]
     get 'graphs/daily/' => 'graphs#daily_responses'
     get 'graphs/hourly/' => 'graphs#hourly_responses'
   end

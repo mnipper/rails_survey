@@ -30,6 +30,8 @@ class Response < ActiveRecord::Base
   validates :question, presence: true
   validates :survey, presence: true
 
+  after_create {|response| response.message 'create' }
+
   def to_s
     if question.nil? or question.options.empty?
       text
@@ -95,4 +97,17 @@ class Response < ActiveRecord::Base
   def versioned_question
     @versioned_question ||= instrument_version.find_question_by(question_identifier: question_identifier)
   end
+  
+  def message action
+    msg = 
+    { 
+      resource: 'responses',
+      action: action,
+      id: self.id,
+      obj: self, 
+      count: Response.count
+    }
+    $redis.publish 'response-create', msg.to_json
+  end
+  
 end
