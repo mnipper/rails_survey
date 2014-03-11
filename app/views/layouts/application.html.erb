@@ -22,7 +22,9 @@
   <div class="content container">
     <div class="row">
       <% flash.each do |key, msg| %>
-        <div class="alert alert-<%= key == :alert ? "danger" : "success" %> text-center"><%= msg %></div>
+        <% if key == :alert or key == :notice %>
+          <div class="alert alert-<%= key == :alert ? "danger" : "success" %> text-center"><%= msg %></div>
+        <% end %>
       <% end %>
     </div>
     <div class="row">
