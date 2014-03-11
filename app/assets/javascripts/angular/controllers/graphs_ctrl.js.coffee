@@ -1,9 +1,23 @@
 App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', ($scope, DailyGraph, HourGraph) ->
   $scope.dayData = []
   $scope.hourData = []
+  $scope.chart = {} #TODO 
+
   $scope.initialize = (project_id) ->
     $scope.project_id = project_id
     $scope.fetchData()
+    
+    items = []
+    socket = io.connect("//localhost:3001/")
+    socket.on "message", (data) ->
+      data = JSON.parse(data)
+      console.log data
+      responseCount = data.count
+      items.push responseCount
+      items.shift()  if items.length > 40
+      $scope.chart =
+        data: items
+        max: 30
  
   $scope.fetchData = ->
     DailyGraph.query( {"project_id": $scope.project_id}, (result) ->

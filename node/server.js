@@ -1,23 +1,21 @@
 process.title = 'realtime-app';
 
+//var sockjs  = require('sockjs');
 var express = require('express');
 var app = express();
 
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
-
 var redis = require("redis");
-
 server.listen(3001);
 
 // simple logger
-app.use(function(req, res, next){
+app.use(function(req, res, next) {
   console.log('%s %s', req.method, req.url);
   next();
 });
 
 io.sockets.on('connection', function (socket) {
-
   // subscribe to redis
   var subscribe = redis.createClient();
   subscribe.subscribe('responses.create');
@@ -31,8 +29,10 @@ io.sockets.on('connection', function (socket) {
   // unsubscribe from redis if session disconnects
   socket.on('disconnect', function () {
     console.log("user disconnected");
-
     subscribe.quit();
   });
-
 });
+
+//webSocket stuff
+//var sockjsServer = sockjs.createServer();
+//sockjsServer.installHandlers(server, { prefix: '/sockjs' });

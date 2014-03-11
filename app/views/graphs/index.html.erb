@@ -14,6 +14,15 @@
             <% end %>
         </table>
     </div>
+    
+    <!-- Line Chart -->
+    <div class="row-fluid" ng-controller="GraphCtrl" ng-init="initialize(<%= current_project.id %>)">
+        <div class="span8">
+            <h2>Realtime Line Chart</h2>
+            <sc-Line-Chart chart="chart" class="line-chart"> </sc-Line-Chart>
+        </div>
+    </div>
+    
 </section>
 
 <script type="text/javascript" charset="utf-8">
