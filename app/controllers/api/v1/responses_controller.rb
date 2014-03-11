@@ -7,7 +7,6 @@ module Api
       def create
         @response = Response.new(params[:response])
         if @response.save
-          #$redis.publish('responses.create', @response.to_json)
           render json: @response, status: :created
         else
           render nothing: true, status: :unprocessable_entity

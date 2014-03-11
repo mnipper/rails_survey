@@ -1,4 +1,4 @@
-process.title = 'pubsub-app';
+process.title = 'realtime-app';
 
 var express = require('express');
 var app = express();
