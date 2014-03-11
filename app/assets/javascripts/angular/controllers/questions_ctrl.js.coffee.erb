@@ -90,4 +90,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
 
   $scope.questionTypesWithOptions = (questionType)->
     questionType in <%= Settings.question_with_options %>
+
+  $scope.questionTypesWithImages = (questionType)->
+    questionType in <%= Settings.question_with_images %>
 ]
