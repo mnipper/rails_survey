@@ -37,6 +37,7 @@
            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#side-nav" href="#stats-collapse"><i class="icon-bar-chart"></i> <span class="name">Statistics</span></a>
            <ul id="stats-collapse" class="panel-collapse collapse">
              <li><%= link_to 'Response Charts', project_graphs_daily_path(current_project) %> </li>
+             <li><%= link_to 'Realtime Charts', project_graphs_path(current_project) %></li>
            </ul>
         </li>
 

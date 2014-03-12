@@ -1,0 +1,12 @@
+{
+  "name": "realtime",
+  "description": "Real time results display",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "3.x",
+    "socket.io": "0.9.x",
+    "redis": "0.8.x",
+    "sockjs": "~0.3.x"
+  }
+}

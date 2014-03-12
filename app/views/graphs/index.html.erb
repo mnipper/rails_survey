@@ -1,0 +1,10 @@
+<section class="widget">
+    <header>
+        <h3> Realtime Project Results Total Count </h3>
+    </header>
+    
+    <div ng-controller="GraphCtrl" ng-init="initialize(<%= current_project.id %>)">
+        <sc-Line-Chart chart="chart" class="line-chart"> </sc-Line-Chart>
+    </div>
+    
+</section>
