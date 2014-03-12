@@ -1,5 +1,5 @@
 <div class="body">
-<div ng-controller="QuestionsCtrl" ng-init="init(<%= current_project.id %>, <%= @instrument.id %>)">
+<div ng-controller="QuestionsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>)">
   <input type="search" ng-model="q" placeholder="Search questions..." class="form-control bottom-buffer">
   <div ui-sortable="sortableOptions" ng-model="questions">
     <div class="row" ng-repeat="question in questions | filter:q">
@@ -31,7 +31,7 @@
             </header>
             <div class="body tab-content">
               <div class="tab-general tab-pane active">
-                <form class="form-horizontal label-left" name="question_form" novalidate>
+                <form class="form-horizontal label-left" name="question_form" id="question_form" novalidate>
                   <fieldset>
                     <div class="control-group">
                       <label for="question-identifier" class="control-label">Question Identifier</label>
@@ -56,7 +56,7 @@
                       <div class="controls form-group">
                         <div id="content" rows="4" text-angular="text-angular" ta-toolbar="[['bold','italics','underline','insertLink'],['redo','undo','clear'],['html'], ['insertImage']]" ng-model="question.text"></div>
                       </div>
-                      <div ng-controller="FileUploadCtrl" ng-init="initialize(<%= current_project.id %>, <%= @instrument.id %>, question.id)">
+                      <div ng-controller="FileUploadCtrl" ng-init="initialize(<%= @project.id %>, <%= @instrument.id %>, question.id)">
                         <div ng-show="questionTypesWithImages(question.question_type)">
                         <label for="content" class="control-label">Images</label> </br>
                          <div ng-show="uploader.isHTML5">
@@ -116,7 +116,7 @@
                         
                       </div>
                       <div ng-show="questionTypesWithOptions(question.question_type)">
-                        <div ng-controller="OptionsCtrl" ng-init="init(<%= current_project.id %>, <%= @instrument.id %>, question.id)">
+                        <div ng-controller="OptionsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>, question.id)">
                           <fieldset>
                             <legend class="section">
                               Options
@@ -179,7 +179,7 @@
                   <div>
                     <p class="text-muted">A skip pattern goes to a specific question based on if the user selects a specific option
                       when responding to a question.  Select the desired pattern for each option to this question.</p>
-                    <div ng-controller="OptionsCtrl" ng-init="init(<%= current_project.id %>, <%= @instrument.id %>, question.id)">
+                    <div ng-controller="OptionsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>, question.id)">
                       <div ng-repeat="option in options">
                         <label for="follow-up" class="control-label">If {{option.text}} is selected, skip to:</label>
                         <div class="controls form-group">
@@ -244,7 +244,7 @@
     </div>
   </div>
   <div class="top-buffer">
-    <a class="btn btn-success" ng-click="newQuestion()"><i class="icon-plus"></i> Add Question</a>
+    <a class="btn btn-success" ng-click="newQuestion()" id="add-question-button"><i class="icon-plus"></i> Add Question</a>
   </div>
 </div>
 

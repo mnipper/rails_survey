@@ -4,10 +4,12 @@ class InstrumentsController < ApplicationController
   end
 
   def show
+    @project = current_project
     @instrument = current_project.instruments.find(params[:id])
   end
 
   def new
+    @project = current_project
     @instrument = current_project.instruments.new
   end
 
@@ -21,6 +23,7 @@ class InstrumentsController < ApplicationController
   end
 
   def edit
+    @project = current_project
     @instrument = current_project.instruments.find(params[:id])
   end
 
