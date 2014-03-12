@@ -16,6 +16,7 @@ RailsSurvey::Application.routes.draw do
           end
           get 'graphs/daily/' => 'graphs#daily'
           get 'graphs/hourly/' => 'graphs#hourly'
+          get 'graphs/count/' => 'graphs#count'
         end
       end
 

@@ -1,4 +1,4 @@
-App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', ($scope, DailyGraph, HourGraph) ->
+App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectResponseCount', ($scope, DailyGraph, HourGraph, ProjectResponseCount) ->
   $scope.dayData = []
   $scope.hourData = []
   $scope.COUNT = 0
@@ -9,7 +9,7 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', ($scope, Daily
     
     items = []
     if items.length == 0
-      items.push ({ value: 0, timestamp: new Date() })
+      items.push ({ value: $scope.COUNT, timestamp: new Date() })
     $scope.chart = 
       {
         data: items
@@ -18,22 +18,15 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', ($scope, Daily
     socket = io.connect("//localhost:3001/")
     socket.on "message", (data) ->
       data = JSON.parse(data)
-      responseCount = 0
-      if data == "UPDATE"
-        responseCount = $scope.COUNT
-      else
-        responseCount = data.count
+      if data.count != 0
         $scope.COUNT = data.count
-      time = new Date()
-      plotPoint = ({ value: responseCount, timestamp: time })
-      items.push plotPoint
-      items.shift()  if items.length > 40
+      items.push { value: $scope.COUNT, timestamp: new Date() }
+      #items.shift()  if items.length > 40
       $scope.chart = 
-      {
-        data: items
-        max: 30
-      }
-      #console.log $scope.chart
+        {
+          data: items
+          max: 500
+        }
       $scope.$apply()
  
   $scope.fetchData = ->
@@ -52,6 +45,12 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', ($scope, Daily
       first = array[0..13]
       second = array[14..23]
       $scope.hourData = second.concat first
+    )
+    
+    ProjectResponseCount.query( {"project_id": $scope.project_id}, (result) ->
+      for key, value of result[0] 
+        if key[0] != '$'
+          $scope.COUNT = value
     )
 ]
 
