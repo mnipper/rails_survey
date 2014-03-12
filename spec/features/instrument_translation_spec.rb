@@ -2,9 +2,9 @@ require "spec_helper"
 
 feature "Instrument Translation", js: true do
   before :each do
-    pending 'current project refactor'
     @user = create(:user)
     @project = create(:project)
+    @user_project = UserProject.create!(user_id: @user.id, project_id: @project.id)
     @instrument = create(:instrument, project: @project)
     @question = create(:question, instrument: @instrument)
     ApplicationController.any_instance.stub(:current_project).and_return(@project)
@@ -12,8 +12,7 @@ feature "Instrument Translation", js: true do
     fill_in 'user_email', :with => @user.email
     fill_in 'user_password', :with => @user.password
     click_button 'Sign in'
-    visit "/projects/#{@project.id}/instruments/#{@instrument.id}/instrument_translations"
-    click_link 'New Translation'
+    visit "/projects/#{@project.id}/instruments/#{@instrument.id}/instrument_translations/new"
   end
 
   scenario "clicking new translation shows new translation page" do
