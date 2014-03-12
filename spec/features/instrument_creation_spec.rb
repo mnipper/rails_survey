@@ -5,8 +5,7 @@ feature "Instrument Creation", js: true do
     @user = create(:user)
     @project = create(:project)
     @user_project = UserProject.create!(user_id: @user.id, project_id: @project.id)
-    @instrument = create(:instrument, project: @project)
-    @question = create(:question, instrument: @instrument)
+    @instrument = build(:instrument, project: @project)
     ApplicationController.any_instance.stub(:current_project).and_return(@project)
     visit '/users/sign_in'
     fill_in 'user_email', :with => @user.email
@@ -26,5 +25,16 @@ feature "Instrument Creation", js: true do
     click_button "Create Instrument"
     find('#add-question-button').click
     page.should have_css('#question_form')
+  end
+
+  scenario "user adds a new question" do
+    fill_in 'instrument_title', :with => @instrument.title
+    click_button "Create Instrument"
+    find('#add-question-button').click
+    select_from_chosen("FREE_RESPONSE",:from => "question-type")
+    find('.ta-text').set('Question Text')
+    within(".form-actions") do
+      find('#save-question').click
+    end
   end
 end

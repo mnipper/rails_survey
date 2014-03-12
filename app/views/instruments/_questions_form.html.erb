@@ -46,6 +46,7 @@
                         data-placeholder="Select a question type..."
                         no-results-text="'This does not match any valid question type'"
                         name="question-type"
+                        id="question-type"
                         ng-model="question.question_type"
                         ng-options="type for type in questionTypes()"
                         required
@@ -54,7 +55,7 @@
                       </div>
                       <label for="content" class="control-label">Content</label>
                       <div class="controls form-group">
-                        <div id="content" rows="4" text-angular="text-angular" ta-toolbar="[['bold','italics','underline','insertLink'],['redo','undo','clear'],['html'], ['insertImage']]" ng-model="question.text"></div>
+                        <div text-angular="text-angular" id="text-angular-content" rows="4" ta-toolbar="[['bold','italics','underline','insertLink'],['redo','undo','clear'],['html'], ['insertImage']]" ng-model="question.text"></div>
                       </div>
                       <div ng-controller="FileUploadCtrl" ng-init="initialize(<%= @project.id %>, <%= @instrument.id %>, question.id)">
                         <div ng-show="questionTypesWithImages(question.question_type)">
@@ -234,7 +235,7 @@
                 </fieldset>
               </div>
               <div class="form-actions">
-                <a class="btn btn-success pull-right" ng-click="saveQuestion()" ng-disabled="question_form.$invalid">Save</a>
+                <a class="btn btn-success pull-right" id="save-question" ng-click="saveQuestion()" ng-disabled="question_form.$invalid">Save</a>
                 <a class="btn btn-danger pull-right" ng-click="cancelQuestion()">Cancel</a>
               </div>
             </div>
