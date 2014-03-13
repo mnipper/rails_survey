@@ -34,13 +34,13 @@ App.directive "scLineChart", ->
       
       chartOptions =
         legend: 
-          position: "bottom"
-          
-        title: "Overall Project Responses Count"
+          position: "bottom" 
+        title: "Realtime Project Responses Summary"
+        titlePosition: "out"
         vAxes:
           [
-            { title: 'Total', minValue: 0, maxValue: 100, titleTextStyle: {color: 'blue'} }, 
-            { title: 'Difference', minValue: 0, maxValue: 20 }
+            { title: 'Total Responses', minValue: 0, maxValue: 100, titleTextStyle: {color: 'blue'} }, 
+            { title: 'Change in Responses', minValue: 0, maxValue: 20 }
           ]
         series: 
           {
@@ -53,11 +53,11 @@ App.directive "scLineChart", ->
                 targetAxisIndex: 1, color: 'green', textStyle: { color: 'green' } 
               }
           }
-
         hAxis:
           viewWindow:
             min: min
             max: max
+          title: "Time"
         backgroundColor: "#339999"
         chartArea: 
           width: 750
