@@ -10,13 +10,13 @@ App.directive "scLineChart", ->
       dataDifference = chart.differenceCount
       
       table = new google.visualization.DataTable()
-      table.addColumn "datetime"
-      table.addColumn "number"
-      table.addColumn "number"
+      table.addColumn "datetime", "Time"
+      table.addColumn "number", "Total Responses"
+      table.addColumn "number", "Change in Responses"
       table.addRows dataTotal.length
       
       view = new google.visualization.DataView(table)
-      
+
       i = 0
       while i < dataTotal.length and i < dataDifference.length
         item = dataTotal[i] 
@@ -33,7 +33,9 @@ App.directive "scLineChart", ->
       min = new Date(last.timestamp - chart.max * 1000)
       
       chartOptions =
-        legend: "none"
+        legend: 
+          position: "bottom"
+          
         title: "Overall Project Responses Count"
         vAxes:
           [
