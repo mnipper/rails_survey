@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140305212214) do
+ActiveRecord::Schema.define(version: 20140313160336) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -50,6 +50,21 @@ ActiveRecord::Schema.define(version: 20140305212214) do
     t.string   "access_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "device_notifications", force: true do |t|
+    t.text     "time"
+    t.boolean  "monday"
+    t.boolean  "tuesday"
+    t.boolean  "wednesday"
+    t.boolean  "thursday"
+    t.boolean  "friday"
+    t.boolean  "saturday"
+    t.boolean  "sunday"
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "instrument_id"
   end
 
   create_table "devices", force: true do |t|
@@ -93,7 +108,7 @@ ActiveRecord::Schema.define(version: 20140305212214) do
 
   create_table "option_translations", force: true do |t|
     t.integer  "option_id"
-    t.string   "text"
+    t.text     "text",       limit: 255
     t.string   "language"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -101,7 +116,7 @@ ActiveRecord::Schema.define(version: 20140305212214) do
 
   create_table "options", force: true do |t|
     t.integer  "question_id"
-    t.string   "text"
+    t.text     "text",               limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "next_question"
@@ -126,14 +141,14 @@ ActiveRecord::Schema.define(version: 20140305212214) do
   create_table "question_translations", force: true do |t|
     t.integer  "question_id"
     t.string   "language"
-    t.string   "text"
+    t.text     "text",                      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "reg_ex_validation_message"
   end
 
   create_table "questions", force: true do |t|
-    t.string   "text"
+    t.text     "text",                             limit: 255
     t.string   "question_type"
     t.string   "question_identifier"
     t.integer  "instrument_id"
@@ -143,9 +158,9 @@ ActiveRecord::Schema.define(version: 20140305212214) do
     t.string   "reg_ex_validation"
     t.integer  "number_in_instrument"
     t.string   "reg_ex_validation_message"
+    t.integer  "follow_up_position",                           default: 0
     t.datetime "deleted_at"
-    t.integer  "follow_up_position",               default: 0
-    t.boolean  "identifies_survey",                default: false
+    t.boolean  "identifies_survey",                            default: false
   end
 
   create_table "response_images", force: true do |t|
@@ -173,13 +188,6 @@ ActiveRecord::Schema.define(version: 20140305212214) do
   end
 
   add_index "responses", ["uuid"], name: "index_responses_on_uuid"
-
-  create_table "roles", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id"
-  end
 
   create_table "surveys", force: true do |t|
     t.integer  "instrument_id"
