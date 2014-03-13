@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140313160336) do
+ActiveRecord::Schema.define(version: 20140313161034) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -73,6 +73,8 @@ ActiveRecord::Schema.define(version: 20140313160336) do
     t.datetime "updated_at"
     t.string   "label"
   end
+
+  add_index "devices", ["identifier"], name: "index_devices_on_identifier", unique: true
 
   create_table "images", force: true do |t|
     t.datetime "created_at"
@@ -162,6 +164,8 @@ ActiveRecord::Schema.define(version: 20140313160336) do
     t.datetime "deleted_at"
     t.boolean  "identifies_survey",                default: false
   end
+
+  add_index "questions", ["question_identifier"], name: "index_questions_on_question_identifier", unique: true
 
   create_table "response_images", force: true do |t|
     t.string   "response_uuid"
