@@ -2,6 +2,7 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
   $scope.dayData = []
   $scope.hourData = []
   $scope.COUNT = 0
+  MAXIMUM = 600
 
   $scope.initialize = (project_id) ->
     $scope.project_id = project_id
@@ -13,7 +14,7 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
     $scope.chart = 
       {
         data: items
-        max: 30
+        max: MAXIMUM
       } 
     socket = io.connect("//localhost:3001/")
     socket.on "message", (data) ->
@@ -25,7 +26,7 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
       $scope.chart = 
         {
           data: items
-          max: 500
+          max: MAXIMUM
         }
       $scope.$apply()
  

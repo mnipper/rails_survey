@@ -32,17 +32,12 @@ App.directive "scLineChart", ->
         vAxis:
           minValue: 0
           maxValue: 100
-          textStyle: 
-            color: 'black'
-            bold: true
 
         hAxis:
           viewWindow:
             min: min
             max: max
-          textStyle:
-            color: 'black'
-            bold: true
+        backgroundColor: "#339999"
 
       lineChart.draw view, chartOptions
 

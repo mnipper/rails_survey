@@ -9,6 +9,7 @@ var io = require('socket.io').listen(server);
 var redis = require("redis");
 server.listen(3001);
 var publisher = undefined;
+var INTERVAL = 1000;
 
 //simple logger
 app.use(function(req, res, next) {
@@ -23,7 +24,7 @@ io.sockets.on('connection', function (socket) {
 	
 	//publish and start periodic update
 	publisher = redis.createClient();
-	setInterval(broadcast, 2000);
+	setInterval(broadcast, INTERVAL);
 
 	// relay redis messages to connected socket
 	subscribe.on("message", function(channel, message) {
