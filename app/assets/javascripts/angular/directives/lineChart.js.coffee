@@ -6,7 +6,7 @@ App.directive "scLineChart", ->
   replace: true
   link: postLink = (scope, element) ->
     draw = (chart) ->
-      data = chart.data
+      data = chart.totalCount
       
       table = new google.visualization.DataTable()
       table.addColumn "datetime"
@@ -29,6 +29,7 @@ App.directive "scLineChart", ->
       
       chartOptions =
         legend: "none"
+        title: "Overall Project Responses Count"
         vAxis:
           minValue: 0
           maxValue: 100
@@ -45,4 +46,4 @@ App.directive "scLineChart", ->
 
     lineChart = new google.visualization.LineChart(element[0])
     scope.$watch "chart", (chart) ->
-      draw chart  if chart and chart.data and chart.max
+      draw chart  if chart and chart.totalCount and chart.max

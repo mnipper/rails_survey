@@ -1,8 +1,9 @@
 App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectResponseCount', ($scope, DailyGraph, HourGraph, ProjectResponseCount) ->
   $scope.dayData = []
   $scope.hourData = []
-  $scope.COUNT = 0
   MAXIMUM = 1000
+  totalCount = 0
+  differenceCount = 0
 
   $scope.initialize = (project_id) ->
     $scope.project_id = project_id
@@ -30,29 +31,35 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
     ProjectResponseCount.query( {"project_id": $scope.project_id}, (result) ->
       for key, value of result[0] 
         if key[0] != '$'
-          $scope.COUNT = value
+          totalCount = value
     )
 
   $scope.lineGraph = ->
-    items = []
-    if items.length == 0
-      items.push ({ value: $scope.COUNT, timestamp: new Date() })
+    totalResponseCount = []
+    differenceResponseCount = []
+    if totalResponseCount.length == 0
+      totalResponseCount.push ({ value: totalCount, timestamp: new Date() })
+      differenceResponseCount.push ({ value: differenceCount, timestamp: new Date() })
     $scope.chart = 
       {
-        data: items
+        totalCount: totalResponseCount
         max: MAXIMUM
+        differenceCount: differenceResponseCount
       } 
     socket = io.connect("//localhost:3001/")
     socket.on "message", (data) ->
       data = JSON.parse(data)
       if data.count != 0
-        $scope.COUNT = data.count
-      items.push { value: $scope.COUNT, timestamp: new Date() }
+        totalCount = data.count
+        differenceCount = data.count - totalResponseCount[totalResponseCount.length - 1]
+      totalResponseCount.push { value: totalCount, timestamp: new Date() }
+      differenceResponseCount.push { value: differenceCount, timestamp: new Date() }
       #items.shift()  if items.length > 40
       $scope.chart = 
         {
-          data: items
+          totalCount: totalResponseCount
           max: MAXIMUM
+          differenceCount: differenceResponseCount
         }
       $scope.$apply()
     
