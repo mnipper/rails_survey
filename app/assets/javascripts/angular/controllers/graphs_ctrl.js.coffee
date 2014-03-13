@@ -1,7 +1,7 @@
 App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectResponseCount', ($scope, DailyGraph, HourGraph, ProjectResponseCount) ->
   $scope.dayData = []
   $scope.hourData = []
-  MAXIMUM = 1000
+  MAXIMUM = 100
   totalCount = 0
   differenceCount = 0
 
@@ -51,8 +51,10 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
       data = JSON.parse(data)
       if data.count != 0
         totalCount = data.count
-        difference = parseInt(data.count) - parseInt(totalResponseCount[totalResponseCount.length - 1].value) 
-        differenceCount = difference.toString()
+        lastTotalCount = totalResponseCount[totalResponseCount.length - 1]
+        differenceCount = parseInt(data.count) - parseInt(lastTotalCount.value) 
+      else
+        differenceCount = 0
       totalResponseCount.push { value: totalCount, timestamp: new Date() }
       differenceResponseCount.push { value: differenceCount, timestamp: new Date() }
       
