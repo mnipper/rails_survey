@@ -12,6 +12,11 @@ module Api
         def hourly
           respond_with current_project.hourly_response_count 
         end
+        
+        def count
+          hash = { 'count' => current_project.responses.count }
+          respond_with [hash]
+        end
       end  
     end
   end

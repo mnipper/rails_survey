@@ -72,6 +72,7 @@ gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'paranoia', '~> 2.0'
 gem 'groupdate', github: 'mieko/groupdate', :branch => 'sqlite3'
 gem 'paperclip', '~> 4.1.0'
+gem "redis", "~> 3.0.7"
 
 group :production do
   gem 'rails_12factor'
