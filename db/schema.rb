@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 20140313160336) do
 
   create_table "option_translations", force: true do |t|
     t.integer  "option_id"
-    t.text     "text",       limit: 255
+    t.text     "text"
     t.string   "language"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -116,7 +116,7 @@ ActiveRecord::Schema.define(version: 20140313160336) do
 
   create_table "options", force: true do |t|
     t.integer  "question_id"
-    t.text     "text",               limit: 255
+    t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "next_question"
@@ -141,14 +141,14 @@ ActiveRecord::Schema.define(version: 20140313160336) do
   create_table "question_translations", force: true do |t|
     t.integer  "question_id"
     t.string   "language"
-    t.text     "text",                      limit: 255
+    t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "reg_ex_validation_message"
   end
 
   create_table "questions", force: true do |t|
-    t.text     "text",                             limit: 255
+    t.text     "text"
     t.string   "question_type"
     t.string   "question_identifier"
     t.integer  "instrument_id"
@@ -158,9 +158,9 @@ ActiveRecord::Schema.define(version: 20140313160336) do
     t.string   "reg_ex_validation"
     t.integer  "number_in_instrument"
     t.string   "reg_ex_validation_message"
-    t.integer  "follow_up_position",                           default: 0
+    t.integer  "follow_up_position",               default: 0
     t.datetime "deleted_at"
-    t.boolean  "identifies_survey",                            default: false
+    t.boolean  "identifies_survey",                default: false
   end
 
   create_table "response_images", force: true do |t|

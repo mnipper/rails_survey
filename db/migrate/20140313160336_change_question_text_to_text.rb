@@ -1,7 +1,7 @@
 class ChangeQuestionTextToText < ActiveRecord::Migration
   def up
-   change_column :questions, :text, :text
-   change_column :question_translations, :text, :text
+   change_column :questions, :text, :text, limit: nil
+   change_column :question_translations, :text, :text, limit: nil
   end
 
   def down
