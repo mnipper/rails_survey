@@ -35,9 +35,22 @@ App.directive "scLineChart", ->
       chartOptions =
         legend: "none"
         title: "Overall Project Responses Count"
-        vAxis:
-          minValue: 0
-          maxValue: 100
+        vAxes:
+          [
+            { title: 'Total', minValue: 0, maxValue: 100, titleTextStyle: {color: 'blue'} }, 
+            { title: 'Difference', minValue: 0, maxValue: 20 }
+          ]
+        series: 
+          {
+            0: 
+              { 
+                targetAxisIndex: 0, color: 'blue', titleTextStyle: { color: 'blue' } 
+              }
+            1: 
+              { 
+                targetAxisIndex: 1, color: 'green', textStyle: { color: 'green' } 
+              }
+          }
 
         hAxis:
           viewWindow:
