@@ -9,7 +9,7 @@ var io = require('socket.io').listen(server);
 var redis = require("redis");
 server.listen(3001);
 var publisher = undefined;
-var INTERVAL = 1000;
+var INTERVAL = 3000;
 
 //simple logger
 app.use(function(req, res, next) {

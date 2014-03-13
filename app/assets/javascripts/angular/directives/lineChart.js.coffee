@@ -38,6 +38,8 @@ App.directive "scLineChart", ->
             min: min
             max: max
         backgroundColor: "#339999"
+        chartArea: 
+          width: 750
 
       lineChart.draw view, chartOptions
 
