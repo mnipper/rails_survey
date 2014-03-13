@@ -6,24 +6,29 @@ App.directive "scLineChart", ->
   replace: true
   link: postLink = (scope, element) ->
     draw = (chart) ->
-      data = chart.totalCount
+      dataTotal = chart.totalCount
+      dataDifference = chart.differenceCount
       
       table = new google.visualization.DataTable()
       table.addColumn "datetime"
       table.addColumn "number"
-      table.addRows data.length
+      table.addColumn "number"
+      table.addRows dataTotal.length
       
       view = new google.visualization.DataView(table)
       
       i = 0
-      while i < data.length
-        item = data[i]    
+      while i < dataTotal.length and i < dataDifference.length
+        item = dataTotal[i] 
+        diff = dataDifference[i]   
         table.setCell(i, 0, new Date(item.timestamp))
-        value = parseFloat(item.value)
-        table.setCell(i, 1, value)
+        totalFloat = parseFloat(item.value)
+        diffFloat = parseFloat(diff.value)
+        table.setCell(i, 1, totalFloat)
+        table.setCell(i, 2, diffFloat)
         i++
         
-      last = data[data.length - 1]
+      last = dataTotal[dataTotal.length - 1]
       max = new Date(last.timestamp)
       min = new Date(last.timestamp - chart.max * 1000)
       
@@ -46,4 +51,4 @@ App.directive "scLineChart", ->
 
     lineChart = new google.visualization.LineChart(element[0])
     scope.$watch "chart", (chart) ->
-      draw chart  if chart and chart.totalCount and chart.max
+      draw chart  if chart and chart.totalCount and chart.max and chart.differenceCount

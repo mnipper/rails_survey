@@ -51,10 +51,10 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
       data = JSON.parse(data)
       if data.count != 0
         totalCount = data.count
-        differenceCount = data.count - totalResponseCount[totalResponseCount.length - 1]
+        differenceCount = parseInt(data.count) - parseInt(totalResponseCount[totalResponseCount.length - 1].value) #TODO fix
       totalResponseCount.push { value: totalCount, timestamp: new Date() }
       differenceResponseCount.push { value: differenceCount, timestamp: new Date() }
-      #items.shift()  if items.length > 40
+      
       $scope.chart = 
         {
           totalCount: totalResponseCount
