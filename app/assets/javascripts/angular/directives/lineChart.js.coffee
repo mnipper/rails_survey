@@ -38,15 +38,15 @@ App.directive "scLineChart", ->
         title: "Realtime Project Responses Summary"
         titlePosition: "out"
         series: 
-          {
-            0: { type: "line", targetAxisIndex: 0, color: 'blue' }
-            1: { type: "line", targetAxisIndex: 1, color: 'green' }
-          }
+          [
+            { targetAxisIndex: 0, color: 'blue' },
+            { targetAxisIndex: 1, color: 'red' }
+          ]
         vAxes:
-          {
-           0: { title: 'Total Responses', minValue: 0, maxValue: 100 } 
-           1: { title: 'Change in Responses', minValue: 0, maxValue: 20 }
-          }
+          [
+           { title: 'Total Responses', minValue: 0, maxValue: 100 }, 
+           { title: 'Change in Responses', minValue: 0, maxValue: 20 }
+          ]
         hAxis:
           viewWindow:
             min: min
