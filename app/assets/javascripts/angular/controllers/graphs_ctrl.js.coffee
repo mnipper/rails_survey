@@ -13,10 +13,11 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
  
   $scope.fetchData = ->
     DailyGraph.query( {"project_id": $scope.project_id}, (result) ->
-      hash = result[0]
-      for k, v of hash
+      array = []
+      for k, v of result[0]
         if k[0] != '$'
-          $scope.dayData.push {time:k , data:v}
+          array.push {time:k , data:v}
+      $scope.dayData = array
     )
         
     HourGraph.query( {"project_id": $scope.project_id}, (result) ->
@@ -53,6 +54,7 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
       if data.count != 0
         totalCount = data.count
         differenceCount +=1
+        $scope.fetchData()  #TODO find a way to fix the overlap in the axes 
       else
         if totalResponseCount.length >= 2 and totalResponseCount[totalResponseCount.length - 1].value == totalResponseCount[totalResponseCount.length - 2].value
             differenceCount = 0
