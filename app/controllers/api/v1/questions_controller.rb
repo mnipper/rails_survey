@@ -4,7 +4,8 @@ module Api
       respond_to :json
 
       def index
-        respond_with Question.all, include: :translations
+        project = Project.find(params[:project_id])
+        respond_with project.questions, include: :translations
       end
 
       def show

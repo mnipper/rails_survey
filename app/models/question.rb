@@ -28,7 +28,7 @@ class Question < ActiveRecord::Base
   has_many :responses
   has_many :options, dependent: :destroy
   has_many :translations, foreign_key: 'question_id', class_name: 'QuestionTranslation', dependent: :destroy
-  has_many :images 
+  has_many :images, dependent: :destroy  
   delegate :project, to: :instrument
   before_save :update_instrument_version, if: Proc.new { |question| question.changed? }
   before_destroy :update_instrument_version

@@ -4,7 +4,8 @@ module Api
       respond_to :json
       
       def index
-        respond_with Image.all.to_a
+        project = Project.find(params[:project_id])
+        respond_with project.images
       end     
     end  
   end
