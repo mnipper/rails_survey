@@ -57,7 +57,7 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
       if data.count != 0
         totalCount = data.count
         differenceCount +=1
-        $scope.fetchData() 
+        #$scope.fetchData() 
         reloadPage = true
       else
         if totalResponseCount.length >= 2 and totalResponseCount[totalResponseCount.length - 1].value == totalResponseCount[totalResponseCount.length - 2].value
