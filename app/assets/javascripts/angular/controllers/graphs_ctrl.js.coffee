@@ -74,7 +74,9 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
       $scope.$apply()
  
   $scope.refreshPage = ->
-    if reloadPage == true
+    currentPage = window.location.href
+    currentPageArray = currentPage.split "/"
+    if reloadPage == true and currentPageArray[currentPageArray.length - 1] == "daily"
       window.location.reload(false)
     
 ]
