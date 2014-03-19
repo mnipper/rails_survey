@@ -33,22 +33,11 @@ createGraph = (scope, element) ->
   
 updateGraph = (newVal, oldVal, scope) ->
     scope.xLabels = newVal.map (pair) -> pair.time
-    scope.xScale = d3.scale.ordinal()
-    .domain(d3.range(newVal.length))
-    .rangeRoundBands([0, scope.w], 0.05)
+    scope.xScale = d3.scale.ordinal().domain(d3.range(newVal.length)).rangeRoundBands([0, scope.w], 0.05)
+    scope.yScale = d3.scale.linear().domain([0, d3.max(newVal, (d) -> d.data)]).range([scope.innerHeight, 0])
 
-    scope.yScale = d3.scale.linear()
-    .domain([0, d3.max(newVal, (d) -> d.data)])
-    .range([scope.innerHeight, 0])
-
-    scope.xAxis = d3.svg.axis()
-      .scale(scope.xScale)
-      .orient("bottom")
-      .tickFormat((d) -> scope.xLabels[d])
-    scope.yAxis = d3.svg.axis()
-      .scale(scope.yScale)
-      .orient("left")
-      .ticks(5)
+    scope.xAxis = d3.svg.axis().scale(scope.xScale).orient("bottom").tickFormat((d) -> scope.xLabels[d])
+    scope.yAxis = d3.svg.axis().scale(scope.yScale).orient("left").ticks(5)
 
     scope.svg.selectAll("rect")
       .data(newVal, (d) -> d.time)
@@ -64,6 +53,7 @@ updateGraph = (newVal, oldVal, scope) ->
       .attr("class", "axis")
       .attr("transform", "translate(#{0},#{scope.innerHeight})")
       .call(scope.xAxis)
+      
     scope.svg.append("g")
       .attr("class", "axis")
       .attr("transform", "translate(" + 0 + ",0)")

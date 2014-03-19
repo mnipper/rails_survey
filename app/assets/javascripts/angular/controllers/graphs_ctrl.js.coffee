@@ -5,6 +5,7 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
   totalCount = 0
   differenceCount = 0
   previousTotalCount = 0
+  reloadPage = false
 
   $scope.initialize = (project_id) ->
     $scope.project_id = project_id
@@ -18,6 +19,7 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
         if k[0] != '$'
           array.push {time:k , data:v}
       $scope.dayData = array
+      $scope.refreshPage()
     )
         
     HourGraph.query( {"project_id": $scope.project_id}, (result) ->
@@ -28,6 +30,7 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
       first = array[0..13]
       second = array[14..23]
       $scope.hourData = second.concat first
+      $scope.refreshPage()
     )
     
     ProjectResponseCount.query( {"project_id": $scope.project_id}, (result) ->
@@ -54,7 +57,8 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
       if data.count != 0
         totalCount = data.count
         differenceCount +=1
-        $scope.fetchData()  #TODO find a way to fix the overlap in the axes 
+        $scope.fetchData() 
+        reloadPage = true
       else
         if totalResponseCount.length >= 2 and totalResponseCount[totalResponseCount.length - 1].value == totalResponseCount[totalResponseCount.length - 2].value
             differenceCount = 0
@@ -68,6 +72,10 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
           differenceCount: differenceResponseCount
         }
       $scope.$apply()
+ 
+  $scope.refreshPage = ->
+    if reloadPage == true
+      window.location.reload(false)
     
 ]
 
