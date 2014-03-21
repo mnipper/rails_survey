@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
-ruby "2.0.0"
+ruby "2.1.1"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.0'
+gem 'rails', '4.1.0.rc1'
 
 gem 'pg', group: [:production]
 

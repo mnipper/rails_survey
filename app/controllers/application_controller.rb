@@ -9,9 +9,9 @@ class ApplicationController < ActionController::Base
   before_filter :store_location
   before_filter :authenticate_user!
 
-  after_filter :verify_authorized,  except: :index
-  after_filter :verify_policy_scoped, only: :index
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  # after_filter :verify_authorized,  except: :index
+  # after_filter :verify_policy_scoped, only: :index
+  # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def after_sign_in_path_for(resource_or_scope)
     set_current_project_id(session[:previous_url])
@@ -40,10 +40,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def user_not_authorized
-    self.response_body = nil
-    flash[:error] = 'You are not authorized to perform this action.'
-    redirect_to root_path
-  end
+  # def user_not_authorized
+    # self.response_body = nil
+    # flash[:error] = 'You are not authorized to perform this action.'
+    # redirect_to root_path
+  # end
 
 end

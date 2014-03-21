@@ -1,13 +1,6 @@
 <section class="widget">
   <header>
     <h4><i class="icon-folder-open"></i> Projects </h4>
-    <div class="actions hidden-xs-portrait">
-      <% if policy(Project.new).create? %>
-        <%= link_to new_project_path, class: 'btn btn-primary' do %>
-          <i class="icon-plus"></i> New Project
-        <% end %>
-      <% end %>
-    </div>
   </header>
 
   <div class="body">
@@ -20,13 +13,9 @@
       </thead>
 
       <tbody>
-      <% policy_scope(@projects).each do |project| %>
+      <% @projects.each do |project| %>
           <tr>
-            <td>
-              <% if policy(project).show? %>
-                <%= link_to project.name, project %>
-              <% end %>
-            </td>
+            <td><%= link_to project.name, project %></td>
             <td><%= project.description %></td>
           </tr>
       <% end %>

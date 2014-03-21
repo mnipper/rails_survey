@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140313161034) do
+ActiveRecord::Schema.define(version: 20140321214335) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -178,13 +178,6 @@ ActiveRecord::Schema.define(version: 20140313161034) do
 
   add_index "responses", ["uuid"], name: "index_responses_on_uuid"
 
-  create_table "roles", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id"
-  end
-
   create_table "surveys", force: true do |t|
     t.integer  "instrument_id"
     t.datetime "created_at"
@@ -221,6 +214,7 @@ ActiveRecord::Schema.define(version: 20140313161034) do
     t.string   "authentication_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "role"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true

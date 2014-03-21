@@ -16,6 +16,7 @@
 #  authentication_token   :string(255)
 #  created_at             :datetime
 #  updated_at             :datetime
+#  role                         :integer
 #
 
 class User < ActiveRecord::Base
@@ -25,25 +26,17 @@ class User < ActiveRecord::Base
   before_save :ensure_authentication_token
   has_many :user_projects 
   has_many :projects, through: :user_projects
-  has_one :role
-  accepts_nested_attributes_for :role 
+  enum role: [:user, :project_manager, :admin, :translator, :data_analyst]
+  after_initialize :set_default_role, :if => :new_record?
 
+  def set_default_role
+    self.role ||= :user
+  end
+  
   def ensure_authentication_token
     if authentication_token.blank?
       self.authentication_token = generate_authentication_token
     end
-  end
-  
-  def project_manager
-    self.role.name == 'project_manager'
-  end
-  
-  def translator
-    self.role.name == 'translator'
-  end
-  
-  def data_analyst
-    self.role.name == 'data_analyst'
   end
 
   private
