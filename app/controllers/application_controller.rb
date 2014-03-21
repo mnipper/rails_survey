@@ -3,20 +3,23 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-
-  # Devise authentication
-  before_filter :authenticate_user_from_token!
-  before_filter :authenticate_user!
-
-  include ApplicationHelper
+  include SessionsHelper
   include ProjectsHelper
+  before_filter :authenticate_user_from_token!
+  before_filter :store_location
+  before_filter :authenticate_user!
 
   after_filter :verify_authorized,  except: :index
   after_filter :verify_policy_scoped, only: :index
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def after_sign_in_path_for(resource_or_scope)
-    root_path
+    set_current_project_id(session[:previous_url])
+    session[:previous_url] || root_path
+  end
+  
+  def after_update_path_for(resource)
+    session[:previous_url] || root_path
   end
 
   def respond_to_ajax

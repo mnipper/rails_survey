@@ -1,0 +1,56 @@
+<section class="widget">
+  <header>
+    <h4><i class="icon-edit"></i> Project</h4>
+  </header>
+  <div class="body">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Export Responses</th>
+      </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td><%= link_to current_project.name, current_project %></td>
+          <td><%= current_project.description %></td>
+          <td><%= link_to 'Export Responses', export_project_path(current_project, format: :csv) %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="widget">
+  <header>
+    <h4><i class="icon-edit"></i> Instruments</h4>
+  </header>
+  <div class="body">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Title</th>
+        <th>Instrument Id</th>
+        <th>Current Version</th>
+        <th>Created at</th>
+        <th>Last updated</th>
+        <th>Export Responses</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @instruments.each do |instrument| %>
+        <tr>
+          <td><%= link_to instrument.title, project_instrument_path(current_project, instrument) %></td>
+          <td><%= instrument.id %></td>
+          <td><%= instrument.current_version_number %></td>
+          <td><%= instrument.created_at %></td>
+          <td><%= instrument.updated_at %></td>
+          <td><%= link_to 'Export Responses', export_responses_project_instrument_path(current_project, instrument, format: :csv) %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</section>

@@ -1,1 +1,14 @@
-<%= render partial: 'graphs/partials/daily' %>
+<section class="widget" ng-controller="GraphCtrl" ng-init="initialize(<%= current_project.id %>)">
+  <header>
+    <h4><i class="icon-calendar"></i> Response count per day for project <%= current_project.name %> </h4>
+  </header>
+  <div class="body">
+    <sc-Graph-Responses style="height: 400px" val="dayData"> </sc-Graph-Responses>
+  </body>
+  <header>
+    <h4><i class="eicon-clock"></i> Response count per hour for project <%= current_project.name %> </h4>
+  </header>
+  <div class="body">
+    <sc-Graph-Responses val="hourData"></sc-Graph-Responses>
+  </div>
+</section>

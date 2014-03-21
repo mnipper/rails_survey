@@ -21,13 +21,13 @@ class Instrument < ActiveRecord::Base
   include LanguageAssignable
   scope :published, -> { where(published: true) }
 
-  attr_accessible :title, :language, :alignment, :questions_attributes, :previous_question_count, :child_update_count,
+  attr_accessible :title, :language, :alignment, :previous_question_count, :child_update_count,
       :published
   belongs_to :project
   has_many :questions, dependent: :destroy
   has_many :surveys
+  has_many :responses, through: :surveys
   has_many :translations, foreign_key: 'instrument_id', class_name: 'InstrumentTranslation', dependent: :destroy
-  accepts_nested_attributes_for :questions, allow_destroy: true
   has_paper_trail :on => [:update, :destroy]
   acts_as_paranoid
 
@@ -36,14 +36,11 @@ class Instrument < ActiveRecord::Base
   validates :title, presence: true, allow_blank: false
   validates :project_id, presence: true, allow_blank: false
 
-  def self.instrument_response_count
-    @response_map = []
-    Instrument.all.each do |instrument|
-      instrument.questions.each do |question|
-        @response_map << {instrument.title => question.responses.count }
-      end
-    end
-    @response_map
+  def version(version_number)
+    InstrumentVersion.build(
+      instrument_id: id,
+      version_number: version_number
+    )
   end
 
   def completion_rate
@@ -54,15 +51,6 @@ class Instrument < ActiveRecord::Base
     (sum / self.surveys.count).round(2)
   end
 
-  def response_count_per_day
-    questions = self.questions.all
-    responses = []
-    questions.each do |question|
-      responses << question.responses.select('DATE(created_at)').count(:group => 'DATE(created_at)')
-    end
-    responses.inject{|result, element| result.merge( element ){|k, old_v, new_v| old_v + new_v}}
-  end
-
   def current_version_number
     versions.count
   end
@@ -71,29 +59,37 @@ class Instrument < ActiveRecord::Base
     questions.count
   end
 
-  def is_version?(version_number)
-    current_version_number == version_number 
-  end
-
-  def question_count_for_version(version, number)
-    count = 0
-    time_at_version = self.versions[number].created_at 
-    all_questions = version.reify.questions.with_deleted
-    filtered_qst = all_questions.where("created_at < ?", time_at_version)
-    filtered_qst.each do |question|
-      if question.deleted_at
-        count += 1 if question.deleted_at > time_at_version
-      else
-        count += 1
-      end
-    end
-    count
-  end
-
   def as_json(options={})
     super((options || {}).merge({
         methods: [:current_version_number, :question_count]
     }))
+  end
+
+  def to_csv
+    CSV.generate do |csv|
+      export(csv)
+    end
+  end
+
+  def export(format)
+    format << ['Instrument id:', id]
+    format << ['Instrument title:', title]
+    format << ['Version number:', current_version_number]
+    format << ["\n"]
+    format << ['number', 'qid', language]
+    questions.each do |question|
+      format << [question.number_in_instrument, question.question_identifier, question.text]
+      question.options.each {|option| format << ['', "Option for #{question.question_identifier}", option.text]}
+      if question.reg_ex_validation_message
+        format << ['', "Regular expiression failure message for #{question.question_identifier}",
+          question.reg_ex_validation_message]
+      end
+    end
+  end
+
+  def update_instrument_version
+    # Force update for paper trail
+    increment!(:child_update_count)
   end
 
   private

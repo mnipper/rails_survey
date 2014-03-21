@@ -33,3 +33,9 @@ vcs.xml
 bin/
 
 tests_angular/
+
+#pictures
+public/system
+
+# Ignore modules for node
+node/node_modules

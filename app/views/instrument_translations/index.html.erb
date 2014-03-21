@@ -2,7 +2,7 @@
   <header>
     <h4><i class="icon-globe"></i> Translations for <%= @instrument.title %></h4>
     <div class="actions hidden-xs-portrait"> 
-      <%= link_to new_project_instrument_instrument_translation_path(@project, @instrument), class: 'btn btn-primary' do %>
+      <%= link_to new_project_instrument_instrument_translation_path(current_project, @instrument), class: 'btn btn-primary' do %>
         <i class="icon-plus"></i> New Translation 
       <% end %>
     </div>
@@ -19,7 +19,7 @@
       <tbody>
     <% @instrument_translations.each do |translation| %>
         <tr>
-          <td><%= link_to translation.language, project_instrument_instrument_translation_path(@project, @instrument, translation) %></td>
+          <td><%= link_to translation.language, project_instrument_instrument_translation_path(current_project, @instrument, translation) %></td>
           <td><%= translation.created_at %></td>
           <td><%= translation.updated_at %></td>
         </tr>
