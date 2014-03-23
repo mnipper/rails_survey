@@ -1,45 +1,38 @@
-# class ProjectPolicy < ApplicationPolicy
-  # attr_reader :user, :project
-  # class Scope < Struct.new(:user, :scope)
-    # def resolve
-      # scope
-    # end
-  # end
-# 
-  # def initialize(user, project)
-    # @user = user
-    # @project = project
-  # end
-# 
-  # def create?
-    # write_permissions
-  # end
-# 
-  # def destroy?
-    # write_permissions
-  # end
-# 
-  # def show?
-    # read_permissions
-  # end
-# 
-  # def edit?
-    # update?
-  # end
-# 
-  # def update?
-    # write_permissions
-  # end
-# 
-  # private
-  # def write_permissions
-    # if current_admin_user or current_user.project_manager
-      # true
-    # end 
-  # end
-#   
-  # def read_permissions
-    # true 
-  # end
-# 
-# end
+class ProjectPolicy 
+  attr_reader :user, :record
+
+  def initialize(user, record)
+    @user = user
+    @record = record
+  end
+
+  def index?
+    primary_project_users
+  end
+  
+  def create?
+    @user.admin?
+  end
+
+  def destroy?
+    @user.admin?
+  end
+
+  def show?
+    primary_project_users
+  end
+
+  def edit?
+    primary_project_users
+  end
+
+  def update?
+    primary_project_users
+  end
+  
+  private
+  def primary_project_users
+    @user.admin? || @user.project_manager? || @user.user? 
+  end
+
+end

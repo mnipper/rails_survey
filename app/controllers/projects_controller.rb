@@ -1,20 +1,25 @@
 class ProjectsController < ApplicationController
-
+  after_action :verify_authorized
+  
   def index
     @projects = current_user.projects
+    authorize @projects
   end
 
   def show
     @project = current_user.projects.find(params[:id])
+    authorize @project
     set_current_project @project
   end
 
   def new
     @project = current_user.projects.new
+    authorize @project
   end
 
   def edit
     @project = current_user.projects.find(params[:id])
+    authorize @project
   end
 
   def create
@@ -28,6 +33,7 @@ class ProjectsController < ApplicationController
 
   def update
     @project = current_user.projects.find(params[:id])
+    authorize @project
     if @project.update(project_params)
       redirect_to @project, notice: 'Project was successfully updated.'
     else
@@ -37,6 +43,7 @@ class ProjectsController < ApplicationController
 
   def destroy
     @project = current_user.projects.find(params[:id])
+    authorize @project
     @project.destroy
     redirect_to projects_url
   end

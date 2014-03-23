@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :email, :password, :password_confirmation, :project_ids, :user_id, :name 
+  permit_params :email, :password, :password_confirmation, :project_ids, :user_id, :name, :role
 
   index do
     column :email
@@ -16,9 +16,7 @@ ActiveAdmin.register User do
       row :id
       row :email
       row 'Role' do
-        if user.role
-          user.role.name
-        end 
+        user.role unless user.role.nil?
       end
       row :sign_in_count
       row :current_sign_in_at
@@ -46,11 +44,19 @@ ActiveAdmin.register User do
       f.input :password_confirmation
 
       f.input :projects, :as => :check_boxes
-      #f.input :role, :as => :check_boxes
-      
+      f.input :roles, :as => :check_boxes
     end
     f.actions
   end
+  
+  # form do |f|
+    # #f.inputs "User Roles" do
+      # f.select(:role, User.roles.keys.map {|role| [role,role]})
+      # f.submit 'Change Role', :class => 'button-xs'
+    # #end
+  # end
+
+  #form :partial => "roles"
 
   controller do
     def update

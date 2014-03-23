@@ -75,6 +75,11 @@ gem 'groupdate', github: 'mieko/groupdate', :branch => 'sqlite3'
 gem 'paperclip', '~> 4.1.0'
 gem "redis", "~> 3.0.7"
 
+# Rails 4.1 gems
+gem "polyamorous", :github => "activerecord-hackery/polyamorous"  
+gem "formtastic", github: "justinfrench/formtastic"
+gem "ransack", github: "activerecord-hackery/ransack", branch: "rails-4.1"
+
 group :production do
   gem 'rails_12factor'
 end
