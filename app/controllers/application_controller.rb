@@ -39,7 +39,11 @@ class ApplicationController < ActionController::Base
 
   def user_not_authorized
     flash[:alert] = "You are not authorized to perform this action."
-    #redirect_to (request.referrer || root_path) unless request.referrer == root_path //TODO fix redirect loop
+    if (request.fullpath == root_path || request.fullpath == '/users/sign_in')
+      redirect_to request_roles_path
+    else
+      redirect_to (request.referrer || root_path) 
+    end
   end
 
 end
