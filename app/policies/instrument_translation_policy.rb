@@ -1,4 +1,4 @@
-class ProjectPolicy 
+class InstrumentTranslationPolicy 
   attr_reader :user, :record
 
   def initialize(user, record)
@@ -36,11 +36,11 @@ class ProjectPolicy
   
   private
   def read_access
-    @user.admin? || @user.manager? || @user.user? || @user.translator?
+    @user.admin? || @user.manager? || @user.user? || @user.translator? || @user.analyst?
   end
   
   def write_access
-    @user.admin? || @user.manager?
+    @user.admin? || @user.translator?
   end
 
 end
