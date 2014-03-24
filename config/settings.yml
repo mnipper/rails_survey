@@ -30,6 +30,9 @@ languages: [
              ['Telugu', 'te']
           ]
 
+# Special Responses
+special_responses: ['SKIP', 'NA', 'RF', 'DK']
+
 right_align_languages: ['ar']
 
 exception_notifications:
