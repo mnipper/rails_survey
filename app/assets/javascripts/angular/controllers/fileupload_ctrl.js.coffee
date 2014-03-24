@@ -28,7 +28,7 @@ App.controller 'FileUploadCtrl', ['$scope', '$fileUploader', 'Image', ($scope, $
         "instrument_id": $scope.instrument_id,
         "question_id": $scope.question_id
       }, (result) ->
-        console.log result 
+        #console.log result 
     )
    
   $scope.deleteImage = (image) ->
