@@ -1,23 +1,29 @@
 class InstrumentTranslationsController < ApplicationController
+  after_action :verify_authorized
+  
   def index
     @instrument = current_project.instruments.find(params[:instrument_id])
-    @instrument_translations = @instrument.translations.to_a
+    @instrument_translations = @instrument.translations
+    authorize @instrument_translations
   end
 
   def show
     @instrument = current_project.instruments.find(params[:instrument_id])
     @instrument_translation = @instrument.translations.find(params[:id])
+     authorize @instrument_translation
   end
 
   def new
     @project = current_project
     @instrument = current_project.instruments.find(params[:instrument_id])
     @instrument_translation = @instrument.translations.new
+     authorize @instrument_translation
   end
 
   def create
     @instrument = current_project.instruments.find(params[:instrument_id])
     @instrument_translation = @instrument.translations.new(params[:instrument_translation])
+    authorize @instrument_translation
     if @instrument_translation.save
       update_translations(params, @instrument, @instrument_translation)
       redirect_to project_instrument_instrument_translation_path(current_project, @instrument, @instrument_translation),
@@ -31,11 +37,13 @@ class InstrumentTranslationsController < ApplicationController
     @instrument = current_project.instruments.find(params[:instrument_id])
     @instrument_translation = @instrument.translations.find(params[:id])
     @project = current_project
+    authorize @instrument_translation
   end
 
   def update
     @instrument = current_project.instruments.find(params[:instrument_id])
     @instrument_translation = @instrument.translations.find(params[:id])
+    authorize @instrument_translation
     update_translations(params, @instrument, @instrument_translation)
     if @instrument_translation.update_attributes(params[:instrument_translation])
       redirect_to project_instrument_instrument_translation_path(current_project, @instrument, @instrument_translation),
@@ -48,6 +56,7 @@ class InstrumentTranslationsController < ApplicationController
   def destroy
     @instrument = current_project.instruments.find(params[:instrument_id])
     @instrument_translation = @instrument.translations.find(params[:id])
+    authorize @instrument_translation
     @instrument_translation.destroy
     redirect_to project_instrument_instrument_translations_url, notice: "Successfully destroyed instrument translation."
   end

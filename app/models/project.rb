@@ -27,6 +27,10 @@ class Project < ActiveRecord::Base
   validates :name, presence: true, allow_blank: false
   validates :description, presence: true, allow_blank: true
 
+  def user_roles_in_project(user)
+    user.roles.where(:project_id => self.id)
+  end
+
   def daily_response_count 
     count_per_day = {}
     array = []

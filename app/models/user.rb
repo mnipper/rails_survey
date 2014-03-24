@@ -16,15 +16,23 @@
 #  authentication_token   :string(255)
 #  created_at             :datetime
 #  updated_at             :datetime
+#  roles_mask             :integer
 #
 
 class User < ActiveRecord::Base
 
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :timeoutable
-  attr_accessible :email, :password, :password_confirmation, :project_ids
+  attr_accessible :email, :password, :password_confirmation, :project_ids, :roles_mask, :roles 
   before_save :ensure_authentication_token
   has_many :user_projects 
   has_many :projects, through: :user_projects
+  include RoleModel
+  roles :admin, :manager, :translator, :analyst, :user 
+  after_create :set_default_role
+
+  def set_default_role
+    self.roles = [:user]
+  end
 
   def ensure_authentication_token
     if authentication_token.blank?
