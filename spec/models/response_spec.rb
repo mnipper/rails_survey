@@ -13,6 +13,7 @@
 #  time_started        :datetime
 #  time_ended          :datetime
 #  question_identifier :string(255)
+#  uuid                :string(255)
 #
 
 require "spec_helper"

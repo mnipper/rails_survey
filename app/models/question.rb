@@ -3,7 +3,7 @@
 # Table name: questions
 #
 #  id                               :integer          not null, primary key
-#  text                             :string(255)
+#  text                             :text
 #  question_type                    :string(255)
 #  question_identifier              :string(255)
 #  instrument_id                    :integer

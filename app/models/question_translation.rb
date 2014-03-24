@@ -5,7 +5,7 @@
 #  id                        :integer          not null, primary key
 #  question_id               :integer
 #  language                  :string(255)
-#  text                      :string(255)
+#  text                      :text
 #  created_at                :datetime
 #  updated_at                :datetime
 #  reg_ex_validation_message :string(255)

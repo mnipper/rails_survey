@@ -13,6 +13,7 @@
 #  project_id              :integer
 #  published               :boolean
 #  deleted_at              :datetime
+#  show_instructions       :boolean          default(FALSE)
 #
 
 require "spec_helper"

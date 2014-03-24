@@ -1,15 +1,16 @@
 # == Schema Information
 #
-# Table name :response_images
+# Table name: response_images
 #
-# id                      :integer      not null, primary key
-# response_uuid           :string       not null
-# created_at              :datetime 
-# updated_at              :datetime    
-# picture_file_name       :string(255)    
-# picture_content_type    :string(255)    
-# picture_file_size       :integer    
-# picture_updated_at      :datetime 
+#  id                   :integer          not null, primary key
+#  response_uuid        :string(255)
+#  created_at           :datetime
+#  updated_at           :datetime
+#  picture_file_name    :string(255)
+#  picture_content_type :string(255)
+#  picture_file_size    :integer
+#  picture_updated_at   :datetime
+#
 
 class ResponseImage < ActiveRecord::Base
   attr_accessible :picture, :response_uuid, :picture_file_name, :picture_content_type, :picture_file_size, :picture_updated_at, :picture_data 

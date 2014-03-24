@@ -4,7 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  option_id  :integer
-#  text       :string(255)
+#  text       :text
 #  language   :string(255)
 #  created_at :datetime
 #  updated_at :datetime
