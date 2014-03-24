@@ -55,5 +55,6 @@ RailsSurvey::Application.routes.draw do
     get 'graphs/daily/' => 'graphs#daily_responses'
     get 'graphs/hourly/' => 'graphs#hourly_responses'
   end
+  resources :request_roles, only: [:index]
 
 end

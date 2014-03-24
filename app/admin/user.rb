@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :email, :password, :password_confirmation, :project_ids
+  permit_params :email, :password, :password_confirmation, :project_ids, :user_id, :name, :roles_mask, :roles
 
   index do
     column :email
@@ -15,6 +15,13 @@ ActiveAdmin.register User do
     attributes_table do
       row :id
       row :email
+      row 'Roles' do
+        unless (user.roles.nil? || user.roles.empty?)
+          user.roles .each do |role|
+            li {role}
+          end
+        end
+      end
       row :sign_in_count
       row :current_sign_in_at
       row :last_sign_in_at
@@ -39,8 +46,8 @@ ActiveAdmin.register User do
       f.input :email
       f.input :password, hint: "Leave blank. Do not change."
       f.input :password_confirmation
-
       f.input :projects, :as => :check_boxes
+      f.input :roles, :as => :check_boxes, :collection => [:admin, :manager, :translator, :analyst, :user] #TODO roles array is defined in two places, models/user and admin/user
     end
     f.actions
   end

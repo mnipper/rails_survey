@@ -3,7 +3,7 @@ module Api
     module Frontend
       class QuestionsController < ApiApplicationController
         respond_to :json
-
+        
         def index
           instrument = current_project.instruments.find(params[:instrument_id])
           respond_with instrument.questions, include: :translations

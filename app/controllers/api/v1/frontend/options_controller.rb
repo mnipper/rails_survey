@@ -3,7 +3,7 @@ module Api
     module Frontend
       class OptionsController < ApiApplicationController
         respond_to :json
-
+        
         def index
             question = Question.find(params[:question_id])
             respond_with question.options, include: :translations
