@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
-ruby "2.1.1"
+ruby "2.0.0"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.0.rc1'
+gem 'rails', '4.0.0'
 
 gem 'pg', group: [:production]
 
@@ -74,11 +74,7 @@ gem 'pundit'
 gem 'groupdate', github: 'mieko/groupdate', :branch => 'sqlite3'
 gem 'paperclip', '~> 4.1.0'
 gem "redis", "~> 3.0.7"
-
-# Rails 4.1 gems
-gem "polyamorous", :github => "activerecord-hackery/polyamorous"  
-gem "formtastic", github: "justinfrench/formtastic"
-gem "ransack", github: "activerecord-hackery/ransack", branch: "rails-4.1"
+gem 'role_model', '~> 0.8.1'
 
 group :production do
   gem 'rails_12factor'

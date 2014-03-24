@@ -32,7 +32,7 @@ class SurveyPolicy
   
   private
   def read_access
-    @user.admin? || @user.project_manager? || @user.user? || @user.data_analyst?
+    @user.admin? || @user.manager? || @user.user? || @user.analyst?
   end
   
   def write_access

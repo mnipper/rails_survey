@@ -32,7 +32,7 @@ class ProjectPolicy
   
   private
   def primary_project_users
-    @user.admin? || @user.project_manager? || @user.user? 
+    @user.admin? || @user.manager? || @user.user? 
   end
 
 end

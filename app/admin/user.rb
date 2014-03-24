@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :email, :password, :password_confirmation, :project_ids, :user_id, :name, :role
+  permit_params :email, :password, :password_confirmation, :project_ids, :user_id, :name, :roles_mask, :roles
 
   index do
     column :email
@@ -15,8 +15,12 @@ ActiveAdmin.register User do
     attributes_table do
       row :id
       row :email
-      row 'Role' do
-        user.role unless user.role.nil?
+      row 'Roles' do
+        unless (user.roles.nil? || user.roles.empty?)
+          user.roles .each do |role|
+            li {role}
+          end
+        end
       end
       row :sign_in_count
       row :current_sign_in_at
@@ -42,21 +46,11 @@ ActiveAdmin.register User do
       f.input :email
       f.input :password, hint: "Leave blank. Do not change."
       f.input :password_confirmation
-
       f.input :projects, :as => :check_boxes
-      f.input :roles, :as => :check_boxes
+      f.input :roles, :as => :check_boxes, :collection => [:admin, :manager, :translator, :analyst, :user] #TODO roles array is defined in two places, models/user and admin/user
     end
     f.actions
   end
-  
-  # form do |f|
-    # #f.inputs "User Roles" do
-      # f.select(:role, User.roles.keys.map {|role| [role,role]})
-      # f.submit 'Change Role', :class => 'button-xs'
-    # #end
-  # end
-
-  #form :partial => "roles"
 
   controller do
     def update
