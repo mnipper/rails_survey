@@ -188,7 +188,7 @@
                       when responding to a question.  Select the desired pattern for each option to this question.</p>
                     <div ng-controller="OptionsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>, question.id)">
                       <div ng-repeat="option in options">
-                        <label for="follow-up" class="control-label">If {{option.text}} is selected, skip to:</label>
+                        <label for="follow-up" class="control-label">If <strong>{{option.text}}</strong> is selected, skip to:</label>
                         <div class="controls form-group">
                           <select
                           chosen
