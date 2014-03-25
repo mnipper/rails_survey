@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   after_create :set_default_role
 
   def set_default_role
-    self.roles = [:user]
+    self.roles = [:user]  #TODO FIX - users not assigned any role upon creation
   end
 
   def ensure_authentication_token
