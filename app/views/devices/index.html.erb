@@ -9,7 +9,7 @@
           <th>Device Identifier</th>
           <th>Device Label</th>
           <th>Number of Surveys</th>
-          <th>Completion %</th>
+          <!-- <th>Completion %</th> -->
           <th>Last Survey</th>
           <th>Last Update</th>
         </tr>
@@ -20,7 +20,7 @@
           <td><%= device.identifier %></td>
           <td><%= device.label %></td>
           <td><%= device.surveys.count %></td>
-          <td><%= device.completion_rate %></td>
+          <!--<td><%#= device.completion_rate %></td>--> <!--TODO fix -->
           <% unless device.last_survey.nil? %>
             <td><%= link_to device.last_survey.uuid, project_survey_path(@project, device.last_survey) %></td>
             <td><%= time_ago_in_words(device.last_survey.updated_at) %> ago </td>
