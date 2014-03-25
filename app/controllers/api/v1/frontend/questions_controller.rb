@@ -6,16 +6,21 @@ module Api
         
         def index
           instrument = current_project.instruments.find(params[:instrument_id])
-          respond_with instrument.questions, include: :translations
+          questions = instrument.questions
+          authorize questions
+          respond_with questions, include: :translations
         end
 
         def show
-          respond_with Question.find(params[:id])
+          question = Question.find(params[:id])
+          authorize question
+          respond_with question
         end
 
         def create
           instrument = current_project.instruments.find(params[:instrument_id])
           question = instrument.questions.new(params[:question])
+          authorize question
           if question.save
             render json: question, status: :created
           else
@@ -24,11 +29,15 @@ module Api
         end
 
         def update
-          respond_with Question.find(params[:id]).update_attributes(params[:question])
+          question = Question.find(params[:id])
+          authorize question
+          respond_with question.update_attributes(params[:question])
         end
 
         def destroy
-          respond_with Question.find(params[:id]).destroy
+          question = Question.find(params[:id])
+          authorize question
+          respond_with question.destroy
         end
       end
     end

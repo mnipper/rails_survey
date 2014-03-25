@@ -6,15 +6,20 @@ module Api
         
         def index
             question = Question.find(params[:question_id])
-            respond_with question.options, include: :translations
+            options = question.options
+            authorize options
+            respond_with options, include: :translations
         end
 
         def show
-          respond_with Option.find(params[:id])
+          option = Option.find(params[:id])
+          authorize option
+          respond_with option
         end
 
         def create
           @option = Option.new(params)
+          authorize @option
           if @option.save
             render nothing: true, status: :created
           else
@@ -23,11 +28,15 @@ module Api
         end
 
         def update
-          respond_with Option.find(params[:id]).update_attributes(params[:option])
+          option = Option.find(params[:id])
+          authorize option
+          respond_with option.update_attributes(params[:option])
         end
 
         def destroy
-          respond_with Option.find(params[:id]).destroy
+          option = Option.find(params[:id])
+          authorize option
+          respond_with option.destroy
         end
       end
     end

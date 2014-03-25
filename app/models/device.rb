@@ -15,7 +15,7 @@ class Device < ActiveRecord::Base
   has_many :project_devices
   has_many :projects, through: :project_devices
   validates :identifier, uniqueness: true, presence: true, allow_blank: false
-
+  
   def danger_zone?
     unless last_survey.nil?
       last_survey.updated_at < 1.day.ago

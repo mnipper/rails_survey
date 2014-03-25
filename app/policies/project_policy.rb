@@ -36,7 +36,7 @@ class ProjectPolicy
   
   private
   def read_access
-    @user.admin? || @user.manager? || @user.user? || @user.translator?
+    @user.admin? || @user.manager? || @user.user? || @user.translator? || @user.analyst?
   end
   
   def write_access
