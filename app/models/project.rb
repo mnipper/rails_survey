@@ -26,9 +26,9 @@ class Project < ActiveRecord::Base
   
   validates :name, presence: true, allow_blank: false
   validates :description, presence: true, allow_blank: true
-
-  def user_roles_in_project(user)
-    user.roles.where(:project_id => self.id)
+  
+  def non_responsive_devices
+    devices.includes(:surveys).where('surveys.updated_at < ?', 1.day.ago).order('surveys.updated_at ASC')
   end
 
   def daily_response_count 
