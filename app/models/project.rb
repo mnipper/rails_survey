@@ -31,7 +31,7 @@ class Project < ActiveRecord::Base
     count_per_day = {}
     array = []
     response_count_per_period(:group_responses_by_day).each do |day, count|
-      count_per_day[day[0..9]] = count.inject{|sum,x| sum + x}
+      count_per_day[day.to_s[5..9]] = count.inject{|sum,x| sum + x}
     end
     array << count_per_day
   end
