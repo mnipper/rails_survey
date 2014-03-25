@@ -101,7 +101,10 @@ class Response < ActiveRecord::Base
   
   def message
     msg =  { count: Response.count }
-    $redis.publish 'responses-create', msg.to_json
+    begin
+      $redis.publish 'responses-create', msg.to_json
+    rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
+      logger.debug "Cannot connect to redis"
+    end
   end
-  
 end
