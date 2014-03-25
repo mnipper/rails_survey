@@ -30,6 +30,7 @@ class InstrumentTranslationsController < ApplicationController
   def edit
     @instrument = current_project.instruments.find(params[:instrument_id])
     @instrument_translation = @instrument.translations.find(params[:id])
+    @project = current_project
   end
 
   def update
