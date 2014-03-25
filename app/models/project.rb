@@ -42,6 +42,7 @@ class Project < ActiveRecord::Base
     response_count_per_period(:group_responses_by_hour).each do |hour, count|
       count_per_hour[hour.to_s] = count.inject{|sum,x| sum + x}
     end
+    puts sanitize(count_per_hour)
     array << sanitize(count_per_hour)
   end
 
