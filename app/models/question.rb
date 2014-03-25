@@ -16,7 +16,7 @@
 #  follow_up_position               :integer          default(0)
 #  deleted_at                       :datetime
 #  identifies_survey                :boolean          default(FALSE)
-#  instructions                     :text
+#  instructions                     :text             default("")
 #
 
 class Question < ActiveRecord::Base
