@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140324202229) do
+ActiveRecord::Schema.define(version: 20140324210656) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -50,6 +50,21 @@ ActiveRecord::Schema.define(version: 20140324202229) do
     t.string   "access_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "device_notifications", force: true do |t|
+    t.text     "time"
+    t.boolean  "monday"
+    t.boolean  "tuesday"
+    t.boolean  "wednesday"
+    t.boolean  "thursday"
+    t.boolean  "friday"
+    t.boolean  "saturday"
+    t.boolean  "sunday"
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "instrument_id"
   end
 
   create_table "devices", force: true do |t|
@@ -146,10 +161,10 @@ ActiveRecord::Schema.define(version: 20140324202229) do
     t.string   "reg_ex_validation"
     t.integer  "number_in_instrument"
     t.string   "reg_ex_validation_message"
-    t.datetime "deleted_at"
     t.integer  "follow_up_position",               default: 0
+    t.datetime "deleted_at"
     t.boolean  "identifies_survey",                default: false
-    t.text     "instructions"
+    t.text     "instructions",                     default: ""
   end
 
   add_index "questions", ["question_identifier"], name: "index_questions_on_question_identifier", unique: true

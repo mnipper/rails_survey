@@ -23,7 +23,7 @@ class Instrument < ActiveRecord::Base
   scope :published, -> { where(published: true) }
 
   attr_accessible :title, :language, :alignment, :previous_question_count, :child_update_count,
-      :published
+      :published, :show_instructions
   belongs_to :project
   has_many :questions, dependent: :destroy
   has_many :surveys
