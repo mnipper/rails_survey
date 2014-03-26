@@ -47,4 +47,8 @@ class Survey < ActiveRecord::Base
   def instrument_version
     instrument.version(instrument_version_number)
   end
+
+  def location_link
+    "https://www.google.com/maps/place/#{latitude}+#{longitude}" if latitude and longitude
+  end
 end
