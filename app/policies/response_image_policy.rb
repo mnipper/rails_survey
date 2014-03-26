@@ -6,7 +6,7 @@ class ResponseImagePolicy < ResponsePolicy
   end
 
   def show
-    @user.admin? || @user.manager? || @user.analyst? || @user.user?
+    @user.admin? || @user.manager? || @user.analyst?
   end
   
 end

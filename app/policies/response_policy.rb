@@ -6,7 +6,7 @@ class ResponsePolicy
   end
 
   def index?
-    @user.admin? || @user.manager? || @user.analyst? || @user.user?
+    @user.admin? || @user.manager? || @user.analyst?
   end
   
 end

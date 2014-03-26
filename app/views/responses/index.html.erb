@@ -16,7 +16,11 @@
         <tr>
           <td><%= link_to current_project.name, current_project %></td>
           <td><%= current_project.description %></td>
-          <td><%= link_to 'Export Responses', export_project_path(current_project, format: :csv) %></td>
+          <td>
+              <% if policy(current_project).export? %>
+                <%= link_to 'Export Responses', export_project_path(current_project, format: :csv) %>
+                <% end %>
+          </td>
         </tr>
       </tbody>
     </table>

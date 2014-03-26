@@ -34,6 +34,10 @@ class ProjectPolicy
     write_access
   end
   
+  def export?
+    @user.admin? || @user.manager? || @user.analyst? 
+  end
+  
   private
   def read_access
     @user.admin? || @user.manager? || @user.user? || @user.translator? || @user.analyst?

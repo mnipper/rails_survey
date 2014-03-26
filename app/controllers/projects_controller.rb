@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  after_action :verify_authorized
+  after_action :verify_authorized, :except => :export 
   
   def index
     @projects = current_user.projects
