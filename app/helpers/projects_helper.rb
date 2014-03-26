@@ -12,4 +12,13 @@ module ProjectsHelper
   def current_project=(project)
     session[:project_id] = project.id if current_user.projects.include? project
   end
+  
+  def set_current_project_id(previous_url)
+    unless previous_url == '/' 
+      split_previous_url = previous_url.split('/')
+      project_id = split_previous_url[2]
+      set_current_project(Project.find project_id.to_i)
+    end
+  end
+  
 end

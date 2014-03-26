@@ -27,9 +27,9 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
       for key, value of result[0]  
         if key[0] != '$'
           array.push {time: key, data: value}
-      first = array[0..13]
-      second = array[14..23]
-      $scope.hourData = second.concat first
+      console.log array
+      $scope.hourData = array
+      console.log $scope.hourData 
       $scope.refreshPage()
     )
     
