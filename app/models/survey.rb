@@ -29,7 +29,8 @@ class Survey < ActiveRecord::Base
   validates :instrument_version_number, presence: true, allow_blank: false
   
   def percent_complete
-    (responses.where.not(:text => "").pluck(:question_id).uniq.count.to_f / instrument_version.questions.count).round(2)
+    #TODO: Fix instrument versioning
+    (responses.where.not(:text => "").pluck(:question_id).uniq.count.to_f / instrument.questions.count).round(2)
   end
 
   def location
