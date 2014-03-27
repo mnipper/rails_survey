@@ -42,6 +42,10 @@ class InstrumentPolicy
     export_access
   end
   
+  def export_pictures?
+    export_access 
+  end
+  
   private
   def read_access
     @user.admin? || @user.manager? || @user.user? || @user.translator? || @user.analyst?

@@ -70,4 +70,12 @@ class InstrumentsController < ApplicationController
       format.csv { render text: @instrument.responses.to_csv }
     end
   end
+  
+  def export_pictures
+    @instrument = current_project.instruments.find(params[:id])
+    authorize @instrument
+    zipped_pictures = @instrument.response_images.to_zip 
+    send_file zipped_pictures.path, :type => 'application/zip', :disposition => 'attachment', :filename => "#{@instrument.title}_pictures.zip" 
+  end
+  
 end
