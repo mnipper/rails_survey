@@ -39,12 +39,12 @@ class ResponseImage < ActiveRecord::Base
     picture.url(:small)
   end
   
-  def self.to_zip 
+  def self.to_zip(name)
     temp_file = Tempfile.new("my-temp-filename-#{Time.now}")
     Zip::OutputStream.open(temp_file.path) do |zipfile|
       all.each do |response_image|
         title = response_image.response.question.question_identifier + '-' + response_image.response.id.to_s + '-' + response_image.picture_file_name
-        zipfile.put_next_entry("pictures/#{title}")
+        zipfile.put_next_entry("#{name}/#{title}")
         photos_root = Rails.root.join('public').to_s
         photo_path = response_image.picture.url.split('?')
         photo_abs_url = photos_root + photo_path[0]

@@ -55,8 +55,8 @@ class ProjectsController < ApplicationController
   end
   
   def export_pictures
-    zipped_pictures = current_project.response_images.to_zip 
-    send_file zipped_pictures.path, :type => 'application/zip', :disposition => 'attachment', :filename => "#{current_project.name}_pictures.zip" 
+    zipped_pictures = current_project.response_images.to_zip(current_project.name)
+    send_file zipped_pictures.path, :type => 'application/zip', :disposition => 'attachment', :filename => "#{current_project.name}" 
   end
 
   private

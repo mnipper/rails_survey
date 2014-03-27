@@ -74,8 +74,8 @@ class InstrumentsController < ApplicationController
   def export_pictures
     @instrument = current_project.instruments.find(params[:id])
     authorize @instrument
-    zipped_pictures = @instrument.response_images.to_zip 
-    send_file zipped_pictures.path, :type => 'application/zip', :disposition => 'attachment', :filename => "#{@instrument.title}_pictures.zip" 
+    zipped_pictures = @instrument.response_images.to_zip(@instrument.title)
+    send_file zipped_pictures.path, :type => 'application/zip', :disposition => 'attachment', :filename => "#{@instrument.title}" 
   end
   
 end
