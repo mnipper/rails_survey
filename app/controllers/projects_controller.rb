@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  after_action :verify_authorized, :except => :export 
+  after_action :verify_authorized, :except => [:export, :export_pictures]
   
   def index
     @projects = current_user.projects
@@ -52,6 +52,11 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       format.csv { render text: current_project.responses.to_csv }
     end
+  end
+  
+  def export_pictures
+    zipped_pictures = current_project.response_images.to_zip 
+    send_file zipped_pictures.path, :type => 'application/zip', :disposition => 'attachment', :filename => "pictures.zip" 
   end
 
   private

@@ -9,6 +9,7 @@
         <th>Name</th>
         <th>Description</th>
         <th>Export Responses</th>
+        <th>Export Pictures</th>
       </tr>
       </thead>
 
@@ -16,11 +17,10 @@
         <tr>
           <td><%= link_to current_project.name, current_project %></td>
           <td><%= current_project.description %></td>
-          <td>
-              <% if policy(current_project).export? %>
-                <%= link_to 'Export Responses', export_project_path(current_project, format: :csv) %>
-                <% end %>
-          </td>
+          <% if policy(current_project).export? %>
+            <td> <%= link_to 'Export Responses', export_project_path(current_project, format: :csv) %> </td>
+            <td><%= link_to 'Export Pictures', export_pictures_project_path(current_project) %> </td>
+          <% end %>
         </tr>
       </tbody>
     </table>

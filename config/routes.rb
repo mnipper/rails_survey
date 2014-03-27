@@ -44,6 +44,7 @@ RailsSurvey::Application.routes.draw do
     end
     member do 
       get :export
+      get :export_pictures 
     end
 
     resources :responses
