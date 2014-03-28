@@ -54,7 +54,11 @@ RailsSurvey::Application.routes.draw do
     resources :devices, only: [:index]
     resources :response_images, only:[:show]
     resources :graphs, only:[:index]
-    resources :exports 
+    resources :exports  do
+      member do
+        get :download 
+      end
+    end
     get 'graphs/daily/' => 'graphs#daily_responses'
     get 'graphs/hourly/' => 'graphs#hourly_responses'
   end

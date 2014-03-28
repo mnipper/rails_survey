@@ -49,9 +49,8 @@ class ProjectsController < ApplicationController
   end
 
   def export
-    respond_to do |format|
-      format.csv { render text: current_project.responses.to_csv }
-    end
+    ProjectExportsWorker.perform_async(current_project.id)
+    redirect_to project_exports_path(current_project)
   end
   
   def export_pictures

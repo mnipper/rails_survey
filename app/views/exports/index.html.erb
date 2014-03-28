@@ -14,9 +14,19 @@
         <tbody>
             <% @exports.each do |export| %>
                 <tr>
-                    <td><% export.created_at %></td>
-                    <td><% export.status %></td>
-                    <td></td>
+                    <td><%= export.created_at %></td>
+                    <td>
+                        <% if export.done %>
+                            Processed
+                        <% else %>
+                            Processing...
+                         <% end %>
+                        </td>
+                    <td>
+                        <% if export.download_url %>
+                            <%= link_to 'Download', download_project_export_path(current_project, export.id) %>
+                        <% end %>
+                    </td>
                 </tr>
             <% end %>
         </tbody>

@@ -76,6 +76,7 @@ gem 'groupdate', github: 'mieko/groupdate', :branch => 'sqlite3'
 gem 'paperclip', '~> 4.1.0'
 gem "redis", "~> 3.0.7"
 gem 'role_model', '~> 0.8.1'
+gem 'sidekiq', '~> 3.0.0'
 
 group :production do
   gem 'rails_12factor'

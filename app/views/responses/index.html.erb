@@ -18,8 +18,8 @@
           <td><%= link_to current_project.name, current_project %></td>
           <td><%= current_project.description %></td>
           <% if policy(current_project).export? %>
-            <td> <%= link_to 'Export Responses', export_project_path(current_project, format: :csv) %> </td>
-            <td><%= link_to 'Export Pictures', export_pictures_project_path(current_project) %> </td>
+            <td> <%= link_to 'Export Responses', export_project_path(current_project) %> </td>
+            <td> <%= link_to 'Export Pictures', export_pictures_project_path(current_project) %> </td>
           <% end %>
         </tr>
       </tbody>
