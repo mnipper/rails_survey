@@ -19,6 +19,7 @@ class Project < ActiveRecord::Base
   has_many :response_images, through: :responses
   has_many :user_projects
   has_many :users, through: :user_projects
+  has_many :exports 
   #To enable synchronization to devices of only questions/options/images that belong to a project
   has_many :questions, through: :instruments
   has_many :images, through: :questions
