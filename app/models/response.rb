@@ -31,7 +31,7 @@ class Response < ActiveRecord::Base
   validates :question, presence: true
   validates :survey, presence: true
 
-  #after_create {|response| response.message }
+  after_create {|response| response.message }
 
   def to_s
     if question.nil? or question.options.empty?
