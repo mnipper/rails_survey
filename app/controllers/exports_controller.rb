@@ -2,7 +2,8 @@ class ExportsController < ApplicationController
   #TODO authorize 
   
   def index
-    @exports = current_project.exports.order('created_at DESC')
+    @project_exports = current_project.exports.order('created_at DESC')
+    @instrument_exports = current_project.instrument_exports.sort_by!(&:created_at) #TODO fix sort order
   end
   
   def new
@@ -39,9 +40,15 @@ class ExportsController < ApplicationController
     render text:"", notice: "Successfully destroyed export."
   end
   
-  def download
+  def download_project_responses 
     export = Export.find params[:id]
     send_file export.download_url, :type => 'text/csv', :disposition => 'attachment', :filename => "#{current_project.name}" 
+  end
+  
+  def download_instrument_responses
+    export = Export.find params[:id]
+    instrument = Instrument.find(export.instrument_id)
+    send_file export.download_url, :type => 'text/csv', :disposition => 'attachment', :filename => "#{instrument.title}"
   end
   
 end

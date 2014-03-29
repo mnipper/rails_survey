@@ -32,6 +32,14 @@ class Project < ActiveRecord::Base
     devices.includes(:surveys).where('surveys.updated_at < ?', 1.day.ago).order('surveys.updated_at ASC')
   end
 
+  def instrument_exports
+    ids = []
+    instruments.each do |inst|
+      ids << inst.id  
+    end
+    Export.find_all_by_instrument_id(ids)
+  end
+
   def daily_response_count 
     count_per_day = {}
     array = []

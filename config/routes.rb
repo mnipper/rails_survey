@@ -56,7 +56,8 @@ RailsSurvey::Application.routes.draw do
     resources :graphs, only:[:index]
     resources :exports  do
       member do
-        get :download 
+        get :download_project_responses  
+        get :download_instrument_responses
       end
     end
     get 'graphs/daily/' => 'graphs#daily_responses'
