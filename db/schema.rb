@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140324210656) do
+ActiveRecord::Schema.define(version: 20140329175339) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -60,6 +60,15 @@ ActiveRecord::Schema.define(version: 20140324210656) do
   end
 
   add_index "devices", ["identifier"], name: "index_devices_on_identifier", unique: true
+
+  create_table "exports", force: true do |t|
+    t.string   "download_url"
+    t.boolean  "done",          default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "project_id"
+    t.integer  "instrument_id"
+  end
 
   create_table "images", force: true do |t|
     t.datetime "created_at"

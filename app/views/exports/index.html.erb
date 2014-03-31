@@ -1,0 +1,80 @@
+<section class="widget">
+  <div class="body">
+      <header>
+        <h4><i class="eicon-export"></i><b>Project Exports</b></h4>
+      </header>
+      <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Project Name</th>
+                <th> Created at </th>
+                <th> Status </th>
+                <th> Download </th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @project_exports.each do |export| %>
+                <tr>
+                    <td>
+                        <% if export.project_id %>
+                            <% project = Project.find export.project_id %>
+                            <%= project.name %>
+                        <% end %>
+                    </td>
+                    <td><%= export.created_at %></td>
+                    <td>
+                        <% if export.done %>
+                            Processed
+                        <% else %>
+                            Processing...
+                         <% end %>
+                    </td>
+                    <td>
+                        <% if export.download_url %>
+                            <%= link_to 'Download', download_project_responses_project_export_path(current_project, export.id) %>
+                        <% end %>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+      </table>
+      <header>
+        <h4><i class="eicon-export"></i> <b>Instrument Exports</b></h4>
+      </header>
+      <table class="table table-hover">
+          <thead>
+              <tr>
+                  <th>Instrument Title</th>
+                  <th>Created at</th>
+                  <th>Status</th>
+                  <th>Download</th>
+              </tr>
+          </thead>
+          <tbody>
+              <% @instrument_exports.each do |export| %>
+                <tr>
+                  <td>
+                    <% if export.instrument_id %>
+                        <% instrument = Instrument.find export.instrument_id %>
+                        <%= instrument.title %>
+                    <% end %>
+                  </td>
+                  <td><%= export.created_at %></td>
+                  <td>
+                        <% if export.done %>
+                            Processed
+                        <% else %>
+                            Processing...
+                         <% end %>
+                  </td>
+                  <td>
+                        <% if export.download_url %>
+                            <%= link_to 'Download', download_instrument_responses_project_export_path(current_project, export.id) %>
+                        <% end %>
+                  </td>
+                </tr>
+              <% end %>
+          </tbody>
+      </table>
+  </div>      
+</section>

@@ -6,7 +6,7 @@ class NotificationPolicy
   end
 
   def index?
-    @user.admin? || @user.manager?
+    @user.admin? || @user.manager? || @user.user?
   end
   
 end

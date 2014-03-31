@@ -37,5 +37,8 @@ tests_angular/
 #pictures
 public/system
 
+#exports
+public/exports
+
 # Ignore modules for node
 node/node_modules

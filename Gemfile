@@ -21,7 +21,8 @@ gem 'therubyracer', platforms: :ruby
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
-gem "rubyzip", "~> 1.1.0"
+gem "rubyzip", "~> 1.1.2"
+gem 'zip-zip'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
@@ -75,6 +76,7 @@ gem 'groupdate', github: 'mieko/groupdate', :branch => 'sqlite3'
 gem 'paperclip', '~> 4.1.0'
 gem "redis", "~> 3.0.7"
 gem 'role_model', '~> 0.8.1'
+gem 'sidekiq', '~> 3.0.0'
 
 group :production do
   gem 'rails_12factor'
