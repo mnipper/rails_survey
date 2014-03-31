@@ -29,4 +29,6 @@ RailsSurvey::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  ENV['REDISTOGO_URL'] = 'redis://localhost:6379'
 end
