@@ -34,11 +34,7 @@ class Project < ActiveRecord::Base
   end
 
   def instrument_response_exports
-    ids = []  #TODO clean up
-    instruments.each do |inst|
-      ids << inst.id  
-    end
-    ResponseExport.find_all_by_instrument_id(ids)
+    ResponseExport.find_all_by_instrument_id(instrument_ids)
   end
 
   def daily_response_count 
