@@ -41,10 +41,10 @@
            </ul>
         </li>
 
-        <li class="<%= (current_page?(project_exports_path(current_project)) or current_page?(project_responses_path(current_project))) ? 'active' : 'panel' %>">
+        <li class="<%= (current_page?(project_response_exports_path(current_project)) or current_page?(project_responses_path(current_project))) ? 'active' : 'panel' %>">
           <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#side-nav" href="#exports-collapse"><i class="icon-download"></i> <span class="name">Exports</span></a>
            <ul id="exports-collapse" class="panel-collapse collapse">
-            <li><%= link_to 'Past Exports', project_exports_path(current_project) %></li>
+            <li><%= link_to 'Past Exports', project_response_exports_path(current_project) %></li>
             <li><%= link_to 'New Export', project_responses_path(current_project) %></li>
           </ul>
         </li>

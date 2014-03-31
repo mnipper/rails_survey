@@ -19,7 +19,8 @@ class Project < ActiveRecord::Base
   has_many :response_images, through: :responses
   has_many :user_projects
   has_many :users, through: :user_projects
-  has_many :exports 
+  has_many :response_exports 
+  has_many :response_images_exports, through: :response_exports
   #To enable synchronization to devices of only questions/options/images that belong to a project
   has_many :questions, through: :instruments
   has_many :images, through: :questions
@@ -32,12 +33,12 @@ class Project < ActiveRecord::Base
     devices.includes(:surveys).where('surveys.updated_at < ?', 1.day.ago).order('surveys.updated_at ASC')
   end
 
-  def instrument_exports
-    ids = []
+  def instrument_response_exports
+    ids = []  #TODO clean up
     instruments.each do |inst|
       ids << inst.id  
     end
-    Export.find_all_by_instrument_id(ids)
+    ResponseExport.find_all_by_instrument_id(ids)
   end
 
   def daily_response_count 

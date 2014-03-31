@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  after_action :verify_authorized, :except => [:export, :export_pictures]
+  after_action :verify_authorized, :except => [:export]
   
   def index
     @projects = current_user.projects
@@ -49,13 +49,8 @@ class ProjectsController < ApplicationController
   end
 
   def export
-    ProjectExportsWorker.perform_async(current_project.id)
-    redirect_to project_exports_path(current_project)
-  end
-  
-  def export_pictures
-    zipped_pictures = current_project.response_images.to_zip(current_project.name)
-    send_file zipped_pictures.path, :type => 'application/zip', :disposition => 'attachment', :filename => "#{current_project.name}" 
+    ProjectResponsesExportWorker.perform_async(current_project.id)
+    redirect_to project_response_exports_path(current_project)
   end
 
   private

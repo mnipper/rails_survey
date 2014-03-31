@@ -9,7 +9,8 @@
                 <th>Project Name</th>
                 <th> Created at </th>
                 <th> Status </th>
-                <th> Download </th>
+                <th> Download Responses </th>
+                <th> Download Response Pictures </th>
             </tr>
         </thead>
         <tbody>
@@ -18,7 +19,7 @@
                     <td>
                         <% if export.project_id %>
                             <% project = Project.find export.project_id %>
-                            <%= project.name %>
+                            <%= link_to project.name, project_path(project.id) %>
                         <% end %>
                     </td>
                     <td><%= export.created_at %></td>
@@ -31,7 +32,12 @@
                     </td>
                     <td>
                         <% if export.download_url %>
-                            <%= link_to 'Download', download_project_responses_project_export_path(current_project, export.id) %>
+                            <%= link_to 'Download', download_project_responses_project_response_export_path(current_project, export.id) %>
+                        <% end %>
+                    </td>
+                    <td>
+                        <% if (export.response_images_export && export.response_images_export.download_url) %>
+                            <%= link_to 'Download Images', download_project_response_images_project_response_export_path(current_project, export.id) %>
                         <% end %>
                     </td>
                 </tr>
@@ -47,7 +53,8 @@
                   <th>Instrument Title</th>
                   <th>Created at</th>
                   <th>Status</th>
-                  <th>Download</th>
+                  <th>Download Responses</th>
+                  <th>Download Response Pictures</th>
               </tr>
           </thead>
           <tbody>
@@ -56,7 +63,7 @@
                   <td>
                     <% if export.instrument_id %>
                         <% instrument = Instrument.find export.instrument_id %>
-                        <%= instrument.title %>
+                        <%= link_to instrument.title, project_instrument_path(instrument.project_id, instrument.id) %>
                     <% end %>
                   </td>
                   <td><%= export.created_at %></td>
@@ -69,8 +76,13 @@
                   </td>
                   <td>
                         <% if export.download_url %>
-                            <%= link_to 'Download', download_instrument_responses_project_export_path(current_project, export.id) %>
+                            <%= link_to 'Download', download_instrument_responses_project_response_export_path(current_project, export.id) %>
                         <% end %>
+                  </td>
+                  <td>
+                      <% if (export.response_images_export && export.response_images_export.download_url) %>
+                        <%= link_to 'Download Images', download_instrument_response_images_project_response_export_path(current_project, export.id) %>
+                      <% end %>
                   </td>
                 </tr>
               <% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140329175339) do
+ActiveRecord::Schema.define(version: 20140331141415) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -60,15 +60,6 @@ ActiveRecord::Schema.define(version: 20140329175339) do
   end
 
   add_index "devices", ["identifier"], name: "index_devices_on_identifier", unique: true
-
-  create_table "exports", force: true do |t|
-    t.string   "download_url"
-    t.boolean  "done",          default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "project_id"
-    t.integer  "instrument_id"
-  end
 
   create_table "images", force: true do |t|
     t.datetime "created_at"
@@ -163,6 +154,15 @@ ActiveRecord::Schema.define(version: 20140329175339) do
 
   add_index "questions", ["question_identifier"], name: "index_questions_on_question_identifier", unique: true
 
+  create_table "response_exports", force: true do |t|
+    t.string   "download_url"
+    t.boolean  "done",          default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "project_id"
+    t.integer  "instrument_id"
+  end
+
   create_table "response_images", force: true do |t|
     t.string   "response_uuid"
     t.datetime "created_at"
@@ -171,6 +171,14 @@ ActiveRecord::Schema.define(version: 20140329175339) do
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
+  end
+
+  create_table "response_images_exports", force: true do |t|
+    t.integer  "response_export_id"
+    t.string   "download_url"
+    t.boolean  "done",               default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "responses", force: true do |t|

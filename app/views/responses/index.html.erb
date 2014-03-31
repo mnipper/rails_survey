@@ -9,7 +9,6 @@
         <th>Name</th>
         <th>Description</th>
         <th>Export Responses</th>
-        <th>Export Response Pictures</th>
       </tr>
       </thead>
 
@@ -19,7 +18,6 @@
           <td><%= current_project.description %></td>
           <% if policy(current_project).export? %>
             <td> <%= link_to 'Export Responses', export_project_path(current_project) %> </td>
-            <td> <%= link_to 'Export Pictures', export_pictures_project_path(current_project) %> </td>
           <% end %>
         </tr>
       </tbody>
@@ -41,7 +39,6 @@
         <th>Created at</th>
         <th>Last updated</th>
         <th>Export Responses</th>
-        <th>Export Response Pictures</th>
       </tr>
       </thead>
       <tbody>
@@ -53,11 +50,6 @@
           <td><%= instrument.created_at %></td>
           <td><%= instrument.updated_at %></td>
           <td><%= link_to 'Export Responses', export_responses_project_instrument_path(current_project, instrument) %></td>
-          <td> 
-            <% unless instrument.response_images.empty? %>
-                <%= link_to 'Export Pictures', export_pictures_project_instrument_path(current_project, instrument) %>
-            <% end %>
-          </td>
         </tr>
       <% end %>
       </tbody>
