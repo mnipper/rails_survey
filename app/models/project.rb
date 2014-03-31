@@ -34,7 +34,7 @@ class Project < ActiveRecord::Base
   end
 
   def instrument_response_exports
-    ResponseExport.find_all_by_instrument_id(instrument_ids)
+    ResponseExport.find_all_by_instrument_id(instrument_ids).sort { |x,y| y.created_at <=> x.created_at }
   end
 
   def daily_response_count 

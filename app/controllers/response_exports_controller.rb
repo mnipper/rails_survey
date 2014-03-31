@@ -3,7 +3,7 @@ class ResponseExportsController < ApplicationController
   
   def index
     @project_exports = current_project.response_exports.order('created_at DESC')
-    @instrument_exports = current_project.instrument_response_exports.sort_by!(&:created_at) #TODO fix sort order
+    @instrument_exports = current_project.instrument_response_exports
   end
   
   def new
