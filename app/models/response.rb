@@ -63,6 +63,38 @@ class Response < ActiveRecord::Base
         response.special_response, response.other_response]
     end
   end
+  
+  def self.spss_label_values
+    labeled_variable_values = []
+    root = Rails.root.join('public', 'exports').to_s
+    spss_file = File.new(root + "/#{Time.now.to_i}.sps", "a+")
+    File.open(spss_file, "a+") do |file|
+      file.puts "VARIABLE LABELS"    
+      file.puts "qid" + " 'question identifier'"
+      file.puts "short_qid" + " 'database question id'"
+      file.puts "instrument_id" + " 'database instrument id'." 
+      file.puts "VALUE LABELS" 
+      all.each do |response|
+        if Settings.question_with_options.include? response.versioned_question.try(:question_type)
+          unless labeled_variable_values.include? response.question_identifier
+            labeled_variable_values << response.question_identifier
+            file.puts response.question_identifier 
+            options = response.text.split(Settings.list_delimiter)
+            options.each do |option_index|
+              if option_index == options.last
+                file.puts "#{option_index} '#{response.versioned_question.options[option_index.to_i].to_s}'."
+              else
+                file.puts "#{option_index} '#{response.versioned_question.options[option_index.to_i].to_s}'" 
+              end 
+            end 
+          end
+        end
+      end
+      file.puts "EXECUTE." 
+    end
+    spss_file.close 
+    spss_file 
+  end
 
   def grouped_responses
     self.group(:created_at)

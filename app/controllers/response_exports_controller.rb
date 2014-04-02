@@ -1,6 +1,7 @@
 class ResponseExportsController < ApplicationController
   after_action :verify_authorized, :except => 
-    [:index, :download_project_responses, :download_instrument_responses, :download_project_response_images, :download_instrument_response_images]
+    [:index, :download_project_responses, :download_instrument_responses, 
+      :download_project_response_images, :download_instrument_response_images, :download_spss_syntax_file]
   
   def index
     @project_exports = current_project.response_exports.order('created_at DESC')
@@ -66,6 +67,12 @@ class ResponseExportsController < ApplicationController
     export = ResponseExport.find params[:id]
     instrument = Instrument.find(export.instrument_id)
     send_file export.response_images_export.download_url, :type => 'application/zip', :disposition => 'attachment', :filename => "#{ instrument.title.gsub!(/\s+/,  '_') }"
+  end
+  
+  def download_spss_syntax_file 
+    export = ResponseExport.find params[:id]
+    instrument = Instrument.find(export.instrument_id)
+    send_file export.spss_syntax_file_url, :type => 'application/x-spss', :disposition => 'attachment', :filename => "#{ instrument.title.gsub!(/\s+/,  '_') }.sps"
   end
   
 end

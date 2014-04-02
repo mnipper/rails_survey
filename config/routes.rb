@@ -58,6 +58,7 @@ RailsSurvey::Application.routes.draw do
         get :download_instrument_responses
         get :download_project_response_images
         get :download_instrument_response_images
+        get :download_spss_syntax_file 
       end
     end
     get 'graphs/daily/' => 'graphs#daily_responses'

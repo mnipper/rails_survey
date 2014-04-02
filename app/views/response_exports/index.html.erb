@@ -58,6 +58,7 @@
                   <th>Created at</th>
                   <th>Status</th>
                   <th>Download Responses</th>
+                  <th>Download spss syntax file</th>
                   <th>Download Response Pictures</th>
               </tr>
           </thead>
@@ -83,6 +84,11 @@
                         <% if export.download_url %>
                             <%= link_to 'Download', download_instrument_responses_project_response_export_path(current_project, export.id) %>
                         <% end %>
+                      <% end %>
+                  </td>
+                  <td>
+                      <% if export.spss_syntax_file_url %>
+                        <%= link_to 'Download spss', download_spss_syntax_file_project_response_export_path(current_project, export.id) %>
                       <% end %>
                   </td>
                   <td>
