@@ -48,24 +48,24 @@ class ResponseExportsController < ApplicationController
   
   def download_project_responses 
     export = ResponseExport.find params[:id]
-    send_file export.download_url, :type => 'text/csv', :disposition => 'attachment', :filename => "#{current_project.name}" 
+    send_file export.download_url, :type => 'text/csv', :disposition => 'attachment', :filename => "#{ current_project.name.gsub!(/\s+/,  '_') }" 
   end
   
   def download_instrument_responses
     export = ResponseExport.find params[:id]
     instrument = Instrument.find(export.instrument_id)
-    send_file export.download_url, :type => 'text/csv', :disposition => 'attachment', :filename => "#{instrument.title}"
+    send_file export.download_url, :type => 'text/csv', :disposition => 'attachment', :filename => "#{ instrument.title.gsub!(/\s+/,  '_') }"
   end
   
   def download_project_response_images
     export = ResponseExport.find params[:id]
-    send_file export.response_images_export.download_url, :type => 'application/zip', :disposition => 'attachment', :filename => "#{current_project.name}"
+    send_file export.response_images_export.download_url, :type => 'application/zip', :disposition => 'attachment', :filename => "#{ current_project.name.gsub!(/\s+/,  '_') }"
   end
   
   def download_instrument_response_images
     export = ResponseExport.find params[:id]
     instrument = Instrument.find(export.instrument_id)
-    send_file export.response_images_export.download_url, :type => 'application/zip', :disposition => 'attachment', :filename => "#{instrument.title}"
+    send_file export.response_images_export.download_url, :type => 'application/zip', :disposition => 'attachment', :filename => "#{ instrument.title.gsub!(/\s+/,  '_') }"
   end
   
 end
