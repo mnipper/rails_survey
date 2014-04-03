@@ -41,6 +41,14 @@ class ResponseExportPolicy < ResponsePolicy
     download_privileges
   end
   
+  def download_instrument_spss_csv?
+    download_privileges 
+  end
+  
+  def download_spss_syntax_file
+    download_privileges 
+  end
+  
   private
   def download_privileges
     @user.admin? || @user.manager? || @user.analyst? 

@@ -45,8 +45,7 @@ class Response < ActiveRecord::Base
     root = Rails.root.join('public', 'exports').to_s
     csv_file = File.new(root + "/#{Time.now.to_i}.csv", "a+")
     CSV.open(csv_file, "wb") do |csv|
-      # export(csv)
-      spss_export(csv)
+      export(csv)
     end
     csv_file.close 
     csv_file 
@@ -63,6 +62,16 @@ class Response < ActiveRecord::Base
         response.versioned_question.try(:text), response.text, response.option_labels,
         response.special_response, response.other_response]
     end
+  end
+  
+  def self.to_spss_friendly_csv
+    root = Rails.root.join('public', 'exports').to_s
+    csv_file = File.new(root + "/spss#{Time.now.to_i}.csv", "a+")
+    CSV.open(csv_file, "wb") do |csv|
+      spss_export(csv)
+    end
+    csv_file.close 
+    csv_file
   end
   
   def self.spss_export(format)

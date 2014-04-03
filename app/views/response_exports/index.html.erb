@@ -57,7 +57,8 @@
                   <th>Instrument Title</th>
                   <th>Created at</th>
                   <th>Status</th>
-                  <th>Download Responses</th>
+                  <th>Responses csv </th>
+                  <th>SPSS friendly csv</th>
                   <th>Download spss syntax file</th>
                   <th>Download Response Pictures</th>
               </tr>
@@ -82,13 +83,20 @@
                   <td>
                       <% if policy(export).download_project_response_images? %>
                         <% if export.download_url %>
-                            <%= link_to 'Download', download_instrument_responses_project_response_export_path(current_project, export.id) %>
+                            <%= link_to 'Download csv', download_instrument_responses_project_response_export_path(current_project, export.id) %>
+                        <% end %>
+                      <% end %>
+                  </td>
+                  <td>
+                      <% if policy(export).download_instrument_spss_csv? %>
+                        <% if export.spss_friendly_csv_url %>
+                            <%= link_to 'Download spss csv', download_instrument_spss_csv_project_response_export_path(current_project, export.id) %>
                         <% end %>
                       <% end %>
                   </td>
                   <td>
                       <% if export.spss_syntax_file_url %>
-                        <%= link_to 'Download spss', download_spss_syntax_file_project_response_export_path(current_project, export.id) %>
+                        <%= link_to 'Download spss syntax', download_spss_syntax_file_project_response_export_path(current_project, export.id) %>
                       <% end %>
                   </td>
                   <td>
