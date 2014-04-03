@@ -64,30 +64,47 @@ class Response < ActiveRecord::Base
     end
   end
   
+  #TODO 1. refactor 2. image question types
   def self.spss_label_values
     labeled_variable_values = []
     root = Rails.root.join('public', 'exports').to_s
     spss_file = File.new(root + "/#{Time.now.to_i}.sps", "a+")
     File.open(spss_file, "a+") do |file|
-      file.puts "VARIABLE LABELS"    
-      file.puts "qid" + " 'question identifier'"
-      file.puts "short_qid" + " 'database question id'"
-      file.puts "instrument_id" + " 'database instrument id'." 
-      file.puts "VALUE LABELS" 
+      qids = []
       all.each do |response|
-        if Settings.question_with_options.include? response.versioned_question.try(:question_type)
-          unless labeled_variable_values.include? response.question_identifier
-            labeled_variable_values << response.question_identifier
+        unless qids.include? response.question_identifier
+          file.puts "STRING #{response.question_identifier} (A#{response.question_identifier.length})."
+          qids << response.question_identifier 
+        end 
+      end
+      file.puts "VARIABLE LABELS"  
+      qids = []
+      all.each do |response|
+        unless qids.include? response.question_identifier
+          if response.question.id == response.instrument.questions.last.id
+            file.puts "#{response.question_identifier} '#{response.versioned_question.text}'."
+          else
+            file.puts "#{response.question_identifier} '#{response.versioned_question.text}'"
+          end 
+          qids << response.question_identifier 
+        end 
+      end
+      qids = []
+      all.each do |response|
+        if Settings.question_with_options.include? response.versioned_question.try(:question_type) 
+          unless qids.include? response.question_identifier
+            file.puts "VALUE LABELS" 
             file.puts response.question_identifier 
-            options = response.text.split(Settings.list_delimiter)
+            qids << response.question_identifier 
+            options = response.versioned_question.options
             options.each do |option_index|
               if option_index == options.last
-                file.puts "#{option_index} '#{response.versioned_question.options[option_index.to_i].to_s}'."
+                file.puts "#{options.index(option_index)} '#{response.versioned_question.options[options.index(option_index)].to_s}'."
               else
-                file.puts "#{option_index} '#{response.versioned_question.options[option_index.to_i].to_s}'" 
+                file.puts "#{options.index(option_index)} '#{response.versioned_question.options[options.index(option_index)].to_s}'" 
               end 
             end 
-          end
+          end 
         end
       end
       file.puts "EXECUTE." 
