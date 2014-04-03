@@ -98,13 +98,6 @@ class Response < ActiveRecord::Base
     root = Rails.root.join('public', 'exports').to_s
     spss_file = File.new(root + "/#{Time.now.to_i}.sps", "a+")
     File.open(spss_file, "a+") do |file|
-      # qids = []
-      # all.each do |response|
-        # unless qids.include? response.question_identifier
-          # file.puts "STRING #{response.question_identifier} (A#{response.question_identifier.length})."
-          # qids << response.question_identifier 
-        # end 
-      # end
       file.puts "VARIABLE LABELS"  
       qids = []
       all.each do |response|
