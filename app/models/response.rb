@@ -45,7 +45,8 @@ class Response < ActiveRecord::Base
     root = Rails.root.join('public', 'exports').to_s
     csv_file = File.new(root + "/#{Time.now.to_i}.csv", "a+")
     CSV.open(csv_file, "wb") do |csv|
-      export(csv)
+      # export(csv)
+      spss_export(csv)
     end
     csv_file.close 
     csv_file 
@@ -64,19 +65,46 @@ class Response < ActiveRecord::Base
     end
   end
   
+  def self.spss_export(format)
+    qids = []
+    all.each do |response|
+      unless qids.include? response.question_identifier
+        qids << response.question_identifier
+      end
+    end
+    format << qids 
+    surveys = []
+    all.each do |response|
+      unless surveys.include? response.survey
+        surveys << response.survey
+      end
+    end
+    surveys.each do |survey|
+      responses = []
+      survey.responses.each do |response|
+        if Settings.question_with_select_multiple.include? response.versioned_question.try(:question_type)
+          responses << response.text.gsub(/,/,  ';')
+        else
+          responses << response.text 
+        end 
+      end
+      format << responses 
+    end
+  end
+  
   #TODO 1. refactor 2. image question types
   def self.spss_label_values
     labeled_variable_values = []
     root = Rails.root.join('public', 'exports').to_s
     spss_file = File.new(root + "/#{Time.now.to_i}.sps", "a+")
     File.open(spss_file, "a+") do |file|
-      qids = []
-      all.each do |response|
-        unless qids.include? response.question_identifier
-          file.puts "STRING #{response.question_identifier} (A#{response.question_identifier.length})."
-          qids << response.question_identifier 
-        end 
-      end
+      # qids = []
+      # all.each do |response|
+        # unless qids.include? response.question_identifier
+          # file.puts "STRING #{response.question_identifier} (A#{response.question_identifier.length})."
+          # qids << response.question_identifier 
+        # end 
+      # end
       file.puts "VARIABLE LABELS"  
       qids = []
       all.each do |response|
