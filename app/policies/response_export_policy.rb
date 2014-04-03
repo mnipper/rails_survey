@@ -45,7 +45,15 @@ class ResponseExportPolicy < ResponsePolicy
     download_privileges 
   end
   
-  def download_spss_syntax_file
+  def download_spss_syntax_file?
+    download_privileges 
+  end
+  
+  def download_project_spss_csv?
+    download_privileges
+  end
+  
+  def download_project_spss_syntax_file?
     download_privileges 
   end
   

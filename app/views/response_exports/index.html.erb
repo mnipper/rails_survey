@@ -9,8 +9,10 @@
                 <th>Project Name</th>
                 <th> Created at </th>
                 <th> Status </th>
-                <th> Download Responses </th>
-                <th> Download Response Pictures </th>
+                <th> Responses csv </th>
+                <th> SPSS csv </th>
+                <th> SPSS Syntax </th>
+                <th> Response Pictures </th>
             </tr>
         </thead>
         <tbody>
@@ -33,10 +35,24 @@
                     <td>
                         <% if policy(export).download_project_responses? %>
                             <% if export.download_url %>
-                                <%= link_to 'Download', download_project_responses_project_response_export_path(current_project, export.id) %>
+                                <%= link_to 'download csv', download_project_responses_project_response_export_path(current_project, export.id) %>
                             <% end %>
                        <% end %>
                     </td>
+                    <td>
+                      <% if policy(export).download_project_spss_csv? %>
+                        <% if export.spss_friendly_csv_url %>
+                            <%= link_to 'download spss csv', download_project_spss_csv_project_response_export_path(current_project, export.id) %>
+                        <% end %>
+                      <% end %>
+                  </td>
+                  <td>
+                      <% if policy(export).download_spss_syntax_file? %>
+                        <% if export.spss_syntax_file_url %>
+                            <%= link_to 'download spss syntax', download_project_spss_syntax_file_project_response_export_path(current_project, export.id) %>
+                        <% end %>
+                      <% end %>
+                  </td>
                     <td>
                         <% if policy(export).download_instrument_responses? %>
                             <% if (export.response_images_export && export.response_images_export.download_url) %>
@@ -59,8 +75,8 @@
                   <th>Status</th>
                   <th>Responses csv </th>
                   <th>SPSS friendly csv</th>
-                  <th>Download spss syntax file</th>
-                  <th>Download Response Pictures</th>
+                  <th>SPSS syntax file</th>
+                  <th>Response Pictures</th>
               </tr>
           </thead>
           <tbody>
@@ -83,26 +99,28 @@
                   <td>
                       <% if policy(export).download_project_response_images? %>
                         <% if export.download_url %>
-                            <%= link_to 'Download csv', download_instrument_responses_project_response_export_path(current_project, export.id) %>
+                            <%= link_to 'download csv', download_instrument_responses_project_response_export_path(current_project, export.id) %>
                         <% end %>
                       <% end %>
                   </td>
                   <td>
                       <% if policy(export).download_instrument_spss_csv? %>
                         <% if export.spss_friendly_csv_url %>
-                            <%= link_to 'Download spss csv', download_instrument_spss_csv_project_response_export_path(current_project, export.id) %>
+                            <%= link_to 'download spss csv', download_instrument_spss_csv_project_response_export_path(current_project, export.id) %>
                         <% end %>
                       <% end %>
                   </td>
                   <td>
-                      <% if export.spss_syntax_file_url %>
-                        <%= link_to 'Download spss syntax', download_spss_syntax_file_project_response_export_path(current_project, export.id) %>
+                      <% if policy(export).download_spss_syntax_file? %>
+                        <% if export.spss_syntax_file_url %>
+                            <%= link_to 'download spss syntax', download_spss_syntax_file_project_response_export_path(current_project, export.id) %>
+                        <% end %>
                       <% end %>
                   </td>
                   <td>
                       <% if policy(export).download_instrument_response_images? %>
                         <% if (export.response_images_export && export.response_images_export.download_url) %>
-                            <%= link_to 'Download Images', download_instrument_response_images_project_response_export_path(current_project, export.id) %>
+                            <%= link_to 'download images zip', download_instrument_response_images_project_response_export_path(current_project, export.id) %>
                         <% end %>
                       <% end %>
                   </td>
