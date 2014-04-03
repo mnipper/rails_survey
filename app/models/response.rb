@@ -74,6 +74,7 @@ class Response < ActiveRecord::Base
     csv_file
   end
   
+  #TODO this method looks more like it should be in survey
   def self.spss_export(format)
     qids = []
     all.each do |response|
