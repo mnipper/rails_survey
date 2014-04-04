@@ -74,7 +74,6 @@ class Response < ActiveRecord::Base
     csv_file
   end
   
-  #TODO this method looks more like it should be in survey
   def self.spss_export(format)
     qids = []
     all.each do |response|
@@ -92,17 +91,12 @@ class Response < ActiveRecord::Base
     surveys.each do |survey|
       responses = []
       survey.responses.each do |response|
-        if Settings.question_with_select_multiple.include? response.versioned_question.try(:question_type)
-          responses << response.text.gsub(/,/,  ';')
-        else
-          responses << response.text 
-        end 
+        responses << response.text.gsub(/,/, ';')
       end
       format << responses 
     end
   end
   
-  #TODO 1. refactor 2. image question types
   def self.spss_label_values
     labeled_variable_values = []
     root = Rails.root.join('public', 'exports').to_s
@@ -112,10 +106,11 @@ class Response < ActiveRecord::Base
       qids = []
       all.each do |response|
         unless qids.include? response.question_identifier
+          response_text = response.versioned_question.text.gsub(/'/, '"')
           if response.question.id == response.instrument.questions.last.id
-            file.puts "#{response.question_identifier} '#{response.versioned_question.text}'."
+            file.puts "#{response.question_identifier} '#{response_text}'."
           else
-            file.puts "#{response.question_identifier} '#{response.versioned_question.text}'"
+            file.puts "#{response.question_identifier} '#{response_text}'"
           end 
           qids << response.question_identifier 
         end 
@@ -129,10 +124,11 @@ class Response < ActiveRecord::Base
             qids << response.question_identifier 
             options = response.versioned_question.options
             options.each do |option_index|
+              option_text = (response.versioned_question.options[options.index(option_index)].to_s).gsub(/'/, '"')
               if option_index == options.last
-                file.puts "#{options.index(option_index)} '#{response.versioned_question.options[options.index(option_index)].to_s}'."
+                file.puts "#{options.index(option_index)} '#{option_text}'."
               else
-                file.puts "#{options.index(option_index)} '#{response.versioned_question.options[options.index(option_index)].to_s}'" 
+                file.puts "#{options.index(option_index)} '#{option_text}'" 
               end 
             end 
           end 

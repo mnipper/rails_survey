@@ -60,8 +60,6 @@ RailsSurvey::Application.routes.draw do
         get :download_instrument_response_images
         get :download_spss_syntax_file 
         get :download_instrument_spss_csv
-        get :download_project_spss_syntax_file
-        get :download_project_spss_csv
       end
     end
     get 'graphs/daily/' => 'graphs#daily_responses'
