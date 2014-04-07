@@ -47,7 +47,6 @@ class Response < ActiveRecord::Base
     CSV.open(csv_file, "wb") do |csv|
       export(csv)
     end
-    csv_file.close 
     csv_file 
   end
 
@@ -70,24 +69,21 @@ class Response < ActiveRecord::Base
     CSV.open(csv_file, "wb") do |csv|
       spss_export(csv)
     end
-    csv_file.close 
     csv_file
   end
   
   def self.spss_export(format)
     qids = []
+    surveys = []
     all.each do |response|
       unless qids.include? response.question_identifier
         qids << response.question_identifier
       end
-    end
-    format << qids 
-    surveys = []
-    all.each do |response|
       unless surveys.include? response.survey
         surveys << response.survey
       end
     end
+    format << qids 
     surveys.each do |survey|
       responses = []
       survey.responses.each do |response|
@@ -98,46 +94,52 @@ class Response < ActiveRecord::Base
   end
   
   def self.spss_label_values
-    labeled_variable_values = []
     root = Rails.root.join('public', 'exports').to_s
     spss_file = File.new(root + "/#{Time.now.to_i}.sps", "a+")
     File.open(spss_file, "a+") do |file|
-      file.puts "VARIABLE LABELS"  
-      qids = []
-      all.each do |response|
-        unless qids.include? response.question_identifier
-          response_text = response.versioned_question.text.gsub(/'/, '"')
-          if response.question.id == response.instrument.questions.last.id
-            file.puts "#{response.question_identifier} '#{response_text}'."
-          else
-            file.puts "#{response.question_identifier} '#{response_text}'"
-          end 
-          qids << response.question_identifier 
+      write_variable_labels(file)
+      write_value_labels(file)
+    end
+    spss_file 
+  end
+  
+  def self.write_variable_labels(file)
+    file.puts "VARIABLE LABELS"  
+    qids = []
+    all.each do |response|
+      unless qids.include? response.question_identifier
+        response_text = response.versioned_question.text.gsub(/'/, '"')
+        if response.question.id == response.instrument.questions.last.id
+          file.puts "#{response.question_identifier} '#{response_text}'."
+        else
+          file.puts "#{response.question_identifier} '#{response_text}'"
         end 
-      end
-      qids = []
-      all.each do |response|
-        if Settings.question_with_options.include? response.versioned_question.try(:question_type) 
-          unless qids.include? response.question_identifier
-            file.puts "VALUE LABELS" 
-            file.puts response.question_identifier 
-            qids << response.question_identifier 
-            options = response.versioned_question.options
-            options.each do |option_index|
-              option_text = (response.versioned_question.options[options.index(option_index)].to_s).gsub(/'/, '"')
-              if option_index == options.last
-                file.puts "#{options.index(option_index)} '#{option_text}'."
-              else
-                file.puts "#{options.index(option_index)} '#{option_text}'" 
-              end 
+        qids << response.question_identifier 
+      end 
+    end
+  end
+  
+  def self.write_value_labels(file)
+    qids = []
+    all.each do |response|
+      if Settings.question_with_options.include? response.versioned_question.try(:question_type) 
+        unless qids.include? response.question_identifier
+          file.puts "VALUE LABELS" 
+          file.puts response.question_identifier 
+          qids << response.question_identifier 
+          options = response.versioned_question.options
+          options.each do |option_index|
+            option_text = (response.versioned_question.options[options.index(option_index)].to_s).gsub(/'/, '"')
+            if option_index == options.last
+              file.puts "#{options.index(option_index)} '#{option_text}'."
+            else
+              file.puts "#{options.index(option_index)} '#{option_text}'" 
             end 
           end 
-        end
+        end 
       end
-      file.puts "EXECUTE." 
     end
-    spss_file.close 
-    spss_file 
+    file.puts "EXECUTE." 
   end
 
   def grouped_responses
