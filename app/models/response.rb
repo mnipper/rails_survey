@@ -141,6 +141,29 @@ class Response < ActiveRecord::Base
     end
     file.puts "EXECUTE." 
   end
+  
+  def self.value_labels_csv
+    root = Rails.root.join('public', 'exports').to_s
+    csv_file = File.new(root + "/#{Time.now.to_i}value_labels.csv", "a+")
+    CSV.open(csv_file, "wb") do |csv|
+      export_value_labels(csv)
+    end
+    csv_file
+  end
+  
+  def self.export_value_labels(format)
+    format << ['variable_identifier', 'variable_type', 'variable_label', 'value_label', 'label_type']
+    questions = all.first.instrument.questions #TODO demeter law violation  
+    questions.each do |question|
+      if question.has_options?
+        question.options.each do |option|
+          format << [question.question_identifier, question.question_type, option.text, question.options.index(option), 'value label']
+        end 
+      else
+        format << [question.question_identifier, question.question_type, question.text, '', 'question label']
+      end 
+    end
+  end
 
   def grouped_responses
     self.group(:created_at)

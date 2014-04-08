@@ -49,6 +49,10 @@ class ResponseExportPolicy < ResponsePolicy
     download_privileges 
   end
   
+  def download_value_labels_csv?
+    download_privileges 
+  end
+  
   private
   def download_privileges
     @user.admin? || @user.manager? || @user.analyst? 

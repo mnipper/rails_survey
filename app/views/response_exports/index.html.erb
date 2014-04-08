@@ -58,6 +58,7 @@
                   <th>Created at</th>
                   <th>Status</th>
                   <th>Responses csv </th>
+                  <th>Value labels csv</th>
                   <th>SPSS friendly csv</th>
                   <th>SPSS syntax file</th>
                   <th>Response Pictures</th>
@@ -86,6 +87,13 @@
                             <%= link_to 'download csv', download_instrument_responses_project_response_export_path(current_project, export.id) %>
                         <% end %>
                       <% end %>
+                  </td>
+                  <td>
+                     <% if policy(export).download_value_labels_csv? %>
+                        <% if export.value_labels_csv %>
+                            <%= link_to 'download value labels', download_value_labels_csv_project_response_export_path(current_project, export.id) %>
+                        <% end %>
+                      <% end %> 
                   </td>
                   <td>
                       <% if policy(export).download_instrument_spss_csv? %>

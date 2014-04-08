@@ -1,7 +1,7 @@
 class ResponseExportsController < ApplicationController
   after_action :verify_authorized, :except => 
     [:index, :download_project_responses, :download_instrument_responses, :download_instrument_spss_csv,
-      :download_project_response_images, :download_instrument_response_images, :download_spss_syntax_file]
+      :download_project_response_images, :download_instrument_response_images, :download_spss_syntax_file, :download_value_labels_csv]
   
   def index
     @project_exports = current_project.response_exports.order('created_at DESC')
@@ -79,6 +79,12 @@ class ResponseExportsController < ApplicationController
     export = ResponseExport.find params[:id]
     instrument = Instrument.find(export.instrument_id)
     send_file export.spss_friendly_csv_url, :type => 'text/csv', :disposition => 'attachment', :filename => "#{ instrument.title.gsub(/\s+/,  '_') }_spss"
+  end
+  
+  def download_value_labels_csv
+    export = ResponseExport.find params[:id]
+    instrument = Instrument.find(export.instrument_id)
+    send_file export.value_labels_csv, :type => 'text/csv', :disposition => 'attachment', :filename => "#{ instrument.title.gsub(/\s+/,  '_') }_value_labels"  
   end
   
 end
