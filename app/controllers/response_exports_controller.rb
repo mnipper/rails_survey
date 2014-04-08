@@ -49,42 +49,51 @@ class ResponseExportsController < ApplicationController
   
   def download_project_responses 
     export = ResponseExport.find params[:id]
-    send_file export.download_url, :type => 'text/csv', :disposition => 'attachment', :filename => "#{ current_project.name.gsub(/\s+/,  '_') }" 
+    project_download(export.download_url, 'text/csv')
   end
   
   def download_instrument_responses
     export = ResponseExport.find params[:id]
     instrument = Instrument.find(export.instrument_id)
-    send_file export.download_url, :type => 'text/csv', :disposition => 'attachment', :filename => "#{ instrument.title.gsub(/\s+/,  '_') }"
+    instrument_download(export.download_url, 'text/csv', "#{ instrument.title.gsub(/\s+/,  '_') }")
   end
   
   def download_project_response_images
     export = ResponseExport.find params[:id]
-    send_file export.response_images_export.download_url, :type => 'application/zip', :disposition => 'attachment', :filename => "#{ current_project.name.gsub(/\s+/,  '_') }"
+    project_download(export.response_images_export.download_url, 'application/zip')
   end
   
   def download_instrument_response_images
     export = ResponseExport.find params[:id]
     instrument = Instrument.find(export.instrument_id)
-    send_file export.response_images_export.download_url, :type => 'application/zip', :disposition => 'attachment', :filename => "#{ instrument.title.gsub(/\s+/,  '_') }"
+    instrument_download(export.response_images_export.download_url, 'application/zip', "#{ instrument.title.gsub(/\s+/,  '_') }")
   end
   
   def download_spss_syntax_file 
     export = ResponseExport.find params[:id]
     instrument = Instrument.find(export.instrument_id)
-    send_file export.spss_syntax_file_url, :type => 'application/x-spss', :disposition => 'attachment', :filename => "#{ instrument.title.gsub!(/\s+/,  '_') }.sps"
+    instrument_download(export.spss_syntax_file_url, 'application/x-spss', "#{ instrument.title.gsub!(/\s+/,  '_') }.sps")
   end
   
   def download_instrument_spss_csv
     export = ResponseExport.find params[:id]
     instrument = Instrument.find(export.instrument_id)
-    send_file export.spss_friendly_csv_url, :type => 'text/csv', :disposition => 'attachment', :filename => "#{ instrument.title.gsub(/\s+/,  '_') }_spss"
+    instrument_download(export.spss_friendly_csv_url, 'text/csv', "#{ instrument.title.gsub(/\s+/,  '_') }_spss")
   end
   
   def download_value_labels_csv
     export = ResponseExport.find params[:id]
     instrument = Instrument.find(export.instrument_id)
-    send_file export.value_labels_csv, :type => 'text/csv', :disposition => 'attachment', :filename => "#{ instrument.title.gsub(/\s+/,  '_') }_value_labels"  
+    instrument_download(export.value_labels_csv, 'text/csv', "#{ instrument.title.gsub(/\s+/,  '_') }_value_labels")
+  end
+  
+  private
+  def project_download(url, type)
+    send_file url, :type => type, :disposition => 'attachment', :filename => "#{ current_project.name.gsub(/\s+/,  '_') }" 
+  end
+  
+  def instrument_download(url, type, filename)
+    send_file url, :type => type, :disposition => 'attachment', :filename => filename   
   end
   
 end
