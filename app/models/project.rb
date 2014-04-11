@@ -25,6 +25,7 @@ class Project < ActiveRecord::Base
   has_many :questions, through: :instruments
   has_many :images, through: :questions
   has_many :options, through: :questions
+  has_many :sections, through: :instruments 
   
   validates :name, presence: true, allow_blank: false
   validates :description, presence: true, allow_blank: true

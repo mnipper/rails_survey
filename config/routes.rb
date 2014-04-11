@@ -28,6 +28,7 @@ RailsSurvey::Application.routes.draw do
         resources :surveys, only: [:create]
         resources :responses, only: [:create]
         resources :response_images, only: [:create]
+        resources :sections, only: [:index, :show]
       end
     end
   end
