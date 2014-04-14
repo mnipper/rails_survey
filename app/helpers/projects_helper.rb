@@ -14,10 +14,14 @@ module ProjectsHelper
   end
   
   def set_current_project_id(previous_url)
+    puts previous_url
+    puts "previous url"
     if previous_url and previous_url != '/' 
       split_previous_url = previous_url.split('/')
       project_id = split_previous_url[2]
-      set_current_project(Project.find project_id.to_i)
+      if project_id.to_i != 0
+        set_current_project(Project.find project_id.to_i)
+      end 
     end
   end
   
