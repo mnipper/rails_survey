@@ -17,7 +17,9 @@ module ProjectsHelper
     if previous_url and previous_url != '/' and previous_url != '/admin'
       split_previous_url = previous_url.split('/')
       project_id = split_previous_url[2]
-      set_current_project(Project.find project_id.to_i)
+      if project_id.to_i != 0
+        set_current_project(Project.find project_id.to_i)
+      end 
     end
   end
   
