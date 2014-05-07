@@ -14,36 +14,33 @@
           <th>Question Type</th>
           <th>Question Identifier</th>
           <th>Question Text</th>
-          <th>Question Options</th>
           <th>Response</th>
           <th>Special Response</th>
           <th>Other Response</th>
           <th>Created at</th>
           <th>Time taken(sec)</th>
+          <th>Response Image</th>
         </tr>
       </thead>
       <tbody>
-      <% instrument_version_created_at = @survey.instrument_version.updated_at %>
     <% @survey.responses.each do |response| %>
           <% if response.question %>
           <tr>
           <td><%= response.question.question_type %></td>
           <td><%= response.question.question_identifier %></td>
           <td>
-               <%= raw response.question.version_at_time(@survey.instrument_version_number, instrument_version_created_at).text %>
+            <%= raw @instrument_version.versioned(response.question).text %>
           </td>
-          <td>
-            <ul class="squares">
-              <% response.question.options.each do |option| %>
-                <li> <%= option.version_at_time(instrument_version_created_at) %> </li>
-              <% end %>
-            <ul>
-          </td>
-          <td><%= response.versioned_response %> </td>
-          <td><%= response.special_response ? response.special_response : 'NA' %></td>
-          <td><%= response.other_response ? response.other_response : 'NA' %></td>
+          <td><%= response.text %> </td>
+          <td><%= response.special_response %></td>
+          <td><%= response.other_response %></td>
           <td><%= response.created_at %> </td>
-          <td><%= response.time_taken_in_seconds ? response.time_taken_in_seconds : 'NA' %></td>
+          <td><%= response.time_taken_in_seconds %></td>
+          <td>
+              <% if response.response_image %>
+                    <%= link_to 'View Image', project_response_image_path(current_project, response.response_image.id)  %>
+              <% end %>
+          </td>
         </tr>
         <% end %>
     <% end %>

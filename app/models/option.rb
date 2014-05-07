@@ -9,6 +9,7 @@
 #  updated_at         :datetime
 #  next_question      :string(255)
 #  number_in_question :integer
+#  deleted_at         :datetime
 #
 
 class Option < ActiveRecord::Base
@@ -19,16 +20,15 @@ class Option < ActiveRecord::Base
   delegate :instrument, to: :question
   delegate :project, to: :question
   has_many :translations, foreign_key: 'option_id', class_name: 'OptionTranslation', dependent: :destroy
+  before_save :update_instrument_version, if: Proc.new { |option| option.changed? }
+  before_destroy :update_instrument_version
   has_paper_trail
+  acts_as_paranoid
 
   validates :text, presence: true, allow_blank: false
 
   def to_s
     text
-  end
-
-  def version_at_time(time)
-    self.version_at(time + 1)
   end
 
   def instrument_version
@@ -39,5 +39,10 @@ class Option < ActiveRecord::Base
     super((options || {}).merge({
         methods: [:instrument_version]
     }))
+  end
+
+  private
+  def update_instrument_version
+    instrument.update_instrument_version
   end
 end

@@ -4,6 +4,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
+require 'support/chosen_select'
 
 driver = Selenium::WebDriver.for :firefox
 driver.manage.timeouts.implicit_wait = 300
@@ -62,4 +63,5 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
+
 end

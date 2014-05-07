@@ -5,6 +5,6 @@ FactoryGirl.define do
     text 'a'
     special_response 'SKIP'
     other_response 'other'
+    sequence(:question_identifier) {|n| "q_#{n}" } 
   end
-
 end

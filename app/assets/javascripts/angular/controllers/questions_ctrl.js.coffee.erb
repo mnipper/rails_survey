@@ -21,6 +21,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
         question.$update()
 
   $scope.editQuestion = (question) ->
+    $scope.$broadcast('EDIT_QUESTION', question.id)
     $scope.edit_question = question
     $scope.edit_question.project_id = $scope.project_id
     $scope.edit_question.instrument_id = $scope.instrument_id
@@ -89,4 +90,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
 
   $scope.questionTypesWithOptions = (questionType)->
     questionType in <%= Settings.question_with_options %>
+
+  $scope.questionTypesWithImages = (questionType)->
+    questionType in <%= Settings.question_with_images %>
 ]

@@ -1,0 +1,8 @@
+<h2>
+    <%= @image.picture_file_name %>
+</h2>
+<section class="widget">
+    <body>
+        <%= image_tag @image.picture.url(:small)  %>
+    </body>
+</section>

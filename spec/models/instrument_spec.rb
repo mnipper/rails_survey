@@ -12,6 +12,7 @@
 #  previous_question_count :integer
 #  project_id              :integer
 #  published               :boolean
+#  deleted_at              :datetime
 #
 
 require "spec_helper"
@@ -33,36 +34,47 @@ describe Instrument do
     end
 
     it "should be version 0 at first" do
+      @instrument.current_version_number.should == 0
+    end
+
+    it "should create a new version when adding questions and options" do
       questions = create_list(:question, 10, instrument: @instrument)
       create_list(:option, 5, question: questions.first)
-      @instrument.current_version_number.should == 0
+      @instrument.current_version_number.should == 15 
     end
 
     it "should create a new version if a question is updated" do
       @instrument.current_version_number.should == 0
       question = create(:question, instrument: @instrument)
-      question.update_attributes(text: 'New text')
       @instrument.current_version_number.should == 1
+      question.update_attributes(text: 'New text')
+      @instrument.current_version_number.should == 2
     end
 
     it "should create a new version if a question is created" do
       @instrument.current_version_number.should == 0
       question = create(:question, instrument: @instrument)
-      @instrument.save
       @instrument.current_version_number.should == 1
     end
 
-    it "should return true if current_version_number" do
-      @instrument.current_version_number.should == 0
-      @instrument.is_version?(0).should be_true
-      @instrument.update_attributes(title: 'New text')
-      @instrument.current_version_number.should == 1
-      @instrument.is_version?(1).should be_true
+    it "should return the correct title for the new version" do
+      @instrument.update_attributes(title: 'New title')
+      @instrument.version(1).title = 'New title'
     end
 
-    it "should return false if not current_version_number" do
-      @instrument.current_version_number.should == 0
-      @instrument.is_version?(1).should be_false
+    it "should return the correct question text for the old version" do
+      question = create(:question, instrument: @instrument)
+      old_text = question.text
+      question.update_attributes(text: 'New text')
+      @instrument.version(1).questions.first.text.should == old_text
+      @instrument.version(2).questions.first.text.should == 'New text'
+    end
+
+    it "should return the correct option for the instrument version" do
+      question = create(:question, instrument: @instrument)
+      option = create(:option, question: question)
+      @instrument.version(1).questions.first.options.should == []
+      @instrument.version(2).questions.first.options.should == [option]
     end
   end
 
@@ -73,7 +85,7 @@ describe Instrument do
     end
 
     it "should set alignment to left for left-aligned languages" do
-      @instrument.update_attributes!(language: (Settings.languages - Settings.right_align_languages).first)
+      @instrument.update_attributes!(language: 'en')
       @instrument.alignment.should == "left"
     end
   end
@@ -137,6 +149,25 @@ describe Instrument do
 
     it "should return the correct translation" do
       @translation.instrument.translated_for(@translation.language, :title).should == @translation.title
+    end
+  end
+
+  describe "export" do
+    before :each do
+      @question = create(:question, instrument: @instrument)
+    end
+
+    it "should export correctly" do
+      out = []
+      @instrument.export(out)
+      out.should == [
+        ["Instrument id:", @instrument.id],
+        ["Instrument title:", @instrument.title],
+        ["Version number:", @instrument.current_version_number],
+        ["\n"],
+        ["number", "qid", @instrument.language],
+        [@question.number_in_instrument, @question.question_identifier, @question.text]
+      ]
     end
   end
 end

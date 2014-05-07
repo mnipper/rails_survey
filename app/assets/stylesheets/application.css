@@ -11,10 +11,10 @@
  *= require_self
  *= require ../../../vendor/assets/lib/nvd3/src/nv.d3
  *= require ../../../vendor/assets/stylesheets/loading-bar
+ *= require ../../../vendor/assets/stylesheets/nv.d3
  *= require bootstrap-original/bootstrap
  *= require bootstrap-original/responsive
  *= require font-awesome-4.0.3/css/font-awesome.min
- *= require font-awesome/css/font-awesome.min
  *= require fontello/css/fontello
  *= require lib/bootstrap-switch
  *= require chosen

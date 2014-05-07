@@ -3,7 +3,9 @@ require 'spec_helper'
 describe "Questions API" do
   before :each do
     @api_key = create(:api_key)
-    @questions = FactoryGirl.create_list(:question, 5)
+    @project = create(:project)
+    @instrument = create(:instrument, project: @project)
+    @questions = FactoryGirl.create_list(:question, 5, instrument: @instrument)
     get "/api/v1/projects/#{@questions.first.project.id}/questions?access_token=#{@api_key.access_token}"
     @json = JSON.parse(response.body)
   end
@@ -44,7 +46,7 @@ describe "Questions API" do
 
   describe "translation text" do
     before :each do
-      @translation = create(:question_translation)
+      @translation = create(:question_translation, question: @questions.last)
       get "/api/v1/projects/#{@questions.first.project.id}/questions?access_token=#{@api_key.access_token}"
       @json = JSON.parse(response.body)
     end

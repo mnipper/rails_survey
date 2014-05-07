@@ -8,13 +8,14 @@ describe "Surveys API" do
     @api_key = FactoryGirl.create(:api_key)
   end
 
-  it 'returns a successful response if survey is invalid' do
+  it 'returns a successful response if survey is valid' do
     post "/api/v1/projects/#{@instrument.project.id}/surveys?access_token=#{@api_key.access_token}",
       survey:
         {
           'instrument_id' => @instrument.id,
           'instrument_version_number' => 0,
-          'device_identifier' => @device.identifier, 
+          'device_uuid' => @survey.uuid, 
+          'device_label' => 'label',
           'uuid' => @survey.uuid
         }
     expect(response).to be_success
@@ -36,7 +37,7 @@ describe "Surveys API" do
       survey:
         {
           'instrument_version_number' => 0,
-          'device_identifier' => @device.identifier, 
+          'device_uuid' => @device.identifier, 
           'uuid' => @survey.uuid
         }
     expect(response).to_not be_success
@@ -48,7 +49,7 @@ describe "Surveys API" do
         {
           'instrument_id' => @instrument.id,
           'instrument_version_number' => 0,
-          'device_identifier' => @device.identifier, 
+          'device_uuid' => @device.identifier, 
         }
     expect(response).to_not be_success
   end
@@ -58,7 +59,7 @@ describe "Surveys API" do
       survey:
         {
           'instrument_id' => @instrument.id,
-          'device_identifier' => @device.identifier, 
+          'device_uuid' => @device.identifier, 
           'uuid' => @survey.uuid
         }
     expect(response).to_not be_success
@@ -74,7 +75,7 @@ describe "Surveys API" do
         {
           'instrument_id' => @instrument.id,
           'instrument_version_number' => 0,
-          'device_identifier' => @device.identifier,
+          'device_uuid' => @device.identifier,
           'uuid' => @survey.uuid
         }
     expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:unauthorized])
@@ -87,7 +88,7 @@ describe "Surveys API" do
         {
           'instrument_id' => @instrument.id,
           'instrument_version_number' => 0,
-          'device_identifier' => @device.identifier,
+          'device_uuid' => @device.identifier,
           'uuid' => @survey.uuid
         }
     expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:upgrade_required])
@@ -100,7 +101,7 @@ describe "Surveys API" do
         {
           'instrument_id' => @instrument.id,
           'instrument_version_number' => 0,
-          'device_identifier' => @device.identifier,
+          'device_uuid' => @device.identifier,
           'uuid' => @survey.uuid
         }
     expect(response).to be_success

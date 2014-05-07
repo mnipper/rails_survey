@@ -1,16 +1,38 @@
 # MINIMUM ANDROID VERSION ALLOWED
-minimum_android_version_code: 1
+minimum_android_version_code: 2
 
-#PENDING QUESTION TYPES: FRONT_PIcTURE, REAR_PICTURE
-question_types: ['SELECT_ONE', 'SELECT_MULTIPLE', 'SELECT_ONE_WRITE_OTHER',
+question_types: 
+        ['SELECT_ONE', 'SELECT_MULTIPLE', 'SELECT_ONE_WRITE_OTHER',
         'SELECT_MULTIPLE_WRITE_OTHER', 'FREE_RESPONSE', 'SLIDER', 'DATE', 
         'RATING', 'TIME', 'LIST_OF_TEXT_BOXES', 'INTEGER', 'EMAIL_ADDRESS',
-        'DECIMAL_NUMBER', 'INSTRUCTIONS', 'MONTH_AND_YEAR', 'YEAR']
-question_with_options: ['SELECT_ONE', 'SELECT_MULTIPLE', 'SELECT_ONE_WRITE_OTHER',
-        'SELECT_MULTIPLE_WRITE_OTHER', 'LIST_OF_TEXT_BOXES']
+        'DECIMAL_NUMBER', 'INSTRUCTIONS', 'MONTH_AND_YEAR', 'YEAR', 
+        'PHONE_NUMBER', 'ADDRESS', 'REAR_PICTURE', 'FRONT_PICTURE',
+        'SELECT_ONE_IMAGE', 'SELECT_MULTIPLE_IMAGE']
+
+question_with_options: ['SELECT_ONE', 'SELECT_MULTIPLE', 'SELECT_ONE_WRITE_OTHER', 'SELECT_MULTIPLE_WRITE_OTHER', 'LIST_OF_TEXT_BOXES']
+question_with_images: ['SELECT_ONE_IMAGE', 'SELECT_MULTIPLE_IMAGE']
+question_with_other: ['SELECT_ONE_WRITE_OTHER', 'SELECT_MULTIPLE_WRITE_OTHER']
+
+# List delimiter for options
+list_delimiter: ','
+
+# Delimiter for items in option dictionary
+dictionary_delimiter: ';'
 
 # ISO 639-1 codes of supported languages
-languages: ['en', 'es', 'km', 'ar', 'te', 'sw', 'am']
+languages: [
+             ['English', 'en'],
+             ['Amharic', 'am'],
+             ['Arabic', 'ar'],
+             ['Khmer', 'km'],
+             ['Spanish', 'es'],
+             ['Swahili', 'sw'],
+             ['Telugu', 'te']
+          ]
+
+# Special Responses
+special_responses: ['SKIP', 'NA', 'RF', 'DK']
+
 right_align_languages: ['ar']
 
 exception_notifications:

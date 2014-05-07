@@ -4,16 +4,14 @@
   <div class="body">
     <ol class="questions">
       <% @instrument_version.questions.each do |question| %>
-        <% next unless @version.versioned(question) %>
         <li>
-          <%= @version.versioned(question).text %> <br />
-          <span class="label label-info"><%= @version.versioned(question).question_type %></span>
-          <% if @version.versioned(question).has_options? %>
+          <%= question.text %> <br />
+          <span class="label label-info"><%= question.question_type %></span>
+          <% if question.has_options? %>
             <br />Options:
             <ol class="options" start="0">
-              <% @version.versioned(question).options.each do |option| %>
-                <% next unless @version.versioned(option) %>
-                <li><%= @version.versioned(option).text %></li>
+              <% question.options.each do |option| %>
+                <li><%= option.text %></li>
               <% end %>
             </ol>
           <% end %>

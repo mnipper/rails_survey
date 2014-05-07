@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140131222407) do
+ActiveRecord::Schema.define(version: 20140313161034) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -56,6 +56,19 @@ ActiveRecord::Schema.define(version: 20140131222407) do
     t.string   "identifier"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "label"
+  end
+
+  add_index "devices", ["identifier"], name: "index_devices_on_identifier", unique: true
+
+  create_table "images", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.integer  "question_id"
   end
 
   create_table "instrument_translations", force: true do |t|
@@ -82,7 +95,7 @@ ActiveRecord::Schema.define(version: 20140131222407) do
 
   create_table "option_translations", force: true do |t|
     t.integer  "option_id"
-    t.string   "text"
+    t.text     "text"
     t.string   "language"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -90,7 +103,7 @@ ActiveRecord::Schema.define(version: 20140131222407) do
 
   create_table "options", force: true do |t|
     t.integer  "question_id"
-    t.string   "text"
+    t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "next_question"
@@ -115,14 +128,14 @@ ActiveRecord::Schema.define(version: 20140131222407) do
   create_table "question_translations", force: true do |t|
     t.integer  "question_id"
     t.string   "language"
-    t.string   "text"
+    t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "reg_ex_validation_message"
   end
 
   create_table "questions", force: true do |t|
-    t.string   "text"
+    t.text     "text"
     t.string   "question_type"
     t.string   "question_identifier"
     t.integer  "instrument_id"
@@ -134,11 +147,24 @@ ActiveRecord::Schema.define(version: 20140131222407) do
     t.string   "reg_ex_validation_message"
     t.datetime "deleted_at"
     t.integer  "follow_up_position",               default: 0
+    t.boolean  "identifies_survey",                default: false
+  end
+
+  add_index "questions", ["question_identifier"], name: "index_questions_on_question_identifier", unique: true
+
+  create_table "response_images", force: true do |t|
+    t.string   "response_uuid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
   end
 
   create_table "responses", force: true do |t|
     t.integer  "question_id"
-    t.string   "text"
+    t.text     "text"
     t.string   "other_response"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -147,12 +173,24 @@ ActiveRecord::Schema.define(version: 20140131222407) do
     t.datetime "time_started"
     t.datetime "time_ended"
     t.string   "question_identifier"
+<<<<<<< HEAD
   end
 
+=======
+    t.string   "uuid"
+  end
+
+  add_index "responses", ["uuid"], name: "index_responses_on_uuid"
+
+>>>>>>> 298b47b660e3806d4983eff2320157e69aaf2e2a
   create_table "roles", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+<<<<<<< HEAD
+=======
+    t.integer  "user_id"
+>>>>>>> 298b47b660e3806d4983eff2320157e69aaf2e2a
   end
 
   create_table "surveys", force: true do |t|

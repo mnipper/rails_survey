@@ -14,6 +14,8 @@
 #  number_in_instrument             :integer
 #  reg_ex_validation_message        :string(255)
 #  follow_up_position               :integer          default(0)
+#  deleted_at                       :datetime
+#  identifies_survey                :boolean          default(FALSE)
 #
 
 require "spec_helper"
@@ -86,16 +88,4 @@ describe Question do
     new_count = @question.instrument.versions.count
     new_count.should == old_count + 1
   end
-
-  it "should return current question", versioning: true do
-    @question.update_attributes!(text: 'swali')
-    @question.version_at_time(0, @question.updated_at).should == @question
-  end
-
-  it "should return previous version", versioning: true do
-    @question.update_attributes!(text: 'swali')
-    @question.update_attributes!(text: 'tena')
-    @question.version_at_time(1, @question.updated_at).should == @question.versions[1].reify
-  end
-
 end

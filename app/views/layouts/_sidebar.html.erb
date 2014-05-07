@@ -27,22 +27,22 @@
           <% end %>
         </li>
 
-        <li class="<%= current_page?(realtime_path) ? 'active' : 'panel' %>">
-          <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#side-nav" href="#stats-collapse"><i class="icon-bar-chart"></i> <span class="name">Statistics</span></a>
-          <ul id="stats-collapse" class="panel-collapse collapse">
-            <!-- <li><%#= link_to 'Charts', bars_path %> </li> -->
-            <li><%= link_to 'Realtime', realtime_path %> </li>
-          </ul>
-        </li>
-
         <li class="<%= current_page?(project_notifications_path(current_project)) ? 'active' : 'panel' %>">
           <%= link_to project_notifications_path(current_project) do %>
               <i class="icon-bell-alt"></i><span class="name">Notifications</span>
           <% end %>
         </li>
+        
+        <li class="<%= current_page?(project_graphs_daily_path(current_project)) ? 'active' : 'panel' %>">
+           <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#side-nav" href="#stats-collapse"><i class="icon-bar-chart"></i> <span class="name">Statistics</span></a>
+           <ul id="stats-collapse" class="panel-collapse collapse">
+             <li><%= link_to 'Response Charts', project_graphs_daily_path(current_project) %> </li>
+             <li><%= link_to 'Realtime Charts', project_graphs_path(current_project) %></li>
+           </ul>
+        </li>
 
         <li class="<%= current_page?(project_responses_path(current_project)) ? 'active' : 'panel' %>">
-          <%= link_to project_responses_path(current_project, format: :csv) do %>
+          <%= link_to project_responses_path(current_project) do %>
               <i class="icon-download"></i><span class="name">Export</span>
           <% end %>
         </li>

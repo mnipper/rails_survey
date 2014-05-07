@@ -9,6 +9,7 @@
 #  updated_at         :datetime
 #  next_question      :string(255)
 #  number_in_question :integer
+#  deleted_at         :datetime
 #
 
 require "spec_helper"
@@ -59,12 +60,5 @@ describe Option do
       option.text = "edited"
       option.versions.count.should == 1
     end
-
-    it "should return correct version" do
-      option = create(:option)
-      option.text = "edited"
-      option.version_at_time(option.updated_at).should == option
-    end
   end
-
 end

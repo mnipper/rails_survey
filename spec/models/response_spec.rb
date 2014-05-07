@@ -2,16 +2,17 @@
 #
 # Table name: responses
 #
-#  id               :integer          not null, primary key
-#  question_id      :integer
-#  text             :string(255)
-#  other_response   :string(255)
-#  created_at       :datetime
-#  updated_at       :datetime
-#  survey_uuid      :string(255)
-#  special_response :string(255)
-#  time_started     :datetime
-#  time_ended       :datetime
+#  id                  :integer          not null, primary key
+#  question_id         :integer
+#  text                :text
+#  other_response      :string(255)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  survey_uuid         :string(255)
+#  special_response    :string(255)
+#  time_started        :datetime
+#  time_ended          :datetime
+#  question_identifier :string(255)
 #
 
 require "spec_helper"
@@ -50,22 +51,30 @@ describe Response do
       Response.export(out)
       out.should == [
         ["qid",
+          "short_qid",
           "instrument_id",
           "instrument_version_number",
           "instrument_title",
           "survey_uuid",
           "device_id",
+          "question_type",
+          "question_text",
           "response",
+          "response_labels",
           "special_response",
           "other_response"
         ],
-        [@response.question.question_identifier,
+        [@response.question_identifier,
+          "q_#{@response.question_id}",
           @response.instrument.id,
           1,
-          @response.instrument.title,
+          @response.survey.instrument_title,
           @response.survey.uuid,
-          @response.survey.device.identifier,
+          @response.survey.device_uuid,
+          @response.question.question_type,
+          @response.versioned_question.try(:text),
           "a",
+          @response.option_labels,
           "SKIP",
           'other']
         ]
@@ -83,19 +92,4 @@ describe Response do
       end
     end
   end
-
-  describe "versioned response", versioning: true do
-    before :each do
-      @test_response = create(:response)
-    end
-
-    it "should return text" do
-      @test_response.versioned_response.should == @test_response.text
-    end
-
-    it "should return versioned option text" do
-      @test_response.versioned_response.should == 'a' #TODO fix/understand factory associations
-    end
-  end
-
 end

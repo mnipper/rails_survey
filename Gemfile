@@ -52,35 +52,33 @@ gem 'paper_trail', '>= 3.0.0.rc2'
 
 group :test do
   gem 'rspec-rails', '~> 2.0'
+  gem 'rspec-mocks'
   gem "factory_girl_rails", "~> 4.0"
   gem 'database_cleaner', '~> 1.0'
   gem 'capybara'
   gem 'selenium-webdriver', '~> 2.39'
 end
 
-# Simple statistics
-gem 'descriptive-statistics'
-
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
 # Use unicorn as the app server
 # gem 'unicorn'
 
 # Use Capistrano for deployment
-# gem 'capistrano', group: :development
-
-# Use debugger
-gem 'debugger', group: [:development]
+gem 'capistrano', group: :development
 gem 'exception_notification'
-# Use sqlite3 as the database for development and test
 gem 'sqlite3', group: [:development, :test]
 gem 'chosen-rails'
+gem 'activeadmin', github: 'gregbell/active_admin'
+gem 'paranoia', '~> 2.0'
+gem 'groupdate', github: 'mieko/groupdate', :branch => 'sqlite3'
+gem 'paperclip', '~> 4.1.0'
+gem "redis", "~> 3.0.7"
 
 group :production do
   gem 'rails_12factor'
 end
 
-#active admin
-gem 'activeadmin', github: 'gregbell/active_admin'
-
+group :development do
+  gem 'debugger', group: [:development]
+  gem 'better_errors'
+  gem 'binding_of_caller'
+end
