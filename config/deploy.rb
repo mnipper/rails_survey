@@ -2,6 +2,7 @@
 lock '3.2.1'
 
 set :application, 'rails_survey' 
+set :deploy_user, 'dmtg'
 set :repo_url, 'git@github.com:mnipper/rails_survey.git'
 set :deploy_to, '/var/www/rails_survey'
 set :scm, :git
