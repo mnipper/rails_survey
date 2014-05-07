@@ -3,18 +3,17 @@ lock '3.2.1'
 
 set :application, 'rails_survey' 
 set :deploy_user, 'dmtg'
+set :scm, :git 
 set :repo_url, 'git@github.com:mnipper/rails_survey.git'
-set :deploy_to, '/var/www/rails_survey'
-set :scm, :git
-set :branch, :master
-set :user, 'dmtg'
+#set :branch, :master
+#set :user, 'dmtg'
 set :use_sudo, false
 set :rails_env, 'production'
 set :deploy_via, :copy
 set :ssh_options, { :forward_agent => true, :port => 2222 }
 set :keep_releases, 5
-server 'wci-chpir.duke.edu', user: 'dmtg', port: 2222, roles: %w{web, app, db}, primary:true
-set :server_name, 'wci-chpir.duke.edu'
+#server 'wci-chpir.duke.edu', user: 'dmtg', port: 2222, roles: %w{web, app, db}, primary:true
+#set :server_name, 'wci-chpir.duke.edu'
 
 
 # Default branch is :master
