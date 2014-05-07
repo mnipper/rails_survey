@@ -12,7 +12,8 @@ set :rails_env, 'production'
 set :deploy_via, :copy
 set :ssh_options, { :forward_agent => true, :port => 2222 }
 set :keep_releases, 5
-server 'wci-chpir.duke.edu', user: 'dmtg', port: 2222, roles: %w{web, app, db}
+server 'wci-chpir.duke.edu', user: 'dmtg', port: 2222, roles: %w{web, app, db}, primary:true
+set :server_name, 'wci-chpir.duke.edu'
 
 
 # Default branch is :master
