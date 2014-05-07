@@ -1,8 +1,19 @@
 # config valid only for Capistrano 3.1
 lock '3.2.1'
 
-set :application, 'my_app_name'
-set :repo_url, 'git@example.com:me/my_repo.git'
+set :application, 'rails_survey' 
+set :repo_url, 'git@github.com:mnipper/rails_survey.git'
+set :deploy_to, '/var/www/rails_survey'
+set :scm, :git
+set :branch, :master
+set :user, 'dmtg'
+set :use_sudo, false
+set :rails_env, 'production'
+set :deploy_via, :copy
+set :ssh_options, { :forward_agent => true, :port => 2222 }
+set :keep_releases, 5
+server 'wci-chpir.duke.edu', user: 'dmtg', port: 2222, roles: %w{web, app, db}
+
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
