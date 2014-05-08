@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140313161034) do
+ActiveRecord::Schema.define(version: 20140409191548) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 20140313161034) do
     t.integer  "project_id"
     t.boolean  "published"
     t.datetime "deleted_at"
+    t.boolean  "show_instructions",       default: false
   end
 
   create_table "option_translations", force: true do |t|
@@ -148,9 +149,22 @@ ActiveRecord::Schema.define(version: 20140313161034) do
     t.datetime "deleted_at"
     t.integer  "follow_up_position",               default: 0
     t.boolean  "identifies_survey",                default: false
+    t.text     "instructions",                     default: ""
   end
 
   add_index "questions", ["question_identifier"], name: "index_questions_on_question_identifier", unique: true
+
+  create_table "response_exports", force: true do |t|
+    t.string   "download_url"
+    t.boolean  "done",                  default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "project_id"
+    t.integer  "instrument_id"
+    t.string   "spss_syntax_file_url"
+    t.string   "spss_friendly_csv_url"
+    t.string   "value_labels_csv"
+  end
 
   create_table "response_images", force: true do |t|
     t.string   "response_uuid"
@@ -160,6 +174,14 @@ ActiveRecord::Schema.define(version: 20140313161034) do
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
+  end
+
+  create_table "response_images_exports", force: true do |t|
+    t.integer  "response_export_id"
+    t.string   "download_url"
+    t.boolean  "done",               default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "responses", force: true do |t|
@@ -173,24 +195,17 @@ ActiveRecord::Schema.define(version: 20140313161034) do
     t.datetime "time_started"
     t.datetime "time_ended"
     t.string   "question_identifier"
-<<<<<<< HEAD
-  end
-
-=======
     t.string   "uuid"
   end
 
   add_index "responses", ["uuid"], name: "index_responses_on_uuid"
 
->>>>>>> 298b47b660e3806d4983eff2320157e69aaf2e2a
-  create_table "roles", force: true do |t|
-    t.string   "name"
+  create_table "sections", force: true do |t|
+    t.string   "title"
+    t.string   "start_question_identifier"
     t.datetime "created_at"
     t.datetime "updated_at"
-<<<<<<< HEAD
-=======
-    t.integer  "user_id"
->>>>>>> 298b47b660e3806d4983eff2320157e69aaf2e2a
+    t.integer  "instrument_id"
   end
 
   create_table "surveys", force: true do |t|
@@ -215,14 +230,6 @@ ActiveRecord::Schema.define(version: 20140313161034) do
     t.datetime "updated_at"
   end
 
-  create_table "user_roles", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "role_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "project_id"
-  end
-
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -237,6 +244,7 @@ ActiveRecord::Schema.define(version: 20140313161034) do
     t.string   "authentication_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "roles_mask"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true
