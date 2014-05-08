@@ -1,4 +1,5 @@
 ActiveAdmin.register Project do
+  menu priority: 4
 
   index do
     column "Name" do |text|
