@@ -14,11 +14,7 @@ class ApplicationController < ActionController::Base
   end
   
   def after_update_path_for(resource)
-    if request.fullpath == "/users/password/edit"
-      root_path
-    else
-      session[:previous_url] || root_path
-    end 
+      session[:previous_url] || root_path 
   end
 
   def respond_to_ajax
