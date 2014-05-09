@@ -23,7 +23,7 @@ namespace :deploy do
   end
   
   task :load_schema do
-    run "cd #{current_path}; rake db:schema:load"
+    run "cd #{current_path}; rake db:schema:load RAILS_ENV=#{rails_env}"
   end
   
   # compile assets locally then rsync
