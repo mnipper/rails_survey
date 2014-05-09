@@ -42,6 +42,8 @@ gem 'groupdate', github: 'mieko/groupdate', :branch => 'sqlite3'
 gem 'paperclip', '~> 4.1.0'
 gem "redis", "~> 3.0.7"
 gem 'mandrill-api', '~> 1.0.51'
+gem 'capistrano-rails', '~> 1.1.1'
+gem 'capistrano-bundler', '~> 1.1.2'
 
 group :production do
   gem 'rails_12factor'
