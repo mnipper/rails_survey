@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   end
   
   def after_update_path_for(resource)
-      session[:previous_url] || root_path 
+    session[:previous_url] || root_path 
   end
 
   def respond_to_ajax
