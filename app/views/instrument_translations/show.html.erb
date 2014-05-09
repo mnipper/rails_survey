@@ -21,7 +21,7 @@
     <% @instrument.questions.each do |question| %>
         <tr>
           <td><%= question.question_identifier %></td>
-          <td><%= question.text %></td>
+          <td><%= raw question.text %></td>
           <td><%= question.translated_for @instrument_translation.language, :text %></td>
         </tr>
         <% if question.has_options? %>

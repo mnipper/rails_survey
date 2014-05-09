@@ -5,6 +5,8 @@ module SessionsHelper
       request.fullpath != "/users/password/edit" && request.fullpath != "/users/sign_out" && 
       request.fullpath != "/admin/login"  && !request.xhr?) 
       session[:previous_url] = request.fullpath 
+    else
+      session[:previous_url] = "/"
     end
   end
 end
