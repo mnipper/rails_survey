@@ -15,7 +15,17 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 
 
 namespace :deploy do
-
+ 
+  task :cold do 
+    update
+    load_schema
+    start
+  end
+  
+  task :load_schema do
+    run "cd #{current_path}; rake db:schema:load"
+  end
+  
   # compile assets locally then rsync
   after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
   after :finishing, 'deploy:cleanup'
