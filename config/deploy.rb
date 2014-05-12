@@ -12,6 +12,7 @@ set :ssh_options, { :forward_agent => true, :port => 2222 }
 set :keep_releases, 5
 #set :linked_files, %w{config/database.yml config/application.yml}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :branch, 'master'
 
 
 namespace :deploy do
