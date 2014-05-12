@@ -39,5 +39,3 @@ exception_notifications:
   email_prefix: '[RailsSurvey] '
   sender: 'noreply@chpir.org'
   recipients: ['michael@chpir.org', 'leonard@chpir.org']
-
-secret_key_path: '../shared/secret_key.txt'
