@@ -35,7 +35,7 @@ namespace :deploy do
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       # Restarts Phusion Passenger 
-      execute :touch, release_path.join('tmp/restart.txt')
+      execute :touch, current_path.join('tmp/restart.txt')
     end
   end
 
