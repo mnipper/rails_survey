@@ -14,6 +14,16 @@ set :linked_files, %w{config/database.yml config/secret_token.txt}
 set :linked_dirs, fetch(:linked_dirs).push("bin" "log" "tmp/pids" "tmp/cache" "tmp/sockets" "vendor/bundle" "public/system")
 set :branch, 'master'
 
+namespace :assets do
+  before :backup_manifest, 'deploy:assets:create_manifest_json'
+    task :create_manifest_json do
+      on roles :web do
+        within release_path do
+          execute :mkdir, release_path.join('assets_manifest_backup')
+        end
+      end
+    end
+end
 
 namespace :deploy do
  
