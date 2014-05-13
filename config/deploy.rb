@@ -17,15 +17,23 @@ set :branch, 'master'
 
 namespace :deploy do
  
+  task :load_schema do
+    run "cd #{current_path}; rake db:schema:load RAILS_ENV=#{rails_env}"
+  end
+ 
   task :cold do 
     update
     load_schema
     start
   end
-  
-  task :load_schema do
-    run "cd #{current_path}; rake db:schema:load RAILS_ENV=#{rails_env}"
+
+  task :stop do
+    run "/usr/local/bin/forever stopall; true"
   end
+
+  task :start, :on_error => :continue do 
+    run "cd #{current_path}/node && /usr/local/bin/forever start server.js"
+  end 
   
   # compile assets locally then rsync
   after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
@@ -37,6 +45,9 @@ namespace :deploy do
       # Restarts Phusion Passenger 
       execute :touch, current_path.join('tmp/restart.txt')
     end
+    stop
+    sleep 5
+    start
   end
 
   after :publishing, :restart
