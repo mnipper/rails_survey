@@ -7,7 +7,7 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var redis = require("redis");
-server.listen(3001);
+server.listen(8080);
 var publisher = undefined;
 var INTERVAL = 3000;
 
