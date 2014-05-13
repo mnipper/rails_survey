@@ -31,7 +31,7 @@ namespace :deploy do
     run "/usr/local/bin/forever stopall; true"
   end
 
-  task :start, :on_error => :continue do 
+  task :start do 
     run "cd #{current_path}/node && /usr/local/bin/forever start server.js"
   end 
   
