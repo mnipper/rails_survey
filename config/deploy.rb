@@ -27,13 +27,19 @@ namespace :deploy do
     start
   end
 
-  task :stop do
+  task :stop_node do
     run "/usr/local/bin/forever stopall; true"
   end
 
-  task :start do 
+  task :start_node do 
     run "cd #{current_path}/node && /usr/local/bin/forever start server.js"
   end 
+  
+  task :restart_node do
+    stop_node
+    sleep 5
+    start_node
+  end
   
   # compile assets locally then rsync
   after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
@@ -45,9 +51,6 @@ namespace :deploy do
       # Restarts Phusion Passenger 
       execute :touch, current_path.join('tmp/restart.txt')
     end
-    stop
-    sleep 5
-    start
   end
 
   after :publishing, :restart
