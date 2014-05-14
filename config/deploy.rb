@@ -44,26 +44,27 @@ namespace :deploy do
     start_node
   end
   
+  desc "Start the Redis server"
+  task :start_redis do
+    run "redis-server /etc/redis.conf"
+  end
+
+  desc "Stop the Redis server"
+  task :stop_redis do
+    run 'echo "SHUTDOWN" | nc localhost 6379'
+  end
+  
   desc 'Restart passenger & apache'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       execute :touch, current_path.join('tmp/restart.txt')
+      stop_redis
+      start_redis
+      restart_node 
     end
   end
 
   after :finishing, 'deploy:cleanup'
   after :publishing, :restart
   
-end
-
-namespace :redis do
-  desc "Start the Redis server"
-  task :start do
-    run "redis-server /etc/redis.conf"
-  end
-
-  desc "Stop the Redis server"
-  task :stop do
-    run 'echo "SHUTDOWN" | nc localhost 6379'
-  end
 end
