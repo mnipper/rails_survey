@@ -56,9 +56,15 @@ namespace :deploy do
   
   desc 'Restart Application'
   task :restart do
-    on roles(:web) do 
-      execute "echo 'SHUTDOWN' | nc localhost 6379"
-      execute "/etc/init.d/redis-server"
+    # on roles(:web) do 
+      # execute "echo 'SHUTDOWN' | nc localhost 6379"
+      # execute "/etc/init.d/redis-server"
+    # end
+    %w[start stop restart].each do |command|
+      desc "#{command} redis"
+      on roles: :web, in: :sequence, wait: 5 do
+        execute "service redis-server #{command}"
+      end
     end
     on roles(:app), in: :sequence, wait: 5 do
       execute :touch, current_path.join('tmp/restart.txt')
