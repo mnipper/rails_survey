@@ -62,7 +62,7 @@ namespace :deploy do
     # end
     %w[start stop restart].each do |command|
       desc "#{command} redis"
-      on roles: :web, in: :sequence, wait: 5 do
+      on roles(:web), in: :sequence, wait: 5 do
         execute "service redis-server #{command}"
       end
     end
