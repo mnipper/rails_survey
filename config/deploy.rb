@@ -54,14 +54,19 @@ namespace :deploy do
     execute 'echo "SHUTDOWN" | nc localhost 6379'
   end
   
-  desc 'Restart passenger & apache'
+  desc 'Restart Application'
   task :restart do
+    on roles(:web) do 
+      run "echo 'SHUTDOWN' | nc localhost 6379"
+      run "redis-server /etc/redis.conf"
+    end
     on roles(:app), in: :sequence, wait: 5 do
       execute :touch, current_path.join('tmp/restart.txt')
-      execute :stop_redis
-      execute :start_redis
-      execute :restart_node 
+      #invoke "stop_redis"
+      #invoke "start_redis"
+      #execute :restart_node 
     end
+    
   end
 
   after :finishing, 'deploy:cleanup'
