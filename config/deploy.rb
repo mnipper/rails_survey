@@ -57,8 +57,8 @@ namespace :deploy do
   desc 'Restart Application'
   task :restart do
     on roles(:web) do 
-      run "echo 'SHUTDOWN' | nc localhost 6379"
-      run "redis-server /etc/redis.conf"
+      execute "echo 'SHUTDOWN' | nc localhost 6379"
+      execute "redis-server /etc/redis.conf"
     end
     on roles(:app), in: :sequence, wait: 5 do
       execute :touch, current_path.join('tmp/restart.txt')
