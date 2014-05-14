@@ -63,7 +63,7 @@ namespace :deploy do
     %w[start stop restart].each do |command|
       desc "#{command} redis"
       on roles(:web), in: :sequence, wait: 5 do
-        execute "sudo nohup /etc/init.d/redis-server #{command}"
+        execute "sudo -p nohup /etc/init.d/redis-server #{command}"
       end
     end
     on roles(:app), in: :sequence, wait: 5 do
