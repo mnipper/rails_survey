@@ -27,11 +27,11 @@ namespace :deploy do
     start
   end
 
-  task :stop do
+  task :stop_node do
     run "/usr/local/bin/forever stopall; true"
   end
 
-  task :start do 
+  task :start_node do 
     run "cd #{current_path}/node && /usr/local/bin/forever start server.js"
   end 
   
@@ -46,8 +46,8 @@ namespace :deploy do
     on roles(:app), in: :sequence, wait: 5 do
       execute :touch, current_path.join('tmp/restart.txt')
     end
-    stop
-    start
+    stop_node
+    start_node
   end
 
   after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
