@@ -27,11 +27,6 @@ namespace :deploy do
     start
   end
 
-  # desc 'Remove old manifest json files'
-  # task :clear_manifests do 
-    # run "cd #{shared_path}; rm -rf public/assets/manifest*"
-  # end
-  
   desc 'Start Forever'
   task :stop_node do
     run "/usr/local/bin/forever stopall; true"
@@ -49,10 +44,11 @@ namespace :deploy do
     start_node
   end
   
-  desc 'Restart application'
+  desc 'Restart passenger & apache'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       execute :touch, current_path.join('tmp/restart.txt')
+      run "sudo /etc/init.d/apache2 restart"
     end
   end
 
@@ -61,10 +57,9 @@ namespace :deploy do
   after :publishing, :restart
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
+      within release_path do
+        execute :rake, 'cache:clear'
+      end
     end
   end
 
