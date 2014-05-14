@@ -27,10 +27,10 @@ namespace :deploy do
     start
   end
 
-  desc 'Remove old manifest json files'
-  task :clear_manifests do 
-    run "cd #{shared_path}; rm -rf public/assets/manifest*"
-  end
+  # desc 'Remove old manifest json files'
+  # task :clear_manifests do 
+    # run "cd #{shared_path}; rm -rf public/assets/manifest*"
+  # end
   
   desc 'Start Forever'
   task :stop_node do
