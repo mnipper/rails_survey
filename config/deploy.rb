@@ -34,7 +34,7 @@ namespace :deploy do
 
   desc 'Stop Forever'
   task :start_node do 
-    run "cd #{current_path}/node && /usr/local/bin/forever start server.js"
+    run "cd #{current_path}/node && sudo /usr/local/bin/forever start server.js 8080"
   end 
   
   desc 'Restart Forever'
@@ -54,4 +54,16 @@ namespace :deploy do
   after :finishing, 'deploy:cleanup'
   after :publishing, :restart
   
+end
+
+namespace :redis do
+  desc "Start the Redis server"
+  task :start do
+    run "redis-server /etc/redis.conf"
+  end
+
+  desc "Stop the Redis server"
+  task :stop do
+    run 'echo "SHUTDOWN" | nc localhost 6379'
+  end
 end
