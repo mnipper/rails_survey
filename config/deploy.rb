@@ -27,34 +27,32 @@ namespace :deploy do
     start
   end
 
-  task :stop_node do
+  task :stop do
     run "/usr/local/bin/forever stopall; true"
   end
 
-  task :start_node do 
+  task :start do 
     run "cd #{current_path}/node && /usr/local/bin/forever start server.js"
   end 
   
-  task :restart_node do
-    stop_node
-    sleep 5
-    start_node
-  end
-  
-  # compile assets locally then rsync
-  after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
-  after :finishing, 'deploy:cleanup'
+  # task :restart_node do
+    # stop_node
+    # sleep 5
+    # start_node
+  # end
   
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      # Restarts Phusion Passenger 
       execute :touch, current_path.join('tmp/restart.txt')
+      stop
+      start
     end
   end
 
+  after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
+  after :finishing, 'deploy:cleanup'
   after :publishing, :restart
-
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       # Here we can do anything such as:
