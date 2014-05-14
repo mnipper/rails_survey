@@ -58,9 +58,9 @@ namespace :deploy do
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       execute :touch, current_path.join('tmp/restart.txt')
-      execute stop_redis
-      execute start_redis
-      execute restart_node 
+      execute :stop_redis
+      execute :start_redis
+      execute :restart_node 
     end
   end
 
