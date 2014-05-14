@@ -45,9 +45,9 @@ namespace :deploy do
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       execute :touch, current_path.join('tmp/restart.txt')
-      stop
-      start
     end
+    stop
+    start
   end
 
   after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
