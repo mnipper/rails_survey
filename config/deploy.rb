@@ -51,7 +51,7 @@ namespace :deploy do
     end
   end
 
-  after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
+  #after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
   after :finishing, 'deploy:cleanup'
   after :publishing, :restart
   # after :restart, :clear_cache do
