@@ -5,11 +5,12 @@ set :application, 'rails_survey'
 set :deploy_user, 'dmtg'
 set :scm, :git 
 set :repo_url, 'git@github.com:mnipper/rails_survey.git'
-set :use_sudo, true
+set :use_sudo, false
 set :rails_env, 'production'
 set :deploy_via, :copy
 set :ssh_options, { :forward_agent => true, :port => 2222 }
-set :pty, true
+set :pty, false
+set :format, :pretty
 set :keep_releases, 5
 set :linked_files, %w{config/database.yml config/secret_token.txt}
 set :linked_dirs, fetch(:linked_dirs).push("bin" "log" "tmp/pids" "tmp/cache" "tmp/sockets" "vendor/bundle" "public/system")
