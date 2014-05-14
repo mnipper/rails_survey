@@ -28,32 +28,32 @@ namespace :deploy do
     start
   end
 
-  desc 'Start Forever'
-  task :stop_node do
-    execute "/usr/local/bin/forever stopall; true"
-  end
-
-  desc 'Stop Forever'
-  task :start_node do 
-    execute "cd #{current_path}/node && sudo /usr/local/bin/forever start server.js 8080"
-  end 
+  # desc 'Start Forever'
+  # task :stop_node do
+    # execute "/usr/local/bin/forever stopall; true"
+  # end
+# 
+  # desc 'Stop Forever'
+  # task :start_node do 
+    # execute "cd #{current_path}/node && sudo /usr/local/bin/forever start server.js 8080"
+  # end 
   
-  desc 'Restart Forever'
-  task :restart_node do
-    execute stop_node
-    sleep 5
-    execute start_node
-  end
+  # desc 'Restart Forever'
+  # task :restart_node do
+    # execute stop_node
+    # sleep 5
+    # execute start_node
+  # end
   
-  desc "Start the Redis server"
-  task :start_redis do
-    execute "redis-server /etc/redis.conf"
-  end
+  # desc "Start the Redis server"
+  # task :start_redis do
+    # execute "redis-server /etc/redis.conf"
+  # end
 
-  desc "Stop the Redis server"
-  task :stop_redis do
-    execute 'echo "SHUTDOWN" | nc localhost 6379'
-  end
+  # desc "Stop the Redis server"
+  # task :stop_redis do
+    # execute 'echo "SHUTDOWN" | nc localhost 6379'
+  # end
   
   desc 'Restart Application'
   task :restart do
@@ -62,6 +62,10 @@ namespace :deploy do
       on roles(:web), in: :sequence, wait: 5 do
         execute "sudo /etc/init.d/redis-server #{command}"
       end
+    end
+    on roles(:app), in: :sequence, wait: 5 do
+      execute "/usr/local/bin/forever stopall; true"
+      execute "cd #{current_path}/node && sudo /usr/local/bin/forever start server.js"
     end
     on roles(:app), in: :sequence, wait: 5 do
       execute :touch, current_path.join('tmp/restart.txt')
