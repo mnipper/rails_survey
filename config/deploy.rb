@@ -27,27 +27,33 @@ namespace :deploy do
     start
   end
 
+  desc 'Remove old manifest json files'
+  task :clear_manifests do 
+    run "cd #{shared_path}; rm -rf public/assets/manifest*"
+  end
+  
+  desc 'Start Forever'
   task :stop_node do
     run "/usr/local/bin/forever stopall; true"
   end
 
+  desc 'Stop Forever'
   task :start_node do 
     run "cd #{current_path}/node && /usr/local/bin/forever start server.js"
   end 
   
-  # task :restart_node do
-    # stop_node
-    # sleep 5
-    # start_node
-  # end
+  desc 'Restart Forever'
+  task :restart_node do
+    stop_node
+    sleep 5
+    start_node
+  end
   
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       execute :touch, current_path.join('tmp/restart.txt')
     end
-    stop_node
-    start_node
   end
 
   after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
