@@ -18,7 +18,7 @@ set :branch, 'master'
 namespace :deploy do
  
   task :load_schema do
-    run "cd #{current_path}; rake db:schema:load RAILS_ENV=#{rails_env}"
+    execute "cd #{current_path}; rake db:schema:load RAILS_ENV=#{rails_env}"
   end
  
   task :cold do 
@@ -29,42 +29,43 @@ namespace :deploy do
 
   desc 'Start Forever'
   task :stop_node do
-    run "/usr/local/bin/forever stopall; true"
+    execute "/usr/local/bin/forever stopall; true"
   end
 
   desc 'Stop Forever'
   task :start_node do 
-    run "cd #{current_path}/node && sudo /usr/local/bin/forever start server.js 8080"
+    execute "cd #{current_path}/node && sudo /usr/local/bin/forever start server.js 8080"
   end 
   
   desc 'Restart Forever'
   task :restart_node do
-    stop_node
+    execute stop_node
     sleep 5
-    start_node
+    execute start_node
   end
   
   desc "Start the Redis server"
   task :start_redis do
-    run "redis-server /etc/redis.conf"
+    execute "redis-server /etc/redis.conf"
   end
 
   desc "Stop the Redis server"
   task :stop_redis do
-    run 'echo "SHUTDOWN" | nc localhost 6379'
+    execute 'echo "SHUTDOWN" | nc localhost 6379'
   end
   
   desc 'Restart passenger & apache'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       execute :touch, current_path.join('tmp/restart.txt')
-      stop_redis
-      start_redis
-      restart_node 
+      execute stop_redis
+      execute start_redis
+      execute restart_node 
     end
   end
 
   after :finishing, 'deploy:cleanup'
-  after :publishing, :restart
+  #after :publishing, :restart
+  after 'deploy:publishing', 'deploy:restart'
   
 end
