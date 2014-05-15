@@ -52,7 +52,7 @@ namespace :deploy do
     end 
   end
     
-  after :finishing, 'deploy:cleanup'
+  after :finishing, 'sudo deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
   after "deploy:updated", "deploy:npm_install"
   

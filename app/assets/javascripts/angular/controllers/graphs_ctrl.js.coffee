@@ -27,9 +27,7 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
       for key, value of result[0]  
         if key[0] != '$'
           array.push {time: key, data: value}
-      console.log array
       $scope.hourData = array
-      console.log $scope.hourData 
       $scope.refreshPage()
     )
     
