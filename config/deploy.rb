@@ -52,6 +52,6 @@ namespace :deploy do
     
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
-  after "deploy:update_code", "deploy:npm_install"
+  after "deploy:updated", "deploy:npm_install"
   
 end
