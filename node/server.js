@@ -4,7 +4,7 @@ var sockjs  = require('sockjs');
 var express = require('express');
 var app = express();
 
-var server = require('http').createServer(app);
+var server = require('https').createServer(app);
 var io = require('socket.io').listen(server);
 var redis = require("redis");
 server.listen(8080);
