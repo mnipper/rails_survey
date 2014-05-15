@@ -36,8 +36,9 @@ namespace :deploy do
     end
     desc "restart node"
     on roles(:app), in: :sequence, wait: 5 do
-      execute "/usr/local/bin/forever stopall; true"
-      execute "cd #{current_path}/node && sudo /usr/local/bin/forever start server.js"
+      #execute "/usr/local/bin/forever stopall; true"
+      #execute "cd #{current_path}/node && sudo /usr/local/bin/forever start server.js"
+      execute "sudo restart realtime-app || sudo start realtime-app"
     end
     desc "restart phusion passenger"
     on roles(:app), in: :sequence, wait: 5 do
@@ -45,7 +46,12 @@ namespace :deploy do
     end  
   end
 
+  task :npm_install, :roles => :app do
+    execute "cd #{release_path}/node && npm install"
+  end
+    
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
+  after "deploy:update_code", "deploy:npm_install"
   
 end
