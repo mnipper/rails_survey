@@ -46,7 +46,7 @@ namespace :deploy do
 
   task :npm_install do
     on roles(:app) do
-      execute "cd #{release_path}/node && npm install"
+      execute "cd #{current_path}/node && npm install"
     end 
   end
     
