@@ -12,7 +12,7 @@ set :ssh_options, { :forward_agent => true, :port => 2222 }
 set :pty, false
 set :format, :pretty
 set :keep_releases, 5
-set :linked_files, %w{config/database.yml config/secret_token.txt config/local_env.yml config/wci-chpir_duke_edu-private.key config/wci-chpir_duke_edu.cer}
+set :linked_files, %w{config/database.yml config/secret_token.txt config/local_env.yml}
 set :linked_dirs, fetch(:linked_dirs).push("bin" "log" "tmp/pids" "tmp/cache" "tmp/sockets" "vendor/bundle" "public/system")
 set :branch, 'master'
 
