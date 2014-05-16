@@ -3,7 +3,8 @@ process.title = 'realtime-app';
 var sockjs  = require('sockjs');
 var express = require('express');
 var app = express();
-var https = require('https');
+var http = require('http');
+//var https = require('https');
 //var fs = require('fs');
 //var options = {
 //	    key:    fs.readFileSync('wci-chpir_duke_edu-private.key'),
@@ -11,7 +12,8 @@ var https = require('https');
 //	};
 //TODO Extract above certs
 //var server = https.createServer(options, app);
-var server = https.createServer(app);
+//var server = https.createServer(app);
+var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 var redis = require("redis");
 server.listen(8080);
