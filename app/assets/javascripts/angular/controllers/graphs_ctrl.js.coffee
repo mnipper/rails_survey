@@ -49,7 +49,8 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
         max: MAXIMUM
         differenceCount: differenceResponseCount
       } 
-    socket = io.connect('//wci-chpir.duke.edu:8080/') #TODO Extract
+    #socket = io.connect('//wci-chpir.duke.edu:8080/') #TODO Extract
+    socket = io.connect('//localhost:8080/')
     socket.on "message", (data) ->
       data = JSON.parse(data)
       if data.count != 0

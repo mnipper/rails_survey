@@ -36,8 +36,8 @@ namespace :deploy do
     end
     desc "restart node"
     on roles(:app), in: :sequence, wait: 5 do
-      execute "sudo cp /etc/httpd/conf/ssl.crt/wci-chpir_duke_edu.cer #{release_path}/node && sudo cp /etc/httpd/conf/ssl.key/wci-chpir_duke_edu-private.key #{release_path}/node"
-      execute "cd #{release_path}/node && sudo chown dmtg wci-chpir_duke_edu.cer && sudo chown dmtg wci-chpir_duke_edu-private.key"
+      #execute "sudo cp /etc/httpd/conf/ssl.crt/wci-chpir_duke_edu.cer #{release_path}/node && sudo cp /etc/httpd/conf/ssl.key/wci-chpir_duke_edu-private.key #{release_path}/node"
+      #execute "cd #{release_path}/node && sudo chown dmtg wci-chpir_duke_edu.cer && sudo chown dmtg wci-chpir_duke_edu-private.key"
       execute "sudo restart realtime-app || sudo start realtime-app"
     end
     desc "restart phusion passenger"
