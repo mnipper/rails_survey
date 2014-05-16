@@ -9,7 +9,6 @@ var options = {
 	    key:    fs.readFileSync('/etc/httpd/conf/ssl.key/wci-chpir_duke_edu-private.key'),
 	    cert:   fs.readFileSync('/etc/httpd/conf/ssl.crt/wci-chpir_duke_edu.cer')
 	};
-TODO Extract above certs
 var server = https.createServer(options, app);
 var server = https.createServer(app);
 var io = require('socket.io').listen(server);
