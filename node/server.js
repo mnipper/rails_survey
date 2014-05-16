@@ -6,8 +6,8 @@ var app = express();
 var https = require('https');
 var fs = require('fs');
 var options = {
-	    key:    fs.readFileSync('/etc/httpd/conf/ssl.key/wci-chpir_duke_edu-private.key'),
-	    cert:   fs.readFileSync('/etc/httpd/conf/ssl.crt/wci-chpir_duke_edu.cer')
+	    key:    fs.readFileSync('/etc/httpd/conf/ssl.key/wci-chpir_duke_edu-private.key', 'utf8'),
+	    cert:   fs.readFileSync('/etc/httpd/conf/ssl.crt/wci-chpir_duke_edu.cer', 'utf8')
 	};
 var server = https.createServer(options, app);
 var server = https.createServer(app);
