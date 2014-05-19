@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140331141415) do
+ActiveRecord::Schema.define(version: 20140409191548) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -156,11 +156,14 @@ ActiveRecord::Schema.define(version: 20140331141415) do
 
   create_table "response_exports", force: true do |t|
     t.string   "download_url"
-    t.boolean  "done",          default: false
+    t.boolean  "done",                  default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "project_id"
     t.integer  "instrument_id"
+    t.string   "spss_syntax_file_url"
+    t.string   "spss_friendly_csv_url"
+    t.string   "value_labels_csv"
   end
 
   create_table "response_images", force: true do |t|
@@ -196,6 +199,14 @@ ActiveRecord::Schema.define(version: 20140331141415) do
   end
 
   add_index "responses", ["uuid"], name: "index_responses_on_uuid"
+
+  create_table "sections", force: true do |t|
+    t.string   "title"
+    t.string   "start_question_identifier"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "instrument_id"
+  end
 
   create_table "surveys", force: true do |t|
     t.integer  "instrument_id"

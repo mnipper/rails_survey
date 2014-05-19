@@ -47,7 +47,6 @@ class Response < ActiveRecord::Base
     CSV.open(csv_file, "wb") do |csv|
       export(csv)
     end
-    csv_file.close 
     csv_file 
   end
 
@@ -61,6 +60,108 @@ class Response < ActiveRecord::Base
         response.survey.device_uuid, response.versioned_question.try(:question_type), 
         response.versioned_question.try(:text), response.text, response.option_labels,
         response.special_response, response.other_response]
+    end
+  end
+  
+  def self.to_spss_friendly_csv
+    root = Rails.root.join('public', 'exports').to_s
+    csv_file = File.new(root + "/spss#{Time.now.to_i}.csv", "a+")
+    CSV.open(csv_file, "wb") do |csv|
+      spss_export(csv)
+    end
+    csv_file
+  end
+  
+  def self.spss_export(format)
+    qids = []
+    surveys = []
+    all.each do |response|
+      unless qids.include? response.question_identifier
+        qids << response.question_identifier
+      end
+      unless surveys.include? response.survey
+        surveys << response.survey
+      end
+    end
+    format << qids 
+    surveys.each do |survey|
+      responses = []
+      survey.responses.each do |response|
+        responses << response.text.gsub(/,/, ';')
+      end
+      format << responses 
+    end
+  end
+  
+  def self.spss_label_values
+    root = Rails.root.join('public', 'exports').to_s
+    spss_file = File.new(root + "/#{Time.now.to_i}.sps", "a+")
+    File.open(spss_file, "a+") do |file|
+      write_variable_labels(file)
+      write_value_labels(file)
+    end
+    spss_file 
+  end
+  
+  def self.write_variable_labels(file)
+    file.puts "VARIABLE LABELS"  
+    qids = []
+    all.each do |response|
+      unless qids.include? response.question_identifier
+        response_text = response.versioned_question.text.gsub(/'/, '"')
+        if response.question.id == response.instrument.questions.last.id
+          file.puts "#{response.question_identifier} '#{response_text}'."
+        else
+          file.puts "#{response.question_identifier} '#{response_text}'"
+        end 
+        qids << response.question_identifier 
+      end 
+    end
+  end
+  
+  def self.write_value_labels(file)
+    qids = []
+    all.each do |response|
+      if Settings.question_with_options.include? response.versioned_question.try(:question_type) 
+        unless qids.include? response.question_identifier
+          file.puts "VALUE LABELS" 
+          file.puts response.question_identifier 
+          qids << response.question_identifier 
+          options = response.versioned_question.options
+          options.each do |option_index|
+            option_text = (response.versioned_question.options[options.index(option_index)].to_s).gsub(/'/, '"')
+            if option_index == options.last
+              file.puts "#{options.index(option_index)} '#{option_text}'."
+            else
+              file.puts "#{options.index(option_index)} '#{option_text}'" 
+            end 
+          end 
+        end 
+      end
+    end
+    file.puts "EXECUTE." 
+  end
+  
+  def self.value_labels_csv
+    root = Rails.root.join('public', 'exports').to_s
+    csv_file = File.new(root + "/#{Time.now.to_i}value_labels.csv", "a+")
+    CSV.open(csv_file, "wb") do |csv|
+      export_value_labels(csv)
+    end
+    csv_file
+  end
+  
+  def self.export_value_labels(format)
+    format << ['variable_identifier', 'variable_type', 'variable_label', 'value_label', 'label_type']
+    questions = all.first.instrument.questions #TODO demeter law violation  
+    questions.each do |question|
+      if question.has_options?
+        question.options.each do |option|
+          format << [question.question_identifier, question.question_type, option.text, question.options.index(option), 'value label']
+        end 
+      else
+        format << [question.question_identifier, question.question_type, question.text, '', 'question label']
+      end 
     end
   end
 

@@ -1,0 +1,30 @@
+<h1> Instrument Sections </h1>
+
+<section class="widget">
+<div class="body">
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Start question identifier</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sections.each do |section| %>
+      <tr>
+        <td><%= section.title %></td>
+        <td><%= section.start_question_identifier %></td>
+        <td><%= link_to 'Edit',  edit_project_instrument_section_path(current_project, @instrument, section) %></td>
+        <td><%= link_to 'Destroy', project_instrument_section_path(current_project, @instrument, section), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<%= link_to new_project_instrument_section_path(current_project, @instrument), class: 'btn btn-primary' do %>
+    <i class="icon-list"></i> Add Section
+<% end %>
+</section>

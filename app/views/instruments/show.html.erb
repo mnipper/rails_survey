@@ -15,6 +15,9 @@
       <%= link_to edit_project_instrument_path(@project, @instrument), class: 'btn btn-primary' do %>
         <i class="icon-edit"></i> Edit Instrument 
       <% end %>
+      <%= link_to project_instrument_sections_path(@project, @instrument), class: 'btn btn-primary' do %>
+        <i class="icon-list"></i> Sections
+      <% end %>
     </div>
   </header>
   <div class="body">

@@ -12,6 +12,7 @@ question_types:
 question_with_options: ['SELECT_ONE', 'SELECT_MULTIPLE', 'SELECT_ONE_WRITE_OTHER', 'SELECT_MULTIPLE_WRITE_OTHER', 'LIST_OF_TEXT_BOXES']
 question_with_images: ['SELECT_ONE_IMAGE', 'SELECT_MULTIPLE_IMAGE']
 question_with_other: ['SELECT_ONE_WRITE_OTHER', 'SELECT_MULTIPLE_WRITE_OTHER']
+question_with_select_multiple: ['SELECT_MULTIPLE', 'SELECT_MULTIPLE_WRITE_OTHER', 'SELECT_MULTIPLE_IMAGE']
 
 # List delimiter for options
 list_delimiter: ','

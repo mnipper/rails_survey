@@ -25,6 +25,7 @@ class Project < ActiveRecord::Base
   has_many :questions, through: :instruments
   has_many :images, through: :questions
   has_many :options, through: :questions
+  has_many :sections, through: :instruments 
   
   validates :name, presence: true, allow_blank: false
   validates :description, presence: true, allow_blank: true
@@ -34,11 +35,7 @@ class Project < ActiveRecord::Base
   end
 
   def instrument_response_exports
-    ids = []  #TODO clean up
-    instruments.each do |inst|
-      ids << inst.id  
-    end
-    ResponseExport.find_all_by_instrument_id(ids)
+    ResponseExport.find_all_by_instrument_id(instrument_ids).sort { |x,y| y.created_at <=> x.created_at }
   end
 
   def daily_response_count 

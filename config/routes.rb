@@ -28,6 +28,7 @@ RailsSurvey::Application.routes.draw do
         resources :surveys, only: [:create]
         resources :responses, only: [:create]
         resources :response_images, only: [:create]
+        resources :sections, only: [:index, :show]
       end
     end
   end
@@ -37,6 +38,7 @@ RailsSurvey::Application.routes.draw do
     resources :instruments do
       resources :versions, only: [:index, :show]
       resources :instrument_translations
+      resources :sections 
       member do
         get :export
         get :export_responses
@@ -58,6 +60,9 @@ RailsSurvey::Application.routes.draw do
         get :download_instrument_responses
         get :download_project_response_images
         get :download_instrument_response_images
+        get :download_spss_syntax_file 
+        get :download_instrument_spss_csv
+        get :download_value_labels_csv
       end
     end
     get 'graphs/daily/' => 'graphs#daily_responses'

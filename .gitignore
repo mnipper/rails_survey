@@ -32,13 +32,16 @@ vcs.xml
 #Ignore bin
 bin/
 
-tests_angular/
-
 #pictures
 public/system
+public/exports
 
 #exports
 public/exports
 
 # Ignore modules for node
 node/node_modules
+
+#Ignore Redis files
+dump.rdb
+
