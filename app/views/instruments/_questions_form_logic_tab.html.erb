@@ -1,0 +1,68 @@
+<div class="tab-logic tab-pane">
+  <fieldset ng-hide="$first">
+    <legend class="section">
+      Follow-up Question
+    </legend>
+    <div>
+      <p class="text-muted">A follow up question is a question that asks for more information about a previous answer.
+        You may re-use the response to the previous question in the creation of the new question.  Specify the question
+        to follow up below, and insert a [followup] in the location to insert the previous response.</p>
+      <label for="follow-up" class="control-label">Follow up on</label>
+      <div class="controls form-group">
+        <select
+        chosen
+        width="'500px'"
+        allow-single-deselect="true"
+        class="select2-container select-block-level"
+        data-placeholder="Select a question identifier..."
+        no-results-text="'This does not match any valid question'"
+        name="follow-up"
+        ng-model="question.following_up_question_identifier"
+        ng-options="q.question_identifier as q.question_identifier + ': ' + q.text for q in questionsBefore(question)"
+        >
+          <option value=""></option>
+        </select>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset ng-hide="$last || !questionTypesWithOptions(question.question_type)">
+    <legend class="section">
+      Skip Patterns
+    </legend>
+    <div>
+      <p class="text-muted">A skip pattern goes to a specific question based on if the user selects a specific option
+        when responding to a question.  Select the desired pattern for each option to this question.</p>
+      <div ng-controller="OptionsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>, question.id)">
+        <div ng-repeat="option in options">
+          <label for="follow-up" class="control-label">If <strong>{{option.text}}</strong> is selected, skip to:</label>
+          <div class="controls form-group">
+            <select
+            chosen
+            width="'500px'"
+            allow-single-deselect="true"
+            class="select2-container select-block-level"
+            data-placeholder="Select a question identifier..."
+            no-results-text="'This does not match any valid question identifier'"
+            name="skip-pattern"
+            ng-model="option.next_question"
+            ng-options="q.question_identifier as q.question_identifier + ': ' + q.text for q in questionsAfter(question)"
+            >
+              <option value=""></option>
+            </select>
+          </div>
+        </div>
+      </div>
+  </fieldset>
+  <fieldset>
+    <legend class="section">
+      Identifies Survey
+    </legend>
+    <div>
+      <p class="text-muted">If this option is enabled, then the response to this question will be used to identify 
+        its survey.</p>
+      <label for="follow-up" class="control-label">Identifies Survey</label>
+      <div class="controls form-group">
+        <input type="checkbox" ng-model="question.identifies_survey" name="identifies-survey">
+      </div>
+  </fieldset>
+</div>
