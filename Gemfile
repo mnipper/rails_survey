@@ -46,6 +46,7 @@ gem "redis", "~> 3.0.7"
 gem 'role_model', '~> 0.8.1'
 gem 'sidekiq', '~> 3.0.0'
 gem 'mandrill-api', '~> 1.0.51'
+gem 'kaminari'
 
 group :production do
   gem 'rails_12factor'

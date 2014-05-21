@@ -3,8 +3,12 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
   $scope.selectedQuestions = []
   $scope.init = (project_id, instrument_id) ->
     $scope.project_id = project_id
+    $scope.current_page = 1
     $scope.instrument_id = instrument_id
-    $scope.questions = Question.query({"project_id": project_id, "instrument_id": instrument_id})
+    $scope.questions = Question.query({"project_id": project_id, "instrument_id": instrument_id, "page": $scope.current_page})
+
+  $scope.getQuestions = () ->
+    $scope.questions = Question.query({"project_id": $scope.project_id, "instrument_id": $scope.instrument_id, "page": $scope.current_page})
 
   $scope.sortableOptions = {
     cursor: 'move',
@@ -26,14 +30,21 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
     $scope.edit_question.project_id = $scope.project_id
     $scope.edit_question.instrument_id = $scope.instrument_id
 
+  $scope.newQuestionNumber = ->
+    if $scope.current_page > 1
+      (($scope.current_page - 1) * 10) + $scope.questions.length + 1
+    else
+      $scope.questions.length + 1
+
   $scope.newQuestion = ->
     question = new Question()
     question.project_id = $scope.project_id
     question.instrument_id = $scope.instrument_id
-    question.number_in_instrument = $scope.questions.length + 1
+    question.number_in_instrument = $scope.newQuestionNumber()
     question.question_identifier = "q_#{question.project_id}_#{question.instrument_id}_#{$scope.uniqueId()}"
     $scope.questions.push(question)
     $scope.edit_question = question
+    $scope.updateQuestionNumbers()
 
   $scope.saveQuestionSuccess = (data, headers) ->
     $scope.$broadcast('SAVE_QUESTION', data.id)
@@ -93,4 +104,10 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
 
   $scope.questionTypesWithImages = (questionType)->
     questionType in <%= Settings.question_with_images %>
+
+  $scope.setPage = (new_page) ->
+    new_page = 1 if new_page < 1
+
+    $scope.current_page = new_page
+    $scope.getQuestions()
 ]

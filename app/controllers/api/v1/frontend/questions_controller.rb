@@ -6,9 +6,13 @@ module Api
         
         def index
           instrument = current_project.instruments.find(params[:instrument_id])
-          questions = instrument.questions
+          if params[:page].blank?
+            questions = instrument.questions
+          else
+            questions = instrument.questions.page(params[:page]).per(10)
+          end
           authorize questions
-          respond_with questions, include: :translations
+          respond_with instrument, questions, include: :translations
         end
 
         def show
