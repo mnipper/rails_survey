@@ -12,7 +12,7 @@ module Api
             questions = instrument.questions.page(params[:page]).per(10)
           end
           authorize questions
-          respond_with instrument, questions, include: :translations
+          respond_with questions, include: :translations
         end
 
         def show
