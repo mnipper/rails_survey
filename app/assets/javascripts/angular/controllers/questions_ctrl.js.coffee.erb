@@ -22,23 +22,14 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
   }
 
   $scope.updateQuestionNumbers = ->
-   # angular.forEach $scope.all_questions, (question, index) ->
-   #   question.number_in_instrument = index + 1
-   #   console.log("#{question.number_in_instrument} #{question.id} #{question.text}")
-   #   if question.id
-   #     question.project_id = $scope.project_id
-   #     question.$update()
-   # $scope.questions = $scope.all_questions.slice($scope.questions[0].number_in_instrument - 1, $scope.questions[$scope.questions.length - 1].number_in_instrument+1)
-    #$scope.getQuestions()
-    #->
-    #  console.log "Is it called"
     offset = 0
     if $scope.current_page > 1
         offset = ($scope.current_page - 1) * $scope.questions_per_page
     angular.forEach $scope.questions, (question, index) ->
       question.number_in_instrument = offset + index + 1
-      question.project_id = $scope.project_id
-      question.$update()
+      if question.id
+        question.project_id = $scope.project_id
+        question.$update()
     start_index = $scope.questions[$scope.questions.length - 1].number_in_instrument
     angular.forEach $scope.all_questions, (question, index) ->
       if question.number_in_instrument >= start_index and question != $scope.questions[$scope.questions.length - 1]
@@ -108,6 +99,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
       question.project_id = $scope.project_id
       question.$delete({},
         (data) ->
+          question.id = null
           $scope.all_questions.splice($scope.all_questions.indexOf(question), 1)
           $scope.questions.splice($scope.questions.indexOf(question), 1)
           $scope.updateQuestionNumbers()
