@@ -12,9 +12,8 @@
   <div ui-sortable="sortableOptions" ng-model="questions">
     <div class="row" ng-repeat="question in questions | filter:q">
       <div class="col-md-3">
-        <span class="tiny-column"><h4 style="display:inline"><strong>{{question.number_in_instrument}}</strong></h4></span>
-        <!--<div class="icheckbox_square-grey" ng-click="toggleSelection(question)" ng-class="{checked: questionSelected(question)}"></div>-->
-        <a class="btn btn-default move-question"><i class="icon-move"></i></a>
+	 <span class="tiny-column"><input type="text" size="4" name="number-in-instrument" ng-model="question.number_in_instrument" required></span>
+	<a class="btn btn-default move-question"><i class="icon-move"></i></a>
         <a class="btn btn-default" ng-click="editQuestion(question)"><i class="icon-edit"></i></a>
         <a class="btn btn-danger" ng-click="deleteQuestion(question)"><i class="icon-trash"></i></a>
       </div>
