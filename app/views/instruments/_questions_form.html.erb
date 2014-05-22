@@ -1,6 +1,13 @@
 <div class="body">
 <div ng-controller="QuestionsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>)">
-  <a ng-click="setPage(2)">2</a>
+  <ul class="pagination">
+    <li><a ng-click="setPage(currentPage - 1)">&laquo;</a></li>
+       <li ng-repeat="page in pages" ng-class="{ active: currentPage == page }">
+         <a ng-click="setPage(page)"> {{ page }} </a>
+       </li>
+    <li><a ng-click="setPage(currentPage + 1)">&raquo;</a></li>
+  </ul> 
+  <!-- <a ng-click="setPage(2)">2</a> -->
   <input type="search" ng-model="q" placeholder="Search questions..." class="form-control bottom-buffer">
   <div ui-sortable="sortableOptions" ng-model="questions">
     <div class="row" ng-repeat="question in questions | filter:q">
