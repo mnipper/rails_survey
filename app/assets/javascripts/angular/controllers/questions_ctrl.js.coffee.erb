@@ -23,9 +23,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
   }
 
   $scope.updateQuestionNumbers = ->
-    offset = 0
-    if $scope.current_page > 1
-        offset = ($scope.current_page - 1) * $scope.questions_per_page
+    offset = ($scope.current_page - 1) * $scope.questions_per_page
     angular.forEach $scope.questions, (question, index) ->
       question.number_in_instrument = offset + index + 1
       if question.id
@@ -138,14 +136,17 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
 
   $scope.repositionQuestion = (question) ->
     question.project_id = $scope.project_id
+    if question.number_in_instrument > $scope.all_questions.length
+      question.number_in_instrument = $scope.all_questions.length 
     question.$update({}, 
       (data) -> 
          if question.number_in_instrument > $scope.questions[$scope.questions.length - 1].number_in_instrument or question.number_in_instrument < $scope.questions[0].number_in_instrument
-           $scope.questions.slice($scope.questions.indexOf(question), 1)
+           $scope.questions.splice($scope.questions.indexOf(question), 1)
            $scope.all_questions.splice(question.number_in_instrument - 1, 0, question)
          else
-           $scope.questions.slice($scope.questions.indexOf(question), 1)
+           $scope.questions.splice($scope.questions.indexOf(question), 1)
            $scope.questions.splice(question.number_in_instrument - 1, 0, question)
          $scope.updateQuestionNumbers()
     )   
+
 ]
