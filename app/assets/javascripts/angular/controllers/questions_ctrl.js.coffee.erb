@@ -136,7 +136,16 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
   $scope.createPages = () ->
     $scope.pages = [1..Math.ceil($scope.all_questions.length/$scope.questions_per_page)]
 
-  $scope.repositionQuestion = () ->
-    console.log "REPOSITIONNNNNNN"  
-    alert("HIIIIIIII")
+  $scope.repositionQuestion = (question) ->
+    question.project_id = $scope.project_id
+    question.$update({}, 
+      (data) -> 
+         if question.number_in_instrument > $scope.questions[$scope.questions.length - 1].number_in_instrument or question.number_in_instrument < $scope.questions[0].number_in_instrument
+           $scope.questions.slice($scope.questions.indexOf(question), 1)
+           $scope.all_questions.splice(question.number_in_instrument - 1, 0, question)
+         else
+           $scope.questions.slice($scope.questions.indexOf(question), 1)
+           $scope.questions.splice(question.number_in_instrument - 1, 0, question)
+         $scope.updateQuestionNumbers()
+    )   
 ]
