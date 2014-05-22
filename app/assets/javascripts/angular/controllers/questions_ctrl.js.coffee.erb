@@ -136,4 +136,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
   $scope.createPages = () ->
     $scope.pages = [1..Math.ceil($scope.all_questions.length/$scope.questions_per_page)]
 
+  $scope.repositionQuestion = () ->
+    console.log "REPOSITIONNNNNNN"  
+    alert("HIIIIIIII")
 ]
