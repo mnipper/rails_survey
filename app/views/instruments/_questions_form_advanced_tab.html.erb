@@ -1,0 +1,20 @@
+<div class="tab-advanced tab-pane">
+  <fieldset>
+    <legend class="section">
+      Regular Expression Match
+    </legend>
+    <div>
+      <p class="text-muted">A regular expression is a standard for describing a text pattern.  If a regular expression
+        is provided for this question, then the response must match this regular expression for it
+        to be considered valid.</p>
+      <label for="question-regex" class="control-label">Regular Expression</label>
+      <div class="controls form-group">
+        <input type="text" name="question-regex" class="form-control" ng-model="question.reg_ex_validation">
+      </div>
+      <label for="question-regex" class="control-label">Regular Expression Failure Message</label>
+      <div class="controls form-group">
+        <input type="text" name="question-regex" class="form-control" ng-model="question.reg_ex_validation_message">
+      </div>
+    </div>
+  </fieldset>
+</div>

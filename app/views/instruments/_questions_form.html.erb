@@ -1,12 +1,19 @@
 <div class="body">
 <div ng-controller="QuestionsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>)">
+  <ul class="pagination">
+    <li><a ng-click="setPage(current_page - 1)"><i class="icon-arrow-left"></i></a></li>
+       <li ng-repeat="page in pages" ng-class="{ active: current_page == page }">
+         <a ng-click="setPage(page)"> {{ page }} </a>
+       </li>
+    <li><a ng-click="setPage(current_page + 1)"><i class="icon-arrow-right"></i></a></li>
+  </ul> 
+  <!-- <a ng-click="setPage(2)">2</a> -->
   <input type="search" ng-model="q" placeholder="Search questions..." class="form-control bottom-buffer">
   <div ui-sortable="sortableOptions" ng-model="questions">
     <div class="row" ng-repeat="question in questions | filter:q">
       <div class="col-md-3">
-        <span class="tiny-column"><h4 style="display:inline"><strong>{{question.number_in_instrument}}</strong></h4></span>
-        <!--<div class="icheckbox_square-grey" ng-click="toggleSelection(question)" ng-class="{checked: questionSelected(question)}"></div>-->
-        <a class="btn btn-default move-question"><i class="icon-move"></i></a>
+	 <form ng-submit="repositionQuestion(question)"> <span class="tiny-column"><input type="text" size="4" name="number-in-instrument" ng-model="question.number_in_instrument" required></span> </form>
+	<a class="btn btn-default move-question"><i class="icon-move"></i></a>
         <a class="btn btn-default" ng-click="editQuestion(question)"><i class="icon-edit"></i></a>
         <a class="btn btn-danger" ng-click="deleteQuestion(question)"><i class="icon-trash"></i></a>
       </div>
@@ -29,217 +36,9 @@
                 <li><a href=".tab-advanced" data-toggle="tab">Advanced</a></li>
               </ul>
             </header>
-            <div class="body tab-content">
-              <div class="tab-general tab-pane active">
-                <form class="form-horizontal label-left" name="question_form" id="question_form" novalidate>
-                  <fieldset>
-                    <div class="control-group">
-                      <label for="question-identifier" class="control-label">Question Identifier</label>
-                      <div class="controls form-group">
-                        <input type="text" class="form-control" name="question-identifier" ng-model="question.question_identifier" required>
-                      </div>
-                      <label for="question-type" class="control-label">Question Type</label>
-                      <div class="controls form-group">
-                        <select
-                        chosen
-                        class="select2-container select-block-level"
-                        data-placeholder="Select a question type..."
-                        no-results-text="'This does not match any valid question type'"
-                        name="question-type"
-                        id="question-type"
-                        ng-model="question.question_type"
-                        ng-options="type for type in questionTypes()"
-                        required
-                        >
-                        </select>
-                      </div>
-                      <% if @instrument.show_instructions %>
-                        <label for="instructions" class="control-label">Instructions</label>
-                        <div class="controls form-group">
-                          <div text-angular="text-angular" id="text-angular-content" rows="4" ta-toolbar="[['bold','italics','underline','insertLink'],['redo','undo','clear'],['html'], ['insertImage']]" ng-model="question.instructions"></div>
-                        </div>
-                      <% end %>
-                      <label for="content" class="control-label">Content</label>
-                      <div class="controls form-group">
-                        <div text-angular="text-angular" id="text-angular-content" rows="4" ta-toolbar="[['bold','italics','underline','insertLink'],['redo','undo','clear'],['html'], ['insertImage']]" ng-model="question.text"></div>
-                      </div>
-                      <div ng-controller="FileUploadCtrl" ng-init="initialize(<%= @project.id %>, <%= @instrument.id %>, question.id)">
-                        <div ng-show="questionTypesWithImages(question.question_type)">
-                        <label for="content" class="control-label">Images</label> </br>
-                         <div ng-show="uploader.isHTML5">
-                            <input ng-file-select type="file" multiple/>
-                          </div>       
-                          <table class="table">
-                          <thead>
-                              <tr>
-                                  <th width="50%">Name</th>
-                                  <th ng-show="uploader.isHTML5">Size</th>
-                                  <th ng-show="uploader.isHTML5">Progress</th>
-                                  <th>Status</th>
-                                  <th>Actions</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr ng-repeat="item in uploader.queue">
-                                  <td>
-                                      <strong>{{ item.file.name }}</strong>
-                                      <div ng-show="uploader.isHTML5" ng-thumb="{ file: item.file, height: 100 }"></div>
-                                  </td>
-                                  <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                                  <td ng-show="uploader.isHTML5">
-                                      <div class="progress" style="margin-bottom: 0;">
-                                          <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
-                                      </div>
-                                  </td>
-                                  <td class="text-center">
-                                      <span ng-show="item.isSuccess"><i class="eicon-check"></i></span>
-                                      <span ng-show="item.isCancel"><i class="eicon-cancel"></i></span>
-                                      <span ng-show="item.isError"><i class="eicon-trash"></i></span>
-                                  </td>
-                                  <td nowrap>
-                                      <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                                          <span class="eicon-upload-cloud"></span> Upload
-                                      </button>
-                                      <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
-                                          <span class="eicon-cancel"></span> Cancel
-                                      </button>
-                                      <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-                                          <span class="eicon-trash"></span> Remove
-                                      </button>
-                                  </td>
-                              </tr>
-                          </tbody>
-                      </table>
-                      <div ng-repeat="img in images">
-                          <div ng-class-odd="'odd'" ng-class-even="'even'">
-                              <div class="col-md-6">
-                                  <b>{{img.photo_file_name}}</b></br>
-                                  <img ng-src="{{img.photo_url}}"></img> </br>
-                                  <button ng-click="deleteImage(img)" class="btn btn-danger">Delete image</button>
-                              </div>
-                          </div>
-                       </div>
-                    </div>
-                        
-                      </div>
-                      <div ng-show="questionTypesWithOptions(question.question_type)">
-                        <div ng-controller="OptionsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>, question.id)">
-                          <fieldset>
-                            <legend class="section">
-                              Options
-                              <button type="submit" ng-click="addOption()" class="btn btn-xs btn-primary pull-right">
-                                <i class="icon-plus"></i> Add Option
-                              </button>
-                            </legend>
-                            <div class="controls form-group">
-                              <ol>
-                                <li ng-repeat="option in options">
-                                  <div class="input-group">
-                                    <input type="text" class="form-control" ng-model="option.text" autofocus="autofocus">
-                                    <div class="input-group-btn">
-                                      <button ng-click="removeOption(option)" class="btn btn-danger">
-                                        <i class="icon-trash"></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                </li>
-                              </ol>
-                            </div>
-                          </fieldset>
-                        </div>
-                      </div>
-                    </div>
-                  </fieldset>
-                </form>
-              </div>
-              <div class="tab-logic tab-pane">
-                <fieldset ng-hide="$first">
-                  <legend class="section">
-                    Follow-up Question
-                  </legend>
-                  <div>
-                    <p class="text-muted">A follow up question is a question that asks for more information about a previous answer.
-                      You may re-use the response to the previous question in the creation of the new question.  Specify the question
-                      to follow up below, and insert a [followup] in the location to insert the previous response.</p>
-                    <label for="follow-up" class="control-label">Follow up on</label>
-                    <div class="controls form-group">
-                      <select
-                      chosen
-                      width="'500px'"
-                      allow-single-deselect="true"
-                      class="select2-container select-block-level"
-                      data-placeholder="Select a question identifier..."
-                      no-results-text="'This does not match any valid question'"
-                      name="follow-up"
-                      ng-model="question.following_up_question_identifier"
-                      ng-options="q.question_identifier as q.question_identifier + ': ' + q.text for q in questionsBefore(question)"
-                      >
-                        <option value=""></option>
-                      </select>
-                    </div>
-                  </div>
-                </fieldset>
-                <fieldset ng-hide="$last || !questionTypesWithOptions(question.question_type)">
-                  <legend class="section">
-                    Skip Patterns
-                  </legend>
-                  <div>
-                    <p class="text-muted">A skip pattern goes to a specific question based on if the user selects a specific option
-                      when responding to a question.  Select the desired pattern for each option to this question.</p>
-                    <div ng-controller="OptionsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>, question.id)">
-                      <div ng-repeat="option in options">
-                        <label for="follow-up" class="control-label">If <strong>{{option.text}}</strong> is selected, skip to:</label>
-                        <div class="controls form-group">
-                          <select
-                          chosen
-                          width="'500px'"
-                          allow-single-deselect="true"
-                          class="select2-container select-block-level"
-                          data-placeholder="Select a question identifier..."
-                          no-results-text="'This does not match any valid question identifier'"
-                          name="skip-pattern"
-                          ng-model="option.next_question"
-                          ng-options="q.question_identifier as q.question_identifier + ': ' + q.text for q in questionsAfter(question)"
-                          >
-                            <option value=""></option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                  <legend class="section">
-                    Identifies Survey
-                  </legend>
-                  <div>
-                    <p class="text-muted">If this option is enabled, then the response to this question will be used to identify 
-                      its survey.</p>
-                    <label for="follow-up" class="control-label">Identifies Survey</label>
-                    <div class="controls form-group">
-                      <input type="checkbox" ng-model="question.identifies_survey" name="identifies-survey">
-                    </div>
-                </fieldset>
-              </div>
-              <div class="tab-advanced tab-pane">
-                <fieldset>
-                  <legend class="section">
-                    Regular Expression Match
-                  </legend>
-                  <div>
-                    <p class="text-muted">A regular expression is a standard for describing a text pattern.  If a regular expression
-                      is provided for this question, then the response must match this regular expression for it
-                      to be considered valid.</p>
-                    <label for="question-regex" class="control-label">Regular Expression</label>
-                    <div class="controls form-group">
-                      <input type="text" name="question-regex" class="form-control" ng-model="question.reg_ex_validation">
-                    </div>
-                    <label for="question-regex" class="control-label">Regular Expression Failure Message</label>
-                    <div class="controls form-group">
-                      <input type="text" name="question-regex" class="form-control" ng-model="question.reg_ex_validation_message">
-                    </div>
-                  </div>
-                </fieldset>
-              </div>
+            <%= render 'questions_form_body_tab' %>
+            <%= render 'questions_form_logic_tab' %>
+            <%= render 'questions_form_advanced_tab' %>
               <div class="form-actions">
                 <a class="btn btn-success pull-right" id="save-question" ng-click="saveQuestion()" ng-disabled="question_form.$invalid">Save</a>
                 <a class="btn btn-danger pull-right" ng-click="cancelQuestion()">Cancel</a>
@@ -253,6 +52,13 @@
   <div class="top-buffer">
     <a class="btn btn-success" ng-click="newQuestion()" id="add-question-button"><i class="icon-plus"></i> Add Question</a>
   </div>
+  <ul class="pagination">
+    <li><a ng-click="setPage(current_page - 1)"><i class="icon-arrow-left"></i></a></li>
+       <li ng-repeat="page in pages" ng-class="{ active: current_page == page }">
+         <a ng-click="setPage(page)"> {{ page }} </a>
+       </li>
+    <li><a ng-click="setPage(current_page + 1)"><i class="icon-arrow-right"></i></a></li>
+  </ul>
 </div>
 
 </div>

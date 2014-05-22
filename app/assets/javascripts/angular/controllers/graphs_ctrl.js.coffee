@@ -27,9 +27,7 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
       for key, value of result[0]  
         if key[0] != '$'
           array.push {time: key, data: value}
-      console.log array
       $scope.hourData = array
-      console.log $scope.hourData 
       $scope.refreshPage()
     )
     
@@ -51,7 +49,7 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
         max: MAXIMUM
         differenceCount: differenceResponseCount
       } 
-    socket = io.connect("//localhost:3001/")
+    socket = io.connect('//wci-chpir.duke.edu:8080/') #TODO Extract
     socket.on "message", (data) ->
       data = JSON.parse(data)
       if data.count != 0

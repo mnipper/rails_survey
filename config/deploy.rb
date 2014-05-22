@@ -5,66 +5,53 @@ set :application, 'rails_survey'
 set :deploy_user, 'dmtg'
 set :scm, :git 
 set :repo_url, 'git@github.com:mnipper/rails_survey.git'
-#set :branch, :master
-#set :user, 'dmtg'
 set :use_sudo, false
 set :rails_env, 'production'
 set :deploy_via, :copy
 set :ssh_options, { :forward_agent => true, :port => 2222 }
+set :pty, false
+set :format, :pretty
 set :keep_releases, 5
-#server 'wci-chpir.duke.edu', user: 'dmtg', port: 2222, roles: %w{web, app, db}, primary:true
-#set :server_name, 'wci-chpir.duke.edu'
-
-
-# Default branch is :master
-# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
-
-# Default deploy_to directory is /var/www/my_app
-# set :deploy_to, '/var/www/my_app'
-
-# Default value for :scm is :git
-# set :scm, :git
-
-# Default value for :format is :pretty
-# set :format, :pretty
-
-# Default value for :log_level is :debug
-# set :log_level, :debug
-
-# Default value for :pty is false
-# set :pty, true
-
-# Default value for :linked_files is []
-# set :linked_files, %w{config/database.yml}
-
-# Default value for linked_dirs is []
-# set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
-
-# Default value for default_env is {}
-# set :default_env, { path: "/opt/ruby/bin:$PATH" }
-
-# Default value for keep_releases is 5
-# set :keep_releases, 5
+set :linked_files, %w{config/database.yml config/secret_token.txt config/local_env.yml}
+set :linked_dirs, fetch(:linked_dirs).push("bin" "log" "tmp/pids" "tmp/cache" "tmp/sockets" "vendor/bundle" "public/system")
+set :branch, 'master'
 
 namespace :deploy do
+ 
+  task :load_schema do
+    execute "cd #{current_path}; rake db:schema:load RAILS_ENV=#{rails_env}"
+  end
+ 
+  task :cold do 
+    update
+    load_schema
+    start
+  end
 
-  desc 'Restart application'
+  desc 'Restart Application'
   task :restart do
+    desc "restart redis"
+    on roles(:app) do
+      execute "sudo /etc/init.d/redis-server restart"
+    end
+    desc "restart node"
     on roles(:app), in: :sequence, wait: 5 do
-      # Your restart mechanism here, for example:
-      # execute :touch, release_path.join('tmp/restart.txt')
+      execute "sudo restart realtime-app || sudo start realtime-app"
     end
+    desc "restart phusion passenger"
+    on roles(:app), in: :sequence, wait: 5 do
+      execute :touch, current_path.join('tmp/restart.txt')
+    end  
   end
 
-  after :publishing, :restart
-
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
-    end
+  task :npm_install do
+    on roles(:app) do
+      execute "cd #{release_path}/node && sudo rm -rf node_modules && npm install"
+    end 
   end
-
+    
+  after :finishing, 'deploy:cleanup'
+  after 'deploy:publishing', 'deploy:restart'
+  after "deploy:updated", "deploy:npm_install"
+  
 end

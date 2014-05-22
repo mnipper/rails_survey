@@ -35,7 +35,7 @@ end
 
 gem 'capistrano', group: :development
 gem 'exception_notification'
-gem 'sqlite3', group: [:development, :test]
+gem 'sqlite3'
 gem 'chosen-rails'
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'paranoia', '~> 2.0'
@@ -46,6 +46,11 @@ gem "redis", "~> 3.0.7"
 gem 'role_model', '~> 0.8.1'
 gem 'sidekiq', '~> 3.0.0'
 gem 'mandrill-api', '~> 1.0.51'
+gem 'kaminari'
+gem 'capistrano-rails', '~> 1.1.1'
+gem 'capistrano-bundler', '~> 1.1.2'
+gem 'capistrano-rvm', '~> 0.1.1'
+gem 'capistrano-sidekiq', '~> 0.3.0'
 
 group :production do
   gem 'rails_12factor'
