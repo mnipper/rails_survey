@@ -1,11 +1,11 @@
 <div class="body">
 <div ng-controller="QuestionsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>)">
   <ul class="pagination">
-    <li><a ng-click="setPage(currentPage - 1)">&laquo;</a></li>
-       <li ng-repeat="page in pages" ng-class="{ active: currentPage == page }">
+    <li><a ng-click="setPage(current_page - 1)">&laquo;</a></li>
+       <li ng-repeat="page in pages" ng-class="{ active: current_page == page }">
          <a ng-click="setPage(page)"> {{ page }} </a>
        </li>
-    <li><a ng-click="setPage(currentPage + 1)">&raquo;</a></li>
+    <li><a ng-click="setPage(current_page + 1)">&raquo;</a></li>
   </ul> 
   <!-- <a ng-click="setPage(2)">2</a> -->
   <input type="search" ng-model="q" placeholder="Search questions..." class="form-control bottom-buffer">
