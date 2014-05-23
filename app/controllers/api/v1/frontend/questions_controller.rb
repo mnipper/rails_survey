@@ -9,7 +9,7 @@ module Api
           if params[:page].blank?
             questions = instrument.questions
           else
-            questions = instrument.questions.page(params[:page]).per(10)
+            questions = instrument.questions.page(params[:page]).per(Settings.questions_per_page)
           end
           authorize questions
           respond_with questions, include: :translations
