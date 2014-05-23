@@ -150,10 +150,10 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
     )
 
   $scope.lastQuestion = (question) ->
-    question === $scope.questions[$scope.questions.length - 1]
+    question == $scope.questions[$scope.questions.length - 1]
 
   $scope.firstQuestion = (question) ->
-    question === $scope.questions[0]
+    question == $scope.questions[0]
 
   $scope.questionNotOnPage = (question) ->
     question.number_in_instrument > $scope.lastQuestion(question).number_in_instrument or question.number_in_instrument < $scope.firstQuestion(question).number_in_instrument
