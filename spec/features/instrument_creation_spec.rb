@@ -1,5 +1,6 @@
 require "spec_helper"
 require_relative '../../app/controllers/api/v1/frontend/questions_controller'
+require_relative '../../app/policies/question_policy'
 
 feature "Instrument Creation", js: true do
   before :each do
