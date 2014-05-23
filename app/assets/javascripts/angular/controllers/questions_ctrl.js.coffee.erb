@@ -4,7 +4,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
   $scope.all_questions = []
   $scope.pages = []
   $scope.questions_per_page = 10.0
-  $scope.current_page = 1 
+  $scope.current_page = 1
   $scope.init = (project_id, instrument_id) ->
     $scope.project_id = project_id
     $scope.current_page = 1
@@ -31,7 +31,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
         question.$update()
     start_index = $scope.questions[$scope.questions.length - 1].number_in_instrument
     angular.forEach $scope.all_questions, (question, index) ->
-      if question.number_in_instrument >= start_index and question != $scope.questions[$scope.questions.length - 1]
+      if question.number_in_instrument >= start_index and not $scope.lastQuestion(question)
         question.number_in_instrument = index + 1
         if question.id
           question.project_id = $scope.project_id
@@ -137,16 +137,24 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
   $scope.repositionQuestion = (question) ->
     question.project_id = $scope.project_id
     if question.number_in_instrument > $scope.all_questions.length
-      question.number_in_instrument = $scope.all_questions.length 
-    question.$update({}, 
-      (data) -> 
-         if question.number_in_instrument > $scope.questions[$scope.questions.length - 1].number_in_instrument or question.number_in_instrument < $scope.questions[0].number_in_instrument
+      question.number_in_instrument = $scope.all_questions.length
+    question.$update({},
+      (data) ->
+         if $scope.questionNotOnPage(question)
            $scope.questions.splice($scope.questions.indexOf(question), 1)
            $scope.all_questions.splice(question.number_in_instrument - 1, 0, question)
          else
            $scope.questions.splice($scope.questions.indexOf(question), 1)
            $scope.questions.splice(question.number_in_instrument - 1, 0, question)
          $scope.updateQuestionNumbers()
-    )   
+    )
 
+  $scope.lastQuestion = (question) ->
+    question === $scope.questions[$scope.questions.length - 1]
+
+  $scope.firstQuestion = (question) ->
+    question === $scope.questions[0]
+
+  $scope.questionNotOnPage = (question) ->
+    question.number_in_instrument > $scope.lastQuestion(question).number_in_instrument or question.number_in_instrument < $scope.firstQuestion(question).number_in_instrument
 ]
