@@ -9,16 +9,17 @@ set :use_sudo, false
 set :rails_env, 'production'
 set :deploy_via, :copy
 set :ssh_options, { :forward_agent => true, :port => 2222 }
+set :pty, false
+set :format, :pretty
 set :keep_releases, 5
-set :linked_files, %w{config/database.yml config/secret_token.txt}
+set :linked_files, %w{config/database.yml config/secret_token.txt config/local_env.yml}
 set :linked_dirs, fetch(:linked_dirs).push("bin" "log" "tmp/pids" "tmp/cache" "tmp/sockets" "vendor/bundle" "public/system")
 set :branch, 'master'
-
 
 namespace :deploy do
  
   task :load_schema do
-    run "cd #{current_path}; rake db:schema:load RAILS_ENV=#{rails_env}"
+    execute "cd #{current_path}; rake db:schema:load RAILS_ENV=#{rails_env}"
   end
  
   task :cold do 
@@ -27,40 +28,30 @@ namespace :deploy do
     start
   end
 
-  desc 'Start Forever'
-  task :stop_node do
-    run "/usr/local/bin/forever stopall; true"
-  end
-
-  desc 'Stop Forever'
-  task :start_node do 
-    run "cd #{current_path}/node && /usr/local/bin/forever start server.js"
-  end 
-  
-  desc 'Restart Forever'
-  task :restart_node do
-    stop_node
-    sleep 5
-    start_node
-  end
-  
-  desc 'Restart passenger & apache'
+  desc 'Restart Application'
   task :restart do
+    desc "restart redis"
+    on roles(:app) do
+      execute "sudo /etc/init.d/redis-server restart"
+    end
+    desc "restart node"
+    on roles(:app), in: :sequence, wait: 5 do
+      execute "sudo restart realtime-app || sudo start realtime-app"
+    end
+    desc "restart phusion passenger"
     on roles(:app), in: :sequence, wait: 5 do
       execute :touch, current_path.join('tmp/restart.txt')
-      run "sudo service apache2 restart"
-    end
+    end  
   end
 
-  after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
+  task :npm_install do
+    on roles(:app) do
+      execute "cd #{release_path}/node && sudo rm -rf node_modules && npm install"
+    end 
+  end
+    
   after :finishing, 'deploy:cleanup'
-  after :publishing, :restart
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      within release_path do
-        execute :rake, 'cache:clear'
-      end
-    end
-  end
-
+  after 'deploy:publishing', 'deploy:restart'
+  after "deploy:updated", "deploy:npm_install"
+  
 end

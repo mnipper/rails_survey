@@ -34,6 +34,13 @@ RailsSurvey::Application.configure do
 
   # Version of your assets, change this if you want to expire all your assets.
   config.assets.version = '1.0'
+  
+  config.before_configuration do
+    env_file = File.join(Rails.root, 'config', 'local_env.yml')
+    YAML.load(File.open(env_file)).each do |key, value|
+      ENV[key.to_s] = value
+    end if File.exists?(env_file)
+  end
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
@@ -98,5 +105,5 @@ RailsSurvey::Application.configure do
        :password => ENV['SMTP_PASSWORD']
   }
 
-  config.action_mailer.default_url_options = { :host => 'chpir-survey-staging.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'wci-chpir.duke.edu' }
 end

@@ -82,12 +82,17 @@ GEM
     capistrano-rvm (0.1.1)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
+    capistrano-sidekiq (0.3.0)
+      capistrano
+      sidekiq
     capybara (2.2.1)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    celluloid (0.15.2)
+      timers (~> 1.1.0)
     childprocess (0.4.0)
       ffi (~> 1.0, >= 1.0.11)
     chosen-rails (1.0.2)
@@ -115,6 +120,7 @@ GEM
       sass (~> 3.1)
     compass-rails (1.1.3)
       compass (>= 0.12.2)
+    connection_pool (2.0.0)
     database_cleaner (1.2.0)
     debug_inspector (0.0.2)
     debugger (1.6.5)
@@ -229,6 +235,8 @@ GEM
     rdoc (4.1.1)
       json (~> 1.4)
     redis (3.0.7)
+    redis-namespace (1.4.1)
+      redis (~> 3.0.4)
     ref (1.0.5)
     responders (1.0.0)
       railties (>= 3.2, < 5)
@@ -258,6 +266,12 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0.4)
+    sidekiq (3.0.2)
+      celluloid (>= 0.15.2)
+      connection_pool (>= 2.0.0)
+      json
+      redis (>= 3.0.6)
+      redis-namespace (>= 1.3.1)
     sprockets (2.10.1)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -281,6 +295,7 @@ GEM
     thread_safe (0.1.3)
       atomic
     tilt (1.4.1)
+    timers (1.1.0)
     tins (1.1.0)
     treetop (1.4.15)
       polyglot
@@ -315,6 +330,7 @@ DEPENDENCIES
   capistrano-bundler (~> 1.1.2)
   capistrano-rails (~> 1.1.1)
   capistrano-rvm (~> 0.1.1)
+  capistrano-sidekiq (~> 0.3.0)
   capybara
   chosen-rails
   coffee-rails (~> 4.0.0)

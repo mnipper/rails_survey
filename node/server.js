@@ -3,8 +3,13 @@ process.title = 'realtime-app';
 var sockjs  = require('sockjs');
 var express = require('express');
 var app = express();
-
-var server = require('http').createServer(app);
+var https = require('https');
+var fs = require('fs');
+var options = {
+	    key:    fs.readFileSync('/etc/httpd/conf/ssl.key/wci-chpir_duke_edu-private.key'),
+	    cert:   fs.readFileSync('/etc/httpd/conf/ssl.crt/wci-chpir_duke_edu.cer')
+	};
+var server = https.createServer(options, app);
 var io = require('socket.io').listen(server);
 var redis = require("redis");
 server.listen(8080);
