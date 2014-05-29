@@ -2,7 +2,6 @@
 lock '3.2.1'
 
 set :application, 'rails_survey' 
-set :deploy_user, 'dmtg'
 set :scm, :git 
 set :repo_url, 'git@github.com:mnipper/rails_survey.git'
 set :use_sudo, false
