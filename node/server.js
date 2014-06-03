@@ -6,8 +6,8 @@ var app = express();
 var https = require('https');
 var fs = require('fs');
 var options = {
-	    key:    fs.readFileSync("config/key.txt"),
-	    cert:   fs.readFileSync("config/cert.txt")
+	    key:    fs.readFileSync("../config/key.txt"),
+	    cert:   fs.readFileSync("../config/cert.txt")
 	};
 var server = https.createServer(options, app);
 var io = require('socket.io').listen(server);
