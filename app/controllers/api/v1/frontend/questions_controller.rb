@@ -7,7 +7,7 @@ module Api
         def index
           instrument = current_project.instruments.find(params[:instrument_id])
           if params[:page].blank?
-            questions = instrument.questions.collect{|question| [question.id, question.number_in_instrument]}
+            questions = instrument.questions
           else
             questions = instrument.questions.page(params[:page]).per(Settings.questions_per_page)
           end
