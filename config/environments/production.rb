@@ -105,5 +105,5 @@ RailsSurvey::Application.configure do
        :password => ENV['SMTP_PASSWORD']
   }
 
-  config.action_mailer.default_url_options = { :host => 'wci-chpir.duke.edu' }
+  config.action_mailer.default_url_options = { :host => ENV['HOSTNAME'] }
 end
