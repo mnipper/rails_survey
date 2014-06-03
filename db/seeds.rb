@@ -2,6 +2,8 @@ u = User.new
 u.email="user@example.com"
 u.password=u.password_confirmation="password"
 u.save!
+u.roles=['admin', 'manager', 'translator', 'analyst', 'user'] 
+u.save!
 
 a = AdminUser.new
 a.email="admin@example.com"
