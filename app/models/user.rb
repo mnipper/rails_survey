@@ -17,10 +17,14 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  roles_mask             :integer
+#  failed_attempts        :integer          default(0)
+#  unlock_token           :string(255)
+#  locked_at              :datetime
 #
 
 class User < ActiveRecord::Base
-  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :timeoutable
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :timeoutable,
+         :lockable
   attr_accessible :email, :password, :password_confirmation, :project_ids, :roles_mask, :roles 
   before_save :ensure_authentication_token
   has_many :user_projects 
