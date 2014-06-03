@@ -20,18 +20,17 @@
 #
 
 class User < ActiveRecord::Base
-
+  include RoleModel
+  roles :admin, :manager, :translator, :analyst, :user
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :timeoutable
   attr_accessible :email, :password, :password_confirmation, :project_ids, :roles_mask, :roles 
   before_save :ensure_authentication_token
+  after_create :set_default_role 
   has_many :user_projects 
   has_many :projects, through: :user_projects
-  include RoleModel
-  roles :admin, :manager, :translator, :analyst, :user 
-  after_create :set_default_role
 
   def set_default_role
-    self.roles = [:user]  #TODO FIX - users not assigned any role upon creation
+    self.roles = [:user]  
   end
 
   def ensure_authentication_token

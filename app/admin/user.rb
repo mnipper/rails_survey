@@ -1,7 +1,8 @@
 ActiveAdmin.register User do
   menu priority: 3
   permit_params :email, :password, :password_confirmation, :project_ids, :user_id, :name, :roles_mask, :roles
-
+  after_save { |user| user.set_default_role }
+  
   index do
     column :email
     column :current_sign_in_at
@@ -48,7 +49,7 @@ ActiveAdmin.register User do
       f.input :password, hint: "Leave blank. Do not change."
       f.input :password_confirmation
       f.input :projects, :as => :check_boxes
-      f.input :roles, :as => :check_boxes, :collection => [:admin, :manager, :translator, :analyst, :user] #TODO roles array is defined in two places, models/user and admin/user
+      f.input :roles, :as => :check_boxes, :collection => [:admin, :manager, :translator,:analyst,:user] 
     end
     f.actions
   end
