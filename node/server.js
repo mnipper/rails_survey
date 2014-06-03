@@ -8,8 +8,8 @@ var fs = require('fs');
 var keyPath = fs.readFileSync('../config/key.txt');
 var certPath = fs.readFileSync('../config/cert.txt');
 var options = {
-	    key:    fs.readFileSync(keyPath),
-	    cert:   fs.readFileSync(certPath)
+	    key:    fs.readFileSync('/etc/httpd/conf/ssl.key/' + keyPath),
+	    cert:   fs.readFileSync('/etc/httpd/conf/ssl.crt/' + certPath)
 	};
 var server = https.createServer(options, app);
 var io = require('socket.io').listen(server);

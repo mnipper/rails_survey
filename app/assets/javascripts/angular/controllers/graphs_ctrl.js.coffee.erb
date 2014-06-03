@@ -1,7 +1,7 @@
 App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectResponseCount', ($scope, DailyGraph, HourGraph, ProjectResponseCount) ->
   $scope.dayData = []
   $scope.hourData = []
-  $scope.HOST = <%= ENV['HOSTNAME'] %>
+  $scope.HOST = <% ENV['HOSTNAME'] %>
   MAXIMUM = 100
   totalCount = 0
   differenceCount = 0
