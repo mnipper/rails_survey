@@ -21,6 +21,7 @@
 #
 
 class AdminUser < ActiveRecord::Base
+  include ComplexPassword
   attr_accessible :email, :password, :password_confirmation
 
   # Include default devise modules. Others available are:
@@ -28,12 +29,4 @@ class AdminUser < ActiveRecord::Base
   devise :database_authenticatable, 
          :recoverable, :rememberable, :trackable, :validatable
 
-  validate :password_complexity
-
-  private
-  def password_complexity
-    if password.present? and not password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d). /)
-      errors.add :password, "must include at least one lowercase letter, one uppercase letter, and one digit"
-    end
-  end
 end

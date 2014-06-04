@@ -23,17 +23,16 @@
 #
 
 class User < ActiveRecord::Base
+  include RoleModel
+  include ComplexPassword
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :timeoutable,
          :lockable
   attr_accessible :email, :password, :password_confirmation, :project_ids, :roles_mask, :roles 
   before_save :ensure_authentication_token
   has_many :user_projects 
   has_many :projects, through: :user_projects
-  include RoleModel
   roles :admin, :manager, :translator, :analyst, :user 
   after_create :set_default_role
-
-  validate :password_complexity
 
   def set_default_role
     self.roles = [:user]  #TODO FIX - users not assigned any role upon creation
@@ -50,13 +49,6 @@ class User < ActiveRecord::Base
     loop do
       token = Devise.friendly_token
       break token unless User.where(authentication_token: token).first
-    end
-  end
-
-  private
-  def password_complexity
-    if password.present? and not password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d). /)
-      errors.add :password, "must include at least one lowercase letter, one uppercase letter, and one digit"
     end
   end
 end
