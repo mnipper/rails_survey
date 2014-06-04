@@ -6,8 +6,8 @@ var app = express();
 var https = require('https');
 var fs = require('fs');
 var options = {
-	    key:    fs.readFileSync('/etc/httpd/conf/ssl.key/wci-chpir_duke_edu-private.key'),
-	    cert:   fs.readFileSync('/etc/httpd/conf/ssl.crt/wci-chpir_duke_edu.cer')
+	    key:    fs.readFileSync(process.env.SSL_KEY),
+	    cert:   fs.readFileSync(process.env.SSL_CERT)
 	};
 var server = https.createServer(options, app);
 var io = require('socket.io').listen(server);
