@@ -1,6 +1,7 @@
 App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectResponseCount', ($scope, DailyGraph, HourGraph, ProjectResponseCount) ->
   $scope.dayData = []
   $scope.hourData = []
+  $scope.HOST = <% ENV['HOSTNAME'] %>
   MAXIMUM = 100
   totalCount = 0
   differenceCount = 0
@@ -49,7 +50,7 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
         max: MAXIMUM
         differenceCount: differenceResponseCount
       } 
-    socket = io.connect('//wci-chpir.duke.edu:8080/') #TODO Extract
+    socket = io.connect($scope.HOST + ':8080/') 
     socket.on "message", (data) ->
       data = JSON.parse(data)
       if data.count != 0
