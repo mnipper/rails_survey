@@ -17,17 +17,23 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  roles_mask             :integer
+#  failed_attempts        :integer          default(0)
+#  unlock_token           :string(255)
+#  locked_at              :datetime
 #
 
 class User < ActiveRecord::Base
   include RoleModel
   roles :admin, :manager, :translator, :analyst, :user
-  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :timeoutable
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :timeoutable,
+         :lockable
   attr_accessible :email, :password, :password_confirmation, :project_ids, :roles_mask, :roles 
   before_save :ensure_authentication_token
   after_create :set_default_role 
   has_many :user_projects 
   has_many :projects, through: :user_projects
+
+  validate :password_complexity
 
   def set_default_role
     self.roles = [:user]  
@@ -47,4 +53,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  private
+  def password_complexity
+    if password.present? and not password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d). /)
+      errors.add :password, "must include at least one lowercase letter, one uppercase letter, and one digit"
+    end
+  end
 end

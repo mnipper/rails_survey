@@ -1,11 +1,13 @@
 u = User.new
 u.email="user@example.com"
-u.password=u.password_confirmation="password"
+u.password=u.password_confirmation="Password1"
+u.save!
+u.roles=['admin', 'manager', 'translator', 'analyst', 'user'] 
 u.save!
 
 a = AdminUser.new
 a.email="admin@example.com"
-a.password=u.password_confirmation="password"
+a.password=u.password_confirmation="Password1"
 a.save!
 
 p = Project.new
