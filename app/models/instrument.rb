@@ -97,17 +97,19 @@ class Instrument < ActiveRecord::Base
   end
 
   def reorder_questions(old_number, new_number)
-    if old_number > new_number
-      # question moved up in instrument
-      questions.unscoped.where('number_in_instrument <= ? AND number_in_instrument >= ?', old_number, new_number).order('number_in_instrument ASC, updated_at DESC').each_with_index do |question, index|
-        question.number_in_instrument = new_number + index
-        question.save
-      end
-    else
-      # question moved down in instrument
-      questions.unscoped.where('number_in_instrument >= ? AND number_in_instrument <= ?', old_number, new_number).order('number_in_instrument ASC, updated_at ASC').each_with_index do |question, index|
-        question.number_in_instrument = old_number + index
-        question.save
+    ActiveRecord::Base.transaction do
+      if old_number > new_number
+        # question moved up in instrument
+        questions.unscoped.where('number_in_instrument <= ? AND number_in_instrument >= ?', old_number, new_number).order('number_in_instrument ASC, updated_at DESC').each_with_index do |question, index|
+          question.number_in_instrument = new_number + index
+          question.save
+        end
+      else
+        # question moved down in instrument
+        questions.unscoped.where('number_in_instrument >= ? AND number_in_instrument <= ?', old_number, new_number).order('number_in_instrument ASC, updated_at ASC').each_with_index do |question, index|
+          question.number_in_instrument = old_number + index
+          question.save
+        end
       end
     end
   end
