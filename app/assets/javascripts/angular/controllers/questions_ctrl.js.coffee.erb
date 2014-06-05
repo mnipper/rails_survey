@@ -16,9 +16,8 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
   $scope.sortableOptions = {
     cursor: 'move',
     handle: '.move-question',
-    axis: 'y'#,
-    # TODO Save updated question numbers from dragging to server
-    #stop: (e, ui) -> $scope.repositionQuestion($scope.questions[ui.item.index() - 1])
+    axis: 'y',
+    stop: (e, ui) -> $scope.updateAndSaveQuestionNumbers()
   }
 
   $scope.editQuestion = (question) ->
@@ -128,6 +127,14 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
     offset = ($scope.current_page - 1) * $scope.questions_per_page
     angular.forEach $scope.questions, (question, index) ->
       question.number_in_instrument = offset + index + 1
+
+  $scope.updateAndSaveQuestionNumbers = ->
+    offset = ($scope.current_page - 1) * $scope.questions_per_page
+    angular.forEach $scope.questions, (question, index) ->
+      question.number_in_instrument = offset + index + 1
+      if question.id and $scope.questionOnPage(question)
+        question.project_id = $scope.project_id
+        question.$update()
 
   $scope.questionOnPage = (question) ->
     first_number = $scope.questions[0].number_in_instrument
