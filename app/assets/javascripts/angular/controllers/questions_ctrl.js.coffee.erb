@@ -3,13 +3,15 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
   $scope.selectedQuestions = []
   $scope.pages = []
   $scope.questions_per_page = <%= Settings.questions_per_page %>
+  $scope.pages_to_show = <%= Settings.pages_to_show %>
   $scope.current_page = 1
   $scope.init = (project_id, instrument_id) ->
     $scope.project_id = project_id
     $scope.current_page = 1
     $scope.instrument_id = instrument_id
     $scope.questions = Question.query({"project_id": project_id, "instrument_id": instrument_id, "page": $scope.current_page})
-
+    $scope.instrument = Question.query({"project_id": project_id, "instrument_id": instrument_id}, -> $scope.createPages())
+    
   $scope.getQuestions = () ->
     $scope.questions = Question.query({"project_id": $scope.project_id, "instrument_id": $scope.instrument_id, "page": $scope.current_page})
 
@@ -107,12 +109,26 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
 
   $scope.setPage = (new_page) ->
     new_page = 1 if new_page < 1
-
     $scope.current_page = new_page
     $scope.getQuestions()
- 
+    if $scope.current_page > $scope.pages_to_show and $scope.current_page % $scope.pages_to_show == 1
+      total_pages = Math.ceil($scope.instrument[0].question_count / $scope.questions_per_page)
+      if $scope.current_page > $scope.pages_to_show
+        lower_bound = (($scope.current_page/$scope.pages_to_show) * $scope.pages_to_show) 
+        upper_bound = (($scope.current_page/$scope.pages_to_show) * $scope.pages_to_show) + ($scope.pages_to_show - 1)
+        if total_pages < upper_bound
+          upper_bound = total_pages
+        $scope.pages = [lower_bound..upper_bound]
+    else if $scope.current_page % $scope.pages_to_show == 0
+      lower_bound = (($scope.current_page/$scope.pages_to_show) * $scope.pages_to_show) - ($scope.pages_to_show - 1)
+      $scope.pages =  [lower_bound..$scope.current_page]
+       
   $scope.createPages = () ->
-    $scope.pages = 200
+    total_pages = Math.ceil($scope.instrument[0].question_count / $scope.questions_per_page)
+    if total_pages > $scope.pages_to_show
+      $scope.pages = [1..$scope.pages_to_show]
+    else
+      $scope.pages = [1..total_pages]
 
   $scope.repositionQuestion = (question) ->
     question.project_id = $scope.project_id

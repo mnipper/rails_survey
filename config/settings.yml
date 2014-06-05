@@ -40,8 +40,6 @@ exception_notifications:
   email_prefix: '[RailsSurvey] '
   sender: 'noreply@chpir.org'
   recipients: ['michael@chpir.org', 'leonard@chpir.org']
-  
-#TODO Change this to localhost when in development
-application_domain: 'wci-chpir.duke.edu' 
 
 questions_per_page: 10
+pages_to_show: 10

@@ -203,13 +203,6 @@ ActiveRecord::Schema.define(version: 20140603203553) do
 
   add_index "responses", ["uuid"], name: "index_responses_on_uuid"
 
-  create_table "roles", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id"
-  end
-
   create_table "sections", force: true do |t|
     t.string   "title"
     t.string   "start_question_identifier"
