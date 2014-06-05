@@ -40,9 +40,16 @@ module Api
         end
 
         def destroy
-          question = Question.find(params[:id])
+          instrument = current_project.instruments.find(params[:instrument_id])
+          question = instrument.questions.find(params[:id])
           authorize question
-          respond_with question.destroy
+          question_number = question.number_in_instrument
+          if question.destroy
+            instrument.reorder_questions_after_delete(question_number)
+            render nothing: true, status: :ok
+          else
+            render json: { errors: question.errors.full_messages }, status: :unprocessable_entity
+          end
         end
       end
     end
