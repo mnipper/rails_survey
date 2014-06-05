@@ -17,16 +17,20 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  roles_mask             :integer
+#  failed_attempts        :integer          default(0)
+#  unlock_token           :string(255)
+#  locked_at              :datetime
 #
 
 class User < ActiveRecord::Base
-
-  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :timeoutable
+  include RoleModel
+  include ComplexPassword
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :timeoutable,
+         :lockable
   attr_accessible :email, :password, :password_confirmation, :project_ids, :roles_mask, :roles 
   before_save :ensure_authentication_token
   has_many :user_projects 
   has_many :projects, through: :user_projects
-  include RoleModel
   roles :admin, :manager, :translator, :analyst, :user 
   after_create :set_default_role
 
@@ -47,5 +51,4 @@ class User < ActiveRecord::Base
       break token unless User.where(authentication_token: token).first
     end
   end
-
 end

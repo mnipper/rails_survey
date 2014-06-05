@@ -15,13 +15,18 @@
 #  last_sign_in_ip        :string(255)
 #  created_at             :datetime
 #  updated_at             :datetime
+#  failed_attempts        :integer          default(0)
+#  unlock_token           :string(255)
+#  locked_at              :datetime
 #
 
 class AdminUser < ActiveRecord::Base
+  include ComplexPassword
   attr_accessible :email, :password, :password_confirmation
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, 
          :recoverable, :rememberable, :trackable, :validatable
+
 end
