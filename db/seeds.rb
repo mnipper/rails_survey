@@ -34,17 +34,19 @@ i = p.instruments.create!(title: "Long Test Instrument",
   language: "en",
   alignment: "left"
 )
-p "Created #{i.title}"
-2000.times do |q_n|
-  question_type = Settings.question_types.sample
-  question = i.questions.create!(text: "Question #{q_n}",
-    question_identifier: "q_#{q_n}",
-    question_type: question_type,
-    number_in_instrument: "#{q_n+1}"
-  )
-  if Settings.question_with_options.include? question_type
-    5.times do |o_n|
-      question.options.create!(text: "Option #{o_n}") 
+ActiveRecord::Base.transaction do
+  p "Created #{i.title}"
+  2000.times do |q_n|
+    question_type = Settings.question_types.sample
+    question = i.questions.create!(text: "Question #{q_n}",
+      question_identifier: "q_#{q_n}",
+      question_type: question_type,
+      number_in_instrument: "#{q_n+1}"
+    )
+    if Settings.question_with_options.include? question_type
+      5.times do |o_n|
+        question.options.create!(text: "Option #{o_n}") 
+      end
     end
   end
 end
