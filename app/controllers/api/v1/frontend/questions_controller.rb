@@ -6,11 +6,7 @@ module Api
         
         def index
           instrument = current_project.instruments.find(params[:instrument_id])
-          if params[:page].blank?
-            questions = instrument.questions
-          else
-            questions = instrument.questions.page(params[:page]).per(Settings.questions_per_page)
-          end
+          questions = instrument.questions.page(params[:page]).per(Settings.questions_per_page)
           authorize questions
           respond_with questions, include: :translations
         end
@@ -33,9 +29,13 @@ module Api
         end
 
         def update
-          question = Question.find(params[:id])
+          instrument = current_project.instruments.find(params[:instrument_id])
+          question = instrument.questions.find(params[:id])
           authorize question
-          respond_with question.update_attributes(params[:question])
+          old_number = question.number_in_instrument
+          question.update_attributes(params[:question])
+          instrument.reorder_questions(old_number, question.number_in_instrument) if old_number != question.number_in_instrument
+          respond_with question 
         end
 
         def destroy
