@@ -22,6 +22,7 @@ module Api
           question = instrument.questions.new(params[:question])
           authorize question
           if question.save
+            instrument.reorder_questions(instrument.questions.last.number_in_instrument, question.number_in_instrument)
             render json: question, status: :created
           else
             render json: { errors: question.errors.full_messages }, status: :unprocessable_entity
