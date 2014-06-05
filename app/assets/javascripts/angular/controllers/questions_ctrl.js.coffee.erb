@@ -18,9 +18,8 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
   $scope.sortableOptions = {
     cursor: 'move',
     handle: '.move-question',
-    axis: 'y'#,
-    # TODO Save updated question numbers from dragging to server
-    #stop: (e, ui) -> $scope.repositionQuestion($scope.questions[ui.item.index() - 1])
+    axis: 'y',
+    stop: (e, ui) -> $scope.updateAndSaveQuestionNumbers()
   }
 
   $scope.editQuestion = (question) ->
@@ -46,7 +45,6 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
 
   $scope.saveQuestionSuccess = (data, headers) ->
     $scope.$broadcast('SAVE_QUESTION', data.id)
-    $scope.edit_question = null
 
   $scope.saveQuestionFailure = (result, headers) ->
     angular.forEach result.data.errors, (error, field) ->
@@ -63,6 +61,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
         (data, headers) -> $scope.saveQuestionSuccess(data, headers),
         (result, headers) -> $scope.saveQuestionFailure(result, headers)
       )
+    $scope.edit_question = null
 
   $scope.cancelQuestion = ->
     $scope.$broadcast('CANCEL_QUESTION')
@@ -83,11 +82,13 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
       question.$delete({},
         (data) ->
           question.id = null
-          $scope.questions.splice($scope.questions.indexOf(question), 1)
         ,
         (data) ->
           alert "Failed to delete question"
         )
+      $scope.questions.splice($scope.questions.indexOf(question), 1)
+      $scope.updateQuestionNumbers()
+
 
   $scope.uniqueId = ->
     new Date().getTime().toString(36).split("").reverse().join("")
@@ -132,18 +133,24 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
 
   $scope.repositionQuestion = (question) ->
     question.project_id = $scope.project_id
-    question.$update({},
-      () ->
-        $scope.questions = $scope.questions.filter (q) -> q isnt question
-        if $scope.questionOnPage(question)
-          $scope.questions.splice(question.number_in_instrument - 1, 0, question)
-          $scope.updateQuestionNumbers()
-    )
+    question.$update({})
+    $scope.questions = $scope.questions.filter (q) -> q isnt question
+    if $scope.questionOnPage(question)
+      $scope.questions.splice(question.number_in_instrument - 1, 0, question)
+      $scope.updateQuestionNumbers()
 
   $scope.updateQuestionNumbers = ->
     offset = ($scope.current_page - 1) * $scope.questions_per_page
     angular.forEach $scope.questions, (question, index) ->
       question.number_in_instrument = offset + index + 1
+
+  $scope.updateAndSaveQuestionNumbers = ->
+    offset = ($scope.current_page - 1) * $scope.questions_per_page
+    angular.forEach $scope.questions, (question, index) ->
+      question.number_in_instrument = offset + index + 1
+      if question.id and $scope.questionOnPage(question)
+        question.project_id = $scope.project_id
+        question.$update()
 
   $scope.questionOnPage = (question) ->
     first_number = $scope.questions[0].number_in_instrument

@@ -26,6 +26,7 @@ module Api
           question = instrument.questions.new(params[:question])
           authorize question
           if question.save
+            ReorderQuestionsWorker.perform_async(instrument.id, instrument.questions.last.number_in_instrument, question.number_in_instrument)
             render json: question, status: :created
           else
             render json: { errors: question.errors.full_messages }, status: :unprocessable_entity
@@ -38,14 +39,23 @@ module Api
           authorize question
           old_number = question.number_in_instrument
           question.update_attributes(params[:question])
-          instrument.reorder_questions(old_number, question.number_in_instrument) if old_number != question.number_in_instrument
+          if old_number != question.number_in_instrument
+            ReorderQuestionsWorker.perform_async(instrument.id, old_number, question.number_in_instrument)
+          end
           respond_with question 
         end
 
         def destroy
-          question = Question.find(params[:id])
+          instrument = current_project.instruments.find(params[:instrument_id])
+          question = instrument.questions.find(params[:id])
           authorize question
-          respond_with question.destroy
+          question_number = question.number_in_instrument
+          if question.destroy
+            DeleteQuestionWorker.perform_async(instrument.id, question_number)
+            render nothing: true, status: :ok
+          else
+            render json: { errors: question.errors.full_messages }, status: :unprocessable_entity
+          end
         end
       end
     end
