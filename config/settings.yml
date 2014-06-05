@@ -41,5 +41,5 @@ exception_notifications:
   sender: 'noreply@chpir.org'
   recipients: ['michael@chpir.org', 'leonard@chpir.org']
 
-questions_per_page: 10
-pages_to_show: 10
+questions_per_page: 15
+pages_to_show: 15
