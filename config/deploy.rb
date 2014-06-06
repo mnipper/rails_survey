@@ -17,15 +17,10 @@ set :branch, 'master'
 
 namespace :deploy do
  
-  task :load_schema do
-    execute "cd #{current_path}; rake db:schema:load RAILS_ENV=#{rails_env}"
-  end
- 
-  task :cold do 
-    update
-    load_schema
-    start
-  end
+  #desc "Run new migrations"
+  #task :run_migrations do
+  #  execute "cd #{release_path} && bundle exec rake db:migrate RAILS_ENV=#{rails_env}"
+  #end
 
   desc 'Restart Application'
   task :restart do
@@ -60,5 +55,6 @@ namespace :deploy do
   after 'deploy:publishing', 'deploy:restart'
   after "deploy:updated", "deploy:npm_install"
   after "deploy:updated", "deploy:create_export_dir"
-  
+  after 'deploy:updated', 'deploy:migrate'
+
 end
