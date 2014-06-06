@@ -17,12 +17,12 @@ set :branch, 'master'
 
 namespace :deploy do
  
-  desc "Run new migrations"
-  task :run_migrations do
-   on roles(:db) do
-     execute "cd #{release_path} && bundle exec rake db:migrate RAILS_ENV=production"
-   end 
-  end
+ # desc "Run new migrations"
+ # task :run_migrations do
+ #  on roles(:app) do
+ #    execute "cd #{release_path} && bundle exec rake db:migrate RAILS_ENV=production"
+ #  end 
+ # end
 
   desc 'Restart Application'
   task :restart do
@@ -57,6 +57,6 @@ namespace :deploy do
   after 'deploy:publishing', 'deploy:restart'
   after "deploy:updated", "deploy:npm_install"
   after "deploy:updated", "deploy:create_export_dir"
-  after 'deploy:updated', 'deploy:run_migrations'
+  #after 'deploy:updated', 'deploy:run_migrations'
 
 end
