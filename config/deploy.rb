@@ -19,7 +19,9 @@ namespace :deploy do
  
   desc "Run new migrations"
   task :run_migrations do
-    execute "cd #{release_path} && bundle exec rake db:migrate RAILS_ENV=#{:rails_env}"
+   on roles(:db) do
+     execute "cd #{release_path} && bundle exec rake db:migrate RAILS_ENV=#{:rails_env}"
+   end 
   end
 
   desc 'Restart Application'
