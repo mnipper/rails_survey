@@ -19,7 +19,7 @@ namespace :deploy do
  
   desc "Run new migrations"
   task :run_migrations do
-   on roles(:db) do
+   on roles(:app) do
      execute "cd #{release_path} && bundle exec rake db:migrate RAILS_ENV=production"
    end 
   end
