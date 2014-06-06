@@ -47,8 +47,10 @@ ActiveAdmin.register User do
       f.input :email
       f.input :password, hint: "Leave blank. Do not change."
       f.input :password_confirmation
-      f.input :projects, :as => :check_boxes
-      f.input :roles, :as => :check_boxes, :collection => [:admin, :manager, :translator, :analyst, :user] #TODO roles array is defined in two places, models/user and admin/user
+      unless current_page?(new_admin_user_path)
+        f.input :projects, :as => :check_boxes
+        f.input :roles, :as => :check_boxes, :collection => [:admin, :manager, :translator, :analyst, :user]
+      end 
     end
     f.actions
   end
