@@ -48,9 +48,17 @@ namespace :deploy do
       execute "cd #{release_path}/node && sudo rm -rf node_modules && npm install"
     end 
   end
+  
+  desc "create exports folder"
+  task :create_export_dir do 
+    on roles(:app) do
+      execute "cd #{release_path}/public && mkdir exports"
+    end
+  end
     
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
   after "deploy:updated", "deploy:npm_install"
+  after "npm_install", "deploy:create_export_dir"
   
 end
