@@ -7,12 +7,12 @@ module Api
         def index
           instrument = current_project.instruments.find(params[:instrument_id])
           if params[:page].blank?
-            questions = instrument.questions
+            respond_with [instrument]
           else
             questions = instrument.questions.page(params[:page]).per(Settings.questions_per_page)
-          end
-          authorize questions
-          respond_with questions, include: :translations
+            authorize questions
+            respond_with questions, include: :translations
+          end 
         end
 
         def show
@@ -26,6 +26,7 @@ module Api
           question = instrument.questions.new(params[:question])
           authorize question
           if question.save
+            ReorderQuestionsWorker.perform_async(instrument.id, instrument.questions.last.number_in_instrument, question.number_in_instrument)
             render json: question, status: :created
           else
             render json: { errors: question.errors.full_messages }, status: :unprocessable_entity
@@ -33,15 +34,28 @@ module Api
         end
 
         def update
-          question = Question.find(params[:id])
+          instrument = current_project.instruments.find(params[:instrument_id])
+          question = instrument.questions.find(params[:id])
           authorize question
-          respond_with question.update_attributes(params[:question])
+          old_number = question.number_in_instrument
+          question.update_attributes(params[:question])
+          if old_number != question.number_in_instrument
+            ReorderQuestionsWorker.perform_async(instrument.id, old_number, question.number_in_instrument)
+          end
+          respond_with question 
         end
 
         def destroy
-          question = Question.find(params[:id])
+          instrument = current_project.instruments.find(params[:instrument_id])
+          question = instrument.questions.find(params[:id])
           authorize question
-          respond_with question.destroy
+          question_number = question.number_in_instrument
+          if question.destroy
+            DeleteQuestionWorker.perform_async(instrument.id, question_number)
+            render nothing: true, status: :ok
+          else
+            render json: { errors: question.errors.full_messages }, status: :unprocessable_entity
+          end
         end
       end
     end

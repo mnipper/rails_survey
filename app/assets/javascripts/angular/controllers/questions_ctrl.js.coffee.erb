@@ -1,17 +1,18 @@
 App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
   $scope.questions = []
   $scope.selectedQuestions = []
-  $scope.all_questions = []
   $scope.pages = []
   $scope.questions_per_page = <%= Settings.questions_per_page %>
+  $scope.pages_to_show = <%= Settings.pages_to_show %>
   $scope.current_page = 1
+  $scope.total_pages = 1
   $scope.init = (project_id, instrument_id) ->
     $scope.project_id = project_id
     $scope.current_page = 1
     $scope.instrument_id = instrument_id
     $scope.questions = Question.query({"project_id": project_id, "instrument_id": instrument_id, "page": $scope.current_page})
-    $scope.all_questions = Question.query({"project_id": project_id, "instrument_id": instrument_id}, -> $scope.createPages())
-
+    $scope.instrument = Question.query({"project_id": project_id, "instrument_id": instrument_id}, -> $scope.createPages())
+    
   $scope.getQuestions = () ->
     $scope.questions = Question.query({"project_id": $scope.project_id, "instrument_id": $scope.instrument_id, "page": $scope.current_page})
 
@@ -19,24 +20,9 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
     cursor: 'move',
     handle: '.move-question',
     axis: 'y',
-    stop: (e, ui) -> $scope.updateQuestionNumbers()
+    stop: (e, ui) -> $scope.updateAndSaveQuestionNumbers()
   }
 
-  $scope.updateQuestionNumbers = ->
-    offset = ($scope.current_page - 1) * $scope.questions_per_page
-    angular.forEach $scope.questions, (question, index) ->
-      question.number_in_instrument = offset + index + 1
-      if question.id
-        question.project_id = $scope.project_id
-        question.$update()
-    start_index = $scope.questions[$scope.questions.length - 1].number_in_instrument
-    angular.forEach $scope.all_questions, (question, index) ->
-      if question.number_in_instrument >= start_index and not $scope.lastQuestion(question)
-        question.number_in_instrument = index + 1
-        if question.id
-          question.project_id = $scope.project_id
-          question.$update()
-  
   $scope.editQuestion = (question) ->
     $scope.$broadcast('EDIT_QUESTION', question.id)
     $scope.edit_question = question
@@ -57,7 +43,6 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
     question.question_identifier = "q_#{question.project_id}_#{question.instrument_id}_#{$scope.uniqueId()}"
     $scope.questions.push(question)
     $scope.edit_question = question
-    $scope.all_questions.splice(question.number_in_instrument - 1, 0, question)
 
   $scope.saveQuestionSuccess = (data, headers) ->
     $scope.$broadcast('SAVE_QUESTION', data.id)
@@ -78,6 +63,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
         (data, headers) -> $scope.saveQuestionSuccess(data, headers),
         (result, headers) -> $scope.saveQuestionFailure(result, headers)
       )
+    $scope.edit_question = null
 
   $scope.cancelQuestion = ->
     $scope.$broadcast('CANCEL_QUESTION')
@@ -98,13 +84,13 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
       question.$delete({},
         (data) ->
           question.id = null
-          $scope.all_questions.splice($scope.all_questions.indexOf(question), 1)
-          $scope.questions.splice($scope.questions.indexOf(question), 1)
-          $scope.updateQuestionNumbers()
         ,
         (data) ->
           alert "Failed to delete question"
         )
+      $scope.questions.splice($scope.questions.indexOf(question), 1)
+      $scope.updateQuestionNumbers()
+
 
   $scope.uniqueId = ->
     new Date().getTime().toString(36).split("").reverse().join("")
@@ -126,34 +112,60 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
 
   $scope.setPage = (new_page) ->
     new_page = 1 if new_page < 1
-
     $scope.current_page = new_page
     $scope.getQuestions()
- 
+    if $scope.current_page > $scope.pages_to_show and $scope.current_page % $scope.pages_to_show == 1
+      if $scope.current_page > $scope.pages_to_show
+        lower_bound = (($scope.current_page/$scope.pages_to_show) * $scope.pages_to_show) 
+        upper_bound = (($scope.current_page/$scope.pages_to_show) * $scope.pages_to_show) + ($scope.pages_to_show - 1)
+        if $scope.total_pages < upper_bound
+          upper_bound = $scope.total_pages
+        $scope.pages = [lower_bound..upper_bound]
+    else if $scope.current_page % $scope.pages_to_show == 0
+      lower_bound = (($scope.current_page/$scope.pages_to_show) * $scope.pages_to_show) - ($scope.pages_to_show - 1)
+      $scope.pages =  [lower_bound..$scope.current_page]
+       
   $scope.createPages = () ->
-    $scope.pages = [1..Math.ceil($scope.all_questions.length/$scope.questions_per_page)]
+    $scope.total_pages = Math.ceil($scope.instrument[0].question_count / $scope.questions_per_page)
+    if $scope.total_pages > $scope.pages_to_show
+      $scope.pages = [1..$scope.pages_to_show]
+    else
+      $scope.pages = [1..$scope.total_pages]
+      
+  $scope.setEndPages = (end_page) ->
+     $scope.current_page = end_page
+     $scope.getQuestions()
+     if end_page == 1
+       $scope.createPages()
+     else if $scope.total_pages > $scope.pages_to_show
+       $scope.pages = [($scope.total_pages - $scope.pages_to_show)..$scope.total_pages]
+     else
+       $scope.pages = [1..$scope.total_pages]
 
   $scope.repositionQuestion = (question) ->
     question.project_id = $scope.project_id
-    if question.number_in_instrument > $scope.all_questions.length
-      question.number_in_instrument = $scope.all_questions.length
     question.$update({},
-      (data) ->
-         if $scope.questionNotOnPage(question)
-           $scope.questions.splice($scope.questions.indexOf(question), 1)
-           $scope.all_questions.splice(question.number_in_instrument - 1, 0, question)
-         else
-           $scope.questions.splice($scope.questions.indexOf(question), 1)
-           $scope.questions.splice(question.number_in_instrument - 1, 0, question)
-         $scope.updateQuestionNumbers()
+      () -> $scope.updateQuestionNumbers()
     )
+    $scope.questions = $scope.questions.filter (q) -> q isnt question
+    if $scope.questionOnPage(question)
+      $scope.questions.splice(question.number_in_instrument - 1, 0, question)
 
-  $scope.lastQuestion = (question) ->
-    question == $scope.questions[$scope.questions.length - 1]
+  $scope.updateQuestionNumbers = ->
+    offset = ($scope.current_page - 1) * $scope.questions_per_page
+    angular.forEach $scope.questions, (question, index) ->
+      question.number_in_instrument = offset + index + 1
 
-  $scope.firstQuestion = (question) ->
-    question == $scope.questions[0]
+  $scope.updateAndSaveQuestionNumbers = ->
+    offset = ($scope.current_page - 1) * $scope.questions_per_page
+    angular.forEach $scope.questions, (question, index) ->
+      question.number_in_instrument = offset + index + 1
+      if question.id and $scope.questionOnPage(question)
+        question.project_id = $scope.project_id
+        question.$update()
 
-  $scope.questionNotOnPage = (question) ->
-    question.number_in_instrument > $scope.lastQuestion(question).number_in_instrument or question.number_in_instrument < $scope.firstQuestion(question).number_in_instrument
+  $scope.questionOnPage = (question) ->
+    first_number = $scope.questions[0].number_in_instrument
+    last_number = $scope.questions[$scope.questions.length - 1].number_in_instrument
+    question.number_in_instrument >= first_number and question.number_in_instrument <= last_number
 ]

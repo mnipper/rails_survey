@@ -1,13 +1,14 @@
 <div class="body">
 <div ng-controller="QuestionsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>)">
   <ul class="pagination">
+    <li><a ng-click="setEndPages(1)"><i class="eicon-left-open-big"></i></a></li>
     <li><a ng-click="setPage(current_page - 1)"><i class="icon-arrow-left"></i></a></li>
        <li ng-repeat="page in pages" ng-class="{ active: current_page == page }">
-         <a ng-click="setPage(page)"> {{ page }} </a>
+           <a ng-click="setPage(page)"> {{ page }} </a>
        </li>
     <li><a ng-click="setPage(current_page + 1)"><i class="icon-arrow-right"></i></a></li>
+    <li><a ng-click="setEndPages(total_pages)"><i class="eicon-right-open-big"></i></a></li>
   </ul> 
-  <!-- <a ng-click="setPage(2)">2</a> -->
   <input type="search" ng-model="q" placeholder="Search questions..." class="form-control bottom-buffer">
   <div ui-sortable="sortableOptions" ng-model="questions">
     <div class="row" ng-repeat="question in questions | filter:q">
@@ -53,11 +54,13 @@
     <a class="btn btn-success" ng-click="newQuestion()" id="add-question-button"><i class="icon-plus"></i> Add Question</a>
   </div>
   <ul class="pagination">
+    <li><a ng-click="setEndPages(1)"><i class="eicon-left-open-big"></i></a></li>
     <li><a ng-click="setPage(current_page - 1)"><i class="icon-arrow-left"></i></a></li>
-       <li ng-repeat="page in pages" ng-class="{ active: current_page == page }">
+    <li ng-repeat="page in pages" ng-class="{ active: current_page == page }">
          <a ng-click="setPage(page)"> {{ page }} </a>
-       </li>
+    </li>
     <li><a ng-click="setPage(current_page + 1)"><i class="icon-arrow-right"></i></a></li>
+    <li><a ng-click="setEndPages(total_pages)"><i class="eicon-right-open-big"></i></a></li>
   </ul>
 </div>
 
