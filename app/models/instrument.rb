@@ -100,13 +100,13 @@ class Instrument < ActiveRecord::Base
     ActiveRecord::Base.transaction do
       if old_number > new_number
         # question moved up in instrument
-        questions.unscoped.where('number_in_instrument <= ? AND number_in_instrument >= ?', old_number, new_number).order('number_in_instrument ASC, updated_at DESC').each_with_index do |question, index|
+        questions.unscoped.where('instrument_id = ? AND number_in_instrument <= ? AND number_in_instrument >= ?', self.id, old_number, new_number).order('number_in_instrument ASC, updated_at DESC').each_with_index do |question, index|
           question.number_in_instrument = new_number + index
           question.save
         end
       else
         # question moved down in instrument
-        questions.unscoped.where('number_in_instrument >= ? AND number_in_instrument <= ?', old_number, new_number).order('number_in_instrument ASC, updated_at ASC').each_with_index do |question, index|
+        questions.unscoped.where('instrument_id = ? AND number_in_instrument >= ? AND number_in_instrument <= ?', self.id, old_number, new_number).order('number_in_instrument ASC, updated_at ASC').each_with_index do |question, index|
           question.number_in_instrument = old_number + index
           question.save
         end
@@ -116,7 +116,7 @@ class Instrument < ActiveRecord::Base
 
   def reorder_questions_after_delete(question_number)
     ActiveRecord::Base.transaction do
-      questions.unscoped.where('number_in_instrument >= ?', question_number).each_with_index do |question, index|
+      questions.unscoped.where('instrument_id = ? AND number_in_instrument >= ?', self.id, question_number).each_with_index do |question, index|
         question.number_in_instrument = question.number_in_instrument - 1
         question.save
       end
