@@ -46,6 +46,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
 
   $scope.saveQuestionSuccess = (data, headers) ->
     $scope.$broadcast('SAVE_QUESTION', data.id)
+    $scope.edit_question = null
 
   $scope.saveQuestionFailure = (result, headers) ->
     angular.forEach result.data.errors, (error, field) ->

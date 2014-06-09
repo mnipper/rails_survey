@@ -1,7 +1,8 @@
 ActiveAdmin.register User do
   menu priority: 3
   permit_params :email, :password, :password_confirmation, :project_ids, :user_id, :name, :roles_mask, :roles
-
+  after_save { |user| user.set_default_role }
+  
   index do
     column :email
     column :current_sign_in_at
