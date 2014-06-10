@@ -41,9 +41,10 @@
         <% @instrument.questions.each do |question| %>
           <tr>
             <td><%= question.question_identifier %></td>
-            <td><%= question.text %></td>
-            <td><%= text_area_tag "question_translations[#{question.id}]",
-              question.translated_for(@instrument_translation.language, :text), size: '50x5' %></td>
+            <td><%= raw question.text %></td>
+            <td><div class="controls form-group" ng-init="<%= question.question_identifier %>.text = '<%= question.translated_for(@instrument_translation.language, :text) %>'">
+              <div text-angular="text-angular" id="text-angular-content" rows="4" ta-toolbar="[['bold','italics','underline','insertLink'],['redo','undo'],['html']]" ng-model="<%= question.question_identifier  %>.text" name="<%= "question_translations[#{question.id}]" %>" placeholder="<%=  %>"></div>
+            </div></td>
           </tr>
           <% if question.has_options? %>
             <% question.options.each do |option| %>
