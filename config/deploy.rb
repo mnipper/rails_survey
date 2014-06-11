@@ -55,7 +55,6 @@ namespace :deploy do
   desc "create exports folder"
   task :create_export_dir do 
     on roles(:app) do
-      execute "cd #{shared_path}/public && mkdir exports"
       execute "cd #{release_path}/public && mkdir exports"
     end
   end
