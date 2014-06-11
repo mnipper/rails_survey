@@ -30,6 +30,10 @@ namespace :deploy do
     on roles(:app) do
       execute "sudo /etc/init.d/redis-server restart"
     end
+    desc "start sidekiq"
+    on roles(:app) do
+      execute "cd #{release_path} && bundle exec sidekiq"
+    end
     desc "restart node"
     on roles(:app), in: :sequence, wait: 5 do
       execute "sudo restart realtime-app || sudo start realtime-app"
