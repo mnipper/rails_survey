@@ -12,7 +12,7 @@ set :pty, false
 set :format, :pretty
 set :keep_releases, 5
 set :linked_files, %w{config/database.yml config/secret_token.txt config/local_env.yml}
-set :linked_dirs, fetch(:linked_dirs).push("bin" "log" "tmp/pids" "tmp/cache" "tmp/sockets" "vendor/bundle" "public/system")
+set :linked_dirs, fetch(:linked_dirs).push("bin" "log" "tmp/pids" "tmp/cache" "tmp/sockets" "vendor/bundle" "public/system" "public/exports")
 set :branch, 'master'
 set :sidekiq_default_hooks, true
 set :sidekiq_pid, File.join(shared_path, 'tmp', 'pids', 'sidekiq.pid')
@@ -55,7 +55,7 @@ namespace :deploy do
   desc "create exports folder"
   task :create_export_dir do 
     on roles(:app) do
-      execute "cd #{release_path}/public && mkdir exports"
+      execute "cd #{shared_path}/public && mkdir exports"
     end
   end
     
