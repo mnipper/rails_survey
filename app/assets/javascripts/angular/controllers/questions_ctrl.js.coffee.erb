@@ -112,6 +112,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
 
   $scope.setPage = (new_page) ->
     new_page = 1 if new_page < 1
+    new_page = $scope.total_pages if new_page > $scope.total_pages
     $scope.current_page = new_page
     $scope.getQuestions()
     if $scope.current_page > $scope.pages_to_show and $scope.current_page % $scope.pages_to_show == 1
