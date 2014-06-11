@@ -14,9 +14,11 @@ set :keep_releases, 5
 set :linked_files, %w{config/database.yml config/secret_token.txt config/local_env.yml}
 set :linked_dirs, fetch(:linked_dirs).push("bin" "log" "tmp/pids" "tmp/cache" "tmp/sockets" "vendor/bundle" "public/system")
 set :branch, 'master'
+set :sidekiq_default_hooks, true
 set :sidekiq_pid, File.join(shared_path, 'tmp', 'pids', 'sidekiq.pid')
 set :sidekiq_log, File.join(shared_path, 'log', 'sidekiq.log')
 set :sidekiq_timeout, 1
+set :sidekiq_role, :app 
 set :sidekiq_command, "RAILS_ENV=production bundle exec sidekiq"
 
 namespace :deploy do
