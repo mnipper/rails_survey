@@ -1,6 +1,6 @@
 <div class="body">
 <div ng-controller="QuestionsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>)">
-  <ul class="pagination">
+  <ul class="pagination" ng-show="total_pages > 1">
     <li><a ng-click="setEndPages(1)"><i class="eicon-left-open-big"></i></a></li>
     <li><a ng-click="setPage(current_page - 1)"><i class="icon-arrow-left"></i></a></li>
        <li ng-repeat="page in pages" ng-class="{ active: current_page == page }">
@@ -53,7 +53,7 @@
   <div class="top-buffer">
     <a class="btn btn-success" ng-click="newQuestion()" id="add-question-button"><i class="icon-plus"></i> Add Question</a>
   </div>
-  <ul class="pagination">
+  <ul class="pagination" ng-show="total_pages > 1">
     <li><a ng-click="setEndPages(1)"><i class="eicon-left-open-big"></i></a></li>
     <li><a ng-click="setPage(current_page - 1)"><i class="icon-arrow-left"></i></a></li>
     <li ng-repeat="page in pages" ng-class="{ active: current_page == page }">
