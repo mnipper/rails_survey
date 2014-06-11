@@ -50,7 +50,7 @@ App.controller 'GraphCtrl', ['$scope', 'DailyGraph', 'HourGraph', 'ProjectRespon
         max: MAXIMUM
         differenceCount: differenceResponseCount
       } 
-    socket = io.connect($scope.HOST + ':8080/') 
+    socket = io.connect($scope.HOST + ':8080/', {secure: true}) 
     socket.on "message", (data) ->
       data = JSON.parse(data)
       if data.count != 0
