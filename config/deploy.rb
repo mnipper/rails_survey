@@ -17,7 +17,7 @@ set :branch, 'master'
 set :sidekiq_pid, File.join(shared_path, 'tmp', 'pids', 'sidekiq.pid')
 set :sidekiq_log, File.join(shared_path, 'log', 'sidekiq.log')
 set :sidekiq_timeout, 1
-
+set :sidekiq_command, "RAILS_ENV=production bundle exec sidekiq"
 
 namespace :deploy do
  
@@ -33,10 +33,6 @@ namespace :deploy do
     desc "restart redis"
     on roles(:app) do
       execute "sudo /etc/init.d/redis-server restart"
-    end
-    desc "start sidekiq"
-    on roles(:app) do
-      execute "cd #{current_path} && RAILS_ENV='production' bundle exec sidekiq"
     end
     desc "restart node"
     on roles(:app), in: :sequence, wait: 5 do
