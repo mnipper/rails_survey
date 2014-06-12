@@ -1,4 +1,3 @@
-# config valid only for Capistrano 3.1
 lock '3.2.1'
 
 set :application, 'rails_survey' 
@@ -23,13 +22,6 @@ set :sidekiq_command, "RAILS_ENV=production bundle exec sidekiq"
 
 namespace :deploy do
  
- # desc "Run new migrations"
- # task :run_migrations do
- #  on roles(:app) do
- #    execute "cd #{release_path} && bundle exec rake db:migrate RAILS_ENV=production"
- #  end 
- # end
-
   desc 'Restart Application'
   task :restart do
     desc "restart redis"
@@ -51,18 +43,9 @@ namespace :deploy do
       execute "cd #{release_path}/node && sudo rm -rf node_modules && npm install"
     end 
   end
-  
-  desc "create exports folder"
-  task :create_export_dir do 
-    on roles(:app) do
-      execute "cd #{release_path}/public && mkdir exports"
-    end
-  end
     
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
   after "deploy:updated", "deploy:npm_install"
-  after "deploy:updated", "deploy:create_export_dir"
-  #after 'deploy:updated', 'deploy:run_migrations'
 
 end
