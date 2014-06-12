@@ -43,9 +43,16 @@ namespace :deploy do
       execute "cd #{release_path}/node && sudo rm -rf node_modules && npm install"
     end 
   end
+  
+  task :sym_link_export_files do
+    on roles(:app) do
+      execute "ln -s #{shared_path}/public/exports #{release_path}/public/exports"
+    end
+  end
     
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
   after "deploy:updated", "deploy:npm_install"
+  after "deploy:updated", "deploy:sym_link_export_files"
 
 end
