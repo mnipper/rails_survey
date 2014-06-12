@@ -30,9 +30,6 @@ vcs.xml
 .idea/
 .project
 
-#Ignore bin
-bin/
-
 #pictures
 public/system
 public/exports
