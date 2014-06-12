@@ -13,13 +13,15 @@
       </thead>
 
       <tbody>
-        <tr>
-          <td><%= link_to current_project.name, current_project %></td>
-          <td><%= current_project.description %></td>
-          <% if policy(current_project).export? %>
-            <td> <%= link_to 'Export Responses', export_project_path(current_project) %> </td>
-          <% end %>
-        </tr>
+        <% unless current_project.responses.empty? %>
+            <tr>
+              <td><%= link_to current_project.name, current_project %></td>
+              <td><%= current_project.description %></td>
+              <% if policy(current_project).export? %>
+                <td> <%= link_to 'Export Responses', export_project_path(current_project) %> </td>
+              <% end %>
+            </tr>
+         <% end %>
       </tbody>
     </table>
   </div>
@@ -43,14 +45,16 @@
       </thead>
       <tbody>
       <% @instruments.each do |instrument| %>
-        <tr>
-          <td><%= link_to instrument.title, project_instrument_path(current_project, instrument) %></td>
-          <td><%= instrument.id %></td>
-          <td><%= instrument.current_version_number %></td>
-          <td><%= instrument.created_at %></td>
-          <td><%= instrument.updated_at %></td>
-          <td><%= link_to 'Export Responses', export_responses_project_instrument_path(current_project, instrument) %></td>
-        </tr>
+        <% unless instrument.responses.empty? %>
+            <tr>
+              <td><%= link_to instrument.title, project_instrument_path(current_project, instrument) %></td>
+              <td><%= instrument.id %></td>
+              <td><%= instrument.current_version_number %></td>
+              <td><%= instrument.created_at %></td>
+              <td><%= instrument.updated_at %></td>
+              <td><%= link_to 'Export Responses', export_responses_project_instrument_path(current_project, instrument) %></td>
+            </tr>
+        <% end %>
       <% end %>
       </tbody>
     </table>
