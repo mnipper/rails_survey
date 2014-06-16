@@ -4,3 +4,4 @@ App.factory 'Question', ['$resource', ($resource) ->
     {update: {method: 'PUT'}}
   )
 ]
+
