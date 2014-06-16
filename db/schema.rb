@@ -203,6 +203,13 @@ ActiveRecord::Schema.define(version: 20140613162054) do
 
   add_index "responses", ["uuid"], name: "index_responses_on_uuid"
 
+  create_table "roles", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+  end
+
   create_table "sections", force: true do |t|
     t.string   "title"
     t.string   "start_question_identifier"
@@ -254,7 +261,6 @@ ActiveRecord::Schema.define(version: 20140613162054) do
     t.integer  "failed_attempts",        default: 0
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.datetime "last_active_at"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true
