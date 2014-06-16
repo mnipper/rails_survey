@@ -13,11 +13,12 @@
 #  device_uuid               :string(255)
 #  latitude                  :string(255)
 #  longitude                 :string(255)
+#  metadata                  :text
 #
 
 class Survey < ActiveRecord::Base
   attr_accessible :instrument_id, :instrument_version_number, :uuid, :device_id, :instrument_title,
-    :device_uuid, :latitude, :longitude
+    :device_uuid, :latitude, :longitude, :metadata
   belongs_to :instrument
   belongs_to :device
   has_many :responses, foreign_key: :survey_uuid, primary_key: :uuid, dependent: :destroy
