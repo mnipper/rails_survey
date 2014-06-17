@@ -53,4 +53,17 @@ class Survey < ActiveRecord::Base
   def location_link
     "https://www.google.com/maps/place/#{latitude}+#{longitude}" if latitude and longitude
   end
+
+  def metadata_keys
+    metadata_json.keys
+  end
+
+  def metadata_value_for(key)
+    metadata_json[key]
+  end
+
+  private
+    def metadata_json
+      JSON.parse(metadata)
+    end
 end
