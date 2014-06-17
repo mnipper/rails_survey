@@ -54,16 +54,7 @@ class Survey < ActiveRecord::Base
     "https://www.google.com/maps/place/#{latitude}+#{longitude}" if latitude and longitude
   end
 
-  def metadata_keys
-    metadata_json.keys
+  def metadata
+    JSON.parse(read_attribute(:metadata))
   end
-
-  def metadata_value_for(key)
-    metadata_json[key]
-  end
-
-  private
-    def metadata_json
-      JSON.parse(metadata)
-    end
 end
