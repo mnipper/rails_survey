@@ -5,7 +5,7 @@ module Api
 
       def index
         project = Project.find(params[:project_id])
-        respond_with project.sections 
+        respond_with project.sections.with_deleted
       end
 
       def show

@@ -1,5 +1,5 @@
 # MINIMUM ANDROID VERSION ALLOWED
-minimum_android_version_code: 2
+minimum_android_version_code: 4
 
 question_types: 
         ['SELECT_ONE', 'SELECT_MULTIPLE', 'SELECT_ONE_WRITE_OTHER',

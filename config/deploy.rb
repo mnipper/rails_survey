@@ -1,4 +1,3 @@
-# config valid only for Capistrano 3.1
 lock '3.2.1'
 
 set :application, 'rails_survey' 
@@ -12,18 +11,13 @@ set :pty, false
 set :format, :pretty
 set :keep_releases, 5
 set :linked_files, %w{config/database.yml config/secret_token.txt config/local_env.yml}
-set :linked_dirs, fetch(:linked_dirs).push("bin" "log" "tmp/pids" "tmp/cache" "tmp/sockets" "vendor/bundle" "public/system")
+set :linked_dirs, fetch(:linked_dirs).push("bin" "log" "tmp/pids" "tmp/cache" "tmp/sockets" "vendor/bundle" "public/system" "public/exports")
 set :branch, 'master'
+set :sidekiq_pid, File.join(shared_path, 'tmp', 'pids', 'sidekiq.pid')
+set :sidekiq_log, File.join(shared_path, 'log', 'sidekiq.log')
 
 namespace :deploy do
  
- # desc "Run new migrations"
- # task :run_migrations do
- #  on roles(:app) do
- #    execute "cd #{release_path} && bundle exec rake db:migrate RAILS_ENV=production"
- #  end 
- # end
-
   desc 'Restart Application'
   task :restart do
     desc "restart redis"
@@ -46,17 +40,15 @@ namespace :deploy do
     end 
   end
   
-  desc "create exports folder"
-  task :create_export_dir do 
+  task :sym_link_export_files do
     on roles(:app) do
-      execute "cd #{release_path}/public && mkdir exports"
+      execute "ln -s #{shared_path}/public/exports #{release_path}/public/exports"
     end
   end
     
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
   after "deploy:updated", "deploy:npm_install"
-  after "deploy:updated", "deploy:create_export_dir"
-  #after 'deploy:updated', 'deploy:run_migrations'
+  after "deploy:updated", "deploy:sym_link_export_files"
 
 end
