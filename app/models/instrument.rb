@@ -83,9 +83,9 @@ class Instrument < ActiveRecord::Base
     format << ['number', 'qid', 'question_type', language]
     questions.each do |question|
       format << [question.number_in_instrument, question.question_identifier, question.question_type, question.text]
-      question.options.each {|option| format << ['', "Option for #{question.question_identifier}", option.text]}
+      question.options.each {|option| format << ['', "Option for #{question.question_identifier}", '', option.text]}
       if question.reg_ex_validation_message
-        format << ['', "Regular expiression failure message for #{question.question_identifier}",
+        format << ['', "Regular expiression failure message for #{question.question_identifier}", '',
           question.reg_ex_validation_message]
       end
     end
