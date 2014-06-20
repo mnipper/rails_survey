@@ -1,5 +1,6 @@
-App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
+App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', ($scope, Question, Instrument) ->
   $scope.questions = []
+  $scope.all_questions = []
   $scope.selectedQuestions = []
   $scope.pages = []
   $scope.questions_per_page = <%= Settings.questions_per_page %>
@@ -11,8 +12,9 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
     $scope.current_page = 1
     $scope.instrument_id = instrument_id
     $scope.questions = Question.query({"project_id": project_id, "instrument_id": instrument_id, "page": $scope.current_page})
-    $scope.instrument = Question.query({"project_id": project_id, "instrument_id": instrument_id}, -> $scope.createPages())
-    
+    $scope.instrument = Instrument.query({"project_id": project_id, "id": instrument_id}, -> $scope.createPages())
+    $scope.all_questions = Question.query({"project_id": project_id, "instrument_id": instrument_id})
+
   $scope.getQuestions = () ->
     $scope.questions = Question.query({"project_id": $scope.project_id, "instrument_id": $scope.instrument_id, "page": $scope.current_page})
 
@@ -96,10 +98,10 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
     new Date().getTime().toString(36).split("").reverse().join("")
 
   $scope.questionsBefore = (question) ->
-    $scope.questions.slice(0, $scope.questions.indexOf(question))
+    $scope.all_questions.slice(0, (question.number_in_instrument - 1))
 
   $scope.questionsAfter = (question) ->
-    $scope.questions.slice($scope.questions.indexOf(question) + 1, $scope.questions.length)
+    $scope.all_questions.slice(question.number_in_instrument, $scope.all_questions.length)
 
   $scope.questionTypes = ->
     <%= Settings.question_types %>
