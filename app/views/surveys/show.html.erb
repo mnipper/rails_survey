@@ -3,6 +3,34 @@
     <%= @survey.instrument.title %><br /><%= @survey.uuid %>
   <% end %>
 </h1>
+
+<% if @survey.metadata %>
+  <section class="widget">
+    <header>
+      <h4><i class="icon-download-alt"></i> Survey Metadata</h4>
+    </header>
+    <div class="body">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @survey.metadata.each_pair do |key, value| %>
+          <tr>
+            <td><%= key %></td>
+            <td><%= value %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+      </table>
+    </div>
+  </section>
+<% end %>
+
 <section class="widget">
   <header>
     <h4><i class="icon-download-alt"></i> Survey Results</h4>

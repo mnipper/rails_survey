@@ -55,6 +55,6 @@ class Survey < ActiveRecord::Base
   end
 
   def metadata
-    JSON.parse(read_attribute(:metadata))
+    JSON.parse(read_attribute(:metadata)) unless read_attribute(:metadata).nil?
   end
 end
