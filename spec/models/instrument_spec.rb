@@ -166,8 +166,8 @@ describe Instrument do
         ["Instrument title:", @instrument.title],
         ["Version number:", @instrument.current_version_number],
         ["\n"],
-        ["number", "qid", @instrument.language],
-        [@question.number_in_instrument, @question.question_identifier, @question.text]
+        ["number", "qid", 'question_type', @instrument.language],
+        [@question.number_in_instrument, @question.question_identifier, @question.question_type, @question.text]
       ]
     end
   end
