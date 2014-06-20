@@ -19,7 +19,7 @@ class InstrumentPolicy
   end
 
   def destroy?
-    @user.admin?
+    write_access
   end
 
   def show?
@@ -58,5 +58,4 @@ class InstrumentPolicy
   def export_access
     @user.admin? || @user.manager? || @user.analyst?
   end
-
 end
