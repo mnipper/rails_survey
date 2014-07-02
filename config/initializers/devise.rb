@@ -7,7 +7,7 @@ Devise.setup do |config|
   config.secret_key = if Rails.env.development? or Rails.env.test?
     'c12e44f421f71b917434e672db0693cfe11e2aa9eb6a0bf00a1285a182cbb33b3c8b494f226fdc536248d4c984fde392604d24e2a7ec4935a4bc90bed928c10b'
   else
-    ENV['DEVISE_SECRET_KEY']
+    ENV['DEVISE_SECRET_TOKEN']
   end
 
   # ==> Mailer Configuration
