@@ -17,7 +17,7 @@ class InstrumentTranslationsController < ApplicationController
     @project = current_project
     @instrument = current_project.instruments.find(params[:instrument_id])
     @instrument_translation = @instrument.translations.new
-     authorize @instrument_translation
+    authorize @instrument_translation
   end
 
   def create
