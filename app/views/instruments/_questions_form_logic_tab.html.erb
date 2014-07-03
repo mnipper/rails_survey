@@ -25,7 +25,7 @@
       </div>
     </div>
   </fieldset>
-  <fieldset ng-hide="$last || !questionTypesWithOptions(question.question_type)">
+  <fieldset ng-hide="$scope.all_questions.length == question.number_in_instrument || !questionTypesWithOptions(question.question_type)">
     <legend class="section">
       Skip Patterns
     </legend>
