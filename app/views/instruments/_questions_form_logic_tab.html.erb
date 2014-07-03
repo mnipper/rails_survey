@@ -45,7 +45,7 @@
             no-results-text="'This does not match any valid question identifier'"
             name="skip-pattern"
             ng-model="option.next_question"
-            ng-options="q.question_identifier as q.question_identifier for q in questionsAfter(question)"
+            ng-options="q.question_identifier as q.question_identifier for q in all_questions"
             >
               <option value=""></option>
             </select>
