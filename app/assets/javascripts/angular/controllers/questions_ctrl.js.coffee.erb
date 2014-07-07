@@ -11,12 +11,12 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', ($scope, Qu
     $scope.project_id = project_id
     $scope.current_page = 1
     $scope.instrument_id = instrument_id
-    $scope.questions = Question.query({"project_id": project_id, "instrument_id": instrument_id, "page": $scope.current_page})
+    $scope.questions = Question.query({"project_id": project_id, "instrument_id": instrument_id, "page": $scope.current_page}, -> $scope.updateQuestionNumbers())
     $scope.instrument = Instrument.query({"project_id": project_id, "id": instrument_id}, -> $scope.createPages())
     $scope.all_questions = Question.query({"project_id": project_id, "instrument_id": instrument_id})
 
   $scope.getQuestions = () ->
-    $scope.questions = Question.query({"project_id": $scope.project_id, "instrument_id": $scope.instrument_id, "page": $scope.current_page})
+    $scope.questions = Question.query({"project_id": $scope.project_id, "instrument_id": $scope.instrument_id, "page": $scope.current_page}, -> $scope.updateQuestionNumbers())
 
   $scope.sortableOptions = {
     cursor: 'move',
