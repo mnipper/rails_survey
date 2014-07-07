@@ -98,16 +98,15 @@ class Instrument < ActiveRecord::Base
 
   def reorder_questions(old_number, new_number)
     ActiveRecord::Base.transaction do
-      if old_number > new_number
-        # question moved up in instrument
-        questions.unscoped.where('instrument_id = ? AND number_in_instrument <= ? AND number_in_instrument >= ?', self.id, old_number, new_number).order('number_in_instrument ASC, updated_at DESC').each_with_index do |question, index|
-          question.number_in_instrument = new_number + index
-          question.save
-        end
-      else
-        # question moved down in instrument
-        questions.unscoped.where('instrument_id = ? AND number_in_instrument >= ? AND number_in_instrument <= ?', self.id, old_number, new_number).order('number_in_instrument ASC, updated_at ASC').each_with_index do |question, index|
-          question.number_in_instrument = old_number + index
+      # If question is moved up in instrument, settle conflicts by giving the
+      # most recently updated (ie the moved question) the lower number.
+      question_moved_up = old_number > new_number
+      secondary_order = question_moved_up ? 'DESC' : 'ASC'
+
+      questions.unscoped.where('instrument_id = ?', self.id).order("number_in_instrument ASC, updated_at #{secondary_order}").each_with_index do |question, index|
+        updated_number = index + 1
+        if question.number_in_instrument != updated_number
+          question.number_in_instrument = updated_number
           question.save
         end
       end
