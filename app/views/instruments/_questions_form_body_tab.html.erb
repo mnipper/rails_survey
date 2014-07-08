@@ -92,7 +92,7 @@
           
         </div>
         <div ng-show="questionTypesWithOptions(question.question_type)">
-          <div ng-controller="OptionsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>, question.id)">
+          <div>
             <fieldset>
               <legend class="section">
                 Options
