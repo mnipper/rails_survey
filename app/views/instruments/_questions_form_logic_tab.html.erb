@@ -32,7 +32,7 @@
     <div>
       <p class="text-muted">A skip pattern goes to a specific question based on if the user selects a specific option
         when responding to a question.  Select the desired pattern for each option to this question.</p>
-      <div ng-controller="OptionsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>, question.id)">
+      <div>
         <div ng-repeat="option in options">
           <label for="follow-up" class="control-label">If <strong>{{option.text}}</strong> is selected, skip to:</label>
           <div class="controls form-group">
