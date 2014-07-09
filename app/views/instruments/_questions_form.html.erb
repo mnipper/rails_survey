@@ -29,6 +29,7 @@
           </header>
           <div class="body" ng-bind-html="question.text"></div>
         </div>
+        <div ng-controller="OptionsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>, question.id)">
         <div ng-show="edit_question == question">
           <section class="widget widget-tabs">
             <header>
@@ -47,6 +48,7 @@
               </div>
             </div>
           </section>
+        </div>
         </div>
       </div>
     </div>
