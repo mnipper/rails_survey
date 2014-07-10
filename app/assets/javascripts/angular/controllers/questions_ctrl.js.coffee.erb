@@ -1,4 +1,4 @@
-App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', ($scope, Question, Instrument) ->
+App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', 'filterFilter', ($scope, Question, Instrument, filterFilter) ->
   $scope.questions = []
   $scope.all_questions = []
   $scope.selectedQuestions = []
@@ -7,6 +7,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', ($scope, Qu
   $scope.pages_to_show = <%= Settings.pages_to_show %>
   $scope.current_page = 1
   $scope.total_pages = 1
+  $scope.searchText = ""
   $scope.init = (project_id, instrument_id) ->
     $scope.project_id = project_id
     $scope.current_page = 1
@@ -174,4 +175,9 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', ($scope, Qu
     first_number = $scope.questions[0].number_in_instrument
     last_number = $scope.questions[$scope.questions.length - 1].number_in_instrument
     question.number_in_instrument >= first_number and question.number_in_instrument <= last_number
+    
+  $scope.searchItem = () ->
+    if $scope.searchText isnt ""
+      $scope.questions = filterFilter($scope.all_questions, $scope.searchText)
+
 ]
