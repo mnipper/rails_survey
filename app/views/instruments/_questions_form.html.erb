@@ -11,7 +11,7 @@
   </ul> 
   <input type="search" ng-model="q" placeholder="Search questions..." class="form-control bottom-buffer">
   <div ui-sortable="sortableOptions" ng-model="questions">
-    <div class="row" ng-repeat="question in questions | filter:q">
+    <div class="row" ng-repeat="question in questions | filter:q | orderBy:number_in_instrument">
       <div class="col-md-3">
 	 <form ng-submit="repositionQuestion(question)"> <span class="tiny-column"><input type="text" size="4" name="number-in-instrument" ng-model="question.number_in_instrument" required></span> </form>
 	<a class="btn btn-default move-question"><i class="icon-move"></i></a>
