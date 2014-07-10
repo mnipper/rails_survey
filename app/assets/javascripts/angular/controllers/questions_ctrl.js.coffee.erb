@@ -151,9 +151,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', 'filterFilt
 
   $scope.repositionQuestion = (question) ->
     question.project_id = $scope.project_id
-    question.$update({},
-      () -> $scope.updateQuestionNumbers()
-    )
+    question.$update({})
     $scope.questions = $scope.questions.filter (q) -> q isnt question
     if $scope.questionOnPage(question)
       $scope.questions.splice(question.number_in_instrument - 1, 0, question)
@@ -177,7 +175,9 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', 'filterFilt
     question.number_in_instrument >= first_number and question.number_in_instrument <= last_number
     
   $scope.searchItem = () ->
-    if $scope.searchText isnt ""
+    if $scope.searchText is ""
+      $scope.getQuestions()
+    else
       $scope.questions = filterFilter($scope.all_questions, $scope.searchText)
 
 ]
