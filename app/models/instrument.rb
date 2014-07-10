@@ -103,7 +103,7 @@ class Instrument < ActiveRecord::Base
       question_moved_up = old_number > new_number
       secondary_order = question_moved_up ? 'DESC' : 'ASC'
 
-      questions.unscoped.where('instrument_id = ?', self.id).order("number_in_instrument ASC, updated_at #{secondary_order}").each_with_index do |question, index|
+      questions.unscoped.where('instrument_id = ? AND deleted_at is null', self.id).order("number_in_instrument ASC, updated_at #{secondary_order}").each_with_index do |question, index|
         updated_number = index + 1
         if question.number_in_instrument != updated_number
           question.number_in_instrument = updated_number
@@ -115,7 +115,7 @@ class Instrument < ActiveRecord::Base
 
   def reorder_questions_after_delete(question_number)
     ActiveRecord::Base.transaction do
-      questions.unscoped.where('instrument_id = ? AND number_in_instrument >= ?', self.id, question_number).each_with_index do |question, index|
+      questions.unscoped.where('instrument_id = ? AND number_in_instrument >= ? AND deleted_at is null', self.id, question_number).each_with_index do |question, index|
         question.number_in_instrument = question.number_in_instrument - 1
         question.save
       end
