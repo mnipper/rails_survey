@@ -16,10 +16,11 @@ App.controller 'FileUploadCtrl', ['$scope', '$fileUploader', 'Image', ($scope, $
         ]
       })
     
-    uploader.filters.push (item) -> #{File|HTMLInputElement}
-      type = (if uploader.isHTML5 then item.type else "/" + item.value.slice(item.value.lastIndexOf(".") + 1))
-      type = "|" + type.toLowerCase().slice(type.lastIndexOf("/") + 1) + "|"
-      "|jpg|png|jpeg|bmp|gif|".indexOf(type) isnt -1
+    if $scope.question_id
+      uploader.filters.push (item) -> #{File|HTMLInputElement}
+        type = (if uploader.isHTML5 then item.type else "/" + item.value.slice(item.value.lastIndexOf(".") + 1))
+        type = "|" + type.toLowerCase().slice(type.lastIndexOf("/") + 1) + "|"
+        "|jpg|png|jpeg|bmp|gif|".indexOf(type) isnt -1
       
   $scope.queryImages = ->
     Image.query(
