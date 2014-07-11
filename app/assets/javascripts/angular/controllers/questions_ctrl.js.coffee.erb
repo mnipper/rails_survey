@@ -152,11 +152,13 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', 'filterFilt
   $scope.repositionQuestion = (question) ->
     question.project_id = $scope.project_id
     question.$update({},
-      () -> $scope.updateQuestionNumbers()
+      () ->
+        $scope.questions = $scope.questions.filter (q) -> q isnt question
+        if $scope.questionOnPage(question)
+          new_index = question.number_in_instrument - 1 - (($scope.current_page - 1) * $scope.questions_per_page)
+          $scope.questions.splice(new_index, 0, question)
+        $scope.updateQuestionNumbers()
     )
-    $scope.questions = $scope.questions.filter (q) -> q isnt question
-    if $scope.questionOnPage(question)
-      $scope.questions.splice(question.number_in_instrument - 1, 0, question)
 
   $scope.updateQuestionNumbers = ->
     offset = ($scope.current_page - 1) * $scope.questions_per_page
