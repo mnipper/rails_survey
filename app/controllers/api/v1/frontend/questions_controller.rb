@@ -16,7 +16,7 @@ module Api
         end
         
         def show
-          question = Question.find(params[:id])
+          question = current_project.questions.find(params[:id])
           authorize question
           respond_with question
         end
