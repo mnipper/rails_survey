@@ -5,20 +5,20 @@ module Api
         respond_to :json
         
         def index
-            question = Question.find(params[:question_id])
+            question = current_project.questions.find(params[:question_id])
             options = question.options
             authorize options
             respond_with options, include: :translations
         end
 
         def show
-          option = Option.find(params[:id])
+          option = current_project.options.find(params[:id])
           authorize option
           respond_with option
         end
 
         def create
-          @option = Option.new(params)
+          @option = current_project.options.new(params)
           authorize @option
           if @option.save
             render nothing: true, status: :created
@@ -28,13 +28,13 @@ module Api
         end
 
         def update
-          option = Option.find(params[:id])
+          option = current_project.options.find(params[:id])
           authorize option
           respond_with option.update_attributes(params[:option])
         end
 
         def destroy
-          option = Option.find(params[:id])
+          option = current_project.options.find(params[:id])
           authorize option
           respond_with option.destroy
         end

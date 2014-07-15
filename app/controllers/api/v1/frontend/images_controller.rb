@@ -5,17 +5,17 @@ module Api
         respond_to :json
 
         def index
-          question = Question.find(params[:question_id])
+          question = current_project.questions.find(params[:question_id])
           respond_with question.images       
         end
 
         def show
-          @image = Image.find(params[:id])
+          @image = current_project.images.find(params[:id])
           send_file @image.photo.path(:medium), :type => @image.photo_content_type, :disposition => 'inline'
         end
         
         def create
-          @image = Image.new(:photo => params[:file], :question_id => params[:question_id])
+          @image = current_project.images.new(:photo => params[:file], :question_id => params[:question_id])
           if @image.save
             render nothing: true, status: :created
           else
@@ -24,7 +24,7 @@ module Api
         end
         
         def destroy
-          respond_with Image.find(params[:id]).destroy
+          respond_with current_project.images.find(params[:id]).destroy
         end
         
       end

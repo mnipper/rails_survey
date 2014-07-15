@@ -5,11 +5,11 @@ module Api
         respond_to :json
 
         def index
-          respond_with Project.all
+          respond_with current_user.projects
         end
 
         def show
-          respond_with Project.find(params[:id])
+          respond_with current_user.projects.find(params[:id])
         end
       end
     end
