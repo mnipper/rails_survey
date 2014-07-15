@@ -5,7 +5,7 @@ class ResponseImagePolicy < ResponsePolicy
     @record = record
   end
 
-  def show
+  def show?
     @user.admin? || @user.manager? || @user.analyst?
   end
   

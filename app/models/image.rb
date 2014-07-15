@@ -25,7 +25,7 @@ class Image < ActiveRecord::Base
   end  
   
   def photo_url
-    photo.url(:small)
+    photo.url(:medium)
   end    
      
 end

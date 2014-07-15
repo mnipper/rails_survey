@@ -10,11 +10,8 @@ module Api
         end
 
         def show
-          if params[:path]
-            path = params[:path].split('/')
-            @image = Image.find(path[0].to_i)
-            send_file @image.photo.path(:medium), :type => @image.photo_content_type, :disposition => 'inline'
-          end
+          @image = Image.find(params[:id])
+          send_file @image.photo.path(:medium), :type => @image.photo_content_type, :disposition => 'inline'
         end
         
         def create
