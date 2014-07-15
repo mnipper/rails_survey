@@ -2,6 +2,8 @@ module Api
   module V1
     module Frontend
       class ImagesController < ApiApplicationController
+        skip_before_filter :authenticate_user!
+        skip_before_filter :authenticate_user_from_token! #TODO FIX AUTHENTICATION WHEN USING ANGULAR FILE UPLOAD
         respond_to :json
 
         def index
@@ -15,7 +17,9 @@ module Api
         end
         
         def create
-          @image = current_project.images.new(:photo => params[:file], :question_id => params[:question_id])
+          project = Project.find(params[:project_id])
+          question = project.questions.find(params[:question_id])
+          @image = question.images.new(:photo => params[:file], :question_id => params[:question_id])
           if @image.save
             render nothing: true, status: :created
           else

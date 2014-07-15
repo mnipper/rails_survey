@@ -11,9 +11,7 @@ App.controller 'FileUploadCtrl', ['$scope', '$fileUploader', 'Image', ($scope, $
       uploader = $scope.uploader = $fileUploader.create({
         scope: $scope,
         url: '/api/v1/frontend/projects/' + $scope.project_id + '/instruments/' + $scope.instrument_id + '/questions/' + $scope.question_id + '/images/',
-        formData: [
-          {name: uploader}
-        ]
+        formData: [{name: uploader} ]
       })
     
     if $scope.question_id

@@ -18,7 +18,8 @@ module Api
         end
 
         def create
-          @option = current_project.options.new(params)
+          question = current_project.questions.find(params[:question_id])
+          @option = question.options.new(params)
           authorize @option
           if @option.save
             render nothing: true, status: :created
