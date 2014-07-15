@@ -42,7 +42,7 @@ class Response < ActiveRecord::Base
   end
 
   def self.to_csv
-    root = Rails.root.join('public', 'exports').to_s
+    root = Rails.root.join('app', 'files', 'exports').to_s
     csv_file = File.new(root + "/#{Time.now.to_i}.csv", "a+")
     CSV.open(csv_file, "wb") do |csv|
       export(csv)
@@ -64,7 +64,7 @@ class Response < ActiveRecord::Base
   end
   
   def self.to_spss_friendly_csv
-    root = Rails.root.join('public', 'exports').to_s
+    root = Rails.root.join('app', 'files', 'exports').to_s
     csv_file = File.new(root + "/spss#{Time.now.to_i}.csv", "a+")
     CSV.open(csv_file, "wb") do |csv|
       spss_export(csv)
@@ -94,7 +94,7 @@ class Response < ActiveRecord::Base
   end
   
   def self.spss_label_values
-    root = Rails.root.join('public', 'exports').to_s
+    root = Rails.root.join('app', 'files', 'exports').to_s
     spss_file = File.new(root + "/#{Time.now.to_i}.sps", "a+")
     File.open(spss_file, "a+") do |file|
       write_variable_labels(file)
@@ -143,7 +143,7 @@ class Response < ActiveRecord::Base
   end
   
   def self.value_labels_csv
-    root = Rails.root.join('public', 'exports').to_s
+    root = Rails.root.join('app', 'files', 'exports').to_s
     csv_file = File.new(root + "/#{Time.now.to_i}value_labels.csv", "a+")
     CSV.open(csv_file, "wb") do |csv|
       export_value_labels(csv)
@@ -153,7 +153,7 @@ class Response < ActiveRecord::Base
   
   def self.export_value_labels(format)
     format << ['variable_identifier', 'variable_type', 'variable_label', 'value_label', 'label_type']
-    questions = all.first.instrument.questions #TODO demeter law violation  
+    questions = all.first.instrument.questions 
     questions.each do |question|
       if question.has_options?
         question.options.each do |option|

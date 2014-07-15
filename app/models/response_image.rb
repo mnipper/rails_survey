@@ -41,15 +41,18 @@ class ResponseImage < ActiveRecord::Base
   end
   
   def self.to_zip(name)
-    root = Rails.root.join('public', 'exports').to_s
+    root = Rails.root.join('app', 'files', 'exports').to_s
     zipped_file = File.new(root + "/#{Time.now.to_i}.zip", "a+")
     Zip::OutputStream.open(zipped_file.path) do |zipfile|
       all.each do |response_image|
         title = response_image.response.question.question_identifier + '-' + response_image.response.id.to_s + '-' + response_image.picture_file_name
         zipfile.put_next_entry("#{name}/#{title}")
-        photos_root = Rails.root.join('public').to_s
+        photos_root = Rails.root.join('app', 'files').to_s
         photo_path = response_image.picture.url.split('?')
-        photo_abs_url = photos_root + photo_path[0]
+        photo_path = photo_path[0]
+        path_arr = photo_path.split('/')
+        path_arr.insert(3, 'original')
+        photo_abs_url = photos_root + path_arr.join("/")
         photo_data = open(photo_abs_url)
         zipfile.print IO.read(photo_data)
       end
