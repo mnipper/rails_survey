@@ -11,7 +11,7 @@ module Api
           else
             questions = instrument.questions.page(params[:page]).per(Settings.questions_per_page)
             authorize questions
-            respond_with questions, include: :translations
+            respond_with questions
           end 
         end
         

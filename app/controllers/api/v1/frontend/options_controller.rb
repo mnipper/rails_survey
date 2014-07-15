@@ -8,7 +8,7 @@ module Api
             question = current_project.questions.find(params[:question_id])
             options = question.options
             authorize options
-            respond_with options, include: :translations
+            respond_with options
         end
 
         def show
