@@ -43,3 +43,6 @@ node/node_modules
 #Ignore Redis files
 dump.rdb
 
+#Image files
+app/files/*
+

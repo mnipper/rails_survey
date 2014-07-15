@@ -16,10 +16,11 @@ App.controller 'FileUploadCtrl', ['$scope', '$fileUploader', 'Image', ($scope, $
         ]
       })
     
-    uploader.filters.push (item) -> #{File|HTMLInputElement}
-      type = (if uploader.isHTML5 then item.type else "/" + item.value.slice(item.value.lastIndexOf(".") + 1))
-      type = "|" + type.toLowerCase().slice(type.lastIndexOf("/") + 1) + "|"
-      "|jpg|png|jpeg|bmp|gif|".indexOf(type) isnt -1
+    if $scope.question_id
+      uploader.filters.push (item) -> #{File|HTMLInputElement}
+        type = (if uploader.isHTML5 then item.type else "/" + item.value.slice(item.value.lastIndexOf(".") + 1))
+        type = "|" + type.toLowerCase().slice(type.lastIndexOf("/") + 1) + "|"
+        "|jpg|png|jpeg|bmp|gif|".indexOf(type) isnt -1
       
   $scope.queryImages = ->
     Image.query(
@@ -28,7 +29,6 @@ App.controller 'FileUploadCtrl', ['$scope', '$fileUploader', 'Image', ($scope, $
         "instrument_id": $scope.instrument_id,
         "question_id": $scope.question_id
       }, (result) ->
-        #console.log result 
     )
    
   $scope.deleteImage = (image) ->
@@ -37,4 +37,5 @@ App.controller 'FileUploadCtrl', ['$scope', '$fileUploader', 'Image', ($scope, $
     image.question_id = $scope.question_id
     image.$delete()
     $scope.images.splice($scope.images.indexOf(image), 1)
+    
 ]

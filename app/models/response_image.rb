@@ -14,7 +14,8 @@
 
 class ResponseImage < ActiveRecord::Base
   attr_accessible :picture, :response_uuid, :picture_file_name, :picture_content_type, :picture_file_size, :picture_updated_at, :picture_data 
-  has_attached_file :picture, :styles => { :small => ["150x150>", :medium => "300x300>"] } 
+  has_attached_file :picture, :styles => { :small => "150x150>", :medium => "300x300>" }, 
+    :url  => "/:attachment/:id/:basename.:extension", :path => ":rails_root/app/files/:attachment/:id/:style/:basename.:extension"  
   validates_attachment_content_type :picture, :content_type => /\Aimage\/.*\Z/
   belongs_to :response, :foreign_key => :response_uuid, :primary_key => :uuid
   delegate :project, to: :response 

@@ -69,5 +69,7 @@ RailsSurvey::Application.routes.draw do
     get 'graphs/hourly/' => 'graphs#hourly_responses'
   end
   resources :request_roles, only: [:index]
-
+  get "/photos/:id/:style.:format", :controller => "api/v1/frontend/images", :action => "show"
+  get "/pictures/:id/:style.:format", :controller => "response_images", :action => "show"
+  
 end

@@ -5,20 +5,13 @@ module Api
         respond_to :json
 
         def index
-          if current_user
-            question = Question.find(params[:question_id])
-            images = []
-            question.images.each do |img|
-              images << img.as_json
-            end
-            respond_with images       
-          end
+          question = Question.find(params[:question_id])
+          respond_with question.images       
         end
 
         def show
-          if current_user
-            respond_with Image.find(params[:id])
-          end
+          @image = Image.find(params[:id])
+          send_file @image.photo.path(:medium), :type => @image.photo_content_type, :disposition => 'inline'
         end
         
         def create
