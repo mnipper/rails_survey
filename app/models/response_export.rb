@@ -18,5 +18,22 @@ class ResponseExport < ActiveRecord::Base
   attr_accessible :done, :download_url, :project_id, :instrument_id, :spss_syntax_file_url, :spss_friendly_csv_url, :value_labels_csv
   belongs_to :project
   belongs_to :instrument
-  has_one :response_images_export
+  has_one :response_images_export, dependent: :destroy  
+  before_destroy :destroy_files
+  
+  private
+  def destroy_files
+    if download_url
+      File.delete(download_url) if File.exist?(download_url)
+    end
+    if spss_syntax_file_url
+      File.delete(spss_syntax_file_url) if File.exist?(spss_syntax_file_url)
+    end
+    if spss_friendly_csv_url
+      File.delete(spss_friendly_csv_url) if File.exist?(spss_friendly_csv_url)
+    end
+    if value_labels_csv
+      File.delete(value_labels_csv) if File.exist?(value_labels_csv)
+    end
+  end
 end
