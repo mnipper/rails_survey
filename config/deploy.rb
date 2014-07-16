@@ -15,6 +15,8 @@ set :linked_dirs, fetch(:linked_dirs).push("bin" "log" "tmp/pids" "tmp/cache" "t
 set :branch, 'master'
 set :sidekiq_pid, File.join(shared_path, 'tmp', 'pids', 'sidekiq.pid')
 set :sidekiq_log, File.join(shared_path, 'log', 'sidekiq.log')
+set :sidekiq_concurrency, 25
+set :sidekiq_processes, 4
 
 namespace :deploy do
  
