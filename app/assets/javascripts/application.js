@@ -19,6 +19,7 @@
 //= require ../../../vendor/assets/javascripts/loading-bar
 //= require ../../../vendor/assets/javascripts/d3
 //= require ../../../vendor/assets/javascripts/nv.d3
+//= require ../../../vendor/assets/javascripts/es5-shim.min
 //= require ../../../vendor/assets/javascripts/angular-file-upload.min
 //= require_directory ../../../vendor/assets/lib/bootstrap/
 //= require_tree ./angular

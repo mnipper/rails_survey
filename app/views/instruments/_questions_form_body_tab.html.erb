@@ -33,6 +33,7 @@
           <div text-angular="text-angular" id="text-angular-content" rows="4" ta-toolbar="[['bold','italics','underline','insertLink'],['redo','undo','clear'],['html'], ['insertImage']]" ng-model="question.text"></div>
         </div>
         <div ng-controller="FileUploadCtrl" ng-init="initialize(<%= @project.id %>, <%= @instrument.id %>, question.id)">
+          <div id="userToken" style="display: none"><%= current_user.authentication_token %></div> <!-- TODO find another way of doing this -->
           <div ng-show="questionTypesWithImages(question.question_type)">
           <label for="content" class="control-label">Images</label> </br>
            <div ng-show="uploader.isHTML5">
