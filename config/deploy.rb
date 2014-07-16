@@ -40,7 +40,7 @@ namespace :deploy do
     end 
   end
   
-  task :sym_link_files, :except => { :no_release => true } do
+  task :sym_link_files do
     on roles(:app) do
       execute "rm -rf #{release_path}/app/files"
       execute "ln -nfs #{shared_path}/files #{release_path}/app/files"
