@@ -11,7 +11,7 @@ set :pty, false
 set :format, :pretty
 set :keep_releases, 5
 set :linked_files, %w{config/database.yml config/secret_token.txt config/local_env.yml}
-set :linked_dirs, fetch(:linked_dirs).push("bin" "log" "tmp/pids" "tmp/cache" "tmp/sockets" "vendor/bundle" "public/system" "public/exports")
+set :linked_dirs, fetch(:linked_dirs).push("bin" "log" "tmp/pids" "tmp/cache" "tmp/sockets" "vendor/bundle" "public/system")
 set :branch, 'master'
 set :sidekiq_pid, File.join(shared_path, 'tmp', 'pids', 'sidekiq.pid')
 set :sidekiq_log, File.join(shared_path, 'log', 'sidekiq.log')
@@ -40,15 +40,16 @@ namespace :deploy do
     end 
   end
   
-  task :sym_link_export_files do
+  task :sym_link_files, :except => { :no_release => true } do
     on roles(:app) do
-      execute "ln -s #{shared_path}/public/exports #{release_path}/public/exports"
+      execute "rm -rf #{release_path}/app/files"
+      execute "ln -nfs #{shared_path}/app/files #{release_path}/app/files"
     end
   end
     
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
   after "deploy:updated", "deploy:npm_install"
-  after "deploy:updated", "deploy:sym_link_export_files"
+  after "deploy:updated", "deploy:sym_link_files"
 
 end
