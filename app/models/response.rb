@@ -41,13 +41,12 @@ class Response < ActiveRecord::Base
     end
   end
 
-  def self.to_csv
-    root = Rails.root.join('app', 'files', 'exports').to_s
-    csv_file = File.new(root + "/#{Time.now.to_i}.csv", "a+")
+  def self.to_csv(csv_file, export_id)
     CSV.open(csv_file, "wb") do |csv|
       export(csv)
     end
-    csv_file 
+    export = ResponseExport.find(export_id)
+    export.update(:done => true)
   end
 
   def self.export(format)

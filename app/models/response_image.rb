@@ -40,9 +40,8 @@ class ResponseImage < ActiveRecord::Base
     picture.url(:small)
   end
   
-  def self.to_zip(name)
-    root = Rails.root.join('app', 'files', 'exports').to_s
-    zipped_file = File.new(root + "/#{Time.now.to_i}.zip", "a+")
+  def self.to_zip(name, zipped_file, pictures_export_id)
+    zipped_file = File.open(zipped_file, "a+")
     Zip::OutputStream.open(zipped_file.path) do |zipfile|
       all.each do |response_image|
         title = response_image.response.question.question_identifier + '-' + response_image.response.id.to_s + '-' + response_image.picture_file_name
@@ -58,7 +57,8 @@ class ResponseImage < ActiveRecord::Base
       end
     end
     zipped_file.close
-    zipped_file 
+    pictures_export = ResponseImagesExport.find(pictures_export_id)
+    pictures_export.update(:done => true)
   end
 
 end
