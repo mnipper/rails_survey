@@ -57,7 +57,7 @@ class Response < ActiveRecord::Base
       format << [response.question_identifier, "q_#{response.question_id}", response.survey.instrument_id,
         response.instrument_version_number, response.survey.instrument_title, response.survey_uuid, 
         response.survey.device_uuid, response.versioned_question.try(:question_type), 
-        response.versioned_question.try(:text), response.text, response.option_labels,
+        Sanitize.fragment(response.versioned_question.try(:text)), response.text, response.option_labels,
         response.special_response, response.other_response]
     end
   end
