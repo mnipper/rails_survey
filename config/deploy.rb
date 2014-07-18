@@ -42,17 +42,9 @@ namespace :deploy do
       execute "cd #{release_path}/node && sudo rm -rf node_modules && npm install"
     end 
   end
-  
-  task :sym_link_files do
-    on roles(:app) do
-      execute "rm -rf #{release_path}/app/files"
-      execute "ln -nfs #{shared_path}/files #{release_path}/app/files"
-    end
-  end
-    
+ 
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
   after "deploy:updated", "deploy:npm_install"
-  after "deploy:updated", "deploy:sym_link_files"
 
 end
