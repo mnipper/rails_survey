@@ -17,6 +17,8 @@ class Image < ActiveRecord::Base
   has_attached_file :photo, :styles => { :small => "200x200>", :medium => "300x300>" },
   :url  => "/:attachment/:id/:basename.:extension", :path => "files/:attachment/:id/:style/:basename.:extension" 
   validates_attachment_content_type :photo, :content_type => /\Aimage\/.*\Z/
+  validates_attachment_file_name :photo, :matches => [/png\Z/, /jpe?g\Z/]
+  validates_with AttachmentSizeValidator, :attributes => :photo, :less_than => 7.megabytes
 
   def as_json(options={})
     super((options || {}).merge({
