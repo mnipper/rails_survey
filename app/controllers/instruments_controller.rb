@@ -66,7 +66,7 @@ class InstrumentsController < ApplicationController
   def export_responses
     @instrument = current_project.instruments.find(params[:id])
     authorize @instrument
-    root = Rails.root.join('app', 'files', 'exports').to_s
+    root = Rails.root.join('files', 'exports').to_s
     csv_file = File.new(root + "/#{Time.now.to_i}.csv", "a+")
     csv_file.close
     export = ResponseExport.create(:instrument_id => @instrument.id, :download_url => csv_file.path)
