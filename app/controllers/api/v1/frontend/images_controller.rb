@@ -2,8 +2,6 @@ module Api
   module V1
     module Frontend
       class ImagesController < ApiApplicationController
-        before_filter :authenticate_user!, only: [:index, :show, :destroy]
-        before_filter :authenticate_user_from_token!, only: [:index, :show, :destroy]
         respond_to :json
 
         def index
@@ -17,17 +15,13 @@ module Api
         end
         
         def create
-          @user = User.find_by_authentication_token(params[:user_token])
-          if @user
-            current_project = @user.projects.find(params[:project_id])
-            question = current_project.questions.find(params[:question_id])
-            @image = question.images.new(:photo => params[:file], :question_id => params[:question_id])
-            if @image.save
-              render nothing: true, status: :created
-            else
-              render nothing: true, status: :unprocessable_entity
-            end 
-          end
+          question = current_project.questions.find(params[:question_id])
+          @image = question.images.new(:photo => params[:file], :question_id => params[:question_id])
+          if @image.save
+            render nothing: true, status: :created
+          else
+            render nothing: true, status: :unprocessable_entity
+          end 
         end
         
         def destroy

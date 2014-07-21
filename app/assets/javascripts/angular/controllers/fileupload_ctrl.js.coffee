@@ -10,10 +10,11 @@ App.controller 'FileUploadCtrl', ['$scope', '$fileUploader', 'Image', ($scope, $
       
       uploader = $scope.uploader = $fileUploader.create({
         scope: $scope,
+        url: '/api/v1/frontend/projects/' + $scope.project_id + '/instruments/' + $scope.instrument_id + '/questions/' + $scope.question_id + '/images/',
+        headers: {'X-CSRF-Token': $('meta[name=csrf-token]').attr('content')},
         isHTML5: true,
         withCredentials: true,
-        url: '/api/v1/frontend/projects/' + $scope.project_id + '/instruments/' + $scope.instrument_id + '/questions/' + $scope.question_id + '/images/',
-        formData: [ { name: uploader, user_token: document.getElementById('userToken').innerHTML } ]
+        formData: [ { name: uploader } ]
       })
     
     if $scope.question_id
