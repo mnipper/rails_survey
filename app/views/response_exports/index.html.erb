@@ -83,7 +83,7 @@
                   </td>
                   <td>
                       <% if policy(export).download_project_response_images? %>
-                        <% if export.download_url && export.done %>
+                        <% if export.download_url %>
                             <%= link_to 'download csv', download_instrument_responses_project_response_export_path(current_project, export.id) %>
                         <% end %>
                       <% end %>
@@ -111,7 +111,7 @@
                   </td> -->
                   <td>
                       <% if policy(export).download_instrument_response_images? %>
-                        <% if (export.response_images_export && export.response_images_export.download_url && export.response_images_export.done) %>
+                        <% if (export.response_images_export && export.response_images_export.download_url) %>
                             <%= link_to 'download images zip', download_instrument_response_images_project_response_export_path(current_project, export.id) %>
                         <% end %>
                       <% end %>

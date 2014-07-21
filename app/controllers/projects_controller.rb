@@ -49,7 +49,7 @@ class ProjectsController < ApplicationController
   end
 
   def export
-    root = Rails.root.join('files', 'exports').to_s
+    root = File.join('files', 'exports').to_s
     csv_file = File.new(root + "/#{Time.now.to_i}.csv", "a+")
     csv_file.close
     export = ResponseExport.create(:project_id => current_project.id, :download_url => csv_file.path)
