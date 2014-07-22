@@ -13,4 +13,13 @@
 class ResponseImagesExport < ActiveRecord::Base
   attr_accessible :download_url, :done, :response_export_id 
   belongs_to :response_export 
+  before_destroy :destroy_files
+
+  private
+  def destroy_files
+    if download_url
+      File.delete(download_url) if File.exist?(download_url)
+    end
+  end
+  
 end

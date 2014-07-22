@@ -11,10 +11,13 @@ set :pty, false
 set :format, :pretty
 set :keep_releases, 5
 set :linked_files, %w{config/database.yml config/secret_token.txt config/local_env.yml}
-set :linked_dirs, fetch(:linked_dirs).push("bin" "log" "tmp/pids" "tmp/cache" "tmp/sockets" "vendor/bundle" "public/system" "public/exports")
+set :linked_dirs, %w(bin log tmp/pids tmp/cache tmp/sockets vendor/bundle)
+set :linked_dirs, fetch(:linked_dirs) + %w{public/system files}
 set :branch, 'master'
 set :sidekiq_pid, File.join(shared_path, 'tmp', 'pids', 'sidekiq.pid')
 set :sidekiq_log, File.join(shared_path, 'log', 'sidekiq.log')
+set :sidekiq_concurrency, 25
+set :sidekiq_processes, 1
 
 namespace :deploy do
  
@@ -39,16 +42,9 @@ namespace :deploy do
       execute "cd #{release_path}/node && sudo rm -rf node_modules && npm install"
     end 
   end
-  
-  task :sym_link_export_files do
-    on roles(:app) do
-      execute "ln -s #{shared_path}/public/exports #{release_path}/public/exports"
-    end
-  end
-    
+ 
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
   after "deploy:updated", "deploy:npm_install"
-  after "deploy:updated", "deploy:sym_link_export_files"
 
 end

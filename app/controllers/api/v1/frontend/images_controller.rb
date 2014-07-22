@@ -15,12 +15,13 @@ module Api
         end
         
         def create
-          @image = current_project.images.new(:photo => params[:file], :question_id => params[:question_id])
+          question = current_project.questions.find(params[:question_id])
+          @image = question.images.new(:photo => params[:file], :question_id => params[:question_id])
           if @image.save
             render nothing: true, status: :created
           else
             render nothing: true, status: :unprocessable_entity
-          end
+          end 
         end
         
         def destroy
