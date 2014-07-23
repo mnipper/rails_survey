@@ -1,0 +1,16 @@
+<div class="tab-copy tab-pane">
+    <fieldset>
+        <legend class="section">
+            Copy Question
+        </legend>
+        <p class="text-muted">Check the instruments that you want to copy this question to.</p>
+        <div class="controls form-group">
+            <div class="checkbox" ng-repeat="inst in instruments">
+                <label> <input type="checkbox" ng-model="inst.checked"></input> {{ inst.title }} </label>
+            </div>
+            <div >
+                <a class="btn btn-success" id="copy-question" ng-click="copyQuestion(question)">Copy Question</a>
+            </div>
+          </div>
+    </fieldset>
+</div>

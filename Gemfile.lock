@@ -51,6 +51,8 @@ GEM
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
+    amoeba (2.0.0)
+      activerecord (>= 3.0)
     angular_rails_csrf (1.0.1)
       rails (>= 3, < 5)
     angularjs-rails (1.0.8)
@@ -344,6 +346,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin!
+  amoeba
   angular_rails_csrf
   angularjs-rails (~> 1.0.7)
   annotate (>= 2.5.0)
