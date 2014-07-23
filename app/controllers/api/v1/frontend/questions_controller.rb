@@ -57,6 +57,29 @@ module Api
             render json: { errors: question.errors.full_messages }, status: :unprocessable_entity
           end
         end
+        
+        def copy
+          if params[:copy_to]
+            instrument = Instrument.find(params[:copy_to])
+            question = Question.find(params[:id])
+            copy_question = question.amoeba_dup
+            copy_question.instrument_id = instrument.id
+            copy_question.number_in_instrument = instrument.questions.size + 1
+            copy_question.question_identifier = params[:q_id]
+            if copy_question.save
+              if question.images
+                question.images.each do |img|
+                  copy_image = Image.new
+                  copy_image.photo = img.photo
+                  copy_image.question_id = copy_question.id
+                  copy_image.save
+                end
+              end
+              render json: copy_question, status: :accepted
+            end 
+          end
+        end
+        
       end
     end
   end

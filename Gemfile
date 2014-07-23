@@ -54,6 +54,7 @@ gem 'capistrano-sidekiq', '~> 0.3.0'
 gem 'angular_rails_csrf'
 gem 'sinatra', '~> 1.4.5', :require => nil
 gem 'sanitize', '~> 3.0.0'
+gem 'amoeba'
 
 group :production do
   gem 'rails_12factor'

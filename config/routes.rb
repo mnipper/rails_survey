@@ -15,6 +15,9 @@ RailsSurvey::Application.routes.draw do
         resources :projects do
           resources :instruments, only: [:index, :show] do
             resources :questions do
+              member do
+                post :copy
+              end
               resources :options
               resources :images 
             end

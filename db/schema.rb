@@ -255,6 +255,7 @@ ActiveRecord::Schema.define(version: 20140616210522) do
     t.integer  "failed_attempts",        default: 0
     t.string   "unlock_token"
     t.datetime "locked_at"
+    t.datetime "last_active_at"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true

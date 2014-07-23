@@ -37,11 +37,13 @@
                 <li><a href=".tab-general" data-toggle="tab">General</a></li>
                 <li><a href=".tab-logic" data-toggle="tab">Logic</a></li>
                 <li><a href=".tab-advanced" data-toggle="tab">Advanced</a></li>
+                <li><a href=".tab-copy" data-toggle="tab">Copy</a></li>
               </ul>
             </header>
             <%= render 'questions_form_body_tab' %>
             <%= render 'questions_form_logic_tab' %>
             <%= render 'questions_form_advanced_tab' %>
+            <%= render 'questions_form_copy_tab' %>
               <div class="form-actions">
                 <a class="btn btn-success pull-right" id="save-question" ng-click="saveQuestion()" ng-disabled="question_form.$invalid">Save</a>
                 <a class="btn btn-danger pull-right" ng-click="cancelQuestion()">Cancel</a>

@@ -1,4 +1,4 @@
-App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', 'filterFilter', ($scope, Question, Instrument, filterFilter) ->
+App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', 'filterFilter', 'CopyQuestion', ($scope, Question, Instrument, filterFilter, CopyQuestion) ->
   $scope.questions = []
   $scope.all_questions = []
   $scope.selectedQuestions = []
@@ -15,6 +15,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', 'filterFilt
     $scope.questions = Question.query({"project_id": project_id, "instrument_id": instrument_id, "page": $scope.current_page})
     $scope.instrument = Instrument.query({"project_id": project_id, "id": instrument_id}, -> $scope.createPages())
     $scope.all_questions = Question.query({"project_id": project_id, "instrument_id": instrument_id})
+    $scope.instruments = Instrument.query({"project_id": project_id})
 
   $scope.getQuestions = () ->
     $scope.questions = Question.query({"project_id": $scope.project_id, "instrument_id": $scope.instrument_id, "page": $scope.current_page})
@@ -183,5 +184,23 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', 'filterFilt
       $scope.getQuestions()
     else
       $scope.questions = filterFilter($scope.all_questions, $scope.searchText)
+
+  $scope.copyQuestion = (question) ->
+    for instrument in $scope.instruments
+      if instrument.checked == true
+        copy_question = new CopyQuestion()
+        copy_question.project_id = $scope.project_id
+        copy_question.instrument_id = $scope.instrument_id
+        copy_question.id = question.id
+        copy_question.destination_instrument_id = instrument.id
+        copy_question.copy_question_identifier = question.question_identifier + "_" + $scope.generateUniqueId()
+        copy_question.$copy()
+        instrument.checked = false
+    $scope.edit_question = null
+    
+  $scope.generateUniqueId = (length=8) ->
+    id = ""
+    id += Math.random().toString(36).substr(2) while id.length < length
+    id.substr 0, length
 
 ]
