@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140613162054) do
+ActiveRecord::Schema.define(version: 20140616210522) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -203,13 +203,6 @@ ActiveRecord::Schema.define(version: 20140613162054) do
 
   add_index "responses", ["uuid"], name: "index_responses_on_uuid"
 
-  create_table "roles", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id"
-  end
-
   create_table "sections", force: true do |t|
     t.string   "title"
     t.string   "start_question_identifier"
@@ -232,6 +225,7 @@ ActiveRecord::Schema.define(version: 20140613162054) do
     t.string   "device_uuid"
     t.string   "latitude"
     t.string   "longitude"
+    t.text     "metadata"
   end
 
   add_index "surveys", ["uuid"], name: "index_surveys_on_uuid"
