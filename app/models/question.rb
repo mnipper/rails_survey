@@ -46,7 +46,7 @@ class Question < ActiveRecord::Base
     include_field :options
     include_field :translations
     nullify :following_up_question_identifier
-    nullify :follow_up_position
+    set :follow_up_position => 0
   end
 
   def has_options?
