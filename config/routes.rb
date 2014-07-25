@@ -37,6 +37,7 @@ RailsSurvey::Application.routes.draw do
         resources :responses, only: [:create]
         resources :response_images, only: [:create]
         resources :sections, only: [:index, :show]
+        resources :android_updates, only: [:index, :show]
       end
     end
   end
