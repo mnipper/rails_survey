@@ -8,6 +8,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', 'filterFilt
   $scope.current_page = 1
   $scope.total_pages = 1
   $scope.searchText = ""
+  $scope.visible = false
   $scope.init = (project_id, instrument_id) ->
     $scope.project_id = project_id
     $scope.current_page = 1
@@ -186,6 +187,11 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', 'filterFilt
       $scope.questions = filterFilter($scope.all_questions, $scope.searchText)
 
   $scope.copyQuestion = (question) ->
+    $scope.copyHelper(question)
+    $scope.edit_question = null
+    (instrument.checked = false) for instrument in $scope.instruments
+    
+  $scope.copyHelper = (question) ->
     for instrument in $scope.instruments
       if instrument.checked == true
         copy_question = new CopyQuestion()
@@ -195,12 +201,19 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', 'filterFilt
         copy_question.destination_instrument_id = instrument.id
         copy_question.copy_question_identifier = question.question_identifier + "_" + $scope.generateUniqueId()
         copy_question.$copy()
-        instrument.checked = false
-    $scope.edit_question = null
-    
+  
   $scope.generateUniqueId = (length=8) ->
     id = ""
     id += Math.random().toString(36).substr(2) while id.length < length
     id.substr 0, length
 
+  $scope.displayQuestions = () ->
+    $scope.visible = !$scope.visible
+    
+  $scope.copyQuestions = () ->
+    $scope.copyHelper(q) for q in $scope.all_questions when q.checked == true
+    $scope.visible = false
+    (instrument.checked = false) for instrument in $scope.instruments
+    (question.checked = false) for question in $scope.all_questions
+    
 ]
