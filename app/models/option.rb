@@ -27,6 +27,11 @@ class Option < ActiveRecord::Base
 
   validates :text, presence: true, allow_blank: false
 
+  amoeba do
+    enable
+    include_field :translations
+  end
+
   def to_s
     text
   end
