@@ -73,7 +73,7 @@ describe Response do
           @response.survey.uuid,
           @response.survey.device_uuid,
           @response.question.question_type,
-          @response.versioned_question.try(:text),
+          Sanitize.fragment(@response.versioned_question.try(:text)),
           "a",
           @response.option_labels,
           "SKIP",
