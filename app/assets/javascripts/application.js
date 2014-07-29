@@ -10,6 +10,15 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require ../../../vendor/assets/javascripts/jquery.min
+//= require ../../../vendor/assets/javascripts/angular
+//= require ../../../vendor/assets/javascripts/angular-resource
+//= require ../../../vendor/assets/javascripts/angular-animate
+//= require ../../../vendor/assets/javascripts/angular-sanitize
+//= require ../../../vendor/assets/javascripts/angular-cookies
+//= require ../../../vendor/assets/javascripts/textAngular.min
+//= require ../../../vendor/assets/javascripts/socket.io.min
+//= require ../../../vendor/assets/javascripts/angular-ui-utils.min
 //= require twitter/bootstrap
 //= require chosen-jquery
 //= require app
