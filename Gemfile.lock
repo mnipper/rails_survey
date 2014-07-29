@@ -51,6 +51,10 @@ GEM
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
+    amoeba (2.0.0)
+      activerecord (>= 3.0)
+    angular_rails_csrf (1.0.1)
+      rails (>= 3, < 5)
     angularjs-rails (1.0.8)
     annotate (2.6.3)
       activerecord (>= 2.3.0)
@@ -121,6 +125,7 @@ GEM
       compass (>= 0.12.2)
       sprockets (<= 2.11.0)
     connection_pool (2.0.0)
+    crass (0.2.0)
     database_cleaner (1.2.0)
     debug_inspector (0.0.2)
     debugger (1.6.6)
@@ -187,6 +192,8 @@ GEM
     net-ssh (2.9.0)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
+    nokogumbo (1.1.9)
+      nokogiri
     orm_adapter (0.5.0)
     paper_trail (3.0.1)
       activerecord (>= 3.0, < 5.0)
@@ -207,6 +214,8 @@ GEM
     pundit (0.2.3)
       activesupport (>= 3.0.0)
     rack (1.5.2)
+    rack-protection (1.5.3)
+      rack
     rack-test (0.6.2)
       rack (>= 1.0)
     rails (4.0.0)
@@ -258,6 +267,10 @@ GEM
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
     rubyzip (1.1.3)
+    sanitize (3.0.0)
+      crass (~> 0.2.0)
+      nokogiri (>= 1.4.4)
+      nokogumbo (= 1.1.9)
     sass (3.2.19)
     sass-rails (4.0.3)
       railties (>= 4.0.0, < 5.0)
@@ -278,6 +291,10 @@ GEM
       json
       redis (>= 3.0.6)
       redis-namespace (>= 1.3.1)
+    sinatra (1.4.5)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
     sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -329,6 +346,8 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin!
+  amoeba
+  angular_rails_csrf
   angularjs-rails (~> 1.0.7)
   annotate (>= 2.5.0)
   better_errors
@@ -365,10 +384,12 @@ DEPENDENCIES
   rspec-mocks
   rspec-rails (~> 2.0)
   rubyzip (~> 1.1.2)
+  sanitize (~> 3.0.0)
   sass-rails (~> 4.0.0)
   sdoc
   selenium-webdriver (~> 2.39)
   sidekiq (~> 3.0.0)
+  sinatra (~> 1.4.5)
   sqlite3
   therubyracer
   turbolinks

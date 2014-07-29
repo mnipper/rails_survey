@@ -41,6 +41,14 @@ class Question < ActiveRecord::Base
   validates :text, presence: true, allow_blank: false
   validates :number_in_instrument, presence: true, allow_blank: false
 
+  amoeba do
+    enable
+    include_field :options
+    include_field :translations
+    nullify :following_up_question_identifier
+    set :follow_up_position => 0
+  end
+
   def has_options?
     !options.empty?
   end

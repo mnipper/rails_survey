@@ -1,15 +1,11 @@
 class ProjectResponsesExportWorker
   include Sidekiq::Worker
 
-  def perform(project_id)
+  def perform(project_id, csv_file, export_id, zipped_file, pictures_export_id)
     project = Project.find project_id
-    export = ResponseExport.create(:project_id => project_id)
-    csv_file = project.responses.to_csv
-    export.update(:download_url => csv_file.path, :done => true)
+    project.responses.to_csv(csv_file, export_id)
     unless project.response_images.empty?
-      pictures_export = ResponseImagesExport.create(:response_export_id => export.id)
-      zip_file = project.response_images.to_zip(project.name)
-      pictures_export.update(:download_url => zip_file.path, :done => true)
+      project.response_images.to_zip(project.name, zipped_file, pictures_export_id)
     end
   end
   

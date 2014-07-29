@@ -1,5 +1,10 @@
 RailsSurvey::Application.routes.draw do
 
+  require 'sidekiq/web'
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :users
@@ -10,6 +15,9 @@ RailsSurvey::Application.routes.draw do
         resources :projects do
           resources :instruments, only: [:index, :show] do
             resources :questions do
+              member do
+                post :copy
+              end
               resources :options
               resources :images 
             end
@@ -24,11 +32,12 @@ RailsSurvey::Application.routes.draw do
         resources :instruments, only: [:index, :show]
         resources :questions, only: [:index, :show]
         resources :options, only: [:index, :show]
-        resources :images, only:[:index]
+        resources :images, only:[:index, :show]
         resources :surveys, only: [:create]
         resources :responses, only: [:create]
         resources :response_images, only: [:create]
         resources :sections, only: [:index, :show]
+        resources :android_updates, only: [:index, :show]
       end
     end
   end

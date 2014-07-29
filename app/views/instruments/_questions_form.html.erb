@@ -1,6 +1,10 @@
 <div class="body">
 <div ng-controller="QuestionsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>)">
-  <ul class="pagination" ng-show="total_pages > 1">
+  <div>
+    <button class="btn btn-primary" ng-click="displayQuestions()">Mass Copy</button>
+    <div ng-show="visible"><%= render 'questions_form_mass_copy' %></div>
+  </div>
+  <div class="pagination col-md-12" ng-show="total_pages > 1">
     <li><a ng-click="setEndPages(1)"><i class="eicon-left-open-big"></i></a></li>
     <li><a ng-click="setPage(current_page - 1)"><i class="icon-arrow-left"></i></a></li>
        <li ng-repeat="page in pages" ng-class="{ active: current_page == page }">
@@ -8,9 +12,8 @@
        </li>
     <li><a ng-click="setPage(current_page + 1)"><i class="icon-arrow-right"></i></a></li>
     <li><a ng-click="setEndPages(total_pages)"><i class="eicon-right-open-big"></i></a></li>
-  </ul> 
+  </div>
   <input type="search" ng-model="searchText" ui-keypress="{ 13 : 'searchItem()' }" placeholder="Search questions..." class="form-control bottom-buffer">
-  
   <div ui-sortable="sortableOptions" ng-model="questions">
     <div class="row" ng-repeat="question in questions | orderBy:number_in_instrument">
       <div class="col-md-3">
@@ -37,11 +40,13 @@
                 <li><a href=".tab-general" data-toggle="tab">General</a></li>
                 <li><a href=".tab-logic" data-toggle="tab">Logic</a></li>
                 <li><a href=".tab-advanced" data-toggle="tab">Advanced</a></li>
+                <li><a href=".tab-copy" data-toggle="tab">Copy</a></li>
               </ul>
             </header>
             <%= render 'questions_form_body_tab' %>
             <%= render 'questions_form_logic_tab' %>
             <%= render 'questions_form_advanced_tab' %>
+            <%= render 'questions_form_copy_tab' %>
               <div class="form-actions">
                 <a class="btn btn-success pull-right" id="save-question" ng-click="saveQuestion()" ng-disabled="question_form.$invalid">Save</a>
                 <a class="btn btn-danger pull-right" ng-click="cancelQuestion()">Cancel</a>
