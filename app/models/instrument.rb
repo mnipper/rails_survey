@@ -79,14 +79,28 @@ class Instrument < ActiveRecord::Base
     format << ['Instrument id:', id]
     format << ['Instrument title:', title]
     format << ['Version number:', current_version_number]
+    format << ['Language:', language]
     format << ["\n"]
-    format << ['number', 'qid', 'question_type', language]
+    format << ['number_in_instrument', 'question_identifier', 'question_type', 'question_text', 'question_instructions']
     questions.each do |question|
-      format << [question.number_in_instrument, question.question_identifier, question.question_type, question.text]
-      question.options.each {|option| format << ['', "Option for #{question.question_identifier}", '', option.text]}
+      format << [question.number_in_instrument, question.question_identifier, question.question_type, 
+        Sanitize.fragment(question.text), question.instructions]
+      question.options.each {
+        |option| format << ['', "Option for #{question.question_identifier}", '', option.text]
+        if option.next_question
+          format << ['', "SKIP for option #{question.question_identifier}", '', option.next_question]
+        end
+      }
       if question.reg_ex_validation_message
-        format << ['', "Regular expiression failure message for #{question.question_identifier}", '',
+        format << ['', "Regular expression failure message for #{question.question_identifier}", '',
           question.reg_ex_validation_message]
+      end
+      if question.following_up_question_identifier
+        format << ['', "Following up on question", '', question.following_up_question_identifier]
+        format << ['', "Follow up position", '', question.follow_up_position]
+      end
+      if question.identifies_survey
+        format << ['', "Question identifies survey", '', "YES"]
       end
     end
   end
