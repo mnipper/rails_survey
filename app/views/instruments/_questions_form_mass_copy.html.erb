@@ -10,7 +10,7 @@
         <legend class="section">Questions to be copied</legend>
         <p class="text-muted">Check the questions that you want copied to the instruments checked above</p>
         <div class="controls form-group">
-            <div class="checkbox" ng-repeat="quest in all_questions">
+            <div class="checkbox col-md-6" ng-repeat="quest in all_questions">
                 <label> <input type="checkbox" ng-model="quest.checked"></input> {{ quest.question_identifier }} </label>
             </div>
         </div>

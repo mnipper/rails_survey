@@ -4,6 +4,7 @@
     <button class="btn btn-primary" ng-click="displayQuestions()">Mass Copy</button>
     <div ng-show="visible"><%= render 'questions_form_mass_copy' %></div>
   </div>
+  <div ng-show="questionVisibility">
   <div class="pagination col-md-12" ng-show="total_pages > 1">
     <li><a ng-click="setEndPages(1)"><i class="eicon-left-open-big"></i></a></li>
     <li><a ng-click="setPage(current_page - 1)"><i class="icon-arrow-left"></i></a></li>
@@ -57,19 +58,19 @@
         </div>
       </div>
     </div>
+    <div class="pagination" ng-show="total_pages > 1">
+        <li><a ng-click="setEndPages(1)"><i class="eicon-left-open-big"></i></a></li>
+        <li><a ng-click="setPage(current_page - 1)"><i class="icon-arrow-left"></i></a></li>
+        <li ng-repeat="page in pages" ng-class="{ active: current_page == page }">
+             <a ng-click="setPage(page)"> {{ page }} </a>
+        </li>
+        <li><a ng-click="setPage(current_page + 1)"><i class="icon-arrow-right"></i></a></li>
+        <li><a ng-click="setEndPages(total_pages)"><i class="eicon-right-open-big"></i></a></li>
+    </div>
   </div>
   <div class="top-buffer">
     <a class="btn btn-success" ng-click="newQuestion()" id="add-question-button"><i class="icon-plus"></i> Add Question</a>
   </div>
-  <ul class="pagination" ng-show="total_pages > 1">
-    <li><a ng-click="setEndPages(1)"><i class="eicon-left-open-big"></i></a></li>
-    <li><a ng-click="setPage(current_page - 1)"><i class="icon-arrow-left"></i></a></li>
-    <li ng-repeat="page in pages" ng-class="{ active: current_page == page }">
-         <a ng-click="setPage(page)"> {{ page }} </a>
-    </li>
-    <li><a ng-click="setPage(current_page + 1)"><i class="icon-arrow-right"></i></a></li>
-    <li><a ng-click="setEndPages(total_pages)"><i class="eicon-right-open-big"></i></a></li>
-  </ul>
+  </div>
 </div>
-
 </div>
