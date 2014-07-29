@@ -9,6 +9,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', 'filterFilt
   $scope.total_pages = 1
   $scope.searchText = ""
   $scope.visible = false
+  $scope.questionVisibility = true
   $scope.init = (project_id, instrument_id) ->
     $scope.project_id = project_id
     $scope.current_page = 1
@@ -209,10 +210,12 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', 'filterFilt
 
   $scope.displayQuestions = () ->
     $scope.visible = !$scope.visible
+    $scope.questionVisibility = !$scope.questionVisibility
     
   $scope.copyQuestions = () ->
     $scope.copyHelper(q) for q in $scope.all_questions when q.checked == true
     $scope.visible = false
+    $scope.questionVisibility = true
     (instrument.checked = false) for instrument in $scope.instruments
     (question.checked = false) for question in $scope.all_questions
     
