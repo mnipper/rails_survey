@@ -1,6 +1,6 @@
 ActiveAdmin.register AdminUser do
   menu priority: 2
-  permit_params :email, :password, :password_confirmation
+  permit_params :email, :password, :password_confirmation, :gauth_enabled
 
   index do
     column :email
@@ -17,6 +17,7 @@ ActiveAdmin.register AdminUser do
       f.input :email
       f.input :password
       f.input :password_confirmation
+      f.input :gauth_enabled, :as => :radio
     end
     f.actions
   end
