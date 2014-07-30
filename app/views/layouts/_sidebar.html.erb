@@ -48,6 +48,12 @@
             <li><%= link_to 'New Export', project_responses_path(current_project) %></li>
           </ul>
         </li>
+
+        <li class="<%= (current_page?(user_displayqr_path)) ? 'active' : 'panel' %>">
+          <%= link_to user_displayqr_path do %>
+              <i class="icon-lock"></i><span class="name">Two-Factor Authentication</span>
+          <% end %>
+        </li>
     <% end %>
 
     <li class="visible-xs">
