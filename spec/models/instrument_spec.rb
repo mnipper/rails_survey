@@ -165,9 +165,10 @@ describe Instrument do
         ["Instrument id:", @instrument.id],
         ["Instrument title:", @instrument.title],
         ["Version number:", @instrument.current_version_number],
+        ["Language:", @instrument.language],
         ["\n"],
-        ["number", "qid", 'question_type', @instrument.language],
-        [@question.number_in_instrument, @question.question_identifier, @question.question_type, @question.text]
+        ["number_in_instrument", "question_identifier", 'question_type', 'question_text', 'question_instructions'],
+        [@question.number_in_instrument, @question.question_identifier, @question.question_type, @question.text, @question.instructions]
       ]
     end
   end
