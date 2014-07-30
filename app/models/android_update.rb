@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: android_updates
+#
+#  id                      :integer          not null, primary key
+#  version                 :integer
+#  created_at              :datetime
+#  updated_at              :datetime
+#  apk_update_file_name    :string(255)
+#  apk_update_content_type :string(255)
+#  apk_update_file_size    :integer
+#  apk_update_updated_at   :datetime
+#
+
 class AndroidUpdate < ActiveRecord::Base
   default_scope { order('version DESC') }
   attr_accessible :version, :apk_update

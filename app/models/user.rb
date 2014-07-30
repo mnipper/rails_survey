@@ -20,6 +20,7 @@
 #  failed_attempts        :integer          default(0)
 #  unlock_token           :string(255)
 #  locked_at              :datetime
+#  last_active_at         :datetime
 #
 
 class User < ActiveRecord::Base
