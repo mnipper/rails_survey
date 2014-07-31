@@ -55,13 +55,13 @@ namespace :monit do
   task :install do
     execute "#{sudo} apt-get -y install monit"
   end
-  after "deploy:install", "monit:install"
+  after "deploy:update", "monit:install"
 
   desc "Setup all Monit configuration"
   task :setup do
     monit_config "monitrc", "/etc/monit/monitrc"
   end
-  after "deploy:setup", "monit:setup"
+  after "monit:install", "monit:setup"
 end
 
 def monit_config(name, destination = nil)
