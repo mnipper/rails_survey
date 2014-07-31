@@ -43,15 +43,6 @@ namespace :deploy do
       execute "cd #{release_path}/node && sudo rm -rf node_modules && npm install"
     end 
   end
-  
-  %w(start stop restart).each do |task_name|
-    desc "#{task_name} Monit"
-    task task_name do
-      on roles(:app), in: :sequence, wait: 5 do
-        execute "sudo service monit #{task_name}"
-      end
-    end
-  end
  
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
