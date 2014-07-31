@@ -19,7 +19,7 @@ set :sidekiq_log, File.join(shared_path, 'log', 'sidekiq.log')
 set :sidekiq_concurrency, 25
 set :sidekiq_processes, 2
 set :config_files, %w( monit )
-set :symlinks, [{ source: "monit", link: "/etc/monit/conf.d/{{full_app_name}}.conf" }]
+set :symlinks, [{ source: "log_rotation", link: "/etc/logrotate.d/{{full_app_name}}" },{ source: "monit", link: "/etc/monit/conf.d/{{full_app_name}}.conf" }]
 
 namespace :deploy do
   desc 'Restart Application'
@@ -43,31 +43,20 @@ namespace :deploy do
       execute "cd #{release_path}/node && sudo rm -rf node_modules && npm install"
     end 
   end
+  
+  %w(start stop restart).each do |task_name|
+    desc "#{task_name} Monit"
+    task task_name do
+      on roles(:app), in: :sequence, wait: 5 do
+        execute "sudo service monit #{task_name}"
+      end
+    end
+  end
  
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
   after "deploy:updated", "deploy:npm_install"
-  after 'deploy:restart', 'monit:restart'
+  after 'deploy:setup_config', 'monit:restart'
 end
 
-namespace :monit do
-  desc "Install Monit"
-  task :install do
-    execute "sudo apt-get install monit"
-  end
-  after "deploy:updated", "monit:install"
 
-  desc "Setup all Monit configuration"
-  task :setup do
-    monit_config "monitrc", "/etc/monit/monitrc"
-  end
-  after "monit:install", "monit:setup"
-end
-
-def monit_config(name, destination = nil)
-  destination ||= "/etc/monit/conf.d/#{name}_#{application}.conf"
-  template "monit/#{name}.erb", "/tmp/monit_#{name}"
-  execute "sudo mv /tmp/monit_#{name} #{destination}"
-  execute "sudo chown root #{destination}"
-  execute "sudo chmod 600 #{destination}"
-end
