@@ -53,7 +53,7 @@ end
 namespace :monit do
   desc "Install Monit"
   task :install do
-    execute "#{sudo} apt-get -y install monit"
+    "#{sudo} apt-get -y install monit"
   end
   after "deploy:updated", "monit:install"
 
