@@ -28,5 +28,6 @@ module RailsSurvey
     # Enable assets
     #config.assets.enabled = true
     config.assets.initialize_on_precompile = false
+    config.quiet_assets = true
   end
 end

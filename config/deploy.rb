@@ -17,10 +17,11 @@ set :branch, 'master'
 set :sidekiq_pid, File.join(shared_path, 'tmp', 'pids', 'sidekiq.pid')
 set :sidekiq_log, File.join(shared_path, 'log', 'sidekiq.log')
 set :sidekiq_concurrency, 25
-set :sidekiq_processes, 1
+set :sidekiq_processes, 2
+set :config_files, %w( monit )
+set :symlinks, [{ source: "monit", link: "/etc/monit/conf.d/{{full_app_name}}.conf" }]
 
 namespace :deploy do
- 
   desc 'Restart Application'
   task :restart do
     desc "restart redis"
@@ -46,5 +47,27 @@ namespace :deploy do
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
   after "deploy:updated", "deploy:npm_install"
+  after 'deploy:setup_config', 'monit:restart'
+end
 
+namespace :monit do
+  desc "Install Monit"
+  task :install do
+    execute "#{sudo} apt-get -y install monit"
+  end
+  after "deploy:install", "monit:install"
+
+  desc "Setup all Monit configuration"
+  task :setup do
+    monit_config "monitrc", "/etc/monit/monitrc"
+  end
+  after "deploy:setup", "monit:setup"
+end
+
+def monit_config(name, destination = nil)
+  destination ||= "/etc/monit/conf.d/#{name}_#{application}.conf"
+  template "monit/#{name}.erb", "/tmp/monit_#{name}"
+  execute "#{sudo} mv /tmp/monit_#{name} #{destination}"
+  execute "#{sudo} chown root #{destination}"
+  execute "#{sudo} chmod 600 #{destination}"
 end
