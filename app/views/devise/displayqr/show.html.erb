@@ -23,7 +23,7 @@
               <div class="form-actions">
                 <% if resource.gauth_enabled == '1' %>
                   <%= f.hidden_field :gauth_enabled, value: 'f' %></p>
-                  <%= f.submit 'Disable', class: 'btn btn-block btn-lg btn-danger' %>
+                  <%= f.submit 'Disable', confirm: 'Are you sure?  This will make your account less secure.', class: 'btn btn-block btn-lg btn-danger' %>
                 <% else %>
                   <%= f.hidden_field :gauth_enabled, value: '1' %></p>
                   <%= f.submit 'Enable', class: 'btn btn-block btn-lg btn-success' %>
