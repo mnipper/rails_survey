@@ -55,7 +55,7 @@ namespace :monit do
   task :install do
     execute "#{sudo} apt-get -y install monit"
   end
-  after "deploy:update", "monit:install"
+  after "deploy:updated", "monit:install"
 
   desc "Setup all Monit configuration"
   task :setup do
