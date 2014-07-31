@@ -1,0 +1,52 @@
+<div class="row">
+  <% if resource.gauth_enabled == '1' %>
+    <div class="alert alert-success text-center">
+      <strong>Two-factor authentication is currently enabled for your account.</strong>
+    </div>
+  <% else %>
+    <div class="alert alert-danger text-center">
+      <strong>Two-factor authentication is currently disabled for your account!</strong>
+    </div>
+  <% end %>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+      <section class="widget">
+          <header class="text-align-center">
+              <h4>Two-Factor Authentication</h4>
+          </header>
+          <div class="body">
+            <%= form_for(resource, :as => resource_name, :url => [resource_name, :displayqr], :html => { :method => :put }) do |f| %>
+              <%= devise_error_messages! %>
+
+              <div class="form-actions">
+                <% if resource.gauth_enabled == '1' %>
+                  <%= f.hidden_field :gauth_enabled, value: 'f' %></p>
+                  <%= f.submit 'Disable', class: 'btn btn-block btn-lg btn-danger' %>
+                <% else %>
+                  <%= f.hidden_field :gauth_enabled, value: '1' %></p>
+                  <%= f.submit 'Enable', class: 'btn btn-block btn-lg btn-success' %>
+                <% end %>
+              </div>
+            <% end %>
+        </div>
+    </section>
+  </div>
+  <div class="col-md-8">
+      <section class="widget">
+          <header class="text-align-center">
+              <h4>Google Authenticator QR Code</h4>
+          </header>
+          <div class="body">
+
+              <%= form_for(resource, :as => resource_name, :url => [:refresh, resource_name, :displayqr], :html => {:method => :post}) do |f|%>
+                <div class="form-actions">
+                    <p align="center"><%= google_authenticator_qrcode(resource) %></p>
+                    <%= f.submit I18n.t('newtoken', {:scope => 'devise.registration'}), class: 'btn btn-block btn-lg btn-danger' %>
+                </div>
+          <% end %>
+        </div>
+    </section>
+  </div>
+</div>

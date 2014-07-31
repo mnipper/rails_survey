@@ -1,0 +1,29 @@
+<div class="single-widget-container">
+    <section class="widget login-widget">
+        <header class="text-align-center">
+            <h4>Enter Google Authenticator Token</h4>
+        </header>
+        <div class="body">
+            <%= form_for(resource, :as => resource_name, :url => [resource_name, :checkga], :html => { :method => :put }) do |f| %>
+            <%= f.hidden_field :tmpid, {:value => @tmpid} %>
+              <fieldset>
+                  <div class="form-group">
+                      <label for="token" >Token</label>
+
+                      <div class="input-group input-group-lg">
+                              <span class="input-group-addon">
+                                  <i class="icon-lock"></i>
+                              </span>
+                          <%= f.text_field :gauth_token, :autocomplete => :off, :autofocus => true, class: 'form-control input-lg', placeholder: 'Enter Token'%>
+                        </div>
+                      </div>
+
+              <div class="form-actions">
+                  <%= f.submit I18n.t('submit_token', {:scope => 'devise'}), class: 'btn btn-block btn-lg btn-danger' %>
+                  <div class="forgot"></div>
+              </div>
+          </fieldset>
+        <% end %>
+      </div>
+  </section>
+</div>
