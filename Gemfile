@@ -22,7 +22,7 @@ end
 gem "rails_config"
 gem "twitter-bootstrap-rails"
 gem 'devise'
-gem 'paper_trail', '~> 3.0.1'
+gem 'paper_trail', '>= 3.0.0.rc2'
 
 group :test do
   gem 'rspec-rails', '~> 2.0'
@@ -64,5 +64,4 @@ group :development do
   gem 'debugger', group: [:development]
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'quiet_assets'
 end
