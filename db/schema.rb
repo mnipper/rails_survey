@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140724192344) do
+ActiveRecord::Schema.define(version: 20140730175845) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 20140724192344) do
     t.string   "language"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "option_changed", default: false
   end
 
   create_table "options", force: true do |t|
@@ -146,6 +147,7 @@ ActiveRecord::Schema.define(version: 20140724192344) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "reg_ex_validation_message"
+    t.boolean  "question_changed",          default: false
   end
 
   create_table "questions", force: true do |t|

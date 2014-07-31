@@ -68,6 +68,10 @@ class InstrumentTranslationsController < ApplicationController
 
     params[:question_translations].each_pair do |id, translation|
       question = instrument.questions.find(id)
+      q_translation = question.has_translation_for?(language)
+      if q_translation and q_translation.text != translation
+        q_translation.update_attribute(:question_changed, false)
+      end
       question.add_or_update_translation_for(language, translation, :text)
     end if params.has_key? :question_translations
 
@@ -78,6 +82,10 @@ class InstrumentTranslationsController < ApplicationController
 
     params[:option_translations].each_pair do |id, translation|
       option = Option.find(id)
+      o_translation = option.has_translation_for?(language)
+      if o_translation and o_translation.text != translation
+        o_translation.update_attribute(:option_changed, false)
+      end
       option.add_or_update_translation_for(language, translation, :text)
     end if params.has_key? :option_translations
   end

@@ -19,14 +19,14 @@
       </thead>
       <tbody>
     <% @instrument.questions.each do |question| %>
-        <tr>
+        <tr class="<%= "danger" if question.translated_for(@instrument_translation.language, :question_changed) %>">
           <td><%= question.question_identifier %></td>
           <td><%= raw question.text %></td>
           <td><%= raw (question.translated_for @instrument_translation.language, :text) %></td>
         </tr>
         <% if question.has_options? %>
           <% question.options.each do |option| %>
-            <tr>
+            <tr class="<%= "danger" if option.translated_for(@instrument_translation.language, :option_changed) %>">
               <td>Option for <%= question.question_identifier %></td>
               <td><%= option.text %></td>
               <td><%= option.translated_for @instrument_translation.language, :text %></td>
