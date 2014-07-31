@@ -22,12 +22,7 @@ module RailsSurvey
     # config.i18n.default_locale = :de
     config.assets.paths << Rails.root.join("vendor", "assets", "images")
     config.assets.paths << Rails.root.join("vendor", "assets", "lib")
-    config.assets.paths << Rails.root.join("public", "system", "images")
     I18n.enforce_available_locales = false
-
-    # Enable assets
-    #config.assets.enabled = true
     config.assets.initialize_on_precompile = false
-    config.quiet_assets = true
   end
 end
