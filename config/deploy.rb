@@ -53,7 +53,7 @@ end
 namespace :monit do
   desc "Install Monit"
   task :install do
-    "#{sudo} apt-get -y install monit"
+    execute "sudo apt-get install monit"
   end
   after "deploy:updated", "monit:install"
 
@@ -67,7 +67,7 @@ end
 def monit_config(name, destination = nil)
   destination ||= "/etc/monit/conf.d/#{name}_#{application}.conf"
   template "monit/#{name}.erb", "/tmp/monit_#{name}"
-  execute "#{sudo} mv /tmp/monit_#{name} #{destination}"
-  execute "#{sudo} chown root #{destination}"
-  execute "#{sudo} chmod 600 #{destination}"
+  execute "sudo mv /tmp/monit_#{name} #{destination}"
+  execute "sudo chown root #{destination}"
+  execute "sudo chmod 600 #{destination}"
 end
