@@ -47,7 +47,7 @@ namespace :deploy do
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
   after "deploy:updated", "deploy:npm_install"
-  after 'deploy:setup', 'monit:restart'
+  after 'deploy:restart', 'monit:restart'
 end
 
 namespace :monit do
