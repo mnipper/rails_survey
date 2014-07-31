@@ -1,5 +1,7 @@
 <h1><%= @instrument.title %> versions</h1>
 
+<%= paginate @instrument.versions.page(params[:page]) %>
+
 <section class="widget">
   <div class="body">
     <table class="table table-hover">
@@ -12,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @instrument.versions.each do |version| %>
+        <% @instrument.versions.page(params[:page]).each do |version| %>
             <tr>
               <td><%= link_to version.index, project_instrument_version_path(current_project, @instrument, version.index) %></td>
               <td><%= version.reify.title %></td>

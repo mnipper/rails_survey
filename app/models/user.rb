@@ -20,16 +20,21 @@
 #  failed_attempts        :integer          default(0)
 #  unlock_token           :string(255)
 #  locked_at              :datetime
-#  last_active_at         :datetime
+#  gauth_secret           :string(255)
+#  gauth_enabled          :string(255)      default("f")
+#  gauth_tmp              :string(255)
+#  gauth_tmp_datetime     :datetime
 #
 
 class User < ActiveRecord::Base
+	attr_accessor :gauth_token
   include RoleModel
   roles :admin, :manager, :translator, :analyst, :user
   include ComplexPassword
-  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :timeoutable,
+  devise :google_authenticatable, :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :timeoutable,
          :lockable
-  attr_accessible :email, :password, :password_confirmation, :project_ids, :roles_mask, :roles 
+  attr_accessible :email, :password, :password_confirmation, :project_ids, :roles_mask, :roles, 
+          :gauth_enabled, :gauth_tmp, :gauth_tmp_datetime
   before_save :ensure_authentication_token
   after_create :set_default_role 
   has_many :user_projects 

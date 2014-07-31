@@ -38,8 +38,3 @@ node/node_modules
 
 #Ignore Redis files
 dump.rdb
-
-#Files
-files/*
-updates/*
-
