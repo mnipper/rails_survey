@@ -21,6 +21,7 @@ class Option < ActiveRecord::Base
   delegate :project, to: :question
   has_many :translations, foreign_key: 'option_id', class_name: 'OptionTranslation', dependent: :destroy
   before_save :update_instrument_version, if: Proc.new { |option| option.changed? }
+  before_save :update_option_translation, if: Proc.new { |option| option.text_changed? }
   before_destroy :update_instrument_version
   has_paper_trail
   acts_as_paranoid
@@ -46,6 +47,12 @@ class Option < ActiveRecord::Base
     }))
   end
 
+  def update_option_translation(status = true)
+    translations.each do |translation|
+      translation.update_attribute(:option_changed, status)
+    end
+  end
+  
   private
   def update_instrument_version
     instrument.update_instrument_version

@@ -33,6 +33,7 @@ class Question < ActiveRecord::Base
   has_many :images, dependent: :destroy  
   delegate :project, to: :instrument
   before_save :update_instrument_version, if: Proc.new { |question| question.changed? }
+  before_save :update_question_translation, if: Proc.new { |question| question.text_changed? }
   before_destroy :update_instrument_version
   has_paper_trail
   acts_as_paranoid
@@ -79,6 +80,12 @@ class Question < ActiveRecord::Base
     options.length
   end
 
+  def update_question_translation(status = true)
+    translations.each do |translation|
+      translation.update_attribute(:question_changed, status)
+    end
+  end
+  
   private
   def update_instrument_version
     instrument.update_instrument_version

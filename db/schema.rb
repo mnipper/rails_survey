@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 20140730200237) do
     t.string   "language"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "option_changed", default: false
   end
 
   create_table "options", force: true do |t|
@@ -150,6 +151,7 @@ ActiveRecord::Schema.define(version: 20140730200237) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "reg_ex_validation_message"
+    t.boolean  "question_changed",          default: false
   end
 
   create_table "questions", force: true do |t|
@@ -269,6 +271,7 @@ ActiveRecord::Schema.define(version: 20140730200237) do
     t.integer  "failed_attempts",        default: 0
     t.string   "unlock_token"
     t.datetime "locked_at"
+    t.datetime "last_active_at"
     t.string   "gauth_secret"
     t.string   "gauth_enabled",          default: "f"
     t.string   "gauth_tmp"
