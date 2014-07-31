@@ -371,7 +371,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   mandrill-api (~> 1.0.51)
-  paper_trail (>= 3.0.0.rc2)
+  paper_trail (~> 3.0.3)
   paperclip (~> 4.1.0)
   paranoia (~> 2.0)
   pg

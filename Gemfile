@@ -22,7 +22,7 @@ end
 gem "rails_config"
 gem "twitter-bootstrap-rails"
 gem 'devise'
-gem 'paper_trail', '>= 3.0.0.rc2'
+gem 'paper_trail', '~> 3.0.3'
 
 group :test do
   gem 'rspec-rails', '~> 2.0'
