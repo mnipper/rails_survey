@@ -43,9 +43,14 @@ namespace :deploy do
   end
   
   task :symlink_files do
-    on roles(:app) do
-      execute "sudo ln -nfs #{current_path}/config/deploy/shared/sidekiq.erb /etc/monit/conf.d/sidekiq.conf"
-      execute "sudo ln -nfs #{current_path}/config/deploy/shared/log_rotation.erb /etc/logrotate.d/rails_server"
+    on roles(:app), in: :parallel do |host|
+      if host.hostname == 'wci-chpir.duke.edu'
+        execute "sudo ln -nfs #{current_path}/config/deploy/shared/sidekiq.erb /etc/monit/conf.d/sidekiq.conf"
+        execute "sudo ln -nfs #{current_path}/config/deploy/shared/log_rotation.erb /etc/logrotate.d/rails_server"
+      else
+        execute "sudo ln -nfs #{current_path}/config/deploy/shared/sidekiq_two.erb /etc/monit/conf.d/sidekiq.conf"
+        execute "sudo ln -nfs #{current_path}/config/deploy/shared/log_rotation.erb /etc/logrotate.d/rails_server"
+      end
     end
   end
  
