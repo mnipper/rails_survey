@@ -18,8 +18,8 @@ set :sidekiq_pid, File.join(shared_path, 'tmp', 'pids', 'sidekiq.pid')
 set :sidekiq_log, File.join(shared_path, 'log', 'sidekiq.log')
 set :sidekiq_concurrency, 25
 set :sidekiq_processes, 2
-set :config_files, %w( monit )
-set :symlinks, [{ source: "log_rotation", link: "/etc/logrotate.d/{{full_app_name}}" },{ source: "monit", link: "/etc/monit/conf.d/{{full_app_name}}.conf" }]
+set :config_files, %w( sidekiq )
+set :symlinks, [{ source: "log_rotation", link: "/etc/logrotate.d/{{full_app_name}}" }]
 
 namespace :deploy do
   desc 'Restart Application'
@@ -43,10 +43,17 @@ namespace :deploy do
       execute "cd #{release_path}/node && sudo rm -rf node_modules && npm install"
     end 
   end
+  
+  task :symlink_sidekiq do
+    on roles(:app) do
+      execute "ln -nfs #{current_path}/config/deploy/shared/sidekiq.erb /etc/monit/conf.d/sidekiq.conf"
+    end
+  end
  
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
-  after "deploy:updated", "deploy:npm_install"
+  after 'deploy:updated', 'deploy:npm_install'
+  after 'deploy:updated', 'deploy:symlink_sidekiq'
   after 'deploy:setup_config', 'monit:restart'
 end
 
