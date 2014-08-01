@@ -1,11 +1,11 @@
-check process sidekiq-0 with pidfile <%= current_path %>/tmp/pids/sidekiq-0.pid
-  start program = "bundle exec sidekiq -P <%= current_path %>/tmp/pids/sidekiq-0.pid" with timeout 30 seconds
-  stop program = "kill -s TERM `cat <%= current_path %>/tmp/pids/sidekiq-0.pid`" with timeout 30 seconds
+check process sidekiq-0 with pidfile /var/www/rails_survey/current/tmp/pids/sidekiq-0.pid
+  start program = "bundle exec sidekiq -P /var/www/rails_survey/current/tmp/pids/sidekiq-0.pid" with timeout 30 seconds
+  stop program = "kill -s TERM `cat /var/www/rails_survey/current/tmp/pids/sidekiq-0.pid`" with timeout 30 seconds
   if totalmem is greater than 800 MB for 2 cycles then restart
   group sidekiq
-  
-check process sidekiq-1 with pidfile <%= current_path %>/tmp/pids/sidekiq-1.pid
-  start program = "bundle exec sidekiq -P <%= current_path %>/tmp/pids/sidekiq-1.pid" with timeout 30 seconds
-  stop program = "kill -s TERM `cat <%= current_path %>/tmp/pids/sidekiq-1.pid`" with timeout 30 seconds
+
+check process sidekiq-1 with pidfile /var/www/rails_survey/current/tmp/pids/sidekiq-1.pid
+  start program = "bundle exec sidekiq -P /var/www/rails_survey/current/tmp/pids/sidekiq-1.pid" with timeout 30 seconds
+  stop program = "kill -s TERM `cat /var/www/rails_survey/current/tmp/pids/sidekiq-1.pid`" with timeout 30 seconds
   if totalmem is greater than 800 MB for 2 cycles then restart
   group sidekiq
