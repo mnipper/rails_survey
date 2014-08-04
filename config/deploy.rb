@@ -46,7 +46,7 @@ namespace :deploy do
   after 'deploy:publishing', 'deploy:restart'
   after 'deploy:updated', 'deploy:npm_install'
   after 'deploy:published', 'sidekiq:monit:config'
-  after 'deploy:published', 'sidekiq:monit:restart_monit'
+  after 'deploy:published', 'monit:restart_monit'
 end
 
 namespace :monit do
