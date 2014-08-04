@@ -42,19 +42,17 @@ namespace :deploy do
     end 
   end
   
+  desc "Restart monit service"
+  task :restart_monit do
+    on roles(:app) do
+      execute "sudo service monit restart"
+    end
+  end
+  
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
   after 'deploy:updated', 'deploy:npm_install'
   after 'deploy:published', 'sidekiq:monit:config'
-  after 'deploy:published', 'monit:restart_monit'
-end
-
-namespace :monit do
-  desc "Restart monit service"
-  task :restart_monit do
-    on roles(:app) do
-      execute 'sudo service monit restart'
-    end
-  end
+  after 'deploy:published', 'deploy:restart_monit'
 end
 
