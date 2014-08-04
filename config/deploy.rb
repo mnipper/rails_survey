@@ -12,7 +12,7 @@ set :format, :pretty
 set :keep_releases, 5
 set :linked_files, %w{config/database.yml config/secret_token.txt config/local_env.yml}
 set :linked_dirs, %w(bin log tmp/pids tmp/cache tmp/sockets vendor/bundle)
-set :linked_dirs, fetch(:linked_dirs) + %w{public/system files}
+set :linked_dirs, fetch(:linked_dirs) + %w{ files updates }
 set :branch, 'master'
 set :sidekiq_pid, File.join(shared_path, 'tmp', 'pids', 'sidekiq.pid')
 set :sidekiq_log, File.join(shared_path, 'log', 'sidekiq.log')
@@ -42,23 +42,9 @@ namespace :deploy do
     end 
   end
   
-  task :symlink_files do
-    on roles(:app), in: :parallel do |host|
-      if host.hostname == 'wci-chpir.duke.edu'
-        execute "sudo ln -nfs #{current_path}/config/deploy/shared/sidekiq.erb /etc/monit/conf.d/sidekiq.conf"
-        execute "sudo ln -nfs #{current_path}/config/deploy/shared/log_rotation.erb /etc/logrotate.d/rails_server"
-      else
-        execute "sudo ln -nfs #{current_path}/config/deploy/shared/sidekiq_two.erb /etc/monit/conf.d/sidekiq.conf"
-        execute "sudo ln -nfs #{current_path}/config/deploy/shared/log_rotation.erb /etc/logrotate.d/rails_server"
-      end
-    end
-  end
- 
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
   after 'deploy:updated', 'deploy:npm_install'
-  after 'deploy:updated', 'deploy:symlink_files'
-  after 'deploy:publishing', 'monit:restart'
 end
 
 
