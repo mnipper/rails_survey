@@ -22,10 +22,6 @@ set :sidekiq_processes, 2
 namespace :deploy do
   desc 'Restart Application'
   task :restart do
-    desc "restart redis"
-    on roles(:app) do
-      execute "sudo /etc/init.d/redis-server restart"
-    end
     desc "restart node"
     on roles(:app), in: :sequence, wait: 5 do
       execute "sudo restart realtime-app || sudo start realtime-app"
@@ -42,6 +38,13 @@ namespace :deploy do
     end 
   end
   
+  desc "Moniter redis"
+  task :config_redis do
+    on roles(:app) do
+      execute "sudo mv #{release_path}/config/deploy/shared/redis.erb /etc/monit/conf.d/redis_rails_survey.conf"
+    end
+  end 
+  
   desc "Restart monit service"
   task :restart_monit do
     on roles(:app) do
@@ -53,6 +56,7 @@ namespace :deploy do
   after 'deploy:publishing', 'deploy:restart'
   after 'deploy:updated', 'deploy:npm_install'
   after 'deploy:published', 'sidekiq:monit:config'
+  after 'deploy:published', 'deploy:config_redis'
   after 'deploy:published', 'deploy:restart_monit'
 end
 
