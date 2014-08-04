@@ -18,7 +18,6 @@ set :sidekiq_pid, File.join(shared_path, 'tmp', 'pids', 'sidekiq.pid')
 set :sidekiq_log, File.join(shared_path, 'log', 'sidekiq.log')
 set :sidekiq_concurrency, 25
 set :sidekiq_processes, 2
-#set :sidekiq_service_name, {:application}_{:rails_env}
 
 namespace :deploy do
   desc 'Restart Application'
@@ -46,19 +45,13 @@ namespace :deploy do
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
   after 'deploy:updated', 'deploy:npm_install'
+  after 'deploy:published', 'sidekiq:monit:config'
+
   #after 'sidekiq:start', 'load:defaults'
   #after 'load:defaults', 'sidekiq:monit:config'
   #after 'sidekiq:monit:config', 'sidekiq:monit:restart'
   #after 'sidekiq:monit:restart', 'sidekiq:monit:monitor'
 end
 
-namespace :sidekiq do    
-  desc "Restart sidekiq"
-  task :restart do
-    on roles(:app) do
-      execute "sudo /usr/bin/monit restart sidekiq"
-    end 
-  end
-end
 
 
