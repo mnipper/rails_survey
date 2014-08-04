@@ -54,8 +54,10 @@ end
 
 namespace :sidekiq do    
   desc "Restart sidekiq"
-  task :restart, :roles => :app, :on_no_matching_servers => :continue do
-    execute "sudo /usr/bin/monit restart sidekiq"
+  task :restart do
+    on roles(:app) do
+      execute "sudo /usr/bin/monit restart sidekiq"
+    end 
   end
 end
 
