@@ -46,7 +46,8 @@ namespace :deploy do
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
   after 'deploy:updated', 'deploy:npm_install'
-  after 'sidekiq:start', 'sidekiq:monit:monitor'
+  after 'sidekiq:start', 'sidekiq:monit:restart'
+  after 'sidekiq:monit:restart', 'sidekiq:monit:monitor'
 end
 
 
