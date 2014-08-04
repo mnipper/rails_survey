@@ -46,10 +46,17 @@ namespace :deploy do
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
   after 'deploy:updated', 'deploy:npm_install'
-  after 'sidekiq:start', 'load:defaults'
-  after 'load:defaults', 'sidekiq:monit:config'
-  after 'sidekiq:monit:config', 'sidekiq:monit:restart'
-  after 'sidekiq:monit:restart', 'sidekiq:monit:monitor'
+  #after 'sidekiq:start', 'load:defaults'
+  #after 'load:defaults', 'sidekiq:monit:config'
+  #after 'sidekiq:monit:config', 'sidekiq:monit:restart'
+  #after 'sidekiq:monit:restart', 'sidekiq:monit:monitor'
+end
+
+namespace :sidekiq do    
+  desc "Restart sidekiq"
+  task :restart, :roles => :app, :on_no_matching_servers => :continue do
+    execute "sudo /usr/bin/monit restart sidekiq"
+  end
 end
 
 
