@@ -12,14 +12,13 @@ set :format, :pretty
 set :keep_releases, 5
 set :linked_files, %w{config/database.yml config/secret_token.txt config/local_env.yml}
 set :linked_dirs, %w(bin log tmp/pids tmp/cache tmp/sockets vendor/bundle)
-set :linked_dirs, fetch(:linked_dirs) + %w{public/system files}
+set :linked_dirs, fetch(:linked_dirs) + %w{ files updates }
 set :branch, 'master'
 set :sidekiq_pid, File.join(shared_path, 'tmp', 'pids', 'sidekiq.pid')
 set :sidekiq_log, File.join(shared_path, 'log', 'sidekiq.log')
 set :sidekiq_concurrency, 25
 set :sidekiq_processes, 2
-set :config_files, %w( monit )
-set :symlinks, [{ source: "monit", link: "/etc/monit/conf.d/{{full_app_name}}.conf" }]
+#set :sidekiq_service_name, {:application}_{:rails_env}
 
 namespace :deploy do
   desc 'Restart Application'
@@ -43,31 +42,11 @@ namespace :deploy do
       execute "cd #{release_path}/node && sudo rm -rf node_modules && npm install"
     end 
   end
- 
+  
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
-  after "deploy:updated", "deploy:npm_install"
-  after 'deploy:restart', 'monit:restart'
+  after 'deploy:updated', 'deploy:npm_install'
+  after 'sidekiq:start', 'sidekiq:monit:monitor'
 end
 
-namespace :monit do
-  desc "Install Monit"
-  task :install do
-    "#{sudo} apt-get -y install monit"
-  end
-  after "deploy:updated", "monit:install"
 
-  desc "Setup all Monit configuration"
-  task :setup do
-    monit_config "monitrc", "/etc/monit/monitrc"
-  end
-  after "monit:install", "monit:setup"
-end
-
-def monit_config(name, destination = nil)
-  destination ||= "/etc/monit/conf.d/#{name}_#{application}.conf"
-  template "monit/#{name}.erb", "/tmp/monit_#{name}"
-  execute "#{sudo} mv /tmp/monit_#{name} #{destination}"
-  execute "#{sudo} chown root #{destination}"
-  execute "#{sudo} chmod 600 #{destination}"
-end
