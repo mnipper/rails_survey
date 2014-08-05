@@ -45,6 +45,13 @@ namespace :deploy do
     end
   end 
   
+  desc "Moniter apache2"
+  task :config_apache2 do
+    on roles(:app) do
+      execute "sudo mv #{release_path}/config/deploy/shared/apache2.erb /etc/monit/conf.d/apache2_rails_survey.conf"
+    end
+  end
+  
   desc "Restart monit service"
   task :restart_monit do
     on roles(:app) do
@@ -57,6 +64,7 @@ namespace :deploy do
   after 'deploy:updated', 'deploy:npm_install'
   after 'deploy:published', 'sidekiq:monit:config'
   after 'deploy:published', 'deploy:config_redis'
+  after 'deploy:published', 'deploy:config_apache2'
   after 'deploy:published', 'deploy:restart_monit'
 end
 

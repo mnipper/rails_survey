@@ -1,0 +1,25 @@
+check process apache2 with pidfile /var/run/apache2/apache2.pid
+  start program = "/etc/init.d/apache2 start"
+  stop program  = "/etc/init.d/apache2 stop"
+  if cpu is greater than 60% for 2 cycles then alert
+  if cpu > 80% for 5 cycles then restart
+  if totalmem > 200.0 MB for 5 cycles then restart
+  if children > 250 then restart
+  if loadavg(5min) greater than 10 for 8 cycles then stop
+  if 4 restarts within 20 cycles then timeout
+  if failed host localhost port 80 with protocol http and request "/server-status" with timeout 25 seconds for 4 times within 5 cycles then restart
+  if failed host $CAPISTRANO:HOST$ port 443 type TCPSSL 
+    pemfile /etc/monit/monit.pem
+    protocol HTTP request http://localhost/<%= @role.user %>/monit/token  then restart
+  group www
+  group apache
+  depend apache_bin
+  depend apache_rc
+
+check file apache_bin with path /usr/sbin/apache2
+  group apache
+  include /etc/monit/templates/rootbin
+
+check file apache_rc with path /etc/init.d/apache2
+  group apache
+  include /etc/monit/templates/rootbin
