@@ -7,10 +7,7 @@ check process apache2 with pidfile /var/run/apache2/apache2.pid
   if children > 250 then restart
   if loadavg(5min) greater than 10 for 8 cycles then stop
   if 4 restarts within 20 cycles then timeout
-  if failed host localhost port 80 with protocol http and request "/server-status" with timeout 25 seconds for 4 times within 5 cycles then restart
-  if failed host $CAPISTRANO:HOST$ port 443 type TCPSSL 
-    pemfile /etc/monit/monit.pem
-    protocol HTTP request http://localhost/<%= @role.user %>/monit/token  then restart
+  if failed port 443 with timeout 25 seconds for 4 times within 5 cycles then restart
   group www
   group apache
   depend apache_bin
