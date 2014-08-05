@@ -1,4 +1,5 @@
 ActiveAdmin.register ApiKey do
+  permit_params :access_token
 
   index do
     column :id
