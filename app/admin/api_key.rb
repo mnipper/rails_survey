@@ -18,6 +18,11 @@ ActiveAdmin.register ApiKey do
   end
 
   form do |f|
+    unless f.object.new_record?
+      f.inputs "Api Key Details" do
+        f.input :access_token
+      end
+    end
     f.actions
   end
 end
