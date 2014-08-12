@@ -13,6 +13,7 @@
 #  device_uuid               :string(255)
 #  latitude                  :string(255)
 #  longitude                 :string(255)
+#  metadata                  :text
 #
 
 class Survey < ActiveRecord::Base

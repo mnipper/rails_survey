@@ -8,6 +8,7 @@
 #  created_at                :datetime
 #  updated_at                :datetime
 #  instrument_id             :integer
+#  deleted_at                :datetime
 #
 
 class Section < ActiveRecord::Base
