@@ -64,7 +64,7 @@ module Api
             question = Question.find(params[:id])
             copy_question = question.amoeba_dup
             copy_question.instrument_id = instrument.id
-            copy_question.number_in_instrument = instrument.questions.size + 1
+            copy_question.number_in_instrument = params[:q_position]
             copy_question.question_identifier = params[:q_id]
             if copy_question.save
               if question.images
