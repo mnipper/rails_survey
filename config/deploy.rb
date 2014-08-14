@@ -77,7 +77,7 @@ namespace :bootstrap do
  
     # Tar up (compress) the puppet directory from the current directory -- the puppet directory within the source code repository
     system("tar czf 'puppet.tgz' puppet/")
-    upload!("puppet.tgz", "/home/dmtg", :via => :scp)
+    upload! "puppet.tgz", "/home/dmtg"
  
     # Untar the puppet directory, and place at /etc/puppet -- the default location for manifests/modules
     run("tar xzf puppet.tgz")
@@ -98,7 +98,7 @@ namespace :puppet do
  
     # We tar up the puppet directory from the current directory -- the puppet directory within the source code repository
     system("tar czf 'puppet.tgz' puppet/")
-    upload!("puppet.tgz", "/home/dmtg", :via => :scp)
+    upload! "puppet.tgz", "/home/dmtg"
  
     # Untar the puppet directory, and place at /etc/puppet -- the default location for manifests/modules
     run("tar xzf puppet.tgz")
