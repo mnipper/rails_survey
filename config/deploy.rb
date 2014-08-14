@@ -70,7 +70,7 @@ end
 
 namespace :bootstrap do
   task :default do
-    set :user, fetch(:user)
+    set :user, "dmtg"
  
     # Set the default_shell to "bash" so that we don't use the RVM shell which isn't installed yet...
     set :default_shell, "bash"
@@ -94,7 +94,7 @@ namespace :puppet do
     # Specific RVM string for managing Puppet; may or may not match the RVM string for the application
     set :rvm_ruby_string, '2.0.0-p195'
     set :rvm_type, :system
-    set :user, fetch(:user)
+    set :user, "dmtg"
  
     # We tar up the puppet directory from the current directory -- the puppet directory within the source code repository
     system("tar czf 'puppet.tgz' puppet/")
