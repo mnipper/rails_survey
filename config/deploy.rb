@@ -76,7 +76,7 @@ namespace :bootstrap do
     on roles(:app) do  
       system("tar czf 'puppet.tgz' puppet/")
       upload! "puppet.tgz", "/home/dmtg"
-      run("tar xzf puppet.tgz")
+      execute :tar, '-xzf' 'puppet.tgz'
       try_sudo("rm -rf /etc/puppet")
       try_sudo("mv /home/dmtg/puppet/ /etc/puppet") 
       try_sudo("bash /etc/puppet/bootstrap.sh")
@@ -93,10 +93,10 @@ namespace :puppet do
     on roles(:app) do  
       system("tar czf 'puppet.tgz' puppet/")
       upload! "puppet.tgz", "/home/dmtg" 
-      run("tar xzf puppet.tgz")
+      execute("tar xzf puppet.tgz")
       try_sudo("rm -rf /etc/puppet")
       try_sudo("mv /home/dmtg/puppet/ /etc/puppet") 
-      run("rvmsudo -p '#{sudo_prompt}' puppet apply /etc/puppet/manifests/site.pp")
+      execute("rvmsudo -p '#{sudo_prompt}' puppet apply /etc/puppet/manifests/site.pp")
     end 
   end 
 end
