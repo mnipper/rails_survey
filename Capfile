@@ -1,6 +1,7 @@
 # Load DSL and Setup Up Stages
 require 'capistrano/setup'
 require 'capistrano/deploy'
+require 'sshkit/dsl'
 
 # Includes tasks from other gems included in your Gemfile
 #
