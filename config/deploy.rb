@@ -96,7 +96,7 @@ namespace :puppet do
       execute("tar xzf puppet.tgz")
       execute "sudo rm -rf /etc/puppet"
       execute "sudo mv /home/dmtg/puppet/ /etc/puppet"
-      execute("rvmsudo -p '#{sudo_prompt}' puppet apply /etc/puppet/manifests/site.pp")
+      execute("rvmsudo -p sudo puppet apply /etc/puppet/manifests/site.pp")
     end 
   end 
 end
