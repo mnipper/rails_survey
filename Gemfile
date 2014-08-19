@@ -56,6 +56,7 @@ gem 'sinatra', '~> 1.4.5', :require => nil
 gem 'sanitize', '~> 3.0.0'
 gem 'amoeba'
 gem 'devise_google_authenticator', '0.3.14'
+gem 'bcrypt-ruby', '~> 3.0.0'
 
 group :production do
   gem 'rails_12factor'

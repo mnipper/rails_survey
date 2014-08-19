@@ -59,6 +59,7 @@ RailsSurvey::Application.routes.draw do
       get :export
     end
 
+    resources :device_users
     resources :responses
     resources :surveys
     resources :notifications, only: [:index]

@@ -1,0 +1,28 @@
+<h1>Device Users</h1>
+
+<section class="widget">
+<div class="body">
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Username</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @device_users.each do |device_user| %>
+      <tr>
+        <td><%= device_user.name %></td>
+        <td><%= device_user.username %></td>
+        <td><%= link_to 'Edit',  edit_project_device_user_path(current_project, device_user) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<%= link_to new_project_device_user_path(current_project), class: 'btn btn-primary' do %>
+    <i class="icon-plus"></i> Add Device User
+<% end %>
+</section>
