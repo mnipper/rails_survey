@@ -1,0 +1,38 @@
+<section class="widget">
+<%= form_for([current_project, @device_user]) do |f| %>
+  <% if @device_user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@device_user.errors.count, "error") %> prohibited this section from being saved:</h2>
+      <ul>
+        <% @device_user.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+    <div class="field top-buffer">
+        <%= f.label :name, 'Name' %> <br />
+        <%= f.text_field :name, class: 'form-control' %>
+    </div>
+
+    <div class="field top-buffer">
+        <%= f.label :username, 'Username' %> <br />
+        <%= f.text_field :username, class: 'form-control' %>
+    </div>
+
+    <div class="field top-buffer">
+        <%= f.label :password, 'Password' %> <br />
+        <%= f.password_field :password, class: 'form-control' %>
+    </div>
+    
+    <div class="field top-buffer">
+        <%= f.label :password_confirmation, 'Password again' %> <br />
+        <%= f.password_field :password_confirmation, class: 'form-control' %>
+    </div>
+
+    <div class="top-buffer">
+      <%= f.submit class: 'btn btn-primary' %>
+    </div>
+<% end %>
+</section>
