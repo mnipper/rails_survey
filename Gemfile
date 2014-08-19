@@ -50,13 +50,14 @@ gem 'kaminari'
 gem 'capistrano-rails', '~> 1.1.1'
 gem 'capistrano-bundler', '~> 1.1.2'
 gem 'capistrano-rvm', '~> 0.1.1'
-gem 'capistrano-sidekiq', '~> 0.3.0'
+gem 'capistrano-sidekiq', '~> 0.3.5'
 gem 'angular_rails_csrf'
 gem 'sinatra', '~> 1.4.5', :require => nil
 gem 'sanitize', '~> 3.0.0'
 gem 'amoeba'
 gem 'devise_google_authenticator', '0.3.14'
 gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'sshkit', '~> 1.5.1'
 
 group :production do
   gem 'rails_12factor'

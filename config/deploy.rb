@@ -12,21 +12,16 @@ set :format, :pretty
 set :keep_releases, 5
 set :linked_files, %w{config/database.yml config/secret_token.txt config/local_env.yml}
 set :linked_dirs, %w(bin log tmp/pids tmp/cache tmp/sockets vendor/bundle)
-set :linked_dirs, fetch(:linked_dirs) + %w{public/system files}
+set :linked_dirs, fetch(:linked_dirs) + %w{ files updates }
 set :branch, 'master'
 set :sidekiq_pid, File.join(shared_path, 'tmp', 'pids', 'sidekiq.pid')
 set :sidekiq_log, File.join(shared_path, 'log', 'sidekiq.log')
 set :sidekiq_concurrency, 25
-set :sidekiq_processes, 1
+set :sidekiq_processes, 2
 
 namespace :deploy do
- 
   desc 'Restart Application'
   task :restart do
-    desc "restart redis"
-    on roles(:app) do
-      execute "sudo /etc/init.d/redis-server restart"
-    end
     desc "restart node"
     on roles(:app), in: :sequence, wait: 5 do
       execute "sudo restart realtime-app || sudo start realtime-app"
@@ -42,9 +37,68 @@ namespace :deploy do
       execute "cd #{release_path}/node && sudo rm -rf node_modules && npm install"
     end 
   end
- 
+  
+  desc "Moniter redis"
+  task :config_redis do
+    on roles(:app) do
+      execute "sudo mv #{release_path}/config/deploy/shared/redis.erb /etc/monit/conf.d/redis_rails_survey.conf"
+    end
+  end 
+  
+  desc "Moniter apache2"
+  task :config_apache2 do
+    on roles(:app) do
+      execute "sudo mv #{release_path}/config/deploy/shared/apache2.erb /etc/monit/conf.d/apache2_rails_survey.conf"
+    end
+  end
+  
+  desc "Restart monit service"
+  task :restart_monit do
+    on roles(:app) do
+      execute "sudo service monit restart"
+    end
+  end
+  
   after :finishing, 'deploy:cleanup'
   after 'deploy:publishing', 'deploy:restart'
-  after "deploy:updated", "deploy:npm_install"
-
+  after 'deploy:updated', 'deploy:npm_install'
+  after 'deploy:published', 'sidekiq:monit:config'
+  after 'deploy:published', 'deploy:config_redis'
+  after 'deploy:published', 'deploy:config_apache2'
+  after 'deploy:published', 'deploy:restart_monit'
 end
+
+namespace :bootstrap do
+  task :default do
+    set :user, "dmtg" 
+    set :default_shell, "bash"
+
+    on roles(:app) do  
+      system("tar czf 'puppet.tgz' puppet/")
+      upload! "puppet.tgz", "/home/dmtg"
+      execute :tar, '-xzf' 'puppet.tgz'
+      execute "sudo rm -rf /etc/puppet"
+      execute "sudo mv /home/dmtg/puppet/ /etc/puppet" 
+      execute "sudo bash /etc/puppet/bootstrap.sh"
+    end 
+  end 
+end
+    
+namespace :puppet do
+  task :default do
+    set :rvm_ruby_string, '2.0.0-p195'
+    set :rvm_type, :system
+    set :user, "dmtg"
+  
+    on roles(:app) do  
+      system("tar czf 'puppet.tgz' puppet/")
+      upload! "puppet.tgz", "/home/dmtg" 
+      execute("tar xzf puppet.tgz")
+      execute "sudo rm -rf /etc/puppet"
+      execute "sudo mv /home/dmtg/puppet/ /etc/puppet"
+      execute("sudo puppet apply /etc/puppet/manifests/site.pp")
+    end 
+  end 
+end
+
+

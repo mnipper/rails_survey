@@ -1,7 +1,7 @@
 # Load DSL and Setup Up Stages
 require 'capistrano/setup'
-# Includes default deployment tasks
 require 'capistrano/deploy'
+require 'sshkit/dsl'
 
 # Includes tasks from other gems included in your Gemfile
 #
@@ -17,6 +17,7 @@ require 'capistrano/rvm'
 require 'capistrano/bundler'
 require 'capistrano/rails/assets'
 require 'capistrano/sidekiq'
+require 'capistrano/sidekiq/monit'
 require 'capistrano/rails/migrations'
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.

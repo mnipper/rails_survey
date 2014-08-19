@@ -27,6 +27,13 @@ ActiveAdmin.register Project do
           end
         end
       end
+      row :instruments do 
+        ul do
+          project.instruments.each do |instrument|
+            li {instrument.title}
+          end
+        end
+      end
     end
     active_admin_comments
   end
