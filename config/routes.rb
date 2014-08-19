@@ -18,7 +18,9 @@ RailsSurvey::Application.routes.draw do
               member do
                 post :copy
               end
-              resources :options
+              resources :options do
+                resources :skips 
+              end
               resources :images 
             end
           end

@@ -25,6 +25,7 @@ class Option < ActiveRecord::Base
   before_destroy :update_instrument_version
   has_paper_trail
   acts_as_paranoid
+  has_many :skips, dependent: :destroy 
 
   validates :text, presence: true, allow_blank: false
 

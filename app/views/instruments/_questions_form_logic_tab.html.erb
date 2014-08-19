@@ -29,7 +29,6 @@
     <legend class="section">
       Skip Patterns
     </legend>
-    <div>
       <p class="text-muted">A skip pattern goes to a specific question based on if the user selects a specific option
         when responding to a question.  Select the desired pattern for each option to this question.</p>
       <div>
@@ -63,6 +62,24 @@
       <label for="follow-up" class="control-label">Identifies Survey</label>
       <div class="controls form-group">
         <input type="checkbox" ng-model="question.identifies_survey" name="identifies-survey">
+      </div>
+  </fieldset>
+  <fieldset>
+      <legend class="section"> Questions to skip </legend>
+      <p class="text-muted">Add question identiers of questions to skip based on selected option.</p>
+      <div ng-repeat="option in options">
+          <label for="follow-up" class="control-label">If <strong>{{option.text}}</strong> is selected, skip the following questions:</label>
+          <div ng-controller="SkipsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>, question.id, option.id)">
+            <button type="submit" ng-click="addQuestionToSkip()" class="btn btn-xs btn-primary pull-right"> <i class="icon-plus"></i> Add Question </button>
+            <li ng-repeat="skip in skips">
+                <div class="input-group">
+                  <input type="text" class="form-control" ng-model="skip.question_identifier" autofocus="autofocus">
+                  <div class="input-group-btn">
+                    <button ng-click="removeSkip(skip)" class="btn btn-danger"><i class="icon-trash"></i></button>
+                  </div>
+                </div>
+            </li>
+          </div>      
       </div>
   </fieldset>
 </div>

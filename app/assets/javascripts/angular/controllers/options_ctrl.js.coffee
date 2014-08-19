@@ -62,4 +62,5 @@ App.controller 'OptionsCtrl', ['$scope', 'Option', ($scope, Option) ->
     option.instrument_id = $scope.instrument_id
     option.question_id = $scope.question_id
     $scope.options.push(option)
+    
 ]
