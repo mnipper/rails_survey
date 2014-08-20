@@ -67,14 +67,14 @@
           <label for="follow-up" class="control-label">If <strong>{{option.text}}</strong> is selected, skip the following questions:</label>
           <div ng-controller="SkipsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>, question.id, option.id)">
             <button type="submit" ng-click="addQuestionToSkip()" class="btn btn-xs btn-primary pull-right"> <i class="icon-plus"></i> Add Question </button>
-            <li ng-repeat="skip in skips">
+            <div ng-repeat="skip in skips">
                 <div class="input-group">
                   <input type="text" class="form-control" ng-model="skip.question_identifier" autofocus="autofocus">
                   <div class="input-group-btn">
                     <button ng-click="removeSkip(skip)" class="btn btn-danger"><i class="icon-trash"></i></button>
                   </div>
                 </div>
-            </li>
+            </div>
           </div>      
       </div>
   </fieldset>

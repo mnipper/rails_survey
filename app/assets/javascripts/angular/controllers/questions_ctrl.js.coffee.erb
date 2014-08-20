@@ -109,7 +109,7 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', 'filterFilt
 
   $scope.questionsAfter = (question) ->
     if (question?)
-      $scope.all_questions.slice(question.number_in_instrument - 1, $scope.all_questions.length)
+      $scope.all_questions.slice(question.number_in_instrument, $scope.all_questions.length)
 
   $scope.questionTypes = ->
     <%= Settings.question_types %>
