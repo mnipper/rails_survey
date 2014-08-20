@@ -15,8 +15,8 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', 'filterFilt
     $scope.current_page = 1
     $scope.instrument_id = instrument_id
     $scope.questions = Question.query({"project_id": project_id, "instrument_id": instrument_id, "page": $scope.current_page})
-    $scope.instrument = Instrument.query({"project_id": project_id, "id": instrument_id}, -> $scope.createPages())
     $scope.all_questions = Question.query({"project_id": project_id, "instrument_id": instrument_id})
+    $scope.instrument = Instrument.query({"project_id": project_id, "id": instrument_id}, -> $scope.createPages())
     $scope.instruments = Instrument.query({"project_id": project_id})
 
   $scope.getQuestions = () ->
@@ -108,7 +108,8 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', 'filterFilt
         $scope.all_questions.slice(0, (question.number_in_instrument - 1))
 
   $scope.questionsAfter = (question) ->
-    $scope.all_questions.slice(question.number_in_instrument, $scope.all_questions.length)
+    if (question?)
+      $scope.all_questions.slice(question.number_in_instrument - 1, $scope.all_questions.length)
 
   $scope.questionTypes = ->
     <%= Settings.question_types %>

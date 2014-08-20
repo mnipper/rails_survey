@@ -26,16 +26,13 @@
     </div>
   </fieldset>
   <fieldset ng-hide="$scope.all_questions.length == question.number_in_instrument || !questionTypesWithOptions(question.question_type)">
-    <legend class="section">
-      Skip Patterns
-    </legend>
-      <p class="text-muted">A skip pattern goes to a specific question based on if the user selects a specific option
-        when responding to a question.  Select the desired pattern for each option to this question.</p>
-      <div>
-        <div ng-repeat="option in options">
-          <label for="follow-up" class="control-label">If <strong>{{option.text}}</strong> is selected, skip to:</label>
-          <div class="controls form-group">
-            <select
+    <legend class="section">Skip Patterns</legend>
+    <p class="text-muted">A skip pattern goes to a specific question based on if the user selects a specific option
+    when responding to a question.  Select the desired pattern for each option to this question.</p>
+    <div ng-repeat="option in options">
+        <label for="follow-up" class="control-label">If <strong>{{option.text}}</strong> is selected, skip to:</label>
+        <div class="controls form-group">
+        <select
             chosen
             width="'500px'"
             allow-single-deselect="true"
@@ -44,13 +41,12 @@
             no-results-text="'This does not match any valid question identifier'"
             name="skip-pattern"
             ng-model="option.next_question"
-            ng-options="q.question_identifier as q.question_identifier for q in questionsAfter(q)"
+            ng-options="q.question_identifier as q.question_identifier for q in questionsAfter(question)"
             >
-              <option value=""></option>
-            </select>
-          </div>
+            <option value=""></option>
+        </select>
         </div>
-      </div>
+    </div>
   </fieldset>
   <fieldset>
     <legend class="section">
