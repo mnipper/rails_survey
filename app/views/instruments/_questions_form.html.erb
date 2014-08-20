@@ -26,10 +26,8 @@
       <div class="col-md-9">
         <div ng-hide="edit_question == question" class="widget">
           <header>
-            <strong><h4>{{question.question_identifier}}</h4></strong>
-            <div class="actions">
-              <!--<a class="btn btn-xs btn-inverse"><i class="icon-arrow-down"></i> View more</a>-->
-            </div>
+            <div class="col-md-6 text-left"><strong><h4>{{question.question_identifier}}</h4></strong></div>
+            <div class="col-md-6 text-right"><strong><p>{{question.question_type}}</p></strong></div>
           </header>
           <div class="body" ng-bind-html="question.text"></div>
         </div>
