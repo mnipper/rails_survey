@@ -60,7 +60,7 @@
         <input type="checkbox" ng-model="question.identifies_survey" name="identifies-survey">
       </div>
   </fieldset>
-  <fieldset>
+  <fieldset ng-hide="$scope.all_questions.length == question.number_in_instrument || !questionTypesWithOptions(question.question_type)">
       <legend class="section"> Questions to skip </legend>
       <p class="text-muted">Add question identiers of questions to skip based on selected option.</p>
       <div ng-repeat="option in options">
