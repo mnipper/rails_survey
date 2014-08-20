@@ -7,12 +7,16 @@ class ApplicationController < ActionController::Base
   include ProjectsHelper
   before_filter :authenticate_user_from_token!
   before_filter :store_location
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, unless: :current_admin_user
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def after_sign_in_path_for(resource_or_scope)
-    set_current_project_id(session[:previous_url])
-    session[:previous_url] || root_path
+    if resource_or_scope.is_a?(AdminUser)
+      admin_dashboard_path
+    else
+      set_current_project_id(session[:previous_url])
+      session[:previous_url] || root_path
+    end
   end
   
   def after_update_path_for(resource)
