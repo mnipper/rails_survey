@@ -32,6 +32,7 @@ RailsSurvey::Application.routes.draw do
 
       resources :projects do
         resources :instruments, only: [:index, :show]
+        resources :device_users, only: [:index, :show]
         resources :questions, only: [:index, :show]
         resources :options, only: [:index, :show]
         resources :images, only:[:index, :show]
