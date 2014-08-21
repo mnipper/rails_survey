@@ -26,20 +26,16 @@ App.controller 'OptionsCtrl', ['$scope', 'Option', ($scope, Option) ->
         option.question_id = $scope.question_id
         if option.id
           option.$update({},
-            (data, headers) -> $scope.saveOptionSuccess(data, headers),
+            (data, headers) -> $scope.options = $scope.queryOptions(),
             (result, headers) -> alert "Error updating option"
           )
         else
           option.$save({},
-            (data, headers) -> $scope.saveOptionSuccess(data, headers),
+            (data, headers) -> $scope.options = $scope.queryOptions(),
             (result, headers) -> alert "Error saving option"
           )
   )
-  
-  $scope.saveOptionSuccess = (data, headers) ->
-    $scope.options = $scope.queryOptions()
-    $scope.$broadcast('SAVE_OPTION', data.id)
-
+ 
   $scope.$on('CANCEL_QUESTION', ->
     $scope.options = $scope.queryOptions()
   )

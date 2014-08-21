@@ -61,12 +61,12 @@
       </div>
   </fieldset>
   <fieldset ng-hide="$scope.all_questions.length == question.number_in_instrument || !questionTypesWithOptions(question.question_type)">
-      <legend class="section"> Questions to skip </legend>
-      <p class="text-muted">Add question identiers of questions to skip based on selected option.</p>
+      <legend class="section"> Multiple Skip Patterns </legend>
+      <p class="text-muted">Use if you need to skip non-subsequent questions based on the option selected.</p>
       <div ng-repeat="option in options">
-          <label for="follow-up" class="control-label">If <strong>{{option.text}}</strong> is selected, skip the following questions:</label>
+          <label for="follow-up" class="control-label">If <strong>{{option.text}}</strong> is selected, skip the questions with the following question identifiers:</label>
           <div ng-controller="SkipsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>, question.id, option.id)">
-            <button type="submit" ng-click="addQuestionToSkip()" class="btn btn-xs btn-primary pull-right"> <i class="icon-plus"></i> Add Question </button>
+            <div><button type="submit" ng-click="addQuestionToSkip()" class="btn btn-xs btn-primary pull-center"> <i class="icon-plus"></i> Add Question </button></div>
             <div ng-repeat="skip in skips">
                 <div class="input-group">
                   <input type="text" class="form-control" ng-model="skip.question_identifier" autofocus="autofocus">
@@ -75,6 +75,7 @@
                   </div>
                 </div>
             </div>
+            <div><button type="submit" ng-click="saveQuestionsToSkip()" class="btn btn-success btn-xs pull-center"><i class="icon-save"></i>Save Questions to Skip</button></div>
           </div>      
       </div>
   </fieldset>
