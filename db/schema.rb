@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140819183930) do
+ActiveRecord::Schema.define(version: 20140821193529) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -246,7 +246,10 @@ ActiveRecord::Schema.define(version: 20140819183930) do
     t.string   "question_identifier"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
+
+  add_index "skips", ["deleted_at"], name: "index_skips_on_deleted_at"
 
   create_table "surveys", force: true do |t|
     t.integer  "instrument_id"

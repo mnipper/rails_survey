@@ -4,7 +4,7 @@ module Api
       respond_to :json
       def index
         project = Project.find(params[:project_id])
-        respond_with project.skips
+        respond_with project.skips.with_deleted
       end
       def show
         respond_with Skip.find(params[:id])

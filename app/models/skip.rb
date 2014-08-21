@@ -7,10 +7,12 @@
 #  question_identifier :string(255)
 #  created_at          :datetime
 #  updated_at          :datetime
+#  deleted_at          :datetime
 #
 
 class Skip < ActiveRecord::Base
   attr_accessible :option_id, :question_identifier
   belongs_to :option
+  acts_as_paranoid 
   validates_uniqueness_of :question_identifier, scope: :option_id
 end
