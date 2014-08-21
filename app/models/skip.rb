@@ -12,5 +12,5 @@
 class Skip < ActiveRecord::Base
   attr_accessible :option_id, :question_identifier
   belongs_to :option
-  
+  validates_uniqueness_of :question_identifier, scope: :option_id
 end
