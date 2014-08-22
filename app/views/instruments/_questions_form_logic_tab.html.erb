@@ -60,7 +60,7 @@
         <input type="checkbox" ng-model="question.identifies_survey" name="identifies-survey">
       </div>
   </fieldset>
-  <fieldset ng-hide="$scope.all_questions.length == question.number_in_instrument || !questionTypesWithOptions(question.question_type)">
+  <fieldset ng-hide="$scope.all_questions.length == question.number_in_instrument || !questionTypesWithMultipleSkipPatterns(question.question_type)">
       <legend class="section"> Multiple Skip Patterns </legend>
       <p class="text-muted">Use multi-skip patterns if you need to skip non-subsequent questions based on the option selected for this question.</p>
       <div ng-repeat="option in options">

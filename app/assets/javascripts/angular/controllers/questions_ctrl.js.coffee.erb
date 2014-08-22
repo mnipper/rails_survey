@@ -120,6 +120,9 @@ App.controller 'QuestionsCtrl', ['$scope', 'Question', 'Instrument', 'filterFilt
   $scope.questionTypesWithImages = (questionType)->
     questionType in <%= Settings.question_with_images %>
 
+  $scope.questionTypesWithMultipleSkipPatterns = (questionType) ->
+    questionType in <%= Settings.question_with_multiple_skips %>
+
   $scope.setPage = (new_page) ->
     new_page = 1 if new_page < 1
     new_page = $scope.total_pages if new_page > $scope.total_pages
