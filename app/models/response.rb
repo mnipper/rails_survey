@@ -60,7 +60,7 @@ class Response < ActiveRecord::Base
         response.instrument_version_number, response.survey.instrument_title, response.survey_uuid, 
         response.survey.device_uuid, response.versioned_question.try(:question_type), 
         Sanitize.fragment(response.versioned_question.try(:text)), response.text, response.option_labels,
-        response.special_response, response.other_response, response.device_user.username]
+        response.special_response, response.other_response, response.device_user.try(:username)]
     end
   end
   
