@@ -14,11 +14,12 @@
 #  time_ended          :datetime
 #  question_identifier :string(255)
 #  uuid                :string(255)
+#  device_user_id      :integer
 #
 
 class Response < ActiveRecord::Base
   attr_accessible :question_id, :text, :other_response, :special_response, :survey_uuid,
-    :time_started, :time_ended, :question_identifier, :uuid
+    :time_started, :time_ended, :question_identifier, :uuid, :device_user_id
   belongs_to :question
   belongs_to :survey, foreign_key: :survey_uuid, primary_key: :uuid
   delegate :device, to: :survey 
@@ -27,6 +28,7 @@ class Response < ActiveRecord::Base
   delegate :instrument_version_number, to: :survey
   delegate :instrument_version, to: :survey
   has_one :response_image, foreign_key: :response_uuid, primary_key: :uuid
+  belongs_to :device_user
 
   validates :question, presence: true
   validates :survey, presence: true
@@ -52,13 +54,13 @@ class Response < ActiveRecord::Base
   def self.export(format)
     format << ['qid', 'short_qid', 'instrument_id', 'instrument_version_number', 'instrument_title', 
       'survey_uuid', 'device_id', 'question_type', 'question_text', 'response', 'response_labels', 'special_response',
-      'other_response']
+      'other_response', 'device_user']
     all.each do |response|
       format << [response.question_identifier, "q_#{response.question_id}", response.survey.instrument_id,
         response.instrument_version_number, response.survey.instrument_title, response.survey_uuid, 
         response.survey.device_uuid, response.versioned_question.try(:question_type), 
         Sanitize.fragment(response.versioned_question.try(:text)), response.text, response.option_labels,
-        response.special_response, response.other_response]
+        response.special_response, response.other_response, response.device_user.username]
     end
   end
   

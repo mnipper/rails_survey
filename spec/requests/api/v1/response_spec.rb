@@ -6,6 +6,7 @@ describe "Responses API" do
     @survey = FactoryGirl.create(:survey)
     @response = FactoryGirl.build(:response)
     @api_key = FactoryGirl.create(:api_key)
+    @device_user = FactoryGirl.create(:device_user)
   end
 
   it 'returns a successful response if response is valid' do
@@ -13,7 +14,8 @@ describe "Responses API" do
       response:
         {
           'question_id' => @question.id,
-          'survey_uuid' => @survey.uuid
+          'survey_uuid' => @survey.uuid,
+          'device_user_id' => @device_user.id
         }
     expect(response).to be_success
   end
