@@ -10,7 +10,7 @@ ActiveAdmin.register Project do
     end
     column :created_at
     column :updated_at
-    default_actions
+    actions
   end
 
   show do |project|

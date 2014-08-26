@@ -4,7 +4,7 @@ ActiveAdmin.register ApiKey do
   index do
     column :id
     column :access_token
-    default_actions
+    actions
   end
 
   filter :access_token
