@@ -2,6 +2,7 @@ require "spec_helper"
 
 feature "Navigation" do
   before :each do
+    skip
     @user = create(:user)
     @project = create(:project)
     @user_project = UserProject.create!(user_id: @user.id, project_id: @project.id)

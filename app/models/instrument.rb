@@ -40,7 +40,7 @@ class Instrument < ActiveRecord::Base
   validates :title, presence: true, allow_blank: false
   validates :project_id, presence: true, allow_blank: false
 
-  def version(version_number)
+  def version_by_version_number(version_number)
     InstrumentVersion.build(
       instrument_id: id,
       version_number: version_number

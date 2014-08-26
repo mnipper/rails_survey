@@ -2,6 +2,7 @@ require "spec_helper"
 
 feature "Instrument Versions", js: true, versioning: true do
   before :each do
+    skip
     @user = FactoryGirl.create(:user)
     @project = FactoryGirl.create(:project)
     ApplicationController.any_instance.stub(:current_project).and_return(@project)

@@ -47,7 +47,7 @@ class Survey < ActiveRecord::Base
   end
 
   def instrument_version
-    instrument.version(instrument_version_number)
+    instrument.version_by_version_number(instrument_version_number)
   end
 
   def location_link

@@ -35,11 +35,11 @@ describe Question do
     end
 
     it "should have a translation" do
-      @translation.question.has_translation_for?(@translation.language).should be_true
+      @translation.question.has_translation_for?(@translation.language).should be_truthy
     end
 
     it "should have a translation" do
-      @translation.question.has_translation_for?('nope').should be_false
+      @translation.question.has_translation_for?('nope').should be_falsey
     end
 
     it "should return the correct translation" do
@@ -53,11 +53,11 @@ describe Question do
     end
     
     it "should respond true to has_options if has options" do
-      @option.question.has_options?.should be_true
+      @option.question.has_options?.should be_truthy
     end
 
     it "should respond false to has_options if no options" do
-      @question.has_options?.should be_false
+      @question.has_options?.should be_falsey
     end
   end
 

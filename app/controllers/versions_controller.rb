@@ -9,6 +9,6 @@ class VersionsController < ApplicationController
   def show
     @instrument = current_project.instruments.find(params[:instrument_id])
     authorize @instrument
-    @instrument_version = @instrument.version(params[:id])
+    @instrument_version = @instrument.version_by_version_number(params[:id])
   end
 end
