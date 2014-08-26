@@ -14,6 +14,7 @@
 #  time_ended          :datetime
 #  question_identifier :string(255)
 #  uuid                :string(255)
+#  device_user_id      :integer
 #
 
 require "spec_helper"
@@ -63,7 +64,8 @@ describe Response do
           "response",
           "response_labels",
           "special_response",
-          "other_response"
+          "other_response",
+          "device_user"
         ],
         [@response.question_identifier,
           "q_#{@response.question_id}",
@@ -77,7 +79,8 @@ describe Response do
           "a",
           @response.option_labels,
           "SKIP",
-          'other']
+          'other',
+          @response.device_user.username]
         ]
     end
 

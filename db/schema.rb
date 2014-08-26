@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140821193529) do
+ActiveRecord::Schema.define(version: 20140825193642) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20140821193529) do
     t.string   "username"
     t.string   "name"
     t.string   "password_digest"
-    t.boolean  "active"
+    t.boolean  "active",          default: false
     t.integer  "device_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -226,6 +226,7 @@ ActiveRecord::Schema.define(version: 20140821193529) do
     t.datetime "time_ended"
     t.string   "question_identifier"
     t.string   "uuid"
+    t.integer  "device_user_id"
   end
 
   add_index "responses", ["uuid"], name: "index_responses_on_uuid"
@@ -292,7 +293,6 @@ ActiveRecord::Schema.define(version: 20140821193529) do
     t.integer  "failed_attempts",        default: 0
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.datetime "last_active_at"
     t.string   "gauth_secret"
     t.string   "gauth_enabled",          default: "f"
     t.string   "gauth_tmp"

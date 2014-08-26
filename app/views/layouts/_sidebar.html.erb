@@ -12,6 +12,12 @@
           <% end %>
         </li>
 
+        <li class="<%= current_page?(project_device_users_path(current_project)) ? 'active' : 'panel' %>">
+          <%= link_to project_device_users_path(current_project) do %>
+              <i class="icon-user"></i><span class="name">Device Users</span>
+          <% end %>
+        </li>
+
         <li class="<%= (current_page?(project_instruments_path(current_project)) or current_page?(new_project_instrument_path(current_project))) ? 'active' : 'panel' %>">
           <a class="accordion-toggle collapsed" data-toggle="collapse"
              data-parent="#side-nav" href="#instruments-collapse"><i class="icon-edit"></i> <span class="name">Instruments</span></a>

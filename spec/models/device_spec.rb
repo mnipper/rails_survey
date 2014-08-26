@@ -25,12 +25,12 @@ describe Device do
 
     it "should be in the danger zone if last survey is too old" do
       @survey.stub(:updated_at).and_return(1.day.ago)
-      @device.danger_zone?.should be_true
+      @device.danger_zone?.should be_truthy
     end
 
     it "should not be in the danger zone if last survey is new" do
       @survey.stub(:updated_at).and_return(1.minute.ago)
-      @device.danger_zone?.should be_false
+      @device.danger_zone?.should be_falsey
     end
   end
 

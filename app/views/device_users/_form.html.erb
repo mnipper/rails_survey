@@ -31,6 +31,11 @@
         <%= f.password_field :password_confirmation, class: 'form-control' %>
     </div>
 
+    <div class="field top-buffer">
+        <%= f.label :active, 'Active' %> <br />
+        <%= f.check_box :active %>
+    </div>
+
     <div class="top-buffer">
       <%= f.submit class: 'btn btn-primary' %>
     </div>

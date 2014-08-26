@@ -60,22 +60,22 @@ describe Instrument do
 
     it "should return the correct title for the new version" do
       @instrument.update_attributes(title: 'New title')
-      @instrument.version(1).title = 'New title'
+      @instrument.version_by_version_number(1).title = 'New title'
     end
 
     it "should return the correct question text for the old version" do
       question = create(:question, instrument: @instrument)
       old_text = question.text
       question.update_attributes(text: 'New text')
-      @instrument.version(1).questions.first.text.should == old_text
-      @instrument.version(2).questions.first.text.should == 'New text'
+      @instrument.version_by_version_number(1).questions.first.text.should == old_text
+      @instrument.version_by_version_number(2).questions.first.text.should == 'New text'
     end
 
     it "should return the correct option for the instrument version" do
       question = create(:question, instrument: @instrument)
       option = create(:option, question: question)
-      @instrument.version(1).questions.first.options.should == []
-      @instrument.version(2).questions.first.options.should == [option]
+      @instrument.version_by_version_number(1).questions.first.options.should == []
+      @instrument.version_by_version_number(2).questions.first.options.should == [option]
     end
   end
 
@@ -141,11 +141,11 @@ describe Instrument do
     end
 
     it "should have a translation" do
-      @translation.instrument.has_translation_for?(@translation.language).should be_true
+      @translation.instrument.has_translation_for?(@translation.language).should be_truthy
     end
 
     it "should have a translation" do
-      @translation.instrument.has_translation_for?('nope').should be_false
+      @translation.instrument.has_translation_for?('nope').should be_falsey
     end
 
     it "should return the correct translation" do
