@@ -45,6 +45,9 @@ class Question < ActiveRecord::Base
     enable
     include_field :options
     include_field :translations
+    nullify :instrument_id
+    nullify :number_in_instrument
+    nullify :question_identifier
     nullify :following_up_question_identifier
     set :follow_up_position => 0
   end

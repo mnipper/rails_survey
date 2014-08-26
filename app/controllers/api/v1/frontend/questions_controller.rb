@@ -75,9 +75,24 @@ module Api
                   copy_image.save
                 end
               end
+              if question.translations
+                create_instrument_translations(question, instrument)
+              end
               render json: copy_question, status: :accepted
             end 
           end
+        end
+        
+        private 
+        def create_instrument_translations(question, instrument)
+           question.translations.each do |translation|
+              if instrument.translations
+                existing_translation = instrument.translations.find_by_language(translation.language)
+                instrument.translations.create(:language => translation.language) unless existing_translation
+              else
+                instrument.translations.create(:language => translation.language)
+              end
+           end
         end
 
       end

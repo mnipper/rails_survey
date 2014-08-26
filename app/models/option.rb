@@ -30,6 +30,7 @@ class Option < ActiveRecord::Base
   amoeba do
     enable
     include_field :translations
+    nullify :next_question 
   end
 
   def to_s
