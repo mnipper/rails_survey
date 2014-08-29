@@ -48,6 +48,7 @@
           <th>Created at</th>
           <th>Time taken(sec)</th>
           <th>Response Image</th>
+          <th>Device User</th>
         </tr>
       </thead>
       <tbody>
@@ -67,6 +68,11 @@
           <td>
               <% if response.response_image %>
                     <%= link_to 'View Image', project_response_image_path(current_project, response.response_image.id)  %>
+              <% end %>
+          </td>
+          <td>
+              <% if response.device_user %>
+                 <%= response.device_user.name %>
               <% end %>
           </td>
         </tr>
