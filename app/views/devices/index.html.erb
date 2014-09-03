@@ -22,7 +22,7 @@
           <td><%= device.surveys.count %></td>
           <!--<td><%#= device.completion_rate %></td>--> <!--TODO fix -->
           <% unless device.last_survey.nil? %>
-            <td><%= link_to device.last_survey.uuid, project_survey_path(@project, device.last_survey) %></td>
+            <td><%= link_to device.last_survey.uuid, project_survey_path(current_project, device.last_survey) %></td>
             <td><%= time_ago_in_words(device.last_survey.updated_at) %> ago </td>
           <% end %>
         </tr>

@@ -20,4 +20,7 @@ class DeviceUser < ActiveRecord::Base
 
   belongs_to :device
   belongs_to :project
+  validates :username, presence: true
+  validates :name, presence: true
+  validates :password_digest, presence: true
 end

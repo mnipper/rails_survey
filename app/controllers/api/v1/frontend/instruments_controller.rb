@@ -6,7 +6,7 @@ module Api
 
         def index
           if current_user
-            respond_with current_project.instruments
+            respond_with current_project.instruments.order('title')
           end
         end
 
