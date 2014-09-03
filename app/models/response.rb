@@ -15,11 +15,13 @@
 #  question_identifier :string(255)
 #  uuid                :string(255)
 #  device_user_id      :integer
+#  question_version    :integer          default(-1)
 #
 
 class Response < ActiveRecord::Base
   attr_accessible :question_id, :text, :other_response, :special_response, :survey_uuid,
-    :time_started, :time_ended, :question_identifier, :uuid, :device_user_id
+    :time_started, :time_ended, :question_identifier, :uuid, :device_user_id,
+    :question_version
   belongs_to :question
   belongs_to :survey, foreign_key: :survey_uuid, primary_key: :uuid
   delegate :device, to: :survey 
@@ -52,15 +54,17 @@ class Response < ActiveRecord::Base
   end
 
   def self.export(format)
-    format << ['qid', 'short_qid', 'instrument_id', 'instrument_version_number', 'instrument_title', 
-      'survey_uuid', 'device_id', 'question_type', 'question_text', 'response', 'response_labels', 'special_response',
-      'other_response', 'device_user']
+    format << ['qid', 'short_qid', 'instrument_id', 'instrument_version_number', 'question_version_number',
+      'instrument_title', 'survey_uuid', 'device_id', 'question_type', 'question_text', 'response',
+      'response_labels', 'special_response', 'other_response', 'response_time_started', 'response_time_ended',
+      'device_user']
     all.each do |response|
       format << [response.question_identifier, "q_#{response.question_id}", response.survey.instrument_id,
-        response.instrument_version_number, response.survey.instrument_title, response.survey_uuid, 
-        response.survey.device_uuid, response.versioned_question.try(:question_type), 
+        response.instrument_version_number, response.question_version, response.survey.instrument_title,
+        response.survey_uuid, response.survey.device_uuid, response.versioned_question.try(:question_type), 
         Sanitize.fragment(response.versioned_question.try(:text)), response.text, response.option_labels,
-        response.special_response, response.other_response, response.device_user.try(:username)]
+        response.special_response, response.other_response, response.time_started, response.time_ended,
+        response.device_user.try(:username)]
     end
   end
   

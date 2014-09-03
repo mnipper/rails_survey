@@ -15,6 +15,7 @@
 #  question_identifier :string(255)
 #  uuid                :string(255)
 #  device_user_id      :integer
+#  question_version    :integer          default(-1)
 #
 
 require "spec_helper"
@@ -56,6 +57,7 @@ describe Response do
           "short_qid",
           "instrument_id",
           "instrument_version_number",
+          "question_version_number",
           "instrument_title",
           "survey_uuid",
           "device_id",
@@ -65,11 +67,14 @@ describe Response do
           "response_labels",
           "special_response",
           "other_response",
+          "response_time_started",
+          "response_time_ended",
           "device_user"
         ],
         [@response.question_identifier,
           "q_#{@response.question_id}",
           @response.instrument.id,
+          1,
           1,
           @response.survey.instrument_title,
           @response.survey.uuid,
@@ -80,6 +85,8 @@ describe Response do
           @response.option_labels,
           "SKIP",
           'other',
+          @response.time_started,
+          @response.time_ended,
           @response.device_user.username]
         ]
     end

@@ -13,10 +13,11 @@
 #  reg_ex_validation                :string(255)
 #  number_in_instrument             :integer
 #  reg_ex_validation_message        :string(255)
-#  follow_up_position               :integer          default(0)
 #  deleted_at                       :datetime
+#  follow_up_position               :integer          default(0)
 #  identifies_survey                :boolean          default(FALSE)
 #  instructions                     :text             default("")
+#  child_update_count               :integer          default(0)
 #
 
 class Question < ActiveRecord::Base
@@ -68,7 +69,7 @@ class Question < ActiveRecord::Base
 
   def as_json(options={})
     super((options || {}).merge({
-        methods: [:option_count, :instrument_version, :image_count]
+        methods: [:option_count, :instrument_version, :image_count, :question_version]
     }))
   end
 
@@ -84,6 +85,15 @@ class Question < ActiveRecord::Base
     translations.each do |translation|
       translation.update_attribute(:question_changed, status)
     end
+  end
+
+  def update_question_version
+    # Force update for paper trail
+    self.update_column(:child_update_count, child_update_count+1)
+  end
+
+  def question_version
+    versions.count
   end
   
   private

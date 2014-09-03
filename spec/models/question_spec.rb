@@ -13,10 +13,11 @@
 #  reg_ex_validation                :string(255)
 #  number_in_instrument             :integer
 #  reg_ex_validation_message        :string(255)
-#  follow_up_position               :integer          default(0)
 #  deleted_at                       :datetime
+#  follow_up_position               :integer          default(0)
 #  identifies_survey                :boolean          default(FALSE)
 #  instructions                     :text             default("")
+#  child_update_count               :integer          default(0)
 #
 
 require "spec_helper"

@@ -57,5 +57,6 @@ class Option < ActiveRecord::Base
   private
   def update_instrument_version
     instrument.update_instrument_version
+    question.update_question_version
   end
 end

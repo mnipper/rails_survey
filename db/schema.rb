@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140825193642) do
+ActiveRecord::Schema.define(version: 20140903175845) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -180,6 +180,7 @@ ActiveRecord::Schema.define(version: 20140825193642) do
     t.integer  "follow_up_position",               default: 0
     t.boolean  "identifies_survey",                default: false
     t.text     "instructions",                     default: ""
+    t.integer  "child_update_count",               default: 0
   end
 
   add_index "questions", ["question_identifier"], name: "index_questions_on_question_identifier", unique: true
@@ -227,6 +228,7 @@ ActiveRecord::Schema.define(version: 20140825193642) do
     t.string   "question_identifier"
     t.string   "uuid"
     t.integer  "device_user_id"
+    t.integer  "question_version",    default: -1
   end
 
   add_index "responses", ["uuid"], name: "index_responses_on_uuid"
