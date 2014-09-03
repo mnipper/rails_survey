@@ -33,7 +33,7 @@ class Question < ActiveRecord::Base
   has_many :translations, foreign_key: 'question_id', class_name: 'QuestionTranslation', dependent: :destroy
   has_many :images, dependent: :destroy  
   delegate :project, to: :instrument
-  before_save :update_instrument_version, if: Proc.new { |question| question.changed? }
+  before_save :update_instrument_version, if: Proc.new { |question| question.changed? and !question.child_update_count_changed? }
   before_save :update_question_translation, if: Proc.new { |question| question.text_changed? }
   before_destroy :update_instrument_version
   has_paper_trail
@@ -92,7 +92,7 @@ class Question < ActiveRecord::Base
 
   def update_question_version
     # Force update for paper trail
-    self.update_column(:child_update_count, child_update_count+1)
+    increment!(:child_update_count)
   end
 
   def question_version
