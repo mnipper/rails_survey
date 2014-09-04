@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140903175845) do
+ActiveRecord::Schema.define(version: 20140904200659) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -233,6 +233,14 @@ ActiveRecord::Schema.define(version: 20140903175845) do
 
   add_index "responses", ["uuid"], name: "index_responses_on_uuid"
 
+  create_table "rules", force: true do |t|
+    t.string   "rule_type"
+    t.integer  "instrument_id"
+    t.string   "rule_params"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "sections", force: true do |t|
     t.string   "title"
     t.string   "start_question_identifier"
@@ -295,7 +303,6 @@ ActiveRecord::Schema.define(version: 20140903175845) do
     t.integer  "failed_attempts",        default: 0
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.datetime "last_active_at"
     t.string   "gauth_secret"
     t.string   "gauth_enabled",          default: "f"
     t.string   "gauth_tmp"
