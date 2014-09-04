@@ -84,7 +84,7 @@ class Instrument < ActiveRecord::Base
     format << ['number_in_instrument', 'question_identifier', 'question_type', 'question_text', 'question_instructions']
     questions.each do |question|
       format << [question.number_in_instrument, question.question_identifier, question.question_type, 
-        Sanitize.fragment(question.text), question.instructions]
+        Sanitize.fragment(question.text), Sanitize.fragment(question.instructions)]
       question.options.each {
         |option| format << ['', "Option for question #{question.question_identifier}", '', option.text]
         if option.next_question
