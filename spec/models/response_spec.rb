@@ -59,8 +59,10 @@ describe Response do
           "instrument_version_number",
           "question_version_number",
           "instrument_title",
+          "survey_id",
           "survey_uuid",
           "device_id",
+          "device_uuid",
           "question_type",
           "question_text",
           "response",
@@ -69,7 +71,8 @@ describe Response do
           "other_response",
           "response_time_started",
           "response_time_ended",
-          "device_user"
+          "device_user_id",
+          "device_user_username"
         ],
         [@response.question_identifier,
           "q_#{@response.question_id}",
@@ -77,7 +80,9 @@ describe Response do
           1,
           1,
           @response.survey.instrument_title,
+          @response.survey.id,
           @response.survey.uuid,
+          @response.survey.device.id,
           @response.survey.device_uuid,
           @response.question.question_type,
           Sanitize.fragment(@response.versioned_question.try(:text)),
@@ -87,6 +92,7 @@ describe Response do
           'other',
           @response.time_started,
           @response.time_ended,
+          @response.device_user.id,
           @response.device_user.username]
         ]
     end
