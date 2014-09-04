@@ -86,9 +86,14 @@ class Instrument < ActiveRecord::Base
       format << [question.number_in_instrument, question.question_identifier, question.question_type, 
         Sanitize.fragment(question.text), question.instructions]
       question.options.each {
-        |option| format << ['', "Option for #{question.question_identifier}", '', option.text]
+        |option| format << ['', "Option for question #{question.question_identifier}", '', option.text]
         if option.next_question
-          format << ['', "SKIP for option #{question.question_identifier}", '', option.next_question]
+          format << ['', "For option #{option}, SKIP TO question", '', option.next_question]
+        end
+        if option.skips
+          option.skips.each {
+            |skip| format << ['', "For option #{option.text}, SKIP question", '', skip.question_identifier]
+          }
         end
       }
       if question.reg_ex_validation_message
