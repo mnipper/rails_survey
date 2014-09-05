@@ -15,8 +15,18 @@ question_with_other: ['SELECT_ONE_WRITE_OTHER', 'SELECT_MULTIPLE_WRITE_OTHER']
 question_with_select_multiple: ['SELECT_MULTIPLE', 'SELECT_MULTIPLE_WRITE_OTHER', 'SELECT_MULTIPLE_IMAGE']
 question_with_multiple_skips: ['SELECT_ONE']
 
-rule_types: ['INSTRUMENT_SURVEY_LIMIT_RULE', 'INSTRUMENT_TIMING_RULE']
-
+rule_types: 
+  instrument_survey_limit_rule:
+    constant_name: 'INSTRUMENT_SURVEY_LIMIT_RULE'
+    pretty_name: 'Instrument Survey Limit Rule'
+    params: ['max_surveys']
+    description: 'Limit the number of surveys that can be created for an instrument per device.'
+#  instrument_timing_rule:
+#    constant_name: 'INSTRUMENT_TIMING_RULE'
+#    pretty_name: 'Instrument Timing Rule'
+#    params: ['start_time', 'end_time']
+#    description: 'Only make this instrument available during certain times of the day.'
+ 
 # List delimiter for options
 list_delimiter: ','
 
