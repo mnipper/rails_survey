@@ -315,6 +315,7 @@ ActiveRecord::Schema.define(version: 20140908181131) do
     t.integer  "failed_attempts",        default: 0
     t.string   "unlock_token"
     t.datetime "locked_at"
+    t.datetime "last_active_at"
     t.string   "gauth_secret"
     t.string   "gauth_enabled",          default: "f"
     t.string   "gauth_tmp"
