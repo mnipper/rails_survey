@@ -1,0 +1,34 @@
+<section class="widget">
+  <header>
+    <h4><i class="icon-check"></i> Rules</h4>
+    <div class="actions hidden-xs-portrait">
+      <%= link_to new_project_rule_path(current_project), class: 'btn btn-primary' do %>
+          <i class="icon-plus"></i> New Rule
+      <% end %>
+    </div>
+  </header>
+  <div class="body">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Instrument</th>
+        <th>Rule Type</th>
+        <th>Rule Parameters</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <% @rules.each do |rule| %>
+          <td><%= rule.instrument.title %></td>
+          <td><%= rule.rule_type %></td>
+          <td>
+            <% rule.rule_params_hash.each_pair do |key, value| %>
+              <strong><%= key %>:</strong> <%= value %><br />
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

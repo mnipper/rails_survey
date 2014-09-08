@@ -42,6 +42,7 @@ RailsSurvey::Application.routes.draw do
         resources :sections, only: [:index, :show]
         resources :android_updates, only: [:index, :show]
         resources :skips, only: [:index, :show]
+        resources :rules, only: [:index]
       end
     end
   end
@@ -61,6 +62,7 @@ RailsSurvey::Application.routes.draw do
       get :export
     end
 
+    resources :rules
     resources :device_users
     resources :responses
     resources :surveys

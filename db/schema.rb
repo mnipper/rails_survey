@@ -233,8 +233,15 @@ ActiveRecord::Schema.define(version: 20140908181131) do
 
   add_index "responses", ["uuid"], name: "index_responses_on_uuid"
 
+<<<<<<< HEAD
   create_table "roles", force: true do |t|
     t.string   "name"
+=======
+  create_table "rules", force: true do |t|
+    t.string   "rule_type"
+    t.integer  "instrument_id"
+    t.string   "rule_params"
+>>>>>>> dade3c0d255aa7e0b2fe0c7d7ad71de0703480b6
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -307,7 +314,6 @@ ActiveRecord::Schema.define(version: 20140908181131) do
     t.integer  "failed_attempts",        default: 0
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.datetime "last_active_at"
     t.string   "gauth_secret"
     t.string   "gauth_enabled",          default: "f"
     t.string   "gauth_tmp"
