@@ -55,6 +55,12 @@
           </ul>
         </li>
 
+        <li class="<%= current_page?(project_device_users_path(current_project)) ? 'active' : 'panel' %>">
+          <%= link_to project_rules_path(current_project) do %>
+              <i class="icon-check"></i><span class="name">Rules</span>
+          <% end %>
+        </li>
+
         <li class="<%= (current_page?(user_displayqr_path)) ? 'active' : 'panel' %>">
           <%= link_to user_displayqr_path do %>
               <i class="icon-lock"></i><span class="name">Two-Factor Authentication</span>

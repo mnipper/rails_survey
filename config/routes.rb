@@ -62,6 +62,7 @@ RailsSurvey::Application.routes.draw do
       get :export
     end
 
+    resources :rules
     resources :device_users
     resources :responses
     resources :surveys

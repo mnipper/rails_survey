@@ -1,0 +1,32 @@
+<section class="widget">
+<%= form_for([current_project, @rule]) do |f| %>
+  <% if @rule.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+        <% @rule.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+    <div class="field top-buffer">
+        <%= f.label :instrument, 'Instrument' %> <br />
+        <%= f.select :instrument_id, current_project.instruments.all.collect {|i| [ i.title, i.id ] }, class: 'form-control' %>
+    </div>
+
+    <div class="field top-buffer">
+      <%= f.label :rule_type, 'Rule Type' %> <br />
+      <%= f.select :rule_type, Rule.rule_type_values(:constant_name), class: 'form-control' %>
+    </div>
+
+    <div class="field top-buffer">
+      <%= f.label :rule_params, 'Rule Params' %> <br />
+      <%= f.text_field :rule_params, class: 'form-control' %>
+    </div>
+
+    <div class="top-buffer">
+      <%= f.submit class: 'btn btn-primary' %>
+    </div>
+<% end %>
+</section>
