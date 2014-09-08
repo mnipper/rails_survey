@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140903175845) do
+ActiveRecord::Schema.define(version: 20140908181131) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -233,6 +233,12 @@ ActiveRecord::Schema.define(version: 20140903175845) do
 
   add_index "responses", ["uuid"], name: "index_responses_on_uuid"
 
+  create_table "roles", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "sections", force: true do |t|
     t.string   "title"
     t.string   "start_question_identifier"
@@ -277,6 +283,13 @@ ActiveRecord::Schema.define(version: 20140903175845) do
     t.datetime "updated_at"
   end
 
+  create_table "user_roles", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "role_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",  null: false
     t.string   "encrypted_password",     default: "",  null: false
@@ -291,7 +304,6 @@ ActiveRecord::Schema.define(version: 20140903175845) do
     t.string   "authentication_token"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "roles_mask"
     t.integer  "failed_attempts",        default: 0
     t.string   "unlock_token"
     t.datetime "locked_at"

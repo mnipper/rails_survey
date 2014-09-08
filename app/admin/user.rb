@@ -1,7 +1,5 @@
 ActiveAdmin.register User do
   menu priority: 3
-  permit_params :email, :password, :password_confirmation, :project_ids, :user_id, :name, :roles_mask, :roles
-  after_save { |user| user.set_default_role }
   
   index do
     column :email
@@ -18,10 +16,8 @@ ActiveAdmin.register User do
       row :id
       row :email
       row 'Roles' do
-        unless (user.roles.nil? || user.roles.empty?)
-          user.roles .each do |role|
-            li {role}
-          end
+        user.roles .each do |role|
+          li {role.name}
         end
       end
       row :sign_in_count
@@ -50,7 +46,7 @@ ActiveAdmin.register User do
       f.input :password_confirmation
       unless current_page?(new_admin_user_path)
         f.input :projects, :as => :check_boxes
-        f.input :roles, :as => :check_boxes, :collection => [:admin, :manager, :translator, :analyst, :user]
+        f.input :roles, :as => :check_boxes
       end 
     end
     f.actions
