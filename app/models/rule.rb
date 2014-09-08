@@ -15,7 +15,11 @@ class Rule < ActiveRecord::Base
 
   belongs_to :instrument
 
+  attr_accessible :instrument_id, :rule_type, :rule_params
+
   validates :rule_type, presence: true
+
+  acts_as_paranoid
 
   def rule_params_hash
     JSON.parse(self.rule_params)

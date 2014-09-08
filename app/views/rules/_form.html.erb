@@ -11,8 +11,8 @@
   <% end %>
   
     <div class="field top-buffer">
-        <%= f.label :instrument, 'Instrument' %> <br />
-        <%= f.select :instrument_id, current_project.instruments.all.collect {|i| [ i.title, i.id ] }, class: 'form-control' %>
+      <%= f.label :instrument, 'Instrument' %> <br />
+      <%= f.select :instrument_id, current_project.instruments.all.collect {|i| [ i.title, i.id ] }, class: 'form-control' %>
     </div>
 
     <div class="field top-buffer">
