@@ -1,0 +1,4 @@
+App.controller 'RulesCtrl', ['$scope', ($scope) ->
+  $scope.ruleTypes = () ->
+   <%= Rule.rule_type_values(:constant_name) %>
+]
