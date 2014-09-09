@@ -1,4 +1,4 @@
-<section class="widget">
+<section class="widget" ng-controller="RulesCtrl">
 <%= form_for([current_project, @rule]) do |f| %>
   <% if @rule.errors.any? %>
     <div id="error_explanation">
@@ -17,12 +17,24 @@
 
     <div class="field top-buffer">
       <%= f.label :rule_type, 'Rule Type' %> <br />
-      <%= f.select :rule_type, Rule.rule_type_values(:constant_name), class: 'form-control' %>
+      <select
+        chosen
+        class="select2-container select-block-level"
+        data-placeholder="Select a rule type..."
+        no-results-text="'This does not match any valid rule type'"
+        name="rule[rule_type]"
+        id="rule-type"
+        ng-model="currentRuleType"
+        ng-options="type for type in ruleTypes()"
+        required
+        >
+          <option value=""><option>
+        </select>
     </div>
 
-    <div class="field top-buffer">
-      <%= f.label :rule_params, 'Rule Params' %> <br />
-      <%= f.text_field :rule_params, class: 'form-control' %>
+    <div class="field top-buffer" ng-show="currentRuleType == 'INSTRUMENT_SURVEY_LIMIT_RULE'">
+      Max Surveys: <input type="text" ng-model="maxSurveys">
+      <input id="rule_rule_params" name="rule[rule_params]" type="hidden" value="{&quot;max_surveys&quot;: {{ maxSurveys }} }">
     </div>
 
     <div class="top-buffer">

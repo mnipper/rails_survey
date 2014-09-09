@@ -19,19 +19,19 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
         <% @rules.each do |rule| %>
-          <td><%= rule.instrument.title %></td>
-          <td><%= rule.rule_type %></td>
-          <td>
-            <% rule.rule_params_hash.each_pair do |key, value| %>
-              <strong><%= key %>:</strong> <%= value %><br />
-            <% end %>
-          </td>
-          <td><%= link_to 'Edit', edit_project_rule_path(current_project, rule), class: 'btn btn-default btn-sm' %></td>
-          <td><%= button_to "Delete", project_rule_path(current_project, rule), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %></td>
+          <tr>
+            <td><%= rule.instrument.title %></td>
+            <td><%= rule.rule_type %></td>
+            <td>
+              <% rule.rule_params_hash.each_pair do |key, value| %>
+                <strong><%= key %>:</strong> <%= value %><br />
+              <% end %>
+            </td>
+            <td><%= link_to 'Edit', edit_project_rule_path(current_project, rule), class: 'btn btn-default btn-sm' %></td>
+            <td><%= button_to "Delete", project_rule_path(current_project, rule), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %></td>
+          </tr>
         <% end %>
-      </tr>
       </tbody>
     </table>
   </div>
