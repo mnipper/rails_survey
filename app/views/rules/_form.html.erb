@@ -22,14 +22,14 @@
         class="select2-container select-block-level"
         data-placeholder="Select a rule type..."
         no-results-text="'This does not match any valid rule type'"
-        name="rule[rule_type]"
         id="rule-type"
         ng-model="currentRuleType"
-        ng-options="type for type in ruleTypes()"
+        ng-options="type as type for type in ruleTypes()"
         required
         >
           <option value=""><option>
         </select>
+        <input id="rule_rule_type" name="rule[rule_type]" type="hidden" value="{{ currentRuleType }}">
     </div>
 
     <div class="field top-buffer" ng-show="currentRuleType == 'INSTRUMENT_SURVEY_LIMIT_RULE'">
