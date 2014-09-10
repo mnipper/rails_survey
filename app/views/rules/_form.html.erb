@@ -33,9 +33,17 @@
     </div>
 
     <div class="field top-buffer" ng-show="currentRuleType == 'INSTRUMENT_SURVEY_LIMIT_RULE'">
+      <%= Settings.rule_types.instrument_survey_limit_rule.description %><br /><br /> 
       Max Surveys: <input type="text" ng-model="maxSurveys">
-      <input id="rule_rule_params" name="rule[rule_params]" type="hidden" value="{&quot;max_surveys&quot;: {{ maxSurveys }} }">
     </div>
+
+    <div class="field top-buffer" ng-show="currentRuleType == 'INSTRUMENT_TIMING_RULE'">
+      <%= Settings.rule_types.instrument_timing_rule.description %><br /><br /> 
+      Start time: <input type="time" ng-model="startTime"><br />
+      End Time: <input type="time" ng-model="endTime">
+    </div>
+
+    <input id="rule_rule_params" name="rule[rule_params]" type="hidden" value="{{ getRuleParams() }}">
 
     <div class="top-buffer">
       <%= f.submit class: 'btn btn-primary' %>

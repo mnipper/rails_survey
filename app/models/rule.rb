@@ -11,7 +11,7 @@
 #
 
 class Rule < ActiveRecord::Base
-  Rules = [:instrument_survey_limit_rule]
+  Rules = [:instrument_survey_limit_rule, :instrument_timing_rule]
 
   belongs_to :instrument
 
