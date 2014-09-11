@@ -24,6 +24,16 @@ module Api
           end 
         end
         
+        def update
+          question = current_project.questions.find(params[:question_id])
+          image = question.images.find(params[:id])
+          if image.update_attributes(params[:image])
+            respond_with image
+          else
+            render nothing: true, status: :unprocessable_entity
+          end
+        end
+        
         def destroy
           respond_with current_project.images.find(params[:id]).destroy
         end

@@ -84,9 +84,17 @@
         <div ng-repeat="img in images">
             <div ng-class-odd="'odd'" ng-class-even="'even'">
                 <div class="col-md-6">
-                    <b>{{img.photo_file_name}}</b></br>
                     <img ng-src="{{img.photo_url}}"></img> </br>
-                    <button ng-click="deleteImage(img)" class="btn btn-danger">Delete image</button>
+                    <div class="row">
+                        <div class="col-md-4">Name:</div>
+                        <div class="col-md-8">{{img.photo_file_name}}</div>
+                    </div>
+                    <div class="row">
+                        <div>Description</div>
+                        <textarea class="form-control" ng-model="img.description"></textarea>
+                    </div>
+                    <button ng-click="deleteImage(img)" class="btn btn-danger">Delete</button>
+                    <button ng-click="saveImageDetails(img)" class="btn btn-success">Save</button>
                 </div>
             </div>
          </div>

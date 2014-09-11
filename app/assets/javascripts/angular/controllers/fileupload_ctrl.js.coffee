@@ -39,4 +39,10 @@ App.controller 'FileUploadCtrl', ['$scope', '$fileUploader', 'Image', ($scope, $
     image.$delete()
     $scope.images.splice($scope.images.indexOf(image), 1)
     
+  $scope.saveImageDetails = (image) ->
+    image.project_id = $scope.project_id
+    image.instrument_id = $scope.instrument_id
+    image.question_id = $scope.question_id
+    image.$update()
+  
 ]

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140908201601) do
+ActiveRecord::Schema.define(version: 20140911152128) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 20140908201601) do
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
     t.integer  "question_id"
+    t.string   "description"
   end
 
   create_table "instrument_translations", force: true do |t|

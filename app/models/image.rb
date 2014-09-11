@@ -10,10 +10,11 @@
 #  photo_file_size    :integer
 #  photo_updated_at   :datetime
 #  question_id        :integer
+#  description        :string(255)
 #
 
 class Image < ActiveRecord::Base
-  attr_accessible :photo, :photo_file_name, :photo_content_type, :photo_file_size, :photo_updated_at, :question_id
+  attr_accessible :photo, :photo_file_name, :photo_content_type, :photo_file_size, :photo_updated_at, :question_id, :description
   has_attached_file :photo, :styles => { :small => "200x200>", :medium => "300x300>" },
   :url  => "/:attachment/:id/:basename.:extension", :path => "files/:attachment/:id/:style/:basename.:extension" 
   validates_attachment_content_type :photo, :content_type => /\Aimage\/.*\Z/
