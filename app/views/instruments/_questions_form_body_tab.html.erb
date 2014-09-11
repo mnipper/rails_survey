@@ -81,22 +81,20 @@
                 </tr>
             </tbody>
         </table>
-        <div ng-repeat="img in images">
-            <div ng-class-odd="'odd'" ng-class-even="'even'">
-                <div class="col-md-6">
-                    <img ng-src="{{img.photo_url}}"></img> </br>
-                    <div class="row">
-                        <div class="col-md-4">Name:</div>
-                        <div class="col-md-8">{{img.photo_file_name}}</div>
-                    </div>
-                    <div class="row">
-                        <div>Description</div>
+        <div ui-sortable="sortableImages" ng-model="images">
+            <div ng-repeat="img in images | orderBy:number">
+                <section class="row widget move-image">
+                    <img class="col-md-8" ng-src="{{img.photo_url}}"></img>
+                    <div class="col-md-4">                  
+                        <div><b>Name</b></div>
+                        <div>{{img.photo_file_name}}</div>
+                        <div><b>Description</b></div>
                         <textarea class="form-control" ng-model="img.description"></textarea>
+                        <button ng-click="deleteImage(img)" class="btn btn-danger">Delete</button>
+                        <button ng-click="saveImageDetails(img)" class="btn btn-success">Save</button>
                     </div>
-                    <button ng-click="deleteImage(img)" class="btn btn-danger">Delete</button>
-                    <button ng-click="saveImageDetails(img)" class="btn btn-success">Save</button>
-                </div>
-            </div>
+                </section>
+             </div>
          </div>
       </div>
           

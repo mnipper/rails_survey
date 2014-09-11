@@ -6,7 +6,7 @@ module Api
 
         def index
           question = current_project.questions.find(params[:question_id])
-          respond_with question.images       
+          respond_with question.images.order("number")       
         end
 
         def show

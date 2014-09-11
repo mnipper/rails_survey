@@ -44,5 +44,19 @@ App.controller 'FileUploadCtrl', ['$scope', '$fileUploader', 'Image', ($scope, $
     image.instrument_id = $scope.instrument_id
     image.question_id = $scope.question_id
     image.$update()
+    
+  $scope.sortableImages = {
+    cursor: 'move',
+    handle: '.move-image',
+    axis: 'y',
+    stop: (e, ui) -> 
+      angular.forEach $scope.images, (image, index) ->
+        if image.id
+          image.project_id = $scope.project_id
+          image.instrument_id = $scope.instrument_id
+          image.question_id = $scope.question_id
+          image.number = index + 1  
+          image.$update()
+    }
   
 ]
