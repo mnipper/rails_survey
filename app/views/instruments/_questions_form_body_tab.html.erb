@@ -35,19 +35,21 @@
         </div>
         <div ng-controller="FileUploadCtrl" ng-init="initialize(<%= @project.id %>, <%= @instrument.id %>, question.id)">
           <div ng-show="questionTypesWithImages(question.question_type)">
-          <label for="content" class="control-label">Images</label> </br>
+          <legend class="section"><i class="icon-upload"></i> <span><b>Images</b></span></legend> 
+          <div ng-hide="uploader.isHTML5" class="btn btn-warning btn-lg btn-block"> 
+             ENTER text, SAVE question and REFRESH page for image uploader to appear
+           </div>
            <div ng-show="uploader.isHTML5">
               <input ng-file-select type="file" multiple/>
             </div>       
-            <div>If image uploader is not visible, save question first</div>
             <table class="table">
             <thead>
                 <tr>
-                    <th width="50%">Name</th>
+                    <th ng-show="uploader.isHTML5" width="50%">Name</th>
                     <th ng-show="uploader.isHTML5">Size</th>
                     <th ng-show="uploader.isHTML5">Progress</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th ng-show="uploader.isHTML5">Status</th>
+                    <th ng-show="uploader.isHTML5">Actions</th>
                 </tr>
             </thead>
             <tbody>
