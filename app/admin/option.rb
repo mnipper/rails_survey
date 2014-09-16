@@ -1,6 +1,7 @@
 ActiveAdmin.register Option do
   menu priority: 7
   permit_params :question_id, :text, :next_question, :number_in_question
+  config.per_page = 20
 
   form do |f|
    f.inputs "Option Details" do

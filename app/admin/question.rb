@@ -2,7 +2,25 @@ ActiveAdmin.register Question do
   menu priority: 6
   permit_params :text, :question_type, :question_identifier, :instrument_id, :following_up_question_identifier, :reg_ex_validation,
           :number_in_instrument, :follow_up_position, :reg_ex_validation_message, :identifies_survey, :instructions
-          
+  config.per_page = 10
+  config.sort_order = "id_asc"
+ 
+  index do 
+    column :id
+    column :question_identifier
+    column :question_type
+    column :text 
+    column :instrument_id
+    column :number_in_instrument
+    column :instructions
+    column :identifies_survey
+    column :following_up_question_identifier
+    column :follow_up_position
+    column :reg_ex_validation
+    column :reg_ex_validation_message
+    actions
+  end
+  
  form do |f|
    f.inputs "Question Details" do
     f.input :instrument
