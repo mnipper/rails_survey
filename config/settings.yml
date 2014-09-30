@@ -26,6 +26,11 @@ rule_types:
     pretty_name: 'Instrument Timing Rule'
     params: ['start_time', 'end_time']
     description: 'Only make this instrument available during certain times of the day.'
+  instrument_survey_limit_per_minute_rule:
+    constant_name: 'INSTRUMENT_SURVEY_LIMIT_PER_MINUTE_RULE'
+    pretty_name: 'Instrument Survey Limit Per Minute Rule'
+    params: ['num_surveys', 'minute_interval']
+    description: 'Limit the number of surveys that can be completed per time interval (specified in minutes).'
  
 # List delimiter for options
 list_delimiter: ','
