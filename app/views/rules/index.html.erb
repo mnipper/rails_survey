@@ -28,7 +28,6 @@
                 <strong><%= key %>:</strong> <%= value %><br />
               <% end %>
             </td>
-            <td><%= link_to 'Edit', edit_project_rule_path(current_project, rule), class: 'btn btn-default btn-sm' %></td>
             <td><%= button_to "Delete", project_rule_path(current_project, rule), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %></td>
           </tr>
         <% end %>
