@@ -54,17 +54,35 @@ class Response < ActiveRecord::Base
   end
 
   def self.export(format)
-    format << ['qid', 'short_qid', 'instrument_id', 'instrument_version_number', 'question_version_number',
+    metadata_keys = []
+    all.each do |response|
+      response.survey.metadata.keys.each do |key|
+        metadata_keys << key unless metadata_keys.include? key
+      end if response.survey.metadata
+    end
+
+    header = ['qid', 'short_qid', 'instrument_id', 'instrument_version_number', 'question_version_number',
       'instrument_title', 'survey_id', 'survey_uuid', 'device_id', 'device_uuid', 'question_type', 'question_text', 'response',
       'response_labels', 'special_response', 'other_response', 'response_time_started', 'response_time_ended',
-      'device_user_id', 'device_user_username']
+      'device_user_id', 'device_user_username'] + metadata_keys
+    format << header
+
     all.each do |response|
-      format << [response.question_identifier, "q_#{response.question_id}", response.survey.instrument_id,
+      row = [response.question_identifier, "q_#{response.question_id}", response.survey.instrument_id,
         response.instrument_version_number, response.question_version, response.survey.instrument_title,
         response.survey.id, response.survey_uuid, response.survey.device.id, response.survey.device_uuid,
         response.versioned_question.try(:question_type), Sanitize.fragment(response.versioned_question.try(:text)),
         response.text, response.option_labels, response.special_response, response.other_response, response.time_started,
         response.time_ended, response.device_user.try(:id), response.device_user.try(:username)]
+
+      if response.survey.metadata
+        response.survey.metadata.each do |k, v|
+          key_index = header.index {|h| h == k}
+          row[key_index] = v
+        end
+      end
+
+      format << row
     end
   end
   
