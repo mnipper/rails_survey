@@ -1,6 +1,7 @@
 ActiveAdmin.register Instrument do
   menu priority: 5
   permit_params :title, :language, :alignment, :previous_question_count, :child_update_count, :published, :show_instructions, :project_id
+  config.per_page = 10
 
   form do |f|
     f.inputs "Instrument Details" do

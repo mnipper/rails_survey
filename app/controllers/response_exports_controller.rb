@@ -47,44 +47,54 @@ class ResponseExportsController < ApplicationController
     render text:"", notice: "Successfully destroyed export."
   end
   
-  def download_project_responses 
-    export = ResponseExport.find params[:id]
+  def download_project_responses   
+    export = current_project.response_exports.find params[:id]
     project_download(export.download_url, 'text/csv')
   end
   
   def download_instrument_responses
-    export = ResponseExport.find params[:id]
-    instrument = Instrument.find(export.instrument_id)
-    instrument_download(export.download_url, 'text/csv', "#{ instrument.title.gsub(/\s+/,  '_') }")
+    export = ResponseExport.find(params[:id])
+    instrument = current_project.instruments.find(export.instrument_id)
+    if instrument
+      instrument_download(export.download_url, 'text/csv', "#{ instrument.title.gsub(/\s+/,  '_') }")
+    end 
   end
   
   def download_project_response_images
-    export = ResponseExport.find params[:id]
+    export = current_project.response_exports.find(params[:id])
     project_download(export.response_images_export.download_url, 'application/zip')
   end
   
   def download_instrument_response_images
-    export = ResponseExport.find params[:id]
-    instrument = Instrument.find(export.instrument_id)
-    instrument_download(export.response_images_export.download_url, 'application/zip', "#{ instrument.title.gsub(/\s+/,  '_') }")
+    export = ResponseExport.find(params[:id])
+    instrument = current_project.instruments.find(export.instrument_id)
+    if instrument
+      instrument_download(export.response_images_export.download_url, 'application/zip', "#{ instrument.title.gsub(/\s+/,  '_') }")
+    end
   end
   
   def download_spss_syntax_file 
-    export = ResponseExport.find params[:id]
-    instrument = Instrument.find(export.instrument_id)
-    instrument_download(export.spss_syntax_file_url, 'application/x-spss', "#{ instrument.title.gsub!(/\s+/,  '_') }.sps")
+    export = ResponseExport.find(params[:id])
+    instrument = current_project.instruments.find(export.instrument_id)
+    if instrument
+      instrument_download(export.spss_syntax_file_url, 'application/x-spss', "#{ instrument.title.gsub!(/\s+/,  '_') }.sps")
+    end 
   end
   
   def download_instrument_spss_csv
-    export = ResponseExport.find params[:id]
-    instrument = Instrument.find(export.instrument_id)
-    instrument_download(export.spss_friendly_csv_url, 'text/csv', "#{ instrument.title.gsub(/\s+/,  '_') }_spss")
+    export = ResponseExport.find(params[:id])
+    instrument = current_project.instruments.find(export.instrument_id)
+    if instrument
+      instrument_download(export.spss_friendly_csv_url, 'text/csv', "#{ instrument.title.gsub(/\s+/,  '_') }_spss")
+    end
   end
   
   def download_value_labels_csv
-    export = ResponseExport.find params[:id]
-    instrument = Instrument.find(export.instrument_id)
-    instrument_download(export.value_labels_csv, 'text/csv', "#{ instrument.title.gsub(/\s+/,  '_') }_value_labels")
+    export = ResponseExport.find(params[:id])
+    instrument = current_project.instruments.find(export.instrument_id)
+    if instrument
+      instrument_download(export.value_labels_csv, 'text/csv', "#{ instrument.title.gsub(/\s+/,  '_') }_value_labels")
+    end
   end
   
   private
