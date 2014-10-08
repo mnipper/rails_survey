@@ -7,4 +7,5 @@ App.controller 'RulesCtrl', ['$scope', ($scope) ->
       when "INSTRUMENT_SURVEY_LIMIT_RULE" then "{\"max_surveys\": #{ $scope.maxSurveys }}"
       when "INSTRUMENT_TIMING_RULE" then "{\"start_time\": \"#{ $scope.startTime }\", \"end_time\": \"#{ $scope.endTime }\" }"
       when "INSTRUMENT_SURVEY_LIMIT_PER_MINUTE_RULE" then "{\"num_surveys\": \"#{ $scope.numSurveys }\", \"minute_interval\": \"#{ $scope.minuteInterval }\" }"
+      when "INSTRUMENT_LAUNCH_RULE" then "{}"
 ]

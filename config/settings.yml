@@ -31,6 +31,11 @@ rule_types:
     pretty_name: 'Instrument Survey Limit Per Minute Rule'
     params: ['num_surveys', 'minute_interval']
     description: 'Limit the number of surveys that can be completed per time interval (specified in minutes).'
+  instrument_launch_rule:
+    constant_name: 'INSTRUMENT_LAUNCH_RULE'
+    pretty_name: 'Instrument Launch Rule'
+    params: []
+    description: 'Setting this rule will make it so that a survey cannot be generated for an instrument from the app.  A survey must be launched from another app.'
  
 # List delimiter for options
 list_delimiter: ','
