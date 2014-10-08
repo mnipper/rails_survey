@@ -15,7 +15,8 @@
 class ResponseImage < ActiveRecord::Base
   attr_accessible :picture, :response_uuid, :picture_file_name, :picture_content_type, :picture_file_size, :picture_updated_at, :picture_data 
   has_attached_file :picture, :styles => { :small => "150x150>", :medium => "300x300>" }, 
-    :url  => "/:attachment/:id/:basename.:extension", :path => "files/:attachment/:id/:style/:basename.:extension"  
+    :url  => "/:attachment/:id/:basename.:extension", :path => "files/:attachment/:id/:style/:basename.:extension",
+    :default_url => "files/:attachment/missing_:style.png"
   belongs_to :response, :foreign_key => :response_uuid, :primary_key => :uuid
   delegate :project, to: :response 
   validates :response_uuid, presence: true
