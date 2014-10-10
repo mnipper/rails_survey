@@ -77,17 +77,26 @@ class Instrument < ActiveRecord::Base
   end
 
   def export(format)
+    translation_languages = []
+    translations.each do |t_language|
+      translation_languages << t_language.language
+    end
+    
     format << ['Instrument id:', id]
     format << ['Instrument title:', title]
     format << ['Version number:', current_version_number]
     format << ['Language:', language]
     format << ["\n"]
-    format << ['number_in_instrument', 'question_identifier', 'question_type', 'question_text', 'question_instructions']
+    format << ['number_in_instrument', 'question_identifier', 'question_type', 'question_instructions', 'question_text'] + translation_languages
     questions.each do |question|
+      question_text_translations = []
+      question.translations.each do |q_translation|
+        question_text_translations << q_translation.text
+      end
       format << [question.number_in_instrument, question.question_identifier, question.question_type, 
-        Sanitize.fragment(question.text), Sanitize.fragment(question.instructions)]
+        Sanitize.fragment(question.instructions), Sanitize.fragment(question.text)] + question_text_translations
       question.options.each {
-        |option| format << ['', "Option for question #{question.question_identifier}", '', option.text]
+        |option| format << ['', "Option for question #{question.question_identifier}", '', option.text] + option_text_translations(option)
         if option.next_question
           format << ['', "For option #{option}, SKIP TO question", '', option.next_question]
         end
@@ -109,6 +118,14 @@ class Instrument < ActiveRecord::Base
         format << ['', "Question identifies survey", '', "YES"]
       end
     end
+  end
+  
+  def option_text_translations(option) 
+    option_text_translations = []
+    option.translations.each do |translation|
+      option_text_translations << translation.text
+    end
+    option_text_translations
   end
 
   def update_instrument_version
