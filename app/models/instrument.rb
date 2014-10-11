@@ -119,7 +119,7 @@ class Instrument < ActiveRecord::Base
   def translations_for_object(obj) 
     text_translations = []
     obj.translations.each do |translation|
-      text_translations << translation.text
+      text_translations << Sanitize.fragment(translation.text)
     end
     text_translations
   end
