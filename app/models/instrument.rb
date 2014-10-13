@@ -76,18 +76,13 @@ class Instrument < ActiveRecord::Base
     end
   end
 
-  def export(format)
-    translation_languages = []
-    translations.each do |t_language|
-      translation_languages << t_language.language
-    end
-    
+  def export(format)   
     format << ['Instrument id:', id]
     format << ['Instrument title:', title]
     format << ['Version number:', current_version_number]
     format << ['Language:', language]
     format << ["\n"]
-    format << ['number_in_instrument', 'question_identifier', 'question_type', 'question_instructions', 'question_text'] + translation_languages
+    format << ['number_in_instrument', 'question_identifier', 'question_type', 'question_instructions', 'question_text'] + instrument_translation_languages
     questions.each do |question|
       format << [question.number_in_instrument, question.question_identifier, question.question_type, 
         Sanitize.fragment(question.instructions), Sanitize.fragment(question.text)] + translations_for_object(question) 
@@ -116,10 +111,20 @@ class Instrument < ActiveRecord::Base
     end
   end
   
+  def instrument_translation_languages
+    translation_languages = []
+    translations.each do |t_language|
+      translation_languages << t_language.language
+    end
+    translation_languages 
+  end
+  
   def translations_for_object(obj) 
     text_translations = []
     obj.translations.each do |translation|
-      text_translations << Sanitize.fragment(translation.text)
+      if (instrument_translation_languages.include? translation.language)
+        text_translations << Sanitize.fragment(translation.text)
+      end
     end
     text_translations
   end
