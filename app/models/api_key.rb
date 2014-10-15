@@ -9,6 +9,7 @@
 #
 
 class ApiKey < ActiveRecord::Base
+  attr_accessible :access_token
   before_create :generate_access_token
   
   private
