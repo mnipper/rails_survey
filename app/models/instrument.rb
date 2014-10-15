@@ -76,39 +76,57 @@ class Instrument < ActiveRecord::Base
     end
   end
 
-  def export(format)
+  def export(format)   
     format << ['Instrument id:', id]
     format << ['Instrument title:', title]
     format << ['Version number:', current_version_number]
     format << ['Language:', language]
     format << ["\n"]
-    format << ['number_in_instrument', 'question_identifier', 'question_type', 'question_text', 'question_instructions']
+    format << ['number_in_instrument', 'question_identifier', 'question_type', 'question_instructions', 'question_text'] + instrument_translation_languages
     questions.each do |question|
       format << [question.number_in_instrument, question.question_identifier, question.question_type, 
-        Sanitize.fragment(question.text), Sanitize.fragment(question.instructions)]
+        Sanitize.fragment(question.instructions), Sanitize.fragment(question.text)] + translations_for_object(question) 
       question.options.each {
-        |option| format << ['', "Option for question #{question.question_identifier}", '', option.text]
+        |option| format << ['', '', '', "Option for question #{question.question_identifier}", option.text] + translations_for_object(option) 
         if option.next_question
-          format << ['', "For option #{option}, SKIP TO question", '', option.next_question]
+          format << ['', '', '', "For option #{option}, SKIP TO question", option.next_question]
         end
         if option.skips
           option.skips.each {
-            |skip| format << ['', "For option #{option.text}, SKIP question", '', skip.question_identifier]
+            |skip| format << ['', '', '', "For option #{option.text}, SKIP question", skip.question_identifier]
           }
         end
       }
       if question.reg_ex_validation_message
-        format << ['', "Regular expression failure message for #{question.question_identifier}", '',
+        format << ['', '', '', "Regular expression failure message for #{question.question_identifier}",
           question.reg_ex_validation_message]
       end
       if question.following_up_question_identifier
-        format << ['', "Following up on question", '', question.following_up_question_identifier]
-        format << ['', "Follow up position", '', question.follow_up_position]
+        format << ['','', '', "Following up on question", question.following_up_question_identifier]
+        format << ['', '', '', "Follow up position", question.follow_up_position]
       end
       if question.identifies_survey
-        format << ['', "Question identifies survey", '', "YES"]
+        format << ['', '', '', "Question identifies survey", "YES"]
       end
     end
+  end
+  
+  def instrument_translation_languages
+    translation_languages = []
+    translations.each do |t_language|
+      translation_languages << t_language.language
+    end
+    translation_languages 
+  end
+  
+  def translations_for_object(obj) 
+    text_translations = []
+    obj.translations.each do |translation|
+      if (instrument_translation_languages.include? translation.language)
+        text_translations << Sanitize.fragment(translation.text)
+      end
+    end
+    text_translations
   end
 
   def update_instrument_version
