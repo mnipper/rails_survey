@@ -27,3 +27,7 @@
 .bottom-buffer { margin-bottom:20px; }
 ul.squares { list-style: square }
 li.active-result { color:#333; }
+table.fixed-wide {
+  table-layout: fixed;
+  width: 100%
+}
