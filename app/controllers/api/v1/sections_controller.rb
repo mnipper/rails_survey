@@ -5,7 +5,7 @@ module Api
 
       def index
         project = Project.find(params[:project_id])
-        respond_with project.sections.with_deleted
+        respond_with project.sections.with_deleted, include: :translations
       end
 
       def show

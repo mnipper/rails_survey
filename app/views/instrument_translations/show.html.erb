@@ -34,7 +34,7 @@
           <% end %>
         <% end %>
         <% if question.starts_section %>
-            <tr>
+            <tr class="<%= "danger" if question.starts_section.translated_for(@instrument_translation.language, :section_changed) %>">
                 <td>Section starting with <%= question.question_identifier %></td>
                 <td><%= question.starts_section.title %></td>
                 <td><%= question.starts_section.translated_for(@instrument_translation.language, :text) %></td>

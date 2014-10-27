@@ -2,12 +2,13 @@
 #
 # Table name: section_translations
 #
-#  id         :integer          not null, primary key
-#  section_id :integer
-#  language   :string(255)
-#  text       :string(255)
-#  created_at :datetime
-#  updated_at :datetime
+#  id              :integer          not null, primary key
+#  section_id      :integer
+#  language        :string(255)
+#  text            :string(255)
+#  created_at      :datetime
+#  updated_at      :datetime
+#  section_changed :boolean          default(FALSE)
 #
 
 class SectionTranslation < ActiveRecord::Base
