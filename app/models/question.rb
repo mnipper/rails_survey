@@ -99,6 +99,10 @@ class Question < ActiveRecord::Base
     versions.count
   end
   
+  def starts_section
+    Section.find_by_start_question_identifier(self.question_identifier)
+  end
+  
   private
   def update_instrument_version
     instrument.update_instrument_version

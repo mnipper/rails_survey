@@ -51,8 +51,8 @@ RailsSurvey::Application.routes.draw do
   resources :projects do
     resources :instruments do
       resources :versions, only: [:index, :show]
-      resources :instrument_translations
-      resources :sections 
+      resources :instrument_translations 
+      resources :sections
       member do
         get :export
         get :export_responses

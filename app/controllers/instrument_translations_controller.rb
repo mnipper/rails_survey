@@ -88,5 +88,10 @@ class InstrumentTranslationsController < ApplicationController
       end
       option.add_or_update_translation_for(language, translation, :text)
     end if params.has_key? :option_translations
+    
+    params[:section_translations].each_pair do |id, translation|
+      section = instrument.sections.find(id)
+      section.add_or_update_translation_for(language, translation, :text)
+    end if params.has_key? :section_translations
   end
 end

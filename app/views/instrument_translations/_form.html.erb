@@ -58,6 +58,14 @@
               </tr>
             <% end %>
           <% end %>
+          <% if question.starts_section %>
+            <tr>
+                <td>Section starting with <%= question.question_identifier %></td>
+                <td><%= question.starts_section.title %></td>
+                <td><%= text_area_tag "section_translations[#{question.starts_section.id}]",
+                   question.starts_section.translated_for(@instrument_translation.language, :text), size: '50x5' %></td>
+            </tr>
+          <% end %>
           <% if question.reg_ex_validation_message %>
             <td>Regular expression failure message for <%= question.question_identifier %></td>
             <td><%= question.reg_ex_validation_message %></td>
