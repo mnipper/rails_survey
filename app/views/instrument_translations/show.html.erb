@@ -15,35 +15,96 @@
           <th>Question Identifier</th>
           <th><%= @instrument.language %></th>
           <th><%= @instrument_translation.language %></th>
+          <th>Translation Status</th>
         </tr>
       </thead>
       <tbody>
     <% @instrument.questions.each do |question| %>
-        <tr class="<%= "danger" if question.translated_for(@instrument_translation.language, :question_changed) %>">
-          <td><%= question.question_identifier %></td>
-          <td><%= raw question.text %></td>
-          <td><%= raw (question.translated_for @instrument_translation.language, :text) %></td>
-        </tr>
+        <% if question.has_translation_for?(@instrument_translation.language) %>
+            <tr ng-class="{danger: question_translation_changed}" ng-controller="QuestionTranslationsCtrl" ng-init="init(
+                <%= current_project.id %>,
+                <%= question.instrument.id %>,
+                <%= question.id %>,
+                <%= question.has_translation_for?(@instrument_translation.language).id %>,
+                <%= question.translated_for(@instrument_translation.language, :question_changed) %>
+            )" >
+                <td><%= question.question_identifier %></td>
+                <td><%= raw question.text %></td>
+                <td><%= raw (question.translated_for @instrument_translation.language, :text) %></td>
+                <td><button ng-show="<%= question.translated_for(@instrument_translation.language, :question_changed)  %>  && showOkButton" 
+                     type="button" class="btn btn-sm btn-success" 
+                     ng-click="setQuestionChanged(<%= @instrument_translation.language %>, false)"> Translation OK </button>                    
+                </td>                
+            </tr>
+        <% else %>
+            <tr>
+                <td><%= question.question_identifier %></td>
+                <td><%= raw question.text %></td>
+                <td><%= raw (question.translated_for @instrument_translation.language, :text) %></td>
+                <td></td>
+            </tr>
+        <% end %>
         <% if question.has_options? %>
           <% question.options.each do |option| %>
-            <tr class="<%= "danger" if option.translated_for(@instrument_translation.language, :option_changed) %>">
-              <td>Option for <%= question.question_identifier %></td>
-              <td><%= option.text %></td>
-              <td><%= option.translated_for @instrument_translation.language, :text %></td>
-            </tr>
+                        <% if option.has_translation_for?(@instrument_translation.language) %>
+                          <tr ng-class="{danger: option_translation_changed}" ng-controller="OptionTranslationsCtrl" ng-init="init(
+                            <%= current_project.id %>,
+                            <%= question.instrument.id %>,
+                            <%= question.id %>,
+                            <%= option.id %>,
+                            <%= option.has_translation_for?(@instrument_translation.language).id %>,
+                            <%= option.translated_for(@instrument_translation.language, :option_changed) %>
+                        )">
+                           <td>Option for <%= question.question_identifier %></td>
+                           <td><%= option.text %></td>
+                           <td><%= option.translated_for(@instrument_translation.language, :text) %> </td>
+                           <td><button ng-show="<%= option.translated_for(@instrument_translation.language, :option_changed)  %>  && showOkButton" 
+                                 type="button" class="btn btn-sm btn-success" 
+                                 ng-click="setOptionChanged(<%= @instrument_translation.language %>, false)"> Translation OK </button>
+                           </td>
+                        </tr>                      
+                        <% else %>
+                            <tr>
+                                <td>Option for <%= question.question_identifier %></td>
+                               <td><%= option.text %></td>
+                               <td></td>    
+                               <td></td>    
+                            </tr>
+                        <% end %>
+
           <% end %>
         <% end %>
         <% if question.starts_section %>
-            <tr class="<%= "danger" if question.starts_section.translated_for(@instrument_translation.language, :section_changed) %>">
-                <td>Section starting with <%= question.question_identifier %></td>
-                <td><%= question.starts_section.title %></td>
-                <td><%= question.starts_section.translated_for(@instrument_translation.language, :text) %></td>
-            </tr>
+            <% if question.starts_section.has_translation_for?(@instrument_translation.language) %>
+                <tr ng-class="{danger: section_translation_changed}" ng-controller="SectionTranslationsCtrl" ng-init="init(
+                            <%= current_project.id %>,
+                            <%= question.instrument.id %>,
+                            <%= question.starts_section.id %>,
+                            <%= question.starts_section.has_translation_for?(@instrument_translation.language).id %>,
+                            <%= question.starts_section.translated_for(@instrument_translation.language, :section_changed) %>
+                        )">
+                        <td>Section starting with <%= question.question_identifier %></td>
+                        <td><%= question.starts_section.title %></td>
+                        <td><%= question.starts_section.translated_for(@instrument_translation.language, :text) %></td>
+                        <td><button ng-show="<%= question.starts_section.translated_for(@instrument_translation.language, :section_changed)  %>  && showOkButton" 
+                                 type="button" class="btn btn-sm btn-success" 
+                                 ng-click="setSectionChanged(<%= @instrument_translation.language %>, false)"> Translation OK </button>                 
+                        </td>
+                </tr>
+            <% else %>
+                <tr>
+                    <td>Section starting with <%= question.question_identifier %></td>
+                    <td><%= question.starts_section.title %></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            <% end %>
         <% end %>
         <% if question.reg_ex_validation_message %>
           <td>Regular expression failure message for <%= question.question_identifier %></td>
           <td><%= question.reg_ex_validation_message %></td>
           <td><%= question.translated_for @instrument_translation.language, :reg_ex_validation_message %></td>
+          <td></td>
         <% end %>
     <% end %>
       </tbody>

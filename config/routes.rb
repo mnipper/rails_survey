@@ -15,13 +15,18 @@ RailsSurvey::Application.routes.draw do
         resources :projects do
           resources :instruments, only: [:index, :show] do
             resources :questions do
+              resources :question_translations, only: [:update]
               member do
                 post :copy
               end
               resources :options do
                 resources :skips 
+                resources :option_translations, only: [:update]
               end
               resources :images 
+            end
+            resources :sections do
+              resources :section_translations, only: [:update]
             end
           end
           get 'graphs/daily/' => 'graphs#daily'
