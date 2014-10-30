@@ -48,6 +48,7 @@ RailsSurvey::Application.routes.draw do
         resources :android_updates, only: [:index, :show]
         resources :skips, only: [:index, :show]
         resources :rules, only: [:index]
+        resources :device_sync_entries, only: [:create]
       end
     end
   end

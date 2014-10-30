@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141027185250) do
+ActiveRecord::Schema.define(version: 20141030191754) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -67,6 +67,19 @@ ActiveRecord::Schema.define(version: 20141027185250) do
     t.string   "access_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "device_sync_entries", force: true do |t|
+    t.string   "latitude"
+    t.string   "longitude"
+    t.integer  "num_surveys"
+    t.string   "current_language"
+    t.string   "current_version"
+    t.string   "instrument_versions"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "device_id"
+    t.string   "api_key"
   end
 
   create_table "device_users", force: true do |t|
@@ -327,7 +340,6 @@ ActiveRecord::Schema.define(version: 20141027185250) do
     t.integer  "failed_attempts",        default: 0
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.datetime "last_active_at"
     t.string   "gauth_secret"
     t.string   "gauth_enabled",          default: "f"
     t.string   "gauth_tmp"

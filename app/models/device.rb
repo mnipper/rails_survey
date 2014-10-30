@@ -14,6 +14,7 @@ class Device < ActiveRecord::Base
   has_many :surveys
   has_many :project_devices
   has_many :projects, through: :project_devices
+  has_many :device_sync_entries
   validates :identifier, uniqueness: true, presence: true, allow_blank: false
   
   def danger_zone?
