@@ -11,12 +11,13 @@
 #  instrument_versions :string(255)
 #  created_at          :datetime
 #  updated_at          :datetime
-#  device_id           :integer
+#  device_uuid         :string(255)
 #  api_key             :string(255)
 #
 
 class DeviceSyncEntry < ActiveRecord::Base
   attr_accessible :latitude, :longitude, :num_surveys, :current_language, :current_version, :instrument_versions,
-                  :api_key
-  belongs_to :device
+                  :api_key, :device_uuid
+
+  belongs_to :device, foreign_key: :identifier, primary_key: :device_uuid
 end
