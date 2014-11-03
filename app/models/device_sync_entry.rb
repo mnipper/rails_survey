@@ -13,11 +13,12 @@
 #  updated_at          :datetime
 #  device_uuid         :string(255)
 #  api_key             :string(255)
+#  timezone            :string(255)
 #
 
 class DeviceSyncEntry < ActiveRecord::Base
   attr_accessible :latitude, :longitude, :num_surveys, :current_language, :current_version, :instrument_versions,
-                  :api_key, :device_uuid
+                  :api_key, :device_uuid, :timezone
 
   belongs_to :device, foreign_key: :identifier, primary_key: :device_uuid
 end
