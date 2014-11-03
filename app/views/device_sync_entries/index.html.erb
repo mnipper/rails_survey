@@ -1,0 +1,41 @@
+<section class="widget">
+  <header>
+    <h4><i class="icon-mobile-phone"></i> Device Syncs</h4>
+  </header>
+  <div class="body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Latitude</th>
+          <th>Longitude</th>
+          <th>Number of Surveys</th>
+          <th>Current Language</th>
+          <th>Current Version</th>
+          <th>Instrument Versions</th>
+          <th>Api Key</th>
+          <th>Timezone</th>
+          <th>Sync Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @device_sync_entries.each do |entry| %>
+            <tr>
+              <td><%= entry.latitude %></td>
+              <td><%= entry.longitude %></td>
+              <td><%= entry.num_surveys %></td>
+              <td><%= entry.current_language %></td>
+              <td><%= entry.current_version %></td>
+              <td>
+              <% entry.instrument_versions['instrument_versions'].each_pair do |key, value| %>
+                <strong><%= key %></strong> (<%= value %>)<br /><br /> 
+              <% end %>
+              </td>
+              <td><%= entry.api_key %></td>
+              <td><%= entry.timezone %></td>
+              <td><%= entry.created_at %></td>
+            </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</section>

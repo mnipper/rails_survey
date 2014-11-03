@@ -73,7 +73,9 @@ RailsSurvey::Application.routes.draw do
     resources :responses
     resources :surveys
     resources :notifications, only: [:index]
-    resources :devices, only: [:index]
+    resources :devices, only: [:index] do
+      resources :device_sync_entries, only: [:index]
+    end
     resources :response_images, only:[:show]
     resources :graphs, only:[:index]
     resources :response_exports  do

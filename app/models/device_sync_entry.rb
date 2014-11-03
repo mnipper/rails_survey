@@ -21,4 +21,8 @@ class DeviceSyncEntry < ActiveRecord::Base
                   :api_key, :device_uuid, :timezone
 
   belongs_to :device, foreign_key: :identifier, primary_key: :device_uuid
+
+  def instrument_versions
+    JSON.parse(read_attribute(:instrument_versions)) unless read_attribute(:instrument_versions).nil?
+  end
 end
