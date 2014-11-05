@@ -10,7 +10,15 @@ class InstrumentTranslationsController < ApplicationController
   def show
     @instrument = current_project.instruments.find(params[:instrument_id])
     @instrument_translation = @instrument.translations.find(params[:id])
-     authorize @instrument_translation
+    authorize @instrument_translation
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = TranslationPdf.new(@instrument_translation)
+        send_data pdf.render, filename: pdf.display_name, type: 'application/pdf'
+      end
+    end
   end
 
   def new

@@ -58,6 +58,7 @@ gem 'amoeba'
 gem 'devise_google_authenticator', '0.3.14'
 gem 'bcrypt', '~> 3.1.7'
 gem 'sshkit', '~> 1.5.1'
+gem 'prawn'
 
 group :production do
   gem 'rails_12factor'

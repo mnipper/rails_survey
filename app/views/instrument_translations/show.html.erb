@@ -3,6 +3,9 @@
     <h4><i class="icon-globe"></i> <%= link_to @instrument.title, project_instrument_path(current_project, @instrument) %> in <%= @instrument_translation.language %></h4>
     <strong>Translated Title:</strong> <%= @instrument.translated_for(@instrument_translation.language, :title) %>
     <div class="actions hidden-xs-portrait"> 
+      <%= link_to project_instrument_instrument_translation_path(current_project, @instrument, @instrument_translation, format: :pdf), class: 'btn btn-primary' do %>
+        <i class="icon-print"></i> PDF 
+      <% end %>
       <%= link_to edit_project_instrument_instrument_translation_path(current_project, @instrument, @instrument_translation), class: 'btn btn-primary' do %>
         <i class="icon-globe"></i> Edit Translation
       <% end %>
