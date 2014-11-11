@@ -114,8 +114,10 @@ class TranslationPdf < Prawn::Document
       case @language
       when 'en'
         'Special Response (circle one):   RF   DK   SK   NA'
-      else
+      when 'es'
         'Special Response (circle one):   RC   NS   SP   NA'
+      else
+        'Special Response (circle one):   RF   DK   SK   NA'
       end
     end
 end
