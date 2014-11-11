@@ -51,8 +51,9 @@ class TranslationPdf < Prawn::Document
 
     def number_question(question)
       text "#{question.number_in_instrument}.)", size: 18, style: :bold
-      draw_text question.question_type,       at: [QuestionLeftMargin, cursor + 15], size: 10, style: :bold
-      draw_text question.question_identifier, at: [QuestionLeftMargin, cursor + 5],  size: 10, style: :bold
+      number_padding = question.number_in_instrument.to_s.length * 10
+      draw_text question.question_type,       at: [QuestionLeftMargin + number_padding, cursor + 15], size: 10, style: :bold
+      draw_text question.question_identifier, at: [QuestionLeftMargin + number_padding, cursor + 5],  size: 10, style: :bold
     end
 
     def draw_options(question)
