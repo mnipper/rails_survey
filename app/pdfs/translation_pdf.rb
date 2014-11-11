@@ -7,6 +7,7 @@ class TranslationPdf < Prawn::Document
   AfterTitleMargin = 15
   CircleSize = 5
   SquareSize = 5
+  AfterHorizontalRuleMargin = 10
 
   def initialize(instrument_translation)
     super()
@@ -33,6 +34,8 @@ class TranslationPdf < Prawn::Document
     def content
       @instrument.questions.each do |question|
         format_question(question)
+        stroke_horizontal_rule
+        move_down AfterHorizontalRuleMargin
       end
     end
 
