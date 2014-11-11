@@ -34,6 +34,7 @@ class TranslationPdf < Prawn::Document
     def content
       @instrument.questions.each do |question|
         format_question(question)
+        text special_responses
         stroke_horizontal_rule
         move_down AfterHorizontalRuleMargin
       end
@@ -106,6 +107,15 @@ class TranslationPdf < Prawn::Document
         'Skip pattern: Skip to'
       else
         'Skip pattern: Skip to'
+      end
+    end
+
+    def special_responses
+      case @language
+      when 'en'
+        'Special Response (circle one):   RF   DK   SK   NA'
+      else
+        'Special Response (circle one):   RC   NS   SP   NA'
       end
     end
 end
