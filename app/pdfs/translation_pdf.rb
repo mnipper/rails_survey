@@ -75,7 +75,13 @@ class TranslationPdf < Prawn::Document
 
     def draw_option(option, &block)
       block.call
-      draw_text option.translated_for(@language, :text), at: [OptionLeftMargin + 10, cursor - 10]
+      if option.next_question?
+        next_question = Question.find_by_question_identifier(option.next_question)
+        draw_text "#{option.translated_for(@language, :text)} (#{skip_to} ##{next_question.number_in_instrument})",
+                  at: [OptionLeftMargin + 10, cursor - 10]
+      else
+        draw_text option.translated_for(@language, :text), at: [OptionLeftMargin + 10, cursor - 10]
+      end
       move_down AfterOptionMargin
     end
 
@@ -88,5 +94,14 @@ class TranslationPdf < Prawn::Document
     def draw_line_option(option)
       draw_text "#{option.translated_for(@language, :text)} _________________________________", at: [OptionLeftMargin, cursor - 5]
       move_down AfterOptionMargin
+    end
+
+    def skip_to
+      case @language
+      when 'en'
+        'Skip pattern: Skip to'
+      else
+        'Skip pattern: Skip to'
+      end
     end
 end
