@@ -1,7 +1,10 @@
 class TranslationPdf < Prawn::Document
 
   OptionLeftMargin = 10
+  QuestionLeftMargin = 30
   AfterOptionMargin = 15
+  InstructionQuestionMargin = 10
+  AfterTitleMargin = 15
   CircleSize = 5
   SquareSize = 5
 
@@ -22,11 +25,9 @@ class TranslationPdf < Prawn::Document
 
   private
     def header
-      after_title_margin = 15
-
       text "#{@instrument_translation.title} v#{@version}", size: 20, style: :bold
       text "#{@language}"
-      move_down after_title_margin
+      move_down AfterTitleMargin
     end
    
     def content
@@ -36,13 +37,11 @@ class TranslationPdf < Prawn::Document
     end
 
     def format_question(question)
-      instruction_question_margin = 10
-
       number_question(question)
 
       if question.has_translation_for?(@language)
         text Sanitize.fragment(question.instructions), style: :italic
-        move_down instruction_question_margin 
+        move_down InstructionQuestionMargin 
         text Sanitize.fragment(question.translated_for(@language, :text))
         draw_options(question) if question.has_options?
       end
@@ -51,11 +50,9 @@ class TranslationPdf < Prawn::Document
     end 
 
     def number_question(question)
-      left_margin = 30
-
       text "#{question.number_in_instrument}.)", size: 18, style: :bold
-      draw_text question.question_type,       at: [left_margin, cursor + 15], size: 10, style: :bold
-      draw_text question.question_identifier, at: [left_margin, cursor + 5],  size: 10, style: :bold
+      draw_text question.question_type,       at: [QuestionLeftMargin, cursor + 15], size: 10, style: :bold
+      draw_text question.question_identifier, at: [QuestionLeftMargin, cursor + 5],  size: 10, style: :bold
     end
 
     def draw_options(question)
