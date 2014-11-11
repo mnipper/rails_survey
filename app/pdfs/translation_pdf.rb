@@ -1,6 +1,6 @@
 class TranslationPdf < Prawn::Document
 
-  OptionLeftMargin = 10
+  OptionLeftMargin = 5
   QuestionLeftMargin = 30
   AfterOptionMargin = 15
   InstructionQuestionMargin = 10
@@ -79,14 +79,14 @@ class TranslationPdf < Prawn::Document
 
     def draw_option(option, &block)
       block.call
-      if option.next_question?
-        next_question = Question.find_by_question_identifier(option.next_question)
-        draw_text "#{option.translated_for(@language, :text)} (#{skip_to} ##{next_question.number_in_instrument})",
-                  at: [OptionLeftMargin + 10, cursor - 10]
-      else
-        draw_text option.translated_for(@language, :text), at: [OptionLeftMargin + 10, cursor - 10]
+      span(500, position: OptionLeftMargin + 10) do
+        if option.next_question?
+          next_question = Question.find_by_question_identifier(option.next_question)
+          text "#{option.translated_for(@language, :text)} (#{skip_to} ##{next_question.number_in_instrument})"
+        else
+          text option.translated_for(@language, :text)
+        end
       end
-      move_down AfterOptionMargin
     end
 
     def draw_other(question)
