@@ -8,7 +8,7 @@
 #  num_surveys         :integer
 #  current_language    :string(255)
 #  current_version     :string(255)
-#  instrument_versions :string(255)
+#  instrument_versions :text
 #  created_at          :datetime
 #  updated_at          :datetime
 #  device_uuid         :string(255)

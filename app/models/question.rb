@@ -77,7 +77,7 @@ class Question < ActiveRecord::Base
   end
 
   def has_other?
-    Settings.question_with_options.include? question_type
+    Settings.question_with_other.include? question_type
   end
 
   def other_index
@@ -102,7 +102,15 @@ class Question < ActiveRecord::Base
   def starts_section
     Section.find_by_start_question_identifier(self.question_identifier)
   end
+
+  def select_one_variant?
+    self.question_type == "SELECT_ONE" or self.question_type == "SELECT_ONE_WRITE_OTHER"
+  end
   
+  def select_multiple_variant?
+    self.question_type == "SELECT_MULTIPLE" or self.question_type == "SELECT_MULTIPLE_WRITE_OTHER"
+  end
+
   private
   def update_instrument_version
     instrument.update_instrument_version

@@ -1,4 +1,14 @@
 class TranslationPdf < Prawn::Document
+
+  OptionLeftMargin = 5
+  QuestionLeftMargin = 30
+  AfterOptionMargin = 15
+  InstructionQuestionMargin = 10
+  AfterTitleMargin = 15
+  CircleSize = 5
+  SquareSize = 5
+  AfterHorizontalRuleMargin = 10
+
   def initialize(instrument_translation)
     super()
     @instrument_translation = instrument_translation
@@ -16,27 +26,26 @@ class TranslationPdf < Prawn::Document
 
   private
     def header
-      after_title_margin = 15
-
       text "#{@instrument_translation.title} v#{@version}", size: 20, style: :bold
       text "#{@language}"
-      move_down after_title_margin
+      move_down AfterTitleMargin
     end
    
     def content
       @instrument.questions.each do |question|
         format_question(question)
+        text special_responses
+        stroke_horizontal_rule
+        move_down AfterHorizontalRuleMargin
       end
     end
 
     def format_question(question)
-      instruction_question_margin = 10
-
       number_question(question)
 
       if question.has_translation_for?(@language)
-        text question.instructions, style: :italic
-        move_down instruction_question_margin 
+        text Sanitize.fragment(question.instructions), style: :italic
+        move_down InstructionQuestionMargin 
         text Sanitize.fragment(question.translated_for(@language, :text))
         draw_options(question) if question.has_options?
       end
@@ -45,28 +54,20 @@ class TranslationPdf < Prawn::Document
     end 
 
     def number_question(question)
-      left_margin = 30
-
       text "#{question.number_in_instrument}.)", size: 18, style: :bold
-      draw_text question.question_type,       at: [left_margin, cursor + 15], size: 10, style: :bold
-      draw_text question.question_identifier, at: [left_margin, cursor + 5],  size: 10, style: :bold
+      number_padding = question.number_in_instrument.to_s.length * 10
+      draw_text question.question_type,       at: [QuestionLeftMargin + number_padding, cursor + 15], size: 10, style: :bold
+      draw_text question.question_identifier, at: [QuestionLeftMargin + number_padding, cursor + 5],  size: 10, style: :bold
     end
 
     def draw_options(question)
-      left_margin = 10
-      circle_size = 5
-      after_option_margin = 15
-
       question.options.each do |option|
-        stroke_circle [left_margin, cursor - 5], circle_size
-        draw_text option.translated_for(@language, :text), at: [left_margin + 10, cursor - 10]
-        move_down after_option_margin 
+        draw_option(option) { stroke_circle [OptionLeftMargin, cursor - 5], CircleSize } if question.select_one_variant?
+        draw_option(option) { stroke_rectangle [OptionLeftMargin, cursor - 5], SquareSize, SquareSize } if question.select_multiple_variant?
+        draw_line_option(option) if question.question_type == "LIST_OF_TEXT_BOXES"
       end
 
-      if question.has_other?
-        stroke_circle [left_margin, cursor - 5], circle_size 
-        draw_text "____________________________________________", at: [left_margin + 10, cursor - 10]
-      end
+      draw_other(question) if question.has_other?
     end
 
     def pad_after_question(question)
@@ -74,6 +75,49 @@ class TranslationPdf < Prawn::Document
         move_down 200
       else
         move_down 50
+      end
+    end
+
+    def draw_option(option, &block)
+      block.call
+      span(500, position: OptionLeftMargin + 10) do
+        if option.next_question?
+          next_question = Question.find_by_question_identifier(option.next_question)
+          text "#{option.translated_for(@language, :text)} (#{skip_to} ##{next_question.number_in_instrument})"
+        else
+          text option.translated_for(@language, :text)
+        end
+      end
+    end
+
+    def draw_other(question)
+      stroke_circle [OptionLeftMargin, cursor - 5], CircleSize if question.question_type == "SELECT_ONE_WRITE_OTHER"
+      stroke_rectangle [OptionLeftMargin, cursor - 5], SquareSize, SquareSize if question.question_type == "SELECT_MULTIPLE_WRITE_OTHER"
+      draw_text "____________________________________________", at: [OptionLeftMargin + 10, cursor - 10]
+    end
+
+    def draw_line_option(option)
+      draw_text "#{option.translated_for(@language, :text)} _________________________________", at: [OptionLeftMargin, cursor - 5]
+      move_down AfterOptionMargin
+    end
+
+    def skip_to
+      case @language
+      when 'en'
+        'Skip pattern: Skip to'
+      else
+        'Skip pattern: Skip to'
+      end
+    end
+
+    def special_responses
+      case @language
+      when 'en'
+        'Special Response (circle one):   RF   DK   SK   NA'
+      when 'es'
+        'Special Response (circle one):   RC   NS   SP   NA'
+      else
+        'Special Response (circle one):   RF   DK   SK   NA'
       end
     end
 end
