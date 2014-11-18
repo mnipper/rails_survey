@@ -2,15 +2,17 @@
 #
 # Table name: projects
 #
-#  id          :integer          not null, primary key
-#  name        :string(255)
-#  description :text
-#  created_at  :datetime
-#  updated_at  :datetime
+#  id                :integer          not null, primary key
+#  name              :string(255)
+#  description       :text
+#  created_at        :datetime
+#  updated_at        :datetime
+#  require_consent   :boolean
+#  consent_form_text :text
 #
 
 class Project < ActiveRecord::Base
-  attr_accessible :name, :description
+  attr_accessible :name, :description, :require_consent, :consent_form_text
   has_many :instruments, dependent: :destroy
   has_many :surveys, through: :instruments
   has_many :project_devices, dependent: :destroy

@@ -23,7 +23,7 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @project = Project.new(project_params)
+    @project = Project.new(params[:project])
     if @project.save && @project.user_projects.create(:user_id => current_user.id, :project_id => @project.id)
       redirect_to @project, notice: 'Project was successfully created.'
     else
@@ -34,7 +34,7 @@ class ProjectsController < ApplicationController
   def update
     @project = current_user.projects.find(params[:id])
     authorize @project
-    if @project.update(project_params)
+    if @project.update(params[:project])
       redirect_to @project, notice: 'Project was successfully updated.'
     else
       render :edit
@@ -63,10 +63,4 @@ class ProjectsController < ApplicationController
     end
     redirect_to project_response_exports_path(current_project)
   end
-
-  private
-    def project_params
-      params.require(:project).permit(:name, :description)
-    end
-
 end

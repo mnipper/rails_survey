@@ -24,6 +24,14 @@
           <%= f.label :description, 'Project Description' %> <br />
           <%= f.text_area :description, class: 'form-control' %>
         </div>
+        <div class="field top-buffer">
+          <%= f.label :require_consent, 'Require Consent' %> <br />
+          <%= f.check_box :require_consent %>
+        </div>
+        <div class="field top-buffer">
+          <%= f.label :consent_form_text, 'Consent Form Text' %> <br />
+          <%= f.text_area :consent_form_text, class: 'form-control' %>
+        </div>
         <div class="top-buffer">
           <%= f.submit class: 'btn btn-primary' %>
         </div>
