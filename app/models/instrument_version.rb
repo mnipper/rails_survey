@@ -19,7 +19,7 @@ class InstrumentVersion
     instrument_version = InstrumentVersion.new
     instrument_version.instrument = instrument
     if instrument.current_version_number > version_number
-      instrument_version.version = Rails.cache.fetch("instrument_versions-#{version_number}", :expires_in => 1.hour) do
+      instrument_version.version = Rails.cache.fetch("instrument_versions-#{instrument.id}-#{version_number}", :expires_in => 1.hour) do
         instrument.versions[version_number]
       end
     end
