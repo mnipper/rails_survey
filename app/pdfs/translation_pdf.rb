@@ -83,7 +83,11 @@ class TranslationPdf < Prawn::Document
       span(500, position: OptionLeftMargin + 10) do
         if option.next_question?
           next_question = Question.find_by_question_identifier(option.next_question)
-          text "#{option.translated_for(@language, :text)} (#{skip_to} ##{next_question.number_in_instrument})"
+          if next_question.nil?
+            text "#{option.translated_for(@language, :text)} (<color rgb='ff0000'>Error Locating Question #{option.next_question} for skip pattern!</color>)", :inline_format => true
+          else
+            text "#{option.translated_for(@language, :text)} (#{skip_to} ##{next_question.number_in_instrument})"
+          end
         else
           text option.translated_for(@language, :text)
         end
