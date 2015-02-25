@@ -109,6 +109,8 @@ class TranslationPdf < Prawn::Document
       case @language
       when 'en'
         'Skip pattern: Skip to'
+      when 'es'
+        'Modelo de Omisión: vaya al #'
       else
         'Skip pattern: Skip to'
       end
@@ -119,7 +121,7 @@ class TranslationPdf < Prawn::Document
       when 'en'
         'Special Response (circle one):   RF   DK   SK   NA'
       when 'es'
-        'Special Response (circle one):   RC   NS   SP   NA'
+        'Respuesta Especial (circule uno):   RC   NS   SP   NA'
       else
         'Special Response (circle one):   RF   DK   SK   NA'
       end
