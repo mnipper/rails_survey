@@ -1,4 +1,21 @@
-<h1><%= @instrument.title %></h1>
+<h1> 
+    <%= @instrument.title %> 
+    <span class="label label-success"> 
+        <i class="icon-bookmark"></i> 
+        <strong>Current Version: <%= @instrument.current_version_number %></strong> 
+    </span> 
+    <% if @instrument.published %> 
+        <span class="label label-success"> 
+            <i class="icon-eye-open"></i> 
+            <strong>Published</strong> 
+        </span> 
+    <% else %> 
+        <span class="label label-danger"> 
+            <i class="icon-eye-close"></i> 
+            <strong>Not Published</strong> 
+        </span> 
+    <% end %> 
+</h1>
 
 <section class="widget">
   <header>
@@ -18,27 +35,12 @@
       <%= link_to project_instrument_sections_path(@project, @instrument), class: 'btn btn-primary' do %>
         <i class="icon-list"></i> Sections
       <% end %>
+      <%= link_to move_project_instrument_path(@project, @instrument), class: 'btn btn-primary' do %>
+        <i class="icon-move">Move Instrument</i>
+      <% end %>
     </div>
   </header>
   <div class="body">
-    <div class="bottom-buffer">
-      <span class="label label-success">
-        <i class="icon-bookmark"></i>
-        <strong>Current Version: <%= @instrument.current_version_number %></strong>
-      </span>
-      <% if @instrument.published %>
-        <span class="label label-success">
-          <i class="icon-eye-open"></i>
-          <strong>Published</strong>
-        </span>
-      <% else %>
-        <span class="label label-danger">
-          <i class="icon-eye-close"></i>
-          <strong>Not Published</strong>
-        </span>
-      <% end %>
-    </div>
+      <%= render 'questions_form' %>
   </div>
-
-  <%= render 'questions_form' %>
 </section>

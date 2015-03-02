@@ -46,6 +46,14 @@ class InstrumentPolicy
     export_access 
   end
   
+  def move?
+    read_access
+  end
+  
+  def update_move?
+    write_access
+  end
+  
   private
   def read_access
     @user.admin? || @user.manager? || @user.user? || @user.translator? || @user.analyst?

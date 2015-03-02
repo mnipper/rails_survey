@@ -1,6 +1,5 @@
-<div class="body">
 <div ng-controller="QuestionsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>)">
-  <div>
+  <div class="centered copy-box pull-right">
     <button class="btn btn-primary" ng-click="displayQuestions()">Mass Copy</button>
     <div ng-show="visible"><%= render 'questions_form_mass_copy' %></div>
   </div>
@@ -70,5 +69,3 @@
     <a class="btn btn-success" ng-click="newQuestion()" id="add-question-button"><i class="icon-plus"></i> Add Question</a>
   </div>
   </div>
-</div>
-</div>

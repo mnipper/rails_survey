@@ -1,0 +1,13 @@
+<h1><%= @instrument.title %></h1>
+<section class="widget">
+    <p>Pick a project to move the instrument (<%= @instrument.title %>) to:</p>
+    <%= form_for @instrument, url: update_move_project_instrument_path(current_project, @instrument) do |f| %>
+        <% @projects.each do |project| %>
+            <% unless project == current_project %>
+                <%= radio_button_tag(:end_project, project.id) %> 
+                <%= label_tag(:end_project, project.name) %> </br>
+            <% end %>
+        <% end %>
+        <%= f.submit 'Move Instrument', class: 'btn btn-primary btn-large' %>
+    <% end %>
+</section>
