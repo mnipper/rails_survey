@@ -167,8 +167,8 @@ describe Instrument do
         ["Version number:", @instrument.current_version_number],
         ["Language:", @instrument.language],
         ["\n"],
-        ["number_in_instrument", "question_identifier", 'question_type', 'question_text', 'question_instructions'],
-        [@question.number_in_instrument, @question.question_identifier, @question.question_type, @question.text, @question.instructions]
+        ["number_in_instrument", "question_identifier", 'question_type', 'question_instructions', 'question_text'],
+        [@question.number_in_instrument, @question.question_identifier, @question.question_type, @question.instructions, @question.text]
       ]
     end
   end

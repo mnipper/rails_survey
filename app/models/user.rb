@@ -39,6 +39,7 @@ class User < ActiveRecord::Base
 
   def set_default_role
     role = Role.find_by_name("user")
+    return unless role
     UserRole.create(:user_id => self.id, :role_id => role.id)  
   end
 
