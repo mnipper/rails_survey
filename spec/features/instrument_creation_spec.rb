@@ -6,6 +6,7 @@ feature "Instrument Creation", js: true do
   before :each do
     @user = create(:user)
     @project = create(:project)
+    UserRole.create(user_id: @user, role_id: Role.create(name: 'manager').id)
     @user_project = UserProject.create!(user_id: @user.id, project_id: @project.id)
     @instrument = build(:instrument, project: @project)
     ApplicationController.any_instance.stub(:current_project).and_return(@project)
@@ -19,6 +20,7 @@ feature "Instrument Creation", js: true do
   scenario "user creates an instrument" do
     fill_in 'instrument_title', :with => @instrument.title
     click_button "Create Instrument"
+    find('#add-question-button').click
     expect(page).to have_text("Successfully created instrument.")
   end
 
