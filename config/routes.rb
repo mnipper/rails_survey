@@ -62,6 +62,8 @@ RailsSurvey::Application.routes.draw do
       member do
         get :export
         get :export_responses
+        get :move
+        match :update_move, action: :update_move, via: [:patch, :put]
       end
     end
     member do 

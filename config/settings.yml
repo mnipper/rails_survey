@@ -36,6 +36,11 @@ rule_types:
     pretty_name: 'Instrument Launch Rule'
     params: []
     description: 'Setting this rule will make it so that a survey cannot be generated for an instrument from the app.  A survey must be launched from another app.'
+  participant_type_rule:
+    constant_name: 'PARTICIPANT_TYPE_RULE'
+    pretty_name: 'Participant Type Rule'
+    params: ['Child', 'Caregiver', 'Center']
+    description: 'Limit an instrument such that it can only be created for a certain type of participant.'
  
 # List delimiter for options
 list_delimiter: ','

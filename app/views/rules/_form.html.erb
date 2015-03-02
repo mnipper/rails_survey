@@ -49,6 +49,11 @@
       Interval in minutes: <input type="text" ng-model="minuteInterval">
     </div>
 
+    <div class="field top-buffer" ng-show="currentRuleType == 'PARTICIPANT_TYPE_RULE'">
+      <%= Settings.rule_types.participant_type_rule.description %><br /><br /> 
+      Participant Type: <select ng-options="pt as pt for pt in participantTypes()" ng-model="participantType"></select><br />
+    </div>
+
     <input id="rule_rule_params" name="rule[rule_params]" type="hidden" value="{{ getRuleParams() }}">
 
     <div class="top-buffer">

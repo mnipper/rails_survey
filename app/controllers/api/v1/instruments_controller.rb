@@ -5,12 +5,12 @@ module Api
 
       def index
         project = Project.find(params[:project_id])
-        respond_with project.instruments.published, include: :translations
+        respond_with project.instruments, include: :translations
       end
 
       def show
         project = Project.find(params[:project_id])
-        respond_with project.instruments.published.find(params[:id])
+        respond_with project.instruments.find(params[:id])
       end
     end
   end
