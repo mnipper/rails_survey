@@ -4,6 +4,6 @@ FactoryGirl.define do
     password 'Password1'
     password_confirmation 'Password1'
     id 0
-    roles ['admin']
+    roles [FactoryGirl.create(:role)]
   end
 end
