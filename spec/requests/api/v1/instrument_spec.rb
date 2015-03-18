@@ -61,10 +61,10 @@ describe "Instruments API" do
     expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:unauthorized])
   end
 
-  it 'should only show published instruments' do
+  it 'should show all instruments' do
     @instruments.last.update_attributes!(published: false)
     get "/api/v1/projects/#{@project.id}/instruments?access_token=#{@api_key.access_token}"
-    expect(JSON.parse(response.body).length).to eq(4)
+    expect(JSON.parse(response.body).length).to eq(5)
   end
 
   it 'should not allow an outdated android app to obtain instruments' do

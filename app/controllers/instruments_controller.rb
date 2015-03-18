@@ -81,4 +81,19 @@ class InstrumentsController < ApplicationController
     redirect_to project_response_exports_path(current_project)
   end
   
+  def move
+    @projects = current_user.projects
+    @instrument = current_project.instruments.find(params[:id])
+    authorize @instrument
+  end
+  
+  def update_move
+    @instrument = current_project.instruments.find(params[:id])
+    authorize @instrument
+    @project = current_user.projects.find(params[:project_id])
+    if @instrument.update_attributes(:project_id => params[:end_project])
+      redirect_to project_path(@project)
+    end
+  end
+  
 end
