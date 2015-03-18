@@ -61,6 +61,7 @@ class InstrumentVersion
 
   private
   def options_for_question(question)
+    return [] unless question
     return question.options unless @version
     options = []
     question.options.with_deleted.each do |option|
