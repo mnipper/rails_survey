@@ -21,16 +21,23 @@ describe Device do
       @device = create(:device) 
       @survey = create(:survey)
       @device.stub(:last_survey).and_return(@survey)
+      Settings.danger_zone_days = 3
     end
 
     it "should be in the danger zone if last survey is too old" do
-      @survey.stub(:updated_at).and_return(1.day.ago)
+      @survey.stub(:updated_at).and_return(4.days.ago)
       @device.danger_zone?.should be_truthy
     end
 
     it "should not be in the danger zone if last survey is new" do
       @survey.stub(:updated_at).and_return(1.minute.ago)
       @device.danger_zone?.should be_falsey
+    end
+
+    it "should have a variable danger zone days" do
+      Settings.danger_zone_days = 1
+      @survey.stub(:updated_at).and_return(2.days.ago)
+      @device.danger_zone?.should be_truthy
     end
   end
 

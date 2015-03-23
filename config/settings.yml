@@ -71,3 +71,4 @@ exception_notifications:
 
 questions_per_page: 15
 pages_to_show: 15
+danger_zone_days: 3
