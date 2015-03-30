@@ -12,10 +12,12 @@
 #  spss_syntax_file_url  :string(255)
 #  spss_friendly_csv_url :string(255)
 #  value_labels_csv      :string(255)
+#  instrument_versions   :text
 #
 
 class ResponseExport < ActiveRecord::Base
-  attr_accessible :done, :download_url, :project_id, :instrument_id, :spss_syntax_file_url, :spss_friendly_csv_url, :value_labels_csv
+  attr_accessible :done, :download_url, :project_id, :instrument_id, :instrument_versions, :spss_syntax_file_url, :spss_friendly_csv_url, :value_labels_csv
+  serialize :instrument_versions
   belongs_to :project
   belongs_to :instrument
   has_one :response_images_export, dependent: :destroy  

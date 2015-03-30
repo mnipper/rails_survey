@@ -69,6 +69,10 @@ class Instrument < ActiveRecord::Base
         methods: [:current_version_number, :question_count]
     }))
   end
+  
+  def survey_instrument_versions
+    surveys.pluck(:instrument_version_number).uniq
+  end
 
   def to_csv
     CSV.generate do |csv|

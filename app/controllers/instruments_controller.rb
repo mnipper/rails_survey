@@ -69,7 +69,7 @@ class InstrumentsController < ApplicationController
     root = File.join('files', 'exports').to_s
     csv_file = File.new(root + "/#{Time.now.to_i}.csv", "a+")
     csv_file.close
-    export = ResponseExport.create(:instrument_id => @instrument.id, :download_url => csv_file.path)
+    export = ResponseExport.create(:instrument_id => @instrument.id, :download_url => csv_file.path, :instrument_versions => @instrument.survey_instrument_versions)
     if @instrument.response_images.empty?
       InstrumentResponsesExportWorker.perform_async(@instrument.id, csv_file.path, export.id, nil, nil)
     else

@@ -56,7 +56,7 @@ class ResponseExportsController < ApplicationController
     export = ResponseExport.find(params[:id])
     instrument = current_project.instruments.find(export.instrument_id)
     if instrument
-      instrument_download(export.download_url, 'text/csv', "#{ instrument.title.gsub(/\s+/,  '_') }")
+      instrument_download(export.download_url, 'text/csv', "#{ instrument.title.gsub(/\s+/,  '_') }.csv")
     end 
   end
   

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150320214148) do
+ActiveRecord::Schema.define(version: 20150330180458) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -102,6 +102,13 @@ ActiveRecord::Schema.define(version: 20150320214148) do
   end
 
   add_index "devices", ["identifier"], name: "index_devices_on_identifier", unique: true
+
+  create_table "grids", force: true do |t|
+    t.string   "name"
+    t.string   "question_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "images", force: true do |t|
     t.datetime "created_at"
@@ -197,6 +204,8 @@ ActiveRecord::Schema.define(version: 20150320214148) do
     t.boolean  "identifies_survey",                default: false
     t.text     "instructions",                     default: ""
     t.integer  "child_update_count",               default: 0
+    t.integer  "grid_id"
+    t.boolean  "first_in_grid",                    default: false
   end
 
   add_index "questions", ["question_identifier"], name: "index_questions_on_question_identifier", unique: true
@@ -211,6 +220,7 @@ ActiveRecord::Schema.define(version: 20150320214148) do
     t.string   "spss_syntax_file_url"
     t.string   "spss_friendly_csv_url"
     t.string   "value_labels_csv"
+    t.text     "instrument_versions"
   end
 
   create_table "response_images", force: true do |t|

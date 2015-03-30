@@ -55,12 +55,10 @@
           <thead>
               <tr>
                   <th>Instrument Title</th>
+                  <th>Instrument Versions</th>
                   <th>Created at</th>
                   <th>Status</th>
                   <th>Responses csv </th>
-                  <!-- <th>Value labels csv</th>
-                  <th>SPSS friendly csv</th>
-                  <th>SPSS syntax file</th> -->
                   <th>Response Pictures</th>
               </tr>
           </thead>
@@ -73,6 +71,14 @@
                         <%= link_to instrument.title, project_instrument_path(instrument.project_id, instrument.id) %>
                     <% end %>
                   </td>
+                  <td>
+                      <% if export.instrument_versions %>
+                        <% instrument = Instrument.find export.instrument_id %>
+                        <% export.instrument_versions.each do |instrument_version| %>
+                            <%= link_to instrument_version, project_instrument_version_path(instrument.project_id, instrument.id, instrument_version) %>
+                        <% end %>
+                      <% end %>
+                  </td>
                   <td><%= export.created_at %></td>
                   <td>
                         <% if export.done %>
@@ -82,33 +88,12 @@
                          <% end %>
                   </td>
                   <td>
-                      <% if policy(export).download_project_response_images? %>
+                      <% if policy(export).download_instrument_responses? %>
                         <% if export.download_url %>
                             <%= link_to 'download csv', download_instrument_responses_project_response_export_path(current_project, export.id) %>
                         <% end %>
                       <% end %>
                   </td>
-                  <!-- <td>
-                     <%# if policy(export).download_value_labels_csv? %>
-                        <%# if export.value_labels_csv %>
-                            <%#= link_to 'download value labels', download_value_labels_csv_project_response_export_path(current_project, export.id) %>
-                        <%# end %>
-                      <%# end %> 
-                  </td>
-                  <td>
-                      <%# if policy(export).download_instrument_spss_csv? %>
-                        <%# if export.spss_friendly_csv_url %>
-                            <%#= link_to 'download spss csv', download_instrument_spss_csv_project_response_export_path(current_project, export.id) %>
-                        <%# end %>
-                      <%# end %>
-                  </td>
-                  <td>
-                      <%# if policy(export).download_spss_syntax_file? %>
-                        <%# if export.spss_syntax_file_url %>
-                            <%#= link_to 'download spss syntax', download_spss_syntax_file_project_response_export_path(current_project, export.id) %>
-                        <%# end %>
-                      <%# end %>
-                  </td> -->
                   <td>
                       <% if policy(export).download_instrument_response_images? %>
                         <% if (export.response_images_export && export.response_images_export.download_url) %>
