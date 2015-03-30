@@ -6,16 +6,16 @@ require 'rspec/autorun'
 require 'capybara/rspec'
 require 'support/chosen_select'
 
-driver = Selenium::WebDriver.for :firefox
-driver.manage.timeouts.implicit_wait = 300
-driver.manage.timeouts.script_timeout = 300
-driver.manage.timeouts.page_load = 300
+#driver = Selenium::WebDriver.for :firefox
+#driver.manage.timeouts.implicit_wait = 300
+#driver.manage.timeouts.script_timeout = 300
+#driver.manage.timeouts.page_load = 300
 
-Capybara.register_driver :selenium do |app|
-  http_client = Selenium::WebDriver::Remote::Http::Default.new
-  http_client.timeout = 300
-  Capybara::Selenium::Driver.new(app, :browser => :firefox, :http_client => http_client)
-end
+#Capybara.register_driver :selenium do |app|
+#  http_client = Selenium::WebDriver::Remote::Http::Default.new
+#  http_client.timeout = 300
+#  Capybara::Selenium::Driver.new(app, :browser => :firefox, :http_client => http_client)
+#end
 
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -64,4 +64,5 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
+  config.filter_run_excluding :js => true
 end
