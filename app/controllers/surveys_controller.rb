@@ -2,7 +2,7 @@ class SurveysController < ApplicationController
   after_action :verify_authorized
   
   def index
-    @surveys = current_project.surveys
+    @surveys = current_project.surveys.order('created_at DESC')
     authorize @surveys
   end
 

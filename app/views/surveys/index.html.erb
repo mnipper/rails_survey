@@ -6,7 +6,8 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th>UUID</th>
+          <th>Survey UUID</th>
+          <th>Time Created</th>
           <th>Instrument</th>
           <th>Instrument Version</th>
           <th>Device</th>
@@ -21,6 +22,7 @@
         <% if survey.instrument %>
         <tr>
           <td><%= survey.uuid %></td>
+          <td><%= survey.created_at %></td>
           <td><%= link_to survey.instrument_title, project_instrument_path(current_project, survey.instrument) %></td>
           <td><%= link_to survey.instrument_version_number,
               project_instrument_version_path(current_project, survey.instrument, survey.instrument_version_number) %></td>
