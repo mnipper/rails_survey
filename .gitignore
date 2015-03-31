@@ -38,3 +38,6 @@ node/node_modules
 
 #Ignore Redis files
 dump.rdb
+
+#Ignore public assets - generate by Capistrano on deploy
+public/assets/
