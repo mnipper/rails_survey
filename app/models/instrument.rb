@@ -31,8 +31,9 @@ class Instrument < ActiveRecord::Base
   has_many :response_images, through: :responses
   has_many :translations, foreign_key: 'instrument_id', class_name: 'InstrumentTranslation', dependent: :destroy
   has_many :response_exports 
-  has_many :sections
+  has_many :sections, dependent: :destroy
   has_many :rules, dependent: :destroy
+  has_many :grids, dependent: :destroy
   has_paper_trail :on => [:update, :destroy]
   acts_as_paranoid
 

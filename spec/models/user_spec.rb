@@ -19,6 +19,7 @@
 #  failed_attempts        :integer          default(0)
 #  unlock_token           :string(255)
 #  locked_at              :datetime
+#  last_active_at         :datetime
 #  gauth_secret           :string(255)
 #  gauth_enabled          :string(255)      default("f")
 #  gauth_tmp              :string(255)

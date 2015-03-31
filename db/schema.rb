@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150330180458) do
+ActiveRecord::Schema.define(version: 20150331200435) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -104,8 +104,10 @@ ActiveRecord::Schema.define(version: 20150330180458) do
   add_index "devices", ["identifier"], name: "index_devices_on_identifier", unique: true
 
   create_table "grids", force: true do |t|
-    t.string   "name"
+    t.integer  "instrument_id"
     t.string   "question_type"
+    t.string   "name"
+    t.text     "option_texts"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

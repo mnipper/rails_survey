@@ -18,6 +18,8 @@
 #  identifies_survey                :boolean          default(FALSE)
 #  instructions                     :text             default("")
 #  child_update_count               :integer          default(0)
+#  grid_id                          :integer
+#  first_in_grid                    :boolean          default(FALSE)
 #
 
 class Question < ActiveRecord::Base
@@ -26,8 +28,9 @@ class Question < ActiveRecord::Base
   attr_accessible :text, :question_type, :question_identifier, :instrument_id,
           :following_up_question_identifier, :reg_ex_validation,
           :number_in_instrument, :reg_ex_validation_message, :identifies_survey,
-          :instructions
+          :instructions, :grid_id
   belongs_to :instrument
+  belongs_to :grid 
   has_many :responses
   has_many :options, dependent: :destroy
   has_many :translations, foreign_key: 'question_id', class_name: 'QuestionTranslation', dependent: :destroy

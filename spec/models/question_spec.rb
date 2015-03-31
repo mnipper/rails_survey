@@ -18,6 +18,8 @@
 #  identifies_survey                :boolean          default(FALSE)
 #  instructions                     :text             default("")
 #  child_update_count               :integer          default(0)
+#  grid_id                          :integer
+#  first_in_grid                    :boolean          default(FALSE)
 #
 
 require "spec_helper"

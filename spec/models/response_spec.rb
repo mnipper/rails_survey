@@ -5,7 +5,7 @@
 #  id                  :integer          not null, primary key
 #  question_id         :integer
 #  text                :text
-#  other_response      :string(255)
+#  other_response      :text
 #  created_at          :datetime
 #  updated_at          :datetime
 #  survey_uuid         :string(255)
