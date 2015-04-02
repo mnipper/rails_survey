@@ -36,7 +36,10 @@
         <i class="icon-list"></i> Sections
       <% end %>
       <%= link_to move_project_instrument_path(@project, @instrument), class: 'btn btn-primary' do %>
-        <i class="icon-move">Move Instrument</i>
+        <i class="icon-move"> Move Instrument</i>
+      <% end %>
+      <%= link_to project_instrument_grids_path(@project, @instrument), class: 'btn btn-primary' do %>
+        <i class="icon-th"> Tables</i>
       <% end %>
     </div>
   </header>

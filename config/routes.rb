@@ -20,14 +20,15 @@ RailsSurvey::Application.routes.draw do
                 post :copy
               end
               resources :options do
-                resources :skips 
+                resources :skips
                 resources :option_translations, only: [:update]
               end
-              resources :images 
+              resources :images
             end
             resources :sections do
               resources :section_translations, only: [:update]
             end
+            resources :grids
           end
           get 'graphs/daily/' => 'graphs#daily'
           get 'graphs/hourly/' => 'graphs#hourly'
@@ -57,8 +58,9 @@ RailsSurvey::Application.routes.draw do
   resources :projects do
     resources :instruments do
       resources :versions, only: [:index, :show]
-      resources :instrument_translations 
+      resources :instrument_translations
       resources :sections
+      resources :grids
       member do
         get :export
         get :export_responses
@@ -66,7 +68,8 @@ RailsSurvey::Application.routes.draw do
         match :update_move, action: :update_move, via: [:patch, :put]
       end
     end
-    member do 
+    
+    member do
       get :export
     end
 
@@ -82,11 +85,11 @@ RailsSurvey::Application.routes.draw do
     resources :graphs, only:[:index]
     resources :response_exports  do
       member do
-        get :download_project_responses  
+        get :download_project_responses
         get :download_instrument_responses
         get :download_project_response_images
         get :download_instrument_response_images
-        get :download_spss_syntax_file 
+        get :download_spss_syntax_file
         get :download_instrument_spss_csv
         get :download_value_labels_csv
       end
@@ -97,5 +100,5 @@ RailsSurvey::Application.routes.draw do
   resources :request_roles, only: [:index]
   get "/photos/:id/:style.:format", :controller => "api/v1/frontend/images", :action => "show"
   get "/pictures/:id/:style.:format", :controller => "response_images", :action => "show"
-  
+
 end

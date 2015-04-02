@@ -1,0 +1,43 @@
+<section class="widget">
+    <div class="row">
+        <div class="col-md-3">Grid Question Type</div>
+        <select class="col-md-9"
+            chosen
+            allow-single-deselect="true"
+            class="select2-container select-block-level"
+            data-placeholder="Select a question type..."
+            no-results-text="'This does not match a valid question type'"
+            name="question-type"
+            ng-model="grid.question_type"
+            ng-options="question_type as question_type for question_type in gridQuestionTypes"
+            ></select>
+    </div>
+    <div class="row">
+        <div class="col-md-3">Grid Name</div>
+        <input class="col-md-9" type="text" class="form-control" name="name" ng-model="grid.name">
+    </div>
+    <fieldset class="row">
+        <legend class="section">Grid Option Labels
+            <button type="submit" ng-click="addOptionLabel()" class="btn btn-xs btn-primary pull-right">
+              <i class="icon-plus"></i> Add Option Label
+            </button>
+        </legend>
+        <div class="controls form-group">
+            <ol>
+                <li ng-repeat="option in grid.option_texts track by $index">
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="grid.option_texts[$index]" autofocus="autofocus">
+                        <div class="input-group-btn">
+                            <button ng-click="removeOptionLabel($index)" class="btn btn-danger">
+                                <i class="icon-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </fieldset>
+    <div class="row">
+        <button class="btn btn-success pull-right" type="submit" ng-click="saveGrid()">Save Grid</button>
+    </div>
+</section>

@@ -1,0 +1,57 @@
+<section class="widget" ng-controller="GridsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>)">
+    <div class="row" ng-repeat="grid in grids">
+        <form editable-form name="editableForm" onaftersave="updateGrid(grid)">
+            <div>
+                <span class="title">Label: </span>
+                <span editable-text="grid.name" e-name="name"> {{grid.name}} </span>
+            </div>
+            <div>
+                <span class="title">Question Type:</span> 
+                <span editable-select="grid.question_type" e-name="question_type" 
+                    e-ng-options="question_type as question_type for question_type in gridQuestionTypes">
+                    {{grid.question_type}}
+                </span>
+            </div>
+            <h4><b>Option Labels</b></h4>
+            <button type="button" ng-click="addOptionLabel(grid)" ng-show="editableForm.$visible" class="btn btn-xs btn-primary pull-right">
+              <i class="icon-plus"></i> Add Option Label
+            </button>
+            <div ng-repeat="option_label in grid.option_texts track by $index">
+                <span editable-text="grid.option_texts[$index]" e-name="option_label">{{option_label}}</span>
+                <button ng-click="removeOptionLabel(grid, $index)" ng-show="editableForm.$visible" class="btn btn-danger">
+                    <i class="icon-trash"></i>
+                </button>
+            </div>
+            <div class="buttons">
+                <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
+                    Edit
+                </button>
+                <span ng-show="editableForm.$visible">
+                    <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+                        Save
+                    </button>
+                    <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+                        Cancel
+                    </button>
+                </span>
+            </div>
+        </form>
+        <table class="table table-bordered ">
+            <tr style="font-weight: bold">
+                <td style="width:5%">Number in Instrument</td>
+                <td style="width:10%">Question Identifier</td>
+                <td style="width:10%">Question Type</td>
+                <td style="width:75%">Question Text</td>
+            </tr>
+        </table>
+        <button class="btn btn-default pull-right" ng-click="newQuestion">
+            Add Question
+        </button></br>
+    </div>
+    <button class="btn btn-success" ng-click="newGrid()">
+        Add Grid
+    </button>
+    <div ng-show="displayNewTemplate">
+        <%= render 'new' %>
+    </div>
+</section>
