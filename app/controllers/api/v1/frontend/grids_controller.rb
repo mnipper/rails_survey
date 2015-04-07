@@ -26,6 +26,12 @@ module Api
           respond_with grid
         end
         
+        def destroy
+          instrument = current_project.instruments.find(params[:instrument_id])
+          grid = instrument.grids.find(params[:id])
+          respond_with grid.destroy
+        end
+        
       end
     end
   end

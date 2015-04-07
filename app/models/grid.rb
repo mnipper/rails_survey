@@ -14,7 +14,7 @@
 class Grid < ActiveRecord::Base
   attr_accessible :instrument_id, :question_type, :name, :option_texts
   belongs_to :instrument
-  has_many :questions
+  has_many :questions, dependent: :destroy
   serialize :option_texts
   
 end

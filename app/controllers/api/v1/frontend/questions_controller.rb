@@ -6,12 +6,14 @@ module Api
         
         def index
           instrument = current_project.instruments.find(params[:instrument_id])
-          if params[:page].blank?
-            respond_with instrument.questions 
-          else
+          if !params[:page].blank?
             questions = instrument.questions.page(params[:page]).per(Settings.questions_per_page)
             authorize questions
-            respond_with questions
+            respond_with questions 
+          elsif !params[:grid_id].blank?
+            respond_with instrument.questions.where(grid_id: params[:grid_id])
+          else
+            respond_with instrument.questions
           end 
         end
         

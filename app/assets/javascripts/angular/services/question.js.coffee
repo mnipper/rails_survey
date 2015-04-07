@@ -11,4 +11,3 @@ App.factory 'CopyQuestion', ['$resource', ($resource) ->
     {copy: {method: 'POST'}}
   )
 ]
-

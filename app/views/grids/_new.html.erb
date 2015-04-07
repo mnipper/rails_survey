@@ -18,7 +18,7 @@
     </div>
     <fieldset class="row">
         <legend class="section">Grid Option Labels
-            <button type="submit" ng-click="addOptionLabel()" class="btn btn-xs btn-primary pull-right">
+            <button type="submit" ng-click="addOptionLabel(grid)" class="btn btn-xs btn-primary pull-right">
               <i class="icon-plus"></i> Add Option Label
             </button>
         </legend>
@@ -28,7 +28,7 @@
                     <div class="input-group">
                         <input type="text" class="form-control" ng-model="grid.option_texts[$index]" autofocus="autofocus">
                         <div class="input-group-btn">
-                            <button ng-click="removeOptionLabel($index)" class="btn btn-danger">
+                            <button ng-click="removeOptionLabel(grid, $index)" class="btn btn-danger">
                                 <i class="icon-trash"></i>
                             </button>
                         </div>
