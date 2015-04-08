@@ -1,4 +1,5 @@
 App.controller 'GridQuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
+  $scope.statuses = [true, false]
   
   $scope.init = (project_id, instrument_id, grid_id) ->
     $scope.project_id = project_id
@@ -29,6 +30,13 @@ App.controller 'GridQuestionsCtrl', ['$scope', 'Question', ($scope, Question) ->
   $scope.updateQuestion = (question) ->
     question.project_id = $scope.project_id
     question.instrument_id = $scope.instrument_id
-    question.$update({})
+    question.$update({}, 
+      (data, headers) -> $scope.getGridQuestions($scope.project_id, $scope.instrument_id, $scope.grid_id),
+      (result, headers) -> $scope.saveQuestionFailure(result, headers)
+    )
     
+  $scope.saveQuestionFailure = (result, headers) ->
+    angular.forEach result.data.errors, (error, field) ->
+      alert error
+      
 ]

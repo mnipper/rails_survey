@@ -28,7 +28,7 @@ class Question < ActiveRecord::Base
   attr_accessible :text, :question_type, :question_identifier, :instrument_id,
           :following_up_question_identifier, :reg_ex_validation,
           :number_in_instrument, :reg_ex_validation_message, :identifies_survey,
-          :instructions, :grid_id
+          :instructions, :grid_id, :first_in_grid
   belongs_to :instrument
   belongs_to :grid 
   has_many :responses
@@ -38,6 +38,7 @@ class Question < ActiveRecord::Base
   delegate :project, to: :instrument
   before_save :update_instrument_version, if: Proc.new { |question| question.changed? and !question.child_update_count_changed? }
   before_save :update_question_translation, if: Proc.new { |question| question.text_changed? }
+  before_save :update_first_in_grid, if: Proc.new { |question| question.first_in_grid_changed? }
   before_destroy :update_instrument_version
   has_paper_trail
   acts_as_paranoid
@@ -114,6 +115,15 @@ class Question < ActiveRecord::Base
     self.question_type == "SELECT_MULTIPLE" or self.question_type == "SELECT_MULTIPLE_WRITE_OTHER"
   end
 
+  def update_first_in_grid
+    if first_in_grid
+      questions_in_grid = Question.where("grid_id = ?", grid_id)
+      questions_in_grid.where.not(id: id).each do |question|
+        question.update_attribute(:first_in_grid, false)
+      end
+    end
+  end
+  
   private
   def update_instrument_version
     instrument.update_instrument_version

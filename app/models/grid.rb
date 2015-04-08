@@ -16,5 +16,12 @@ class Grid < ActiveRecord::Base
   belongs_to :instrument
   has_many :questions, dependent: :destroy
   serialize :option_texts
+  after_save :update_question_types, if: Proc.new { |grid| grid.question_type_changed? }
+  
+  def update_question_types
+    questions.each do |question| 
+      question.update_attribute(:question_type, self.question_type)
+    end
+  end
   
 end

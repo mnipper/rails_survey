@@ -43,7 +43,8 @@
                 <tr style="font-weight: bold">
                     <td style="width:10%">Number in Instrument</td>
                     <td style="width:10%">Question Identifier</td>
-                    <td style="width: 60%">Question Text</td>
+                    <td style="width: 55%">Question Text</td>
+                    <td style="width: 5%">Starts Grid</td>
                     <td style="width: 20%">Edit</td>
                 </tr>
                 <tr ng-repeat="question in questions">
@@ -60,6 +61,11 @@
                     <td>
                         <span editable-textarea="question.text" e-form="rowform" e-name="text" e-required>
                             {{question.text}}
+                        </span>
+                    </td>
+                    <td>
+                        <span editable-select="question.first_in_grid" e-name="first_in_grid" e-form="rowform" e-ng-options="s as s for s in statuses">
+                            {{question.first_in_grid}}
                         </span>
                     </td>
                     <td>
