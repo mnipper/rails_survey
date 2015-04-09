@@ -1,4 +1,4 @@
-App.controller 'GridsCtrl', ['$scope', 'Grid', 'Question', 'Instrument', 'Option', ($scope, Grid, Question, Instrument, Option) ->
+App.controller 'GridsCtrl', ['$scope', 'Grid', 'Question', 'Instrument', 'Option', 'GridLabel', ($scope, Grid, Question, Instrument, Option, GridLabel) ->
   
   $scope.init = (project_id, instrument_id) ->
     $scope.project_id = project_id
@@ -13,7 +13,6 @@ App.controller 'GridsCtrl', ['$scope', 'Grid', 'Question', 'Instrument', 'Option
     $scope.grid = new Grid()
     $scope.grid.instrument_id = $scope.instrument_id
     $scope.grid.project_id = $scope.project_id
-    $scope.grid.option_texts = []
     
   $scope.saveGrid = ->
     $scope.displayNewTemplate = false
@@ -23,6 +22,7 @@ App.controller 'GridsCtrl', ['$scope', 'Grid', 'Question', 'Instrument', 'Option
     )
 
   $scope.saveGridSuccess = (data, headers) ->
+    $scope.$broadcast('GRID_SAVED', data.id)
     $scope.grids.push($scope.grid)
     
   $scope.saveGridFailure = (result, headers) ->
@@ -41,18 +41,14 @@ App.controller 'GridsCtrl', ['$scope', 'Grid', 'Question', 'Instrument', 'Option
           alert "Failed to delete grid"
         )
       $scope.grids.splice($scope.grids.indexOf(grid), 1)
-    
-  $scope.addOptionLabel = (grid) ->
-    grid.option_texts ?= []
-    grid.option_texts.push "new label"
-
-  $scope.removeOptionLabel = (grid, index) ->
-    grid.option_texts.splice(index, 1)
-    $scope.updateGrid(grid)
-    
+ 
   $scope.updateGrid = (grid) ->
     grid.project_id = $scope.project_id
-    grid.$update({})
+    grid.$update({},
+      (data) -> ,
+      (data) ->
+        alert "Failed to update grid"
+      )
     
   $scope.newQuestion = (grid) ->
     $scope.current_grid = grid
@@ -74,7 +70,9 @@ App.controller 'GridsCtrl', ['$scope', 'Grid', 'Question', 'Instrument', 'Option
     
   $scope.saveQuestionSuccess = (data, headers) ->
     $scope.$broadcast('GRID_CHANGED', data.id)
-    $scope.createQuestionOptions(data.id)
+    $scope.option_texts = GridLabel.query(
+      {"project_id": $scope.project_id, "instrument_id": $scope.instrument_id, "grid_id": $scope.current_grid.id}, -> $scope.createQuestionOptions(data.id)
+    )
 
   $scope.saveQuestionFailure = (result, headers) ->
     angular.forEach result.data.errors, (error, field) ->
@@ -84,15 +82,24 @@ App.controller 'GridsCtrl', ['$scope', 'Grid', 'Question', 'Instrument', 'Option
     $scope.instrument = $scope.instruments[0]
  
   $scope.createQuestionOptions = (question_id) ->
-    $scope.createOption(option_text, question_id, index + 1) for option_text, index in $scope.current_grid.option_texts
+    $scope.createOption(option_text, question_id, index + 1) for option_text, index in $scope.option_texts
     
   $scope.createOption = (option_text, question_id, index) ->
     option = new Option
     option.project_id = $scope.project_id
     option.instrument_id = $scope.instrument_id
     option.question_id = question_id
-    option.text = option_text
+    option.text = option_text.label
     option.number_in_question = index
-    option.$save({})
-         
+    option.$save({}, 
+      (data, headers) -> $scope.updateGridLabel(option_text, data),
+      (data, headers) -> alert "Failed to save option"
+    )
+ 
+  $scope.updateGridLabel = (grid_label, option) ->
+    grid_label.option_id = option.id
+    grid_label.project_id = $scope.project_id
+    grid_label.instrument_id = $scope.instrument_id
+    grid_label.$update({})
+             
 ]

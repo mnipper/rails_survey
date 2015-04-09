@@ -26,6 +26,7 @@ class Option < ActiveRecord::Base
   has_paper_trail
   acts_as_paranoid
   has_many :skips, dependent: :destroy 
+  has_one :grid_label
 
   validates :text, presence: true, allow_blank: false
 
@@ -39,6 +40,15 @@ class Option < ActiveRecord::Base
     text
   end
 
+  #Return grid_label text if option has grid_label
+  def text
+    if grid_label
+      grid_label.label
+    else
+      read_attribute(:text)
+    end
+  end
+  
   def instrument_version
     instrument.current_version_number
   end

@@ -22,7 +22,7 @@ module Api
           @option = question.options.new(params)
           authorize @option
           if @option.save
-            render nothing: true, status: :created
+            render json: @option, status: :created
           else
             render nothing: true, status: :unprocessable_entity
           end

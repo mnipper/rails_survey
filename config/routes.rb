@@ -28,7 +28,9 @@ RailsSurvey::Application.routes.draw do
             resources :sections do
               resources :section_translations, only: [:update]
             end
-            resources :grids
+            resources :grids do
+              resources :grid_labels
+            end
           end
           get 'graphs/daily/' => 'graphs#daily'
           get 'graphs/hourly/' => 'graphs#hourly'

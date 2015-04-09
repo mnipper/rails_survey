@@ -1,7 +1,7 @@
 <section class="widget">
-    <div class="row">
-        <div class="col-md-3">Grid Question Type</div>
-        <select class="col-md-9"
+    <div class="control-group">
+        <label for="grid-question-type" class="control-label">Grid Question Type: </label>
+        <select
             chosen
             allow-single-deselect="true"
             class="select2-container select-block-level"
@@ -11,24 +11,24 @@
             ng-model="grid.question_type"
             ng-options="question_type as question_type for question_type in gridQuestionTypes"
             ></select>
+        </div>
+    <div class="control-group">
+        <label for="grid-name" class="control-label">Grid Name: </label>
+        <input type="text" class="form-control" name="name" ng-model="grid.name">
     </div>
-    <div class="row">
-        <div class="col-md-3">Grid Name</div>
-        <input class="col-md-9" type="text" class="form-control" name="name" ng-model="grid.name">
-    </div>
-    <fieldset class="row">
+    <fieldset ng-controller="GridLabelsCtrl" ng-init="init(<%= @project.id %>, <%= @instrument.id %>, grid.id)">
         <legend class="section">Grid Option Labels
-            <button type="submit" ng-click="addOptionLabel(grid)" class="btn btn-xs btn-primary pull-right">
+            <button type="submit" ng-click="addGridLabel()" class="btn btn-xs btn-primary pull-right">
               <i class="icon-plus"></i> Add Option Label
             </button>
         </legend>
         <div class="controls form-group">
             <ol>
-                <li ng-repeat="option in grid.option_texts track by $index">
+                <li ng-repeat="grid_label in grid_labels">
                     <div class="input-group">
-                        <input type="text" class="form-control" ng-model="grid.option_texts[$index]" autofocus="autofocus">
+                        <input type="text" class="form-control" ng-model="grid_label.label" autofocus="autofocus">
                         <div class="input-group-btn">
-                            <button ng-click="removeOptionLabel(grid, $index)" class="btn btn-danger">
+                            <button ng-click="removeGridLabel(grid_label)" class="btn btn-danger">
                                 <i class="icon-trash"></i>
                             </button>
                         </div>
@@ -38,6 +38,6 @@
         </div>
     </fieldset>
     <div class="row">
-        <button class="btn btn-success pull-right" type="submit" ng-click="saveGrid()">Save Grid</button>
+        <button class="btn btn-success pull-right" type="submit" ng-click="saveGrid(grid)">Save Grid</button>
     </div>
 </section>
