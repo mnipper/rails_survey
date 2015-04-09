@@ -21,7 +21,6 @@ class Project < ActiveRecord::Base
   has_many :users, through: :user_projects
   has_many :response_exports 
   has_many :response_images_exports, through: :response_exports
-  #To enable synchronization to devices of only questions/options/images that belong to a project
   has_many :questions, through: :instruments
   has_many :images, through: :questions
   has_many :options, through: :questions
@@ -29,6 +28,8 @@ class Project < ActiveRecord::Base
   has_many :device_users
   has_many :skips, through: :options 
   has_many :rules, through: :instruments
+  has_many :grids, through: :instruments
+  has_many :grid_labels, through: :grids
   
   validates :name, presence: true, allow_blank: false
   validates :description, presence: true, allow_blank: true
