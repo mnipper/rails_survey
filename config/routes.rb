@@ -52,6 +52,8 @@ RailsSurvey::Application.routes.draw do
         resources :skips, only: [:index, :show]
         resources :rules, only: [:index]
         resources :device_sync_entries, only: [:create]
+        resources :grids, only: [:index]
+        resources :grid_labels, only: [:index]
       end
     end
   end
