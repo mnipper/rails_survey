@@ -53,7 +53,14 @@ App.controller 'GridsCtrl', ['$scope', 'Grid', 'Question', 'Instrument', 'Option
   $scope.newQuestion = (grid) ->
     $scope.current_grid = grid
     question = new Question()
-    question.number_in_instrument = $scope.instrument.previous_question_count + 1
+    $scope.questions = Question.query({"project_id": $scope.project_id, "instrument_id": $scope.instrument_id, "grid_id": grid.id}, 
+      -> $scope.assignQuestionAttributes(question, grid))
+    
+  $scope.assignQuestionAttributes = (question, grid) ->
+    if $scope.questions.length > 0
+      question.number_in_instrument = $scope.questions[$scope.questions.length - 1].number_in_instrument + 1
+    else
+      question.number_in_instrument = $scope.instrument.previous_question_count + 1
     question.text = "Placeholder question text"
     question.question_identifier = "q_#{$scope.project_id}_#{$scope.instrument_id}_#{$scope.uniqueId()}"
     question.question_type = grid.question_type
@@ -64,7 +71,7 @@ App.controller 'GridsCtrl', ['$scope', 'Grid', 'Question', 'Instrument', 'Option
         (data, headers) -> $scope.saveQuestionSuccess(data, headers),
         (result, headers) -> $scope.saveQuestionFailure(result, headers)
     )
-  
+    
   $scope.uniqueId = ->
     new Date().getTime().toString(36).split("").reverse().join("")
     
