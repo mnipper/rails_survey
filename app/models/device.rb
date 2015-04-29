@@ -19,7 +19,7 @@ class Device < ActiveRecord::Base
   
   def danger_zone?
     unless last_survey.nil?
-      last_survey.updated_at < Settings.danger_zone_days.days.ago
+      last_survey.updated_at.to_time < Settings.danger_zone_days.days.ago
     end
   end
 
