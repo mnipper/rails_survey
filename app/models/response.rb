@@ -32,10 +32,16 @@ class Response < ActiveRecord::Base
   has_one :response_image, foreign_key: :response_uuid, primary_key: :uuid
   belongs_to :device_user
 
-  validates :question, presence: true
+  validate :question_existence
   validates :survey, presence: true
 
   after_create {|response| response.message }
+
+  def question_existence
+    unless Question.with_deleted.find(question_id)
+      errors.add(:question, "has never existed")
+    end
+  end
 
   def to_s
     if question.nil? or question.options.empty?
