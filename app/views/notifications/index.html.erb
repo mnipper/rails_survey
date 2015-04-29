@@ -10,7 +10,7 @@
         <% else %>
           <% @dangerous_devices.each do |device| %>
               <tr>
-                <td><%= %Q[#{device.identifier} has not sent a survey in 
+                <td><%= %Q[#{device.label.blank? ? device.identifier : device.label} has not sent a survey in 
                     #{time_ago_in_words(device.last_survey.updated_at)}] %></td>
               </tr>
           <% end %>

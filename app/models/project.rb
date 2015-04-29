@@ -35,7 +35,7 @@ class Project < ActiveRecord::Base
   validates :description, presence: true, allow_blank: true
   
   def non_responsive_devices
-    devices.includes(:surveys).where('surveys.updated_at < ?', 1.day.ago).order('surveys.updated_at ASC')
+    devices.includes(:surveys).where('surveys.updated_at < ?', Settings.danger_zone_days.days.ago).order('surveys.updated_at ASC')
   end
 
   def instrument_response_exports
