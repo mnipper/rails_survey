@@ -38,7 +38,7 @@ class Response < ActiveRecord::Base
   after_create {|response| response.message }
 
   def question_existence
-    unless Question.with_deleted.find(question_id)
+    unless Question.with_deleted.find_by_id(question_id)
       errors.add(:question, "has never existed")
     end
   end
