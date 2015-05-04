@@ -11,7 +11,7 @@
           <th>Survey Count</th>
           <th>Last Survey</th>
           <th>Last Update</th>
-          <th>Current App Version</th>
+          <th>Current Version Name</th>
           <th>Sync Data</th>
         </tr>
       </thead>
@@ -24,7 +24,7 @@
           <% unless device.last_survey.nil? || device.device_sync_entries.last.nil? %>
             <td><%= link_to device.last_survey.uuid, project_survey_path(current_project, device.last_survey) %></td>
             <td><%= time_ago_in_words(device.device_sync_entries.last.updated_at) %> ago </td>
-            <td><%= device.device_sync_entries.last.current_version %></td>
+            <td><%= device.device_sync_entries.last.current_version_name %></td>
           <% else %>
             <td></td>
             <td></td>

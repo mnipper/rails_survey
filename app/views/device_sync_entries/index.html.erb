@@ -10,7 +10,8 @@
           <th>Longitude</th>
           <th>Number of Surveys</th>
           <th>Current Language</th>
-          <th>Current Version</th>
+          <th>Current Version Code</th>
+          <th>Current Version Name</th>
           <th>Instrument Versions</th>
           <th>Timezone</th>
           <th>Sync Timestamp</th>
@@ -23,7 +24,8 @@
               <td><%= entry.longitude %></td>
               <td><%= entry.num_surveys %></td>
               <td><%= entry.current_language %></td>
-              <td><%= entry.current_version %></td>
+              <td><%= entry.current_version_code %></td>
+              <td><%= entry.current_version_name %></td>
               <td>
               <% entry.instrument_versions['instrument_versions'].each_pair do |key, value| %>
                 <strong><%= key %></strong> (<%= value %>)<br /><br /> 

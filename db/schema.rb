@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150408170713) do
+ActiveRecord::Schema.define(version: 20150504205436) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -74,13 +74,14 @@ ActiveRecord::Schema.define(version: 20150408170713) do
     t.string   "longitude"
     t.integer  "num_surveys"
     t.string   "current_language"
-    t.string   "current_version"
+    t.string   "current_version_code"
     t.text     "instrument_versions"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "device_uuid"
     t.string   "api_key"
     t.string   "timezone"
+    t.string   "current_version_name"
   end
 
   create_table "device_users", force: true do |t|
