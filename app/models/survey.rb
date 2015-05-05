@@ -57,4 +57,41 @@ class Survey < ActiveRecord::Base
   def metadata
     JSON.parse(read_attribute(:metadata)) unless read_attribute(:metadata).nil?
   end
+  
+  def self.to_csv(csv_file, export_id)
+    CSV.open(csv_file, "wb") do |csv|
+      export(csv)
+    end
+    export = ResponseExport.find(export_id)
+    export.update_attributes(:done => true)
+  end
+  
+  def self.export(format) 
+    question_identifiers = []
+    all.each do |survey|
+      survey.instrument.questions.each do |question|
+        question_identifiers << question.question_identifier unless question_identifiers.include? question.question_identifier
+      end
+    end
+    
+    header = ['survey_id', 'survey_uuid', 'device_identifier', 'device_label', 'device_user_id', 'device_user_username',
+       'latitude', 'longitude', 'instrument_id', 'instrument_version_number', 'instrument_title'] + question_identifiers
+    format << header
+      
+    all.each do |survey|
+      row = [survey.id, survey.uuid, survey.device.identifier, survey.device.label, survey.device.try(:device_user).try(:id), 
+        survey.device.try(:device_user).try(:username), survey.latitude, survey.longitude, survey.instrument.id, 
+        survey.instrument_version_number, survey.instrument.title] + response_to_question(survey, question_identifiers)
+      format << row
+    end
+    
+  end
+  
+  def self.response_to_question(surv, identifiers)
+    survey_responses = Hash[surv.responses.pluck(:question_identifier, :text).map{|resp| [resp[0], resp[1]]}]
+    mapped_responses = []
+    identifiers.each {|identifier| survey_responses[identifier] ? mapped_responses << survey_responses[identifier] : mapped_responses << "" }
+    mapped_responses
+  end
+  
 end

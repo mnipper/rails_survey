@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150504205436) do
+ActiveRecord::Schema.define(version: 20150505202735) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -221,7 +221,7 @@ ActiveRecord::Schema.define(version: 20150504205436) do
   add_index "questions", ["question_identifier"], name: "index_questions_on_question_identifier", unique: true
 
   create_table "response_exports", force: true do |t|
-    t.string   "download_url"
+    t.string   "long_format_url"
     t.boolean  "done",                  default: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -231,6 +231,7 @@ ActiveRecord::Schema.define(version: 20150504205436) do
     t.string   "spss_friendly_csv_url"
     t.string   "value_labels_csv"
     t.text     "instrument_versions"
+    t.string   "wide_format_url"
   end
 
   create_table "response_images", force: true do |t|

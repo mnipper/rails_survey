@@ -3,7 +3,7 @@
 # Table name: response_exports
 #
 #  id                    :integer          not null, primary key
-#  download_url          :string(255)
+#  long_format_url       :string(255)
 #  done                  :boolean          default(FALSE)
 #  created_at            :datetime
 #  updated_at            :datetime
@@ -13,10 +13,12 @@
 #  spss_friendly_csv_url :string(255)
 #  value_labels_csv      :string(255)
 #  instrument_versions   :text
+#  wide_format_url       :string(255)
 #
 
 class ResponseExport < ActiveRecord::Base
-  attr_accessible :done, :download_url, :project_id, :instrument_id, :instrument_versions, :spss_syntax_file_url, :spss_friendly_csv_url, :value_labels_csv
+  attr_accessible :done, :long_format_url, :wide_format_url, :project_id, :instrument_id, :instrument_versions, 
+    :spss_syntax_file_url, :spss_friendly_csv_url, :value_labels_csv
   serialize :instrument_versions
   belongs_to :project
   belongs_to :instrument
@@ -25,8 +27,8 @@ class ResponseExport < ActiveRecord::Base
   
   private
   def destroy_files
-    if download_url
-      File.delete(download_url) if File.exist?(download_url)
+    if long_format_url
+      File.delete(long_format_url) if File.exist?(long_format_url)
     end
     if spss_syntax_file_url
       File.delete(spss_syntax_file_url) if File.exist?(spss_syntax_file_url)

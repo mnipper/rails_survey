@@ -67,16 +67,19 @@ class InstrumentsController < ApplicationController
     @instrument = current_project.instruments.find(params[:id])
     authorize @instrument
     root = File.join('files', 'exports').to_s
-    csv_file = File.new(root + "/#{Time.now.to_i}.csv", "a+")
-    csv_file.close
-    export = ResponseExport.create(:instrument_id => @instrument.id, :download_url => csv_file.path, :instrument_versions => @instrument.survey_instrument_versions)
-    if @instrument.response_images.empty?
-      InstrumentResponsesExportWorker.perform_async(@instrument.id, csv_file.path, export.id, nil, nil)
-    else
+    long_csv_file = File.new(root + "/#{Time.now.to_i}" + "_long" + ".csv", "a+")
+    long_csv_file.close
+    wide_csv_file = File.new(root + "/#{Time.now.to_i}" + "_wide" + ".csv", "a+")
+    wide_csv_file.close
+    export = ResponseExport.create(:instrument_id => @instrument.id, :long_format_url => long_csv_file.path, 
+      :wide_format_url => wide_csv_file.path, :instrument_versions => @instrument.survey_instrument_versions)
+    InstrumentLongResponsesExportWorker.perform_async(@instrument.id, long_csv_file.path, export.id)
+    InstrumentWideResponsesExportWorker.perform_async(@instrument.id, wide_csv_file.path, export.id)
+    if @instrument.response_images
       zipped_file = File.new(root + "/#{Time.now.to_i}.zip", "a+")
       zipped_file.close 
       pictures_export = ResponseImagesExport.create(:response_export_id => export.id, :download_url => zipped_file.path)
-      InstrumentResponsesExportWorker.perform_async(@instrument.id, csv_file.path, export.id, zipped_file.path, pictures_export.id)
+      ImagesExportWorker.perform_async(@instrument.id, zipped_file.path, pictures_export.id)
     end
     redirect_to project_response_exports_path(current_project)
   end

@@ -32,14 +32,14 @@
                     </td>
                     <td>
                         <% if policy(export).download_project_responses? %>
-                            <% if export.download_url %>
+                            <% if export.long_format_url %>
                                 <%= link_to 'download csv', download_project_responses_project_response_export_path(current_project, export.id) %>
                             <% end %>
                        <% end %>
                     </td>
                     <td>
                         <% if policy(export).download_instrument_responses? %>
-                            <% if (export.response_images_export && export.response_images_export.download_url) %>
+                            <% if (export.response_images_export && export.response_images_export.long_format_url) %>
                                 <%= link_to 'Download Images', download_project_response_images_project_response_export_path(current_project, export.id) %>
                             <% end %>
                        <% end %>
@@ -89,7 +89,7 @@
                   </td>
                   <td>
                       <% if policy(export).download_instrument_responses? %>
-                        <% if export.download_url %>
+                        <% if export.long_format_url %>
                             <%= link_to 'download csv', download_instrument_responses_project_response_export_path(current_project, export.id) %>
                         <% end %>
                       <% end %>
