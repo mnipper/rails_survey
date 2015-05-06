@@ -6,7 +6,7 @@
       <table class="table table-hover">
         <thead>
             <tr>
-                <th>Project Name</th>
+                <th> Project Name </th>
                 <th> Created at </th>
                 <th> Status </th>
                 <th> Responses csv </th>
@@ -39,7 +39,7 @@
                     </td>
                     <td>
                         <% if policy(export).download_instrument_responses? %>
-                            <% if (export.response_images_export && export.response_images_export.long_format_url) %>
+                            <% if (export.response_images_export && export.response_images_export.download_url) %>
                                 <%= link_to 'Download Images', download_project_response_images_project_response_export_path(current_project, export.id) %>
                             <% end %>
                        <% end %>

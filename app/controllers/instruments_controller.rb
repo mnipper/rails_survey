@@ -79,7 +79,7 @@ class InstrumentsController < ApplicationController
       zipped_file = File.new(root + "/#{Time.now.to_i}.zip", "a+")
       zipped_file.close 
       pictures_export = ResponseImagesExport.create(:response_export_id => export.id, :download_url => zipped_file.path)
-      ImagesExportWorker.perform_async(@instrument.id, zipped_file.path, pictures_export.id)
+      InstrumentImagesExportWorker.perform_async(@instrument.id, zipped_file.path, pictures_export.id)
     end
     redirect_to project_response_exports_path(current_project)
   end

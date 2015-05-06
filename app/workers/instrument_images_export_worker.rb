@@ -1,4 +1,4 @@
-class ImagesExportWorker
+class InstrumentImagesExportWorker
   include Sidekiq::Worker
 
   def perform(instrument_id, zipped_file, pictures_export_id)
