@@ -74,14 +74,25 @@ class Survey < ActiveRecord::Base
       end
     end
     
+    metadata_keys = []
+    all.each do |survey|
+      survey.metadata.keys.each do |key|
+        metadata_keys << key unless metadata_keys.include? key
+      end if survey.metadata
+    end
+    
     header = ['survey_id', 'survey_uuid', 'device_identifier', 'device_label', 'device_user_id', 'device_user_username',
-       'latitude', 'longitude', 'instrument_id', 'instrument_version_number', 'instrument_title'] + question_identifiers
+       'latitude', 'longitude', 'instrument_id', 'instrument_version_number', 'instrument_title'] + question_identifiers + metadata_keys
     format << header
       
     all.each do |survey|
       row = [survey.id, survey.uuid, survey.device.identifier, survey.device.label, survey.device.try(:device_user).try(:id), 
         survey.device.try(:device_user).try(:username), survey.latitude, survey.longitude, survey.instrument.id, 
-        survey.instrument_version_number, survey.instrument.title] + response_to_question(survey, question_identifiers)
+        survey.instrument_version_number, survey.instrument.title] + response_to_question(survey, question_identifiers)    
+      survey.metadata.each do |k, v|
+        key_index = header.index {|h| h == k}
+        row[key_index] = v
+      end if survey.metadata
       format << row
     end
     
