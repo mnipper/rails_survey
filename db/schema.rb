@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150505202735) do
+ActiveRecord::Schema.define(version: 20150506151440) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -222,14 +222,11 @@ ActiveRecord::Schema.define(version: 20150505202735) do
 
   create_table "response_exports", force: true do |t|
     t.string   "long_format_url"
-    t.boolean  "done",                  default: false
+    t.boolean  "done",                default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "project_id"
     t.integer  "instrument_id"
-    t.string   "spss_syntax_file_url"
-    t.string   "spss_friendly_csv_url"
-    t.string   "value_labels_csv"
     t.text     "instrument_versions"
     t.string   "wide_format_url"
   end

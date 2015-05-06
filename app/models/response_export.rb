@@ -2,23 +2,19 @@
 #
 # Table name: response_exports
 #
-#  id                    :integer          not null, primary key
-#  long_format_url       :string(255)
-#  done                  :boolean          default(FALSE)
-#  created_at            :datetime
-#  updated_at            :datetime
-#  project_id            :integer
-#  instrument_id         :integer
-#  spss_syntax_file_url  :string(255)
-#  spss_friendly_csv_url :string(255)
-#  value_labels_csv      :string(255)
-#  instrument_versions   :text
-#  wide_format_url       :string(255)
+#  id                  :integer          not null, primary key
+#  long_format_url     :string(255)
+#  done                :boolean          default(FALSE)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  project_id          :integer
+#  instrument_id       :integer
+#  instrument_versions :text
+#  wide_format_url     :string(255)
 #
 
 class ResponseExport < ActiveRecord::Base
-  attr_accessible :done, :long_format_url, :wide_format_url, :project_id, :instrument_id, :instrument_versions, 
-    :spss_syntax_file_url, :spss_friendly_csv_url, :value_labels_csv
+  attr_accessible :done, :long_format_url, :wide_format_url, :project_id, :instrument_id, :instrument_versions
   serialize :instrument_versions
   belongs_to :project
   belongs_to :instrument
@@ -30,14 +26,9 @@ class ResponseExport < ActiveRecord::Base
     if long_format_url
       File.delete(long_format_url) if File.exist?(long_format_url)
     end
-    if spss_syntax_file_url
-      File.delete(spss_syntax_file_url) if File.exist?(spss_syntax_file_url)
-    end
-    if spss_friendly_csv_url
-      File.delete(spss_friendly_csv_url) if File.exist?(spss_friendly_csv_url)
-    end
-    if value_labels_csv
-      File.delete(value_labels_csv) if File.exist?(value_labels_csv)
-    end
+    if wide_format_url
+      File.delete(wide_format_url) if File.exist?(wide_format_url)
+    end    
   end
+  
 end
