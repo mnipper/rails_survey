@@ -89,13 +89,12 @@ RailsSurvey::Application.routes.draw do
     resources :graphs, only:[:index]
     resources :response_exports  do
       member do
-        get :download_project_responses
-        get :download_instrument_responses
-        get :download_project_response_images
-        get :download_instrument_response_images
-        get :download_spss_syntax_file
-        get :download_instrument_spss_csv
-        get :download_value_labels_csv
+        get :project_long_format_responses
+        get :project_wide_format_responses
+        get :instrument_long_format_responses
+        get :instrument_wide_format_responses
+        get :project_response_images
+        get :instrument_response_images
       end
     end
     get 'graphs/daily/' => 'graphs#daily_responses'

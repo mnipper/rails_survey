@@ -1,7 +1,7 @@
 class ResponseExportsController < ApplicationController
   after_action :verify_authorized, :except => 
-    [:index, :download_project_responses, :download_instrument_responses, :download_instrument_spss_csv,
-      :download_project_response_images, :download_instrument_response_images, :download_spss_syntax_file, :download_value_labels_csv]
+    [:index, :project_long_format_responses, :project_wide_format_responses, :instrument_long_format_responses,
+      :instrument_wide_format_responses, :project_response_images, :instrument_response_images]
   
   def index
     @project_exports = current_project.response_exports.order('created_at DESC')
@@ -47,61 +47,44 @@ class ResponseExportsController < ApplicationController
     render text:"", notice: "Successfully destroyed export."
   end
   
-  def download_project_responses   
+  def project_long_format_responses   
     export = current_project.response_exports.find params[:id]
-    project_download(export.download_url, 'text/csv')
+    send_file export.long_format_url, :type => 'text/csv', :disposition => 'attachment', :filename => "#{ current_project.name.gsub(/\s+/,  '_') }.csv"
   end
   
-  def download_instrument_responses
+  def project_wide_format_responses
+    export = current_project.response_exports.find params[:id]
+    send_file export.wide_format_url, :type => 'text/csv', :disposition => 'attachment', :filename => "#{ current_project.name.gsub(/\s+/,  '_') }.csv"
+  end
+  
+  def instrument_long_format_responses
     export = ResponseExport.find(params[:id])
     instrument = current_project.instruments.find(export.instrument_id)
     if instrument
-      instrument_download(export.download_url, 'text/csv', "#{ instrument.title.gsub(/\s+/,  '_') }.csv")
-    end 
+      instrument_download(export.long_format_url, 'text/csv', "#{ instrument.title.gsub(/\s+/,  '_') }.csv")
+    end
   end
   
-  def download_project_response_images
+   def instrument_wide_format_responses
+      export = ResponseExport.find(params[:id])
+      instrument = current_project.instruments.find(export.instrument_id)
+      if instrument
+        instrument_download(export.wide_format_url, 'text/csv', "#{ instrument.title.gsub(/\s+/,  '_') }.csv")
+      end
+  end
+  
+  def project_response_images
     export = current_project.response_exports.find(params[:id])
-    project_download(export.response_images_export.download_url, 'application/zip')
+    send_file export.response_images_export.download_url, :type => 'application/zip', :disposition => 'attachment', :filename => "#{ current_project.name.gsub(/\s+/,  '_') }.zip"
   end
   
-  def download_instrument_response_images
+  def instrument_response_images
     export = ResponseExport.find(params[:id])
-    instrument = current_project.instruments.find(export.instrument_id)
-    if instrument
-      instrument_download(export.response_images_export.download_url, 'application/zip', "#{ instrument.title.gsub(/\s+/,  '_') }")
-    end
-  end
-  
-  def download_spss_syntax_file 
-    export = ResponseExport.find(params[:id])
-    instrument = current_project.instruments.find(export.instrument_id)
-    if instrument
-      instrument_download(export.spss_syntax_file_url, 'application/x-spss', "#{ instrument.title.gsub!(/\s+/,  '_') }.sps")
-    end 
-  end
-  
-  def download_instrument_spss_csv
-    export = ResponseExport.find(params[:id])
-    instrument = current_project.instruments.find(export.instrument_id)
-    if instrument
-      instrument_download(export.spss_friendly_csv_url, 'text/csv', "#{ instrument.title.gsub(/\s+/,  '_') }_spss")
-    end
-  end
-  
-  def download_value_labels_csv
-    export = ResponseExport.find(params[:id])
-    instrument = current_project.instruments.find(export.instrument_id)
-    if instrument
-      instrument_download(export.value_labels_csv, 'text/csv', "#{ instrument.title.gsub(/\s+/,  '_') }_value_labels")
-    end
+    instrument_download(export.response_images_export.download_url, 'application/zip', "#{ current_project.instruments.find_by_id(export.instrument_id).title.gsub(/\s+/,  '_') }")
   end
   
   private
-  def project_download(url, type)
-    send_file url, :type => type, :disposition => 'attachment', :filename => "#{ current_project.name.gsub(/\s+/,  '_') }" 
-  end
-  
+
   def instrument_download(url, type, filename)
     send_file url, :type => type, :disposition => 'attachment', :filename => filename   
   end

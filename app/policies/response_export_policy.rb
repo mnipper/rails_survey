@@ -25,32 +25,28 @@ class ResponseExportPolicy < ResponsePolicy
     @user.admin?
   end
   
-  def download_project_responses?
+  def project_long_format_responses?
+    download_privileges
+  end
+
+  def project_wide_format_responses?
+    download_privileges
+  end
+    
+  def instrument_long_format_responses?
     download_privileges
   end
   
-  def download_instrument_responses?
+  def instrument_wide_format_responses?
     download_privileges
   end
   
-  def download_project_response_images?
+  def project_response_images?
     download_privileges
   end
   
-  def download_instrument_response_images?
+  def instrument_response_images?
     download_privileges
-  end
-  
-  def download_instrument_spss_csv?
-    download_privileges 
-  end
-  
-  def download_spss_syntax_file?
-    download_privileges 
-  end
-  
-  def download_value_labels_csv?
-    download_privileges 
   end
   
   private

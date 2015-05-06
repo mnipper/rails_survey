@@ -57,7 +57,7 @@ class ProjectsController < ApplicationController
     export = ResponseExport.create(:project_id => current_project.id, :long_format_url => long_csv_file.path, :wide_format_url => wide_csv_file.path)
     ProjectLongResponsesExportWorker.perform_async(current_project.id, long_csv_file.path, export.id)
     ProjectWideResponsesExportWorker.perform_async(current_project.id, wide_csv_file.path, export.id)
-    if current_project.response_images
+    unless current_project.response_images.empty?
       zipped_file = File.new(root + "/#{Time.now.to_i}.zip", "a+")
       zipped_file.close 
       pictures_export = ResponseImagesExport.create(:response_export_id => export.id, :download_url => zipped_file.path) 
