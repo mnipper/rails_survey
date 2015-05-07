@@ -26,7 +26,7 @@
                        <% end %>
                     </td>
                     <td>
-                        <% if policy(export).project_wide_format_responses? && export.long_format_url %>
+                        <% if policy(export).project_wide_format_responses? && export.wide_format_url %>
                             <%= link_to 'wide csv', project_wide_format_responses_project_response_export_path(current_project, export.id) %>
                        <% end %>
                     </td>
