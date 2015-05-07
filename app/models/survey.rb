@@ -71,6 +71,8 @@ class Survey < ActiveRecord::Base
     all.each do |survey|
       survey.instrument.questions.each do |question|
         question_identifiers << question.question_identifier unless question_identifiers.include? question.question_identifier
+        question_identifiers << question.question_identifier + '_special' unless question_identifiers.include? question.question_identifier + '_special'
+        question_identifiers << question.question_identifier + '_other' unless question_identifiers.include? question.question_identifier + '_other'
       end
     end
     
@@ -82,27 +84,30 @@ class Survey < ActiveRecord::Base
     end
     
     header = ['survey_id', 'survey_uuid', 'device_identifier', 'device_label', 'device_user_id', 'device_user_username',
-       'latitude', 'longitude', 'instrument_id', 'instrument_version_number', 'instrument_title'] + question_identifiers + metadata_keys
+       'latitude', 'longitude', 'instrument_id', 'instrument_version_number', 'instrument_title'] + metadata_keys + question_identifiers 
     format << header
       
     all.each do |survey|
       row = [survey.id, survey.uuid, survey.device.identifier, survey.device.label, survey.device.try(:device_user).try(:id), 
         survey.device.try(:device_user).try(:username), survey.latitude, survey.longitude, survey.instrument.id, 
-        survey.instrument_version_number, survey.instrument.title] + response_to_question(survey, question_identifiers)    
+        survey.instrument_version_number, survey.instrument.title]     
+      
       survey.metadata.each do |k, v|
         key_index = header.index {|h| h == k}
         row[key_index] = v
       end if survey.metadata
+      
+      survey.responses.each do |response|
+        index_of_identifier = header.index(response.question_identifier)
+        row[index_of_identifier] = response.text if index_of_identifier
+        index_of_special_identifier = header.index(response.question_identifier + '_special')
+        row[index_of_special_identifier] = response.special_response if index_of_special_identifier
+        index_of_other_identifier = header.index(response.question_identifier + '_other')
+        row[index_of_other_identifier] = response.other_response if index_of_other_identifier
+      end
+         
       format << row
     end
-    
   end
-  
-  def self.response_to_question(surv, identifiers)
-    survey_responses = Hash[surv.responses.pluck(:question_identifier, :text).map{|resp| [resp[0], resp[1]]}]
-    mapped_responses = []
-    identifiers.each {|identifier| survey_responses[identifier] ? mapped_responses << survey_responses[identifier] : mapped_responses << "" }
-    mapped_responses
-  end
-  
+
 end
