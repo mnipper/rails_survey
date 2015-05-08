@@ -71,6 +71,7 @@ class Survey < ActiveRecord::Base
     all.each do |survey|
       survey.instrument.questions.each do |question|
         question_identifiers << question.question_identifier unless question_identifiers.include? question.question_identifier
+        question_identifiers << question.question_identifier + '_label' unless question_identifiers.include? question.question_identifier + '_label'
         question_identifiers << question.question_identifier + '_special' unless question_identifiers.include? question.question_identifier + '_special'
         question_identifiers << question.question_identifier + '_other' unless question_identifiers.include? question.question_identifier + '_other'
       end
@@ -84,7 +85,7 @@ class Survey < ActiveRecord::Base
     end
     
     header = ['survey_id', 'survey_uuid', 'device_identifier', 'device_label', 'latitude', 'longitude', 'instrument_id', 'instrument_version_number', 
-      'instrument_title', 'survey_start_time', 'survey_end_time', 'device_user_id', 'device_user_username'] + metadata_keys + question_identifiers 
+      'instrument_title', 'survey_start_time', 'survey_end_time', 'device_user_id', 'device_user_username'] + metadata_keys + question_identifiers
     format << header
       
     all.each do |survey|
@@ -104,6 +105,8 @@ class Survey < ActiveRecord::Base
         row[index_of_special_identifier] = response.special_response if index_of_special_identifier
         index_of_other_identifier = header.index(response.question_identifier + '_other')
         row[index_of_other_identifier] = response.other_response if index_of_other_identifier
+        index_of_label = header.index(response.question_identifier + '_label')
+        row[index_of_label] = survey.option_labels(response) if index_of_label
       end
       device_user_id_index = header.index('device_user_id')
       device_user_username_index = header.index('device_user_username')
@@ -114,6 +117,21 @@ class Survey < ActiveRecord::Base
       end
       format << row
     end
+  end
+  
+  def option_labels(response)
+    labels = [] 
+    versioned_question = versioned_question(response.question_identifier)
+    if response.question and versioned_question and versioned_question.has_options? 
+      response.text.split(Settings.list_delimiter).each do |option_index|
+        (versioned_question.has_other? and option_index.to_i == versioned_question.other_index) ? labels << "Other" : labels << versioned_question.options[option_index.to_i].to_s
+      end
+    end
+    labels.join(Settings.list_delimiter)
+  end
+  
+  def versioned_question(question_identifier)
+    instrument_version.find_question_by(question_identifier: question_identifier)
   end
 
 end
