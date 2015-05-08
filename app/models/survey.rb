@@ -84,12 +84,13 @@ class Survey < ActiveRecord::Base
     end
     
     header = ['survey_id', 'survey_uuid', 'device_identifier', 'device_label', 'latitude', 'longitude', 'instrument_id', 'instrument_version_number', 
-      'instrument_title' , 'device_user_id', 'device_user_username'] + metadata_keys + question_identifiers 
+      'instrument_title', 'survey_start_time', 'survey_end_time', 'device_user_id', 'device_user_username'] + metadata_keys + question_identifiers 
     format << header
       
     all.each do |survey|
       row = [survey.id, survey.uuid, survey.device.identifier, survey.device.label, survey.latitude, survey.longitude, survey.instrument.id, 
-        survey.instrument_version_number, survey.instrument.title]     
+        survey.instrument_version_number, survey.instrument.title, survey.responses.order('time_started').try(:first).try(:time_started), 
+        survey.responses.order('time_ended').try(:last).try(:time_ended)]     
       
       survey.metadata.each do |k, v|
         key_index = header.index {|h| h == k}
