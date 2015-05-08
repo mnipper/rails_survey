@@ -83,13 +83,12 @@ class Survey < ActiveRecord::Base
       end if survey.metadata
     end
     
-    header = ['survey_id', 'survey_uuid', 'device_identifier', 'device_label', 'device_user_id', 'device_user_username',
-       'latitude', 'longitude', 'instrument_id', 'instrument_version_number', 'instrument_title'] + metadata_keys + question_identifiers 
+    header = ['survey_id', 'survey_uuid', 'device_identifier', 'device_label', 'latitude', 'longitude', 'instrument_id', 'instrument_version_number', 
+      'instrument_title' , 'device_user_id', 'device_user_username'] + metadata_keys + question_identifiers 
     format << header
       
     all.each do |survey|
-      row = [survey.id, survey.uuid, survey.device.identifier, survey.device.label, survey.device.try(:device_user).try(:id), 
-        survey.device.try(:device_user).try(:username), survey.latitude, survey.longitude, survey.instrument.id, 
+      row = [survey.id, survey.uuid, survey.device.identifier, survey.device.label, survey.latitude, survey.longitude, survey.instrument.id, 
         survey.instrument_version_number, survey.instrument.title]     
       
       survey.metadata.each do |k, v|
@@ -105,7 +104,13 @@ class Survey < ActiveRecord::Base
         index_of_other_identifier = header.index(response.question_identifier + '_other')
         row[index_of_other_identifier] = response.other_response if index_of_other_identifier
       end
-         
+      device_user_id_index = header.index('device_user_id')
+      device_user_username_index = header.index('device_user_username')
+      device_user_ids = survey.responses.pluck(:device_user_id).uniq.compact
+      unless device_user_ids.empty?
+        row[device_user_id_index] = device_user_ids.join(",")
+        row[device_user_username_index] = DeviceUser.find(device_user_ids).map(&:username).uniq.join(",")   
+      end
       format << row
     end
   end
