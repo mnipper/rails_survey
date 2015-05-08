@@ -121,17 +121,13 @@ class Survey < ActiveRecord::Base
   
   def option_labels(response)
     labels = [] 
-    versioned_question = versioned_question(response.question_identifier)
+    versioned_question = instrument_version.find_question_by(question_identifier: response.question_identifier)
     if response.question and versioned_question and versioned_question.has_options? 
       response.text.split(Settings.list_delimiter).each do |option_index|
         (versioned_question.has_other? and option_index.to_i == versioned_question.other_index) ? labels << "Other" : labels << versioned_question.options[option_index.to_i].to_s
       end
     end
     labels.join(Settings.list_delimiter)
-  end
-  
-  def versioned_question(question_identifier)
-    instrument_version.find_question_by(question_identifier: question_identifier)
   end
 
 end
