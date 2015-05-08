@@ -2,7 +2,7 @@ class DevicesController < ApplicationController
   after_action :verify_authorized
   
   def index
-    @devices = current_project.devices.order('updated_at DESC')
+    @devices = current_project.devices.order('label')
     authorize @devices
   end
   
