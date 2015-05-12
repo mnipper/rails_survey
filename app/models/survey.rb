@@ -67,15 +67,17 @@ class Survey < ActiveRecord::Base
   end
   
   def self.export(format) 
-    question_identifiers = []
+    variable_identifiers = []
     all.each do |survey|
       survey.instrument.questions.each do |question|
-        question_identifiers << question.question_identifier unless question_identifiers.include? question.question_identifier
-        question_identifiers << question.question_identifier + '_label' unless question_identifiers.include? question.question_identifier + '_label'
-        question_identifiers << question.question_identifier + '_special' unless question_identifiers.include? question.question_identifier + '_special'
-        question_identifiers << question.question_identifier + '_other' unless question_identifiers.include? question.question_identifier + '_other'
-        question_identifiers << question.question_identifier + '_version' unless question_identifiers.include? question.question_identifier + '_version'
-        question_identifiers << question.question_identifier + '_text' unless question_identifiers.include? question.question_identifier + '_text' 
+        variable_identifiers << question.question_identifier unless variable_identifiers.include? question.question_identifier
+        variable_identifiers << question.question_identifier + '_label' unless variable_identifiers.include? question.question_identifier + '_label'
+        variable_identifiers << question.question_identifier + '_special' unless variable_identifiers.include? question.question_identifier + '_special'
+        variable_identifiers << question.question_identifier + '_other' unless variable_identifiers.include? question.question_identifier + '_other'
+        variable_identifiers << question.question_identifier + '_version' unless variable_identifiers.include? question.question_identifier + '_version'
+        variable_identifiers << question.question_identifier + '_text' unless variable_identifiers.include? question.question_identifier + '_text' 
+        variable_identifiers << question.question_identifier + '_start_time' unless variable_identifiers.include? question.question_identifier + '_start_time'
+        variable_identifiers << question.question_identifier + '_end_time' unless variable_identifiers.include? question.question_identifier + '_end_time'
       end
     end
     
@@ -87,7 +89,7 @@ class Survey < ActiveRecord::Base
     end
     
     header = ['survey_id', 'survey_uuid', 'device_identifier', 'device_label', 'latitude', 'longitude', 'instrument_id', 'instrument_version_number', 
-      'instrument_title', 'survey_start_time', 'survey_end_time', 'device_user_id', 'device_user_username'] + metadata_keys + question_identifiers
+      'instrument_title', 'survey_start_time', 'survey_end_time', 'device_user_id', 'device_user_username'] + metadata_keys + variable_identifiers
     format << header
       
     all.each do |survey|
@@ -101,18 +103,22 @@ class Survey < ActiveRecord::Base
       end if survey.metadata
       
       survey.responses.each do |response|
-        index_of_identifier = header.index(response.question_identifier)
-        row[index_of_identifier] = response.text if index_of_identifier
-        index_of_special_identifier = header.index(response.question_identifier + '_special')
-        row[index_of_special_identifier] = response.special_response if index_of_special_identifier
-        index_of_other_identifier = header.index(response.question_identifier + '_other')
-        row[index_of_other_identifier] = response.other_response if index_of_other_identifier
-        index_of_label = header.index(response.question_identifier + '_label')
-        row[index_of_label] = survey.option_labels(response) if index_of_label
-        index_of_question_version = header.index(response.question_identifier + '_version')
-        row[index_of_question_version] = response.question_version if index_of_question_version
-        index_of_question_text = header.index(response.question_identifier + '_text')
-        row[index_of_question_text] = Sanitize.fragment(survey.chronicled_question(response.question_identifier).try(:text)) if index_of_question_text
+        identifier_index = header.index(response.question_identifier)
+        row[identifier_index] = response.text if identifier_index
+        special_identifier_index = header.index(response.question_identifier + '_special')
+        row[special_identifier_index] = response.special_response if special_identifier_index
+        other_identifier_index = header.index(response.question_identifier + '_other')
+        row[other_identifier_index] = response.other_response if other_identifier_index
+        label_index = header.index(response.question_identifier + '_label')
+        row[label_index] = survey.option_labels(response) if label_index
+        question_version_index = header.index(response.question_identifier + '_version')
+        row[question_version_index] = response.question_version if question_version_index
+        question_text_index = header.index(response.question_identifier + '_text')
+        row[question_text_index] = Sanitize.fragment(survey.chronicled_question(response.question_identifier).try(:text)) if question_text_index
+        start_time_index = header.index(response.question_identifier + '_start_time')
+        row[start_time_index] = response.time_started if start_time_index
+        end_time_index = header.index(response.question_identifier + '_end_time')
+        row[end_time_index] = response.time_ended if end_time_index
       end
       device_user_id_index = header.index('device_user_id')
       device_user_username_index = header.index('device_user_username')
