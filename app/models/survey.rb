@@ -74,6 +74,8 @@ class Survey < ActiveRecord::Base
         question_identifiers << question.question_identifier + '_label' unless question_identifiers.include? question.question_identifier + '_label'
         question_identifiers << question.question_identifier + '_special' unless question_identifiers.include? question.question_identifier + '_special'
         question_identifiers << question.question_identifier + '_other' unless question_identifiers.include? question.question_identifier + '_other'
+        question_identifiers << question.question_identifier + '_version' unless question_identifiers.include? question.question_identifier + '_version'
+        question_identifiers << question.question_identifier + '_text' unless question_identifiers.include? question.question_identifier + '_text' 
       end
     end
     
@@ -107,6 +109,10 @@ class Survey < ActiveRecord::Base
         row[index_of_other_identifier] = response.other_response if index_of_other_identifier
         index_of_label = header.index(response.question_identifier + '_label')
         row[index_of_label] = survey.option_labels(response) if index_of_label
+        index_of_question_version = header.index(response.question_identifier + '_version')
+        row[index_of_question_version] = response.question_version if index_of_question_version
+        index_of_question_text = header.index(response.question_identifier + '_text')
+        row[index_of_question_text] = Sanitize.fragment(survey.chronicled_question(response.question_identifier).try(:text)) if index_of_question_text
       end
       device_user_id_index = header.index('device_user_id')
       device_user_username_index = header.index('device_user_username')
@@ -119,9 +125,13 @@ class Survey < ActiveRecord::Base
     end
   end
   
+  def chronicled_question(question_identifier)
+    instrument_version.find_question_by(question_identifier: question_identifier)
+  end
+  
   def option_labels(response)
     labels = [] 
-    versioned_question = instrument_version.find_question_by(question_identifier: response.question_identifier)
+    versioned_question = chronicled_question(response.question_identifier)
     if response.question and versioned_question and versioned_question.has_options? 
       response.text.split(Settings.list_delimiter).each do |option_index|
         (versioned_question.has_other? and option_index.to_i == versioned_question.other_index) ? labels << "Other" : labels << versioned_question.options[option_index.to_i].to_s
