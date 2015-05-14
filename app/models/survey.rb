@@ -14,7 +14,7 @@
 #  latitude                  :string(255)
 #  longitude                 :string(255)
 #  metadata                  :text
-#  completion_rate           :decimal(, )
+#  completion_rate           :decimal(3, 2)
 #
 
 class Survey < ActiveRecord::Base
