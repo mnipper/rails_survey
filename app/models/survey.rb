@@ -30,8 +30,9 @@ class Survey < ActiveRecord::Base
   validates :instrument_version_number, presence: true, allow_blank: false
   
   def percent_complete
-    (responses.where.not('text = ? AND other_response = ? AND special_response = ?', "", "", "")
-    .pluck(:question_id).uniq.count.to_f / instrument.version_by_version_number(instrument_version_number).questions.count).round(2)
+    (responses.where.not('text = ? AND other_response = ? AND special_response = ?', nil || "", nil || "", nil || "")
+    .pluck(:question_id).uniq.count.to_f / instrument.version_by_version_number(instrument_version_number)
+    .questions.select{|question| question.question_type != 'INSTRUCTIONS'}.count).round(2)
   end
 
   def location
