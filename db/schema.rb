@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150506151440) do
+ActiveRecord::Schema.define(version: 20150514175128) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -324,6 +324,7 @@ ActiveRecord::Schema.define(version: 20150506151440) do
     t.string   "latitude"
     t.string   "longitude"
     t.text     "metadata"
+    t.decimal  "completion_rate"
   end
 
   add_index "surveys", ["uuid"], name: "index_surveys_on_uuid"

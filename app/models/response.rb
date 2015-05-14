@@ -34,13 +34,18 @@ class Response < ActiveRecord::Base
 
   validate :question_existence
   validates :survey, presence: true
-
+  after_create :calculate_response_rate
+  after_destroy :calculate_response_rate
   after_create {|response| response.message }
 
   def question_existence
     unless Question.with_deleted.find_by_id(question_id)
       errors.add(:question, "has never existed")
     end
+  end
+  
+  def calculate_response_rate
+    survey.calculate_completion_rate
   end
 
   def to_s

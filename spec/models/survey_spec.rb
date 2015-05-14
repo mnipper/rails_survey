@@ -14,6 +14,7 @@
 #  latitude                  :string(255)
 #  longitude                 :string(255)
 #  metadata                  :text
+#  completion_rate           :decimal(, )
 #
 
 require "spec_helper"

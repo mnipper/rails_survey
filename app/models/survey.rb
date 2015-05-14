@@ -14,11 +14,12 @@
 #  latitude                  :string(255)
 #  longitude                 :string(255)
 #  metadata                  :text
+#  completion_rate           :decimal(, )
 #
 
 class Survey < ActiveRecord::Base
   attr_accessible :instrument_id, :instrument_version_number, :uuid, :device_id, :instrument_title,
-    :device_uuid, :latitude, :longitude, :metadata
+    :device_uuid, :latitude, :longitude, :metadata, :completion_rate
   belongs_to :instrument
   belongs_to :device
   has_many :responses, foreign_key: :survey_uuid, primary_key: :uuid, dependent: :destroy
@@ -30,9 +31,14 @@ class Survey < ActiveRecord::Base
   validates :instrument_version_number, presence: true, allow_blank: false
   
   def percent_complete
-    (responses.where.not('text = ? AND other_response = ? AND special_response = ?', nil || "", nil || "", nil || "")
+    completion_rate || calculate_completion_rate
+  end
+  
+  def calculate_completion_rate
+    self.update(completion_rate: (responses.where.not('text = ? AND other_response = ? AND special_response = ?', nil || "", nil || "", nil || "")
     .pluck(:question_id).uniq.count.to_f / instrument.version_by_version_number(instrument_version_number)
-    .questions.select{|question| question.question_type != 'INSTRUCTIONS'}.count).round(2)
+    .questions.select{|question| question.question_type != 'INSTRUCTIONS'}.count).round(2))
+    completion_rate 
   end
 
   def location
