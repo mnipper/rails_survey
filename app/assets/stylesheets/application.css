@@ -32,3 +32,60 @@ table.fixed-wide {
   table-layout: fixed;
   width: 100%
 }
+
+.pagination-wrapper {
+width: 600px; 
+margin: 0 auto;
+}
+
+.pagination {
+  cursor: default;
+  /* self-clearing method: */ }
+  .pagination a, .pagination span, .pagination em {
+    padding: 0.2em 0.5em;
+    display: block;
+    float: left;
+    margin-right: 1px; }
+  .pagination .disabled {
+    color: #999999;
+    border: 1px solid #dddddd; }
+  .pagination .current {
+    font-style: normal;
+    font-weight: bold;
+    background: #2e6ab1;
+    color: white;
+    border: 1px solid #2e6ab1; }
+  .pagination a {
+    text-decoration: none;
+    color: #9bd0f6;
+    border: 1px solid #9aafe5; }
+  .pagination a:hover, .pagination a:focus {
+    background: white;
+    color: #000044;
+    border-color: #000044; }
+.pagination .pagination_links {
+    margin: 0 auto;
+    width: 70%;
+    text-align: center;
+}
+  .pagination .page_info {
+    margin: 0 auto;
+    background: #2e6ab1;
+    color: white;
+    padding: 0.4em 0.6em;
+    width: 22em;
+    margin-bottom: 0.3em; }
+  .pagination .page_info b {
+    color: #000033;
+    background: #6aa6ed;
+    padding: 0.1em 0.25em; }
+  .pagination:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; }
+  * html .pagination {
+    height: 1%; }
+  *:first-child + html .pagination {
+    overflow: hidden; }

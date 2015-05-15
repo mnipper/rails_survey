@@ -24,11 +24,11 @@ class Survey < ActiveRecord::Base
   belongs_to :device
   has_many :responses, foreign_key: :survey_uuid, primary_key: :uuid, dependent: :destroy
   delegate :project, to: :instrument
-  
   validates :device_id, presence: true, allow_blank: false
   validates :uuid, presence: true, allow_blank: false
   validates :instrument_id, presence: true, allow_blank: false
   validates :instrument_version_number, presence: true, allow_blank: false
+  paginates_per 20
   
   def percent_complete
     completion_rate || calculate_completion_rate

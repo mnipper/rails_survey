@@ -80,7 +80,10 @@ RailsSurvey::Application.routes.draw do
     resources :rules
     resources :device_users
     resources :responses
-    resources :surveys
+    concern :paginatable do
+      get '(page/:page)', :action => :index, :on => :collection, :as => ''
+    end
+    resources :surveys, :concerns => :paginatable
     resources :notifications, only: [:index]
     resources :devices, only: [:index] do
       resources :device_sync_entries, only: [:index]
