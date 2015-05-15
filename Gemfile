@@ -33,7 +33,6 @@ group :test do
   gem 'selenium-webdriver', '~> 2.39'
 end
 
-gem 'capistrano', group: :development
 gem 'exception_notification'
 gem 'sqlite3'
 gem 'chosen-rails'
@@ -47,10 +46,6 @@ gem 'role_model', '~> 0.8.1'
 gem 'sidekiq', '~> 3.0.0'
 gem 'mandrill-api', '~> 1.0.51'
 gem 'kaminari'
-gem 'capistrano-rails', '~> 1.1.1'
-gem 'capistrano-bundler', '~> 1.1.2'
-gem 'capistrano-rvm', '~> 0.1.1'
-gem 'capistrano-sidekiq', '~> 0.3.5'
 gem 'angular_rails_csrf'
 gem 'sinatra', '~> 1.4.5', :require => nil
 gem 'sanitize', '~> 3.0.0'
@@ -59,14 +54,19 @@ gem 'devise_google_authenticator', '0.3.14'
 gem 'bcrypt', '~> 3.1.7'
 gem 'sshkit', '~> 1.5.1'
 gem 'prawn'
-gem 'capistrano-multiconfig', '~> 3.0.8'
 
 group :production do
   gem 'rails_12factor'
 end
 
 group :development do
-  gem 'debugger', group: [:development]
+  gem 'debugger'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'capistrano', '~> 3.2.1'
+  gem 'capistrano-rails', '~> 1.1.1'
+  gem 'capistrano-bundler', '~> 1.1.2'
+  gem 'capistrano-rvm', '~> 0.1.1'
+  gem 'capistrano-sidekiq', '~> 0.3.5'
+  gem 'capistrano-multiconfig', '~> 3.0.8'
 end
