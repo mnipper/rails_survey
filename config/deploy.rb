@@ -67,38 +67,3 @@ namespace :deploy do
   after 'deploy:published', 'deploy:config_apache2'
   after 'deploy:published', 'deploy:restart_monit'
 end
-
-namespace :bootstrap do
-  task :default do
-    set :user, "dmtg" 
-    set :default_shell, "bash"
-
-    on roles(:app) do  
-      system("tar czf 'puppet.tgz' puppet/")
-      upload! "puppet.tgz", "/home/dmtg"
-      execute :tar, '-xzf' 'puppet.tgz'
-      execute "sudo rm -rf /etc/puppet"
-      execute "sudo mv /home/dmtg/puppet/ /etc/puppet" 
-      execute "sudo bash /etc/puppet/bootstrap.sh"
-    end 
-  end 
-end
-    
-namespace :puppet do
-  task :default do
-    set :rvm_ruby_string, '2.0.0-p195'
-    set :rvm_type, :system
-    set :user, "dmtg"
-  
-    on roles(:app) do  
-      system("tar czf 'puppet.tgz' puppet/")
-      upload! "puppet.tgz", "/home/dmtg" 
-      execute("tar xzf puppet.tgz")
-      execute "sudo rm -rf /etc/puppet"
-      execute "sudo mv /home/dmtg/puppet/ /etc/puppet"
-      execute("sudo puppet apply /etc/puppet/manifests/site.pp")
-    end 
-  end 
-end
-
-
