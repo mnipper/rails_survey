@@ -28,7 +28,7 @@ class Survey < ActiveRecord::Base
   validates :uuid, presence: true, allow_blank: false
   validates :instrument_id, presence: true, allow_blank: false
   validates :instrument_version_number, presence: true, allow_blank: false
-  paginates_per 20
+  paginates_per 50
   
   def percent_complete
     completion_rate || calculate_completion_rate
