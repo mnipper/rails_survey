@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150514202912) do
+ActiveRecord::Schema.define(version: 20150522153709) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 20150514202912) do
   end
 
   create_table "device_users", force: true do |t|
-    t.string   "username"
+    t.string   "username",                        null: false
     t.string   "name"
     t.string   "password_digest"
     t.boolean  "active",          default: false
