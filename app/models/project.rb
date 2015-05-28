@@ -34,6 +34,25 @@ class Project < ActiveRecord::Base
   validates :name, presence: true, allow_blank: false
   validates :description, presence: true, allow_blank: true
   
+  def instruments_to_sync(instrument_ids_and_versions)
+    return instruments unless instrument_ids_and_versions
+    synced_instruments = instruments.find(instrument_ids_and_versions.keys.map(&:to_i))
+    unsynced_instruments = instruments - synced_instruments
+    instrument_ids_and_versions.each do |instrument_id, instrument_version|
+      instrument = instruments.find(instrument_id.to_i)
+      unsynced_instruments << instrument if instrument.current_version_number > instrument_version
+    end
+    unsynced_instruments
+  end
+  
+  def questions_to_sync(instrument_ids) 
+    questions.where(instrument_id: instrument_ids) #TODO Only return changed questions
+  end
+  
+  def options_to_sync(instruments)
+    instruments.map {|instrument| instrument.options}.flatten #TODO Only sync changed options
+  end
+  
   def non_responsive_devices
     devices.includes(:surveys).where('surveys.updated_at < ?', Settings.danger_zone_days.days.ago).order('surveys.updated_at ASC')
   end

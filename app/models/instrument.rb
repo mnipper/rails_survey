@@ -26,6 +26,7 @@ class Instrument < ActiveRecord::Base
       :published, :show_instructions, :project_id 
   belongs_to :project
   has_many :questions, dependent: :destroy
+  has_many :options, through: :questions
   has_many :surveys
   has_many :responses, through: :surveys
   has_many :response_images, through: :responses
