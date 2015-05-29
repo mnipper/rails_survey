@@ -2,14 +2,15 @@
 #
 # Table name: options
 #
-#  id                 :integer          not null, primary key
-#  question_id        :integer
-#  text               :text
-#  created_at         :datetime
-#  updated_at         :datetime
-#  next_question      :string(255)
-#  number_in_question :integer
-#  deleted_at         :datetime
+#  id                        :integer          not null, primary key
+#  question_id               :integer
+#  text                      :text
+#  created_at                :datetime
+#  updated_at                :datetime
+#  next_question             :string(255)
+#  number_in_question        :integer
+#  deleted_at                :datetime
+#  instrument_version_number :integer          default(-1)
 #
 
 require "spec_helper"

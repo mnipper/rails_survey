@@ -20,6 +20,7 @@
 #  child_update_count               :integer          default(0)
 #  grid_id                          :integer
 #  first_in_grid                    :boolean          default(FALSE)
+#  instrument_version_number        :integer          default(-1)
 #
 
 require "spec_helper"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150522153709) do
+ActiveRecord::Schema.define(version: 20150528185801) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -172,6 +172,7 @@ ActiveRecord::Schema.define(version: 20150522153709) do
     t.string   "next_question"
     t.integer  "number_in_question"
     t.datetime "deleted_at"
+    t.integer  "instrument_version_number", default: -1
   end
 
   create_table "project_devices", force: true do |t|
@@ -216,6 +217,7 @@ ActiveRecord::Schema.define(version: 20150522153709) do
     t.integer  "child_update_count",               default: 0
     t.integer  "grid_id"
     t.boolean  "first_in_grid",                    default: false
+    t.integer  "instrument_version_number",        default: -1
   end
 
   add_index "questions", ["question_identifier"], name: "index_questions_on_question_identifier", unique: true

@@ -20,6 +20,7 @@
 #  child_update_count               :integer          default(0)
 #  grid_id                          :integer
 #  first_in_grid                    :boolean          default(FALSE)
+#  instrument_version_number        :integer          default(-1)
 #
 
 class Question < ActiveRecord::Base
@@ -28,7 +29,7 @@ class Question < ActiveRecord::Base
   attr_accessible :text, :question_type, :question_identifier, :instrument_id,
           :following_up_question_identifier, :reg_ex_validation,
           :number_in_instrument, :reg_ex_validation_message, :identifies_survey,
-          :instructions, :grid_id, :first_in_grid
+          :instructions, :grid_id, :first_in_grid, :instrument_version_number
   belongs_to :instrument
   belongs_to :grid 
   has_many :responses
@@ -39,6 +40,7 @@ class Question < ActiveRecord::Base
   before_save :update_instrument_version, if: Proc.new { |question| question.changed? and !question.child_update_count_changed? }
   before_save :update_question_translation, if: Proc.new { |question| question.text_changed? }
   before_save :update_first_in_grid, if: Proc.new { |question| question.first_in_grid_changed? }
+  after_save :record_instrument_version
   before_destroy :update_instrument_version
   has_paper_trail
   acts_as_paranoid
@@ -71,7 +73,7 @@ class Question < ActiveRecord::Base
   end
 
   def instrument_version
-    instrument.current_version_number
+    read_attribute(:instrument_version_number) == -1 ? instrument.current_version_number : read_attribute(:instrument_version_number)
   end
 
   def as_json(options={})
@@ -126,6 +128,10 @@ class Question < ActiveRecord::Base
   
   private
   def update_instrument_version
-    instrument.update_instrument_version
+    instrument.update_instrument_version 
+  end
+  
+  def record_instrument_version
+    update_column(:instrument_version_number, instrument_version)
   end
 end

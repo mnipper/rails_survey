@@ -5,8 +5,7 @@ module Api
 
       def index
         project = Project.find(params[:project_id])
-        instruments = project.instruments_to_sync(params[:instrument_versions])
-        options = project.options_to_sync(instruments) if instruments
+        options = project.options_to_sync(params[:instrument_versions])
         respond_with options, include: :translations
       end
 
