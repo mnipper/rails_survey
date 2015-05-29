@@ -5,7 +5,7 @@ module Api
 
       def index
         project = Project.find(params[:project_id])
-        questions = project.questions_to_sync(params[:instrument_versions]) 
+        questions = project.questions_to_sync(params[:instrument_versions], params[:deleted_questions]) 
         respond_with questions, include: :translations
       end
 

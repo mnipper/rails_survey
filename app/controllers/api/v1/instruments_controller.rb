@@ -5,7 +5,7 @@ module Api
 
       def index
         project = Project.find(params[:project_id])
-        instruments = project.instruments_to_sync(params[:instrument_versions])
+        instruments = project.instruments_to_sync(params[:instrument_versions], params[:deleted_instruments])
         respond_with instruments, include: :translations
       end
 

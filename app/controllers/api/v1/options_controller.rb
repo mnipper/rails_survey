@@ -5,7 +5,7 @@ module Api
 
       def index
         project = Project.find(params[:project_id])
-        options = project.options_to_sync(params[:instrument_versions])
+        options = project.options_to_sync(params[:instrument_versions], params[:deleted_options])
         respond_with options, include: :translations
       end
 
