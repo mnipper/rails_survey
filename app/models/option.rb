@@ -71,9 +71,11 @@ class Option < ActiveRecord::Base
   def update_instrument_version
     instrument.update_instrument_version
     question.update_question_version
+    question.update_column(:instrument_version_number, instrument.current_version_number)
   end
   
   def record_instrument_version_number
     update_column(:instrument_version_number, instrument.current_version_number) 
+    question.update_column(:instrument_version_number, instrument.current_version_number)
   end
 end
