@@ -9,8 +9,6 @@ ActiveAdmin.register User do
     actions
   end
 
-  filter :email
-
   show do |user|
     attributes_table do
       row :id

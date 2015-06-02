@@ -7,8 +7,6 @@ ActiveAdmin.register ApiKey do
     actions
   end
 
-  filter :access_token
-  
   show do |user|
     attributes_table do
       row :id
