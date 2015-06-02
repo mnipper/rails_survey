@@ -11,7 +11,8 @@ ActiveAdmin.register Survey do
       end
       column :uuid
       column "Instrument" do |inst|
-        link_to inst.instrument_title, admin_survey_path(inst.instrument_id)
+        instrument = Instrument.find_by_id(inst.instrument_id)
+        instrument ? (link_to inst.instrument_title, admin_instrument_path(inst.instrument_id)) : inst.instrument_title
       end
       column "Instrument Versions" do |version|
         version.instrument_version_number

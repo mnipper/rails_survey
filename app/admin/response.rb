@@ -15,8 +15,8 @@ ActiveAdmin.register Response do
       link_to s_uuid.survey_uuid, admin_survey_path(survey.id)
     end
     column "Question" do |q_id|
-      question = Question.with_deleted.find(q_id.question_id)
-      link_to q_id.question_id, admin_question_path(question.id)
+      question = Question.find_by_id(q_id.question_id)
+      question ? (link_to q_id.question_id, admin_question_path(question.id)) : q_id.question_id
     end
     column :question_identifier
     column :text
