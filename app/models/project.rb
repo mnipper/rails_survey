@@ -36,7 +36,7 @@ class Project < ActiveRecord::Base
   
   def instruments_to_sync(instrument_ids_and_versions, deleted_instruments_ids)
     return instruments.with_deleted if instrument_ids_and_versions.blank?
-    synced_instruments = instruments.where(id: instrument_ids_and_versions.keys.map(&:to_i))
+    synced_instruments = instruments.where(id: instrument_ids_and_versions.keys)
     unsynced_instruments = instruments.with_deleted - synced_instruments 
     unless deleted_instruments_ids.blank?
       synced_deleted_instruments = instruments.with_deleted.where(id: deleted_instruments_ids.split(",").map(&:to_i))
@@ -51,7 +51,7 @@ class Project < ActiveRecord::Base
   
   def questions_to_sync(instrument_ids_and_versions, deleted_questions_ids) 
     return questions.with_deleted if instrument_ids_and_versions.blank?
-    synced_instruments = instruments.where(id: instrument_ids_and_versions.keys.map(&:to_i))
+    synced_instruments = instruments.where(id: instrument_ids_and_versions.keys)
     synced_questions = synced_instruments.map {|inst| inst.questions}.flatten
     unsynced_questions = questions.with_deleted - synced_questions
     unless deleted_questions_ids.blank?
@@ -67,7 +67,7 @@ class Project < ActiveRecord::Base
   
   def options_to_sync(instrument_ids_and_versions, deleted_options_ids)
     return options.with_deleted if instrument_ids_and_versions.blank?
-    synced_instruments = instruments.where(id: instrument_ids_and_versions.keys.map(&:to_i))
+    synced_instruments = instruments.where(id: instrument_ids_and_versions.keys)
     synced_options = synced_instruments.map {|inst| inst.options}.flatten
     unsynced_options = options.with_deleted - synced_options
     unless deleted_options_ids.blank?
