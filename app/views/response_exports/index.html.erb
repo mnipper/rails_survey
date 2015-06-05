@@ -8,7 +8,6 @@
             <tr>
                 <th>Project</th>
                 <th>Date</th>
-                <th>Status</th>
                 <th>Long format csv</th>
                 <th>Wide format csv</th>
                 <th>Pictures</th>
@@ -19,16 +18,19 @@
                 <tr>
                     <td><%= link_to current_project.name, project_path(export.try(:project_id)) %></td>
                     <td><%= export.created_at.strftime("%Y-%m-%d %I:%M%p") %></td>
-                    <td><%= export.done ? "Processed" : "Processing.." %></td>
                     <td>
-                        <% if policy(export).project_long_format_responses? && export.long_format_url %>
+                       <% if policy(export).project_long_format_responses? && export.long_done && export.long_format_url %>
                             <%= link_to 'long csv', project_long_format_responses_project_response_export_path(current_project, export.id) %>
+                       <% else %>
+                            Processing...
                        <% end %>
                     </td>
                     <td>
-                        <% if policy(export).project_wide_format_responses? && export.wide_format_url %>
+                        <% if policy(export).project_wide_format_responses? && export.wide_done && export.wide_format_url %>
                             <%= link_to 'wide csv', project_wide_format_responses_project_response_export_path(current_project, export.id) %>
-                       <% end %>
+                        <% else %>
+                            Processing...
+                        <% end %>
                     </td>
                     <td>
                         <% if policy(export).project_response_images? && export.response_images_export && export.response_images_export.download_url %>
@@ -48,7 +50,6 @@
                   <th>Instrument</th>
                   <th>Versions</th>
                   <th>Date</th>
-                  <th>Status</th>
                   <th>Long format csv</th>
                   <th>Wide format csv</th>
                   <th>Pictures</th>
@@ -64,15 +65,18 @@
                     <% end %>
                   </td>
                   <td><%= export.created_at.strftime("%Y-%m-%d %I:%M%p") %></td>
-                  <td><%= export.done ? "Processed" : "Processing.." %></td>
                   <td>
-                      <% if policy(export).instrument_long_format_responses? && export.long_format_url %>
+                      <% if policy(export).instrument_long_format_responses? && export.long_done && export.long_format_url %>
                         <%= link_to 'long csv', instrument_long_format_responses_project_response_export_path(current_project, export.id) %>
+                      <% else %>
+                        Processing...
                       <% end %>
                   </td>
                   <td>
-                      <% if policy(export).instrument_wide_format_responses? && export.wide_format_url %>
+                      <% if policy(export).instrument_wide_format_responses? && export.wide_done && export.wide_format_url %>
                         <%= link_to 'wide csv', instrument_wide_format_responses_project_response_export_path(current_project, export.id) %>
+                      <% else %>
+                        Processing...
                       <% end %>
                   </td>
                   <td>

@@ -55,8 +55,10 @@ class ProjectsController < ApplicationController
     wide_csv_file = File.new(root + "/#{Time.now.to_i}" + "_wide" + ".csv", "a+")
     wide_csv_file.close
     export = ResponseExport.create(:project_id => current_project.id, :long_format_url => long_csv_file.path, :wide_format_url => wide_csv_file.path)
-    ProjectLongResponsesExportWorker.perform_async(current_project.id, long_csv_file.path, export.id)
-    ProjectWideResponsesExportWorker.perform_async(current_project.id, wide_csv_file.path, export.id)
+    long_id = ProjectLongResponsesExportWorker.perform_async(current_project.id, long_csv_file.path)
+    wide_id = ProjectWideResponsesExportWorker.perform_async(current_project.id, wide_csv_file.path)
+    StatusWorker.perform_in(1.minute, export.id, long_id, "long_job")
+    StatusWorker.perform_in(1.minute, export.id, wide_id, "wide_job")
     unless current_project.response_images.empty?
       zipped_file = File.new(root + "/#{Time.now.to_i}.zip", "a+")
       zipped_file.close 

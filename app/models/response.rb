@@ -56,12 +56,10 @@ class Response < ActiveRecord::Base
     end
   end
 
-  def self.to_csv(csv_file, export_id)
+  def self.to_csv(csv_file)
     CSV.open(csv_file, "wb") do |csv|
       export(csv)
     end
-    export = ResponseExport.find(export_id)
-    export.update(:done => true)
   end
 
   def self.export(format)

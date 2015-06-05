@@ -4,17 +4,18 @@
 #
 #  id                  :integer          not null, primary key
 #  long_format_url     :string(255)
-#  done                :boolean          default(FALSE)
+#  long_done           :boolean          default(FALSE)
 #  created_at          :datetime
 #  updated_at          :datetime
 #  project_id          :integer
 #  instrument_id       :integer
 #  instrument_versions :text
 #  wide_format_url     :string(255)
+#  wide_done           :boolean          default(FALSE)
 #
 
 class ResponseExport < ActiveRecord::Base
-  attr_accessible :done, :long_format_url, :wide_format_url, :project_id, :instrument_id, :instrument_versions
+  attr_accessible :long_format_url, :wide_format_url, :project_id, :instrument_id, :instrument_versions, :long_done, :wide_done
   serialize :instrument_versions
   belongs_to :project
   belongs_to :instrument

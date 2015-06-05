@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150528185801) do
+ActiveRecord::Schema.define(version: 20150605200250) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -224,13 +224,14 @@ ActiveRecord::Schema.define(version: 20150528185801) do
 
   create_table "response_exports", force: true do |t|
     t.string   "long_format_url"
-    t.boolean  "done",                default: false
+    t.boolean  "long_done",           default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "project_id"
     t.integer  "instrument_id"
     t.text     "instrument_versions"
     t.string   "wide_format_url"
+    t.boolean  "wide_done",           default: false
   end
 
   create_table "response_images", force: true do |t|

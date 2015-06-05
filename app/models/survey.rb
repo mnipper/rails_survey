@@ -65,12 +65,10 @@ class Survey < ActiveRecord::Base
     JSON.parse(read_attribute(:metadata)) unless read_attribute(:metadata).nil?
   end
   
-  def self.to_csv(csv_file, export_id)
+  def self.to_csv(csv_file)
     CSV.open(csv_file, "wb") do |csv|
       export(csv)
     end
-    export = ResponseExport.find(export_id)
-    export.update_attributes(:done => true)
   end
   
   def self.export(format) 

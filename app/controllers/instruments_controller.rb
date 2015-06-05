@@ -73,8 +73,10 @@ class InstrumentsController < ApplicationController
     wide_csv_file.close
     export = ResponseExport.create(:instrument_id => @instrument.id, :long_format_url => long_csv_file.path, 
       :wide_format_url => wide_csv_file.path, :instrument_versions => @instrument.survey_instrument_versions)
-    InstrumentLongResponsesExportWorker.perform_async(@instrument.id, long_csv_file.path, export.id)
-    InstrumentWideResponsesExportWorker.perform_async(@instrument.id, wide_csv_file.path, export.id)
+    long_id = InstrumentLongResponsesExportWorker.perform_async(@instrument.id, long_csv_file.path)
+    wide_id = InstrumentWideResponsesExportWorker.perform_async(@instrument.id, wide_csv_file.path)
+    StatusWorker.perform_in(1.minute, export.id, long_id, "long_job")
+    StatusWorker.perform_in(1.minute, export.id, wide_id, "wide_job")
     unless @instrument.response_images.empty?
       zipped_file = File.new(root + "/#{Time.now.to_i}.zip", "a+")
       zipped_file.close 
