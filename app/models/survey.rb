@@ -76,6 +76,8 @@ class Survey < ActiveRecord::Base
     all.each do |survey|
       survey.instrument.questions.each do |question|
         variable_identifiers << question.question_identifier unless variable_identifiers.include? question.question_identifier
+        variable_identifiers << question.question_identifier + '_short_qid' unless variable_identifiers.include? question.question_identifier + '_short_qid'
+        variable_identifiers << question.question_identifier + '_question_type' unless variable_identifiers.include? question.question_identifier + '_question_type'
         variable_identifiers << question.question_identifier + '_label' unless variable_identifiers.include? question.question_identifier + '_label'
         variable_identifiers << question.question_identifier + '_special' unless variable_identifiers.include? question.question_identifier + '_special'
         variable_identifiers << question.question_identifier + '_other' unless variable_identifiers.include? question.question_identifier + '_other'
@@ -110,6 +112,10 @@ class Survey < ActiveRecord::Base
       survey.responses.each do |response|
         identifier_index = header.index(response.question_identifier)
         row[identifier_index] = response.text if identifier_index
+        short_qid_index = header.index(response.question_identifier + '_short_qid')
+        row[short_qid_index] = response.question_id if short_qid_index
+        question_type_index = header.index(response.question_identifier + '_question_type')
+        row[question_type_index] = response.question.question_type if question_type_index
         special_identifier_index = header.index(response.question_identifier + '_special')
         row[special_identifier_index] = response.special_response if special_identifier_index
         other_identifier_index = header.index(response.question_identifier + '_other')
@@ -137,7 +143,7 @@ class Survey < ActiveRecord::Base
   end
   
   def chronicled_question(question_identifier)
-    instrument_version.find_question_by(question_identifier: question_identifier)
+    @chronicled_question ||= instrument_version.find_question_by(question_identifier: question_identifier)
   end
   
   def option_labels(response)
