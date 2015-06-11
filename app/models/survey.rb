@@ -73,18 +73,13 @@ class Survey < ActiveRecord::Base
   
   def self.export(format) 
     variable_identifiers = []
+    question_identifier_variables = %w[_short_qid _question_type _label _special _other _version _text _start_time _end_time]
     all.each do |survey|
       survey.instrument.questions.each do |question|
         variable_identifiers << question.question_identifier unless variable_identifiers.include? question.question_identifier
-        variable_identifiers << question.question_identifier + '_short_qid' unless variable_identifiers.include? question.question_identifier + '_short_qid'
-        variable_identifiers << question.question_identifier + '_question_type' unless variable_identifiers.include? question.question_identifier + '_question_type'
-        variable_identifiers << question.question_identifier + '_label' unless variable_identifiers.include? question.question_identifier + '_label'
-        variable_identifiers << question.question_identifier + '_special' unless variable_identifiers.include? question.question_identifier + '_special'
-        variable_identifiers << question.question_identifier + '_other' unless variable_identifiers.include? question.question_identifier + '_other'
-        variable_identifiers << question.question_identifier + '_version' unless variable_identifiers.include? question.question_identifier + '_version'
-        variable_identifiers << question.question_identifier + '_text' unless variable_identifiers.include? question.question_identifier + '_text' 
-        variable_identifiers << question.question_identifier + '_start_time' unless variable_identifiers.include? question.question_identifier + '_start_time'
-        variable_identifiers << question.question_identifier + '_end_time' unless variable_identifiers.include? question.question_identifier + '_end_time'
+        question_identifier_variables.each do |variable|
+          variable_identifiers << question.question_identifier + variable unless variable_identifiers.include? question.question_identifier + variable
+        end
       end
     end
     
