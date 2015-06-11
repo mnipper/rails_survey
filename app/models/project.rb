@@ -34,14 +34,10 @@ class Project < ActiveRecord::Base
   validates :name, presence: true, allow_blank: false
   validates :description, presence: true, allow_blank: true
   
-  def instruments_to_sync(instrument_ids_and_versions, deleted_instruments_ids)
+  def instruments_to_sync(instrument_ids_and_versions)
     return instruments.with_deleted if instrument_ids_and_versions.blank?
     synced_instruments = instruments.where(id: instrument_ids_and_versions.keys)
     unsynced_instruments = instruments.with_deleted - synced_instruments 
-    unless deleted_instruments_ids.blank?
-      synced_deleted_instruments = instruments.with_deleted.where(id: deleted_instruments_ids.split(",").map(&:to_i))
-      unsynced_instruments -= synced_deleted_instruments if synced_deleted_instruments
-    end
     instrument_ids_and_versions.each do |instrument_id, instrument_version|
       instrument = instruments.where(id: instrument_id.to_i).try(:first)
       unsynced_instruments << instrument if !instrument.blank? && instrument.current_version_number > instrument_version
@@ -49,15 +45,11 @@ class Project < ActiveRecord::Base
     unsynced_instruments
   end
   
-  def questions_to_sync(instrument_ids_and_versions, deleted_questions_ids) 
+  def questions_to_sync(instrument_ids_and_versions) 
     return questions.with_deleted if instrument_ids_and_versions.blank?
     synced_instruments = instruments.where(id: instrument_ids_and_versions.keys)
     synced_questions = synced_instruments.map {|inst| inst.questions}.flatten
     unsynced_questions = questions.with_deleted - synced_questions
-    unless deleted_questions_ids.blank?
-      synced_deleted_questions = questions.with_deleted.where(id: deleted_questions_ids.split(",").map(&:to_i))
-      unsynced_questions -= synced_deleted_questions if synced_deleted_questions
-    end
     instrument_ids_and_versions.each do |instrument_id, instrument_version|
       instrument = instruments.where(id: instrument_id.to_i).try(:first)
       unsynced_questions << instrument.questions.select{|question| question.instrument_version_number > instrument_version} unless instrument.blank?
@@ -65,20 +57,24 @@ class Project < ActiveRecord::Base
     unsynced_questions.flatten
   end
   
-  def options_to_sync(instrument_ids_and_versions, deleted_options_ids)
+  def options_to_sync(instrument_ids_and_versions)
     return options.with_deleted if instrument_ids_and_versions.blank?
     synced_instruments = instruments.where(id: instrument_ids_and_versions.keys)
     synced_options = synced_instruments.map {|inst| inst.options}.flatten
     unsynced_options = options.with_deleted - synced_options
-    unless deleted_options_ids.blank?
-      synced_deleted_options = options.with_deleted.where(id: deleted_options_ids.split(",").map(&:to_i))
-      unsynced_options -= synced_deleted_options if synced_deleted_options
-    end
     instrument_ids_and_versions.each do |instrument_id, instrument_version|
       instrument = instruments.where(id: instrument_id.to_i).try(:first)
       unsynced_options << instrument.options.select {|option| option.instrument_version_number > instrument_version} unless instrument.blank?
     end
     unsynced_options.flatten
+  end
+  
+  def ids_and_versions(ids, versions)
+    instrument_ids_and_versions = {}
+    if ids && versions
+      instrument_ids_and_versions = Hash[ids.split(",").map(&:to_i).zip versions.split(",").map(&:to_i)]
+    end
+    instrument_ids_and_versions
   end
   
   def non_responsive_devices
