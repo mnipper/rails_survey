@@ -21,7 +21,7 @@
           <td><%= device.identifier %></td>
           <td><%= device.label %></td>
           <td><%= device.surveys.count %></td>
-          <td><%= device.last_survey ? (link_to device.last_survey.uuid, project_survey_path(current_project, device.last_survey)) : "" %></td>
+          <td><%= (device.last_survey && current_project.surveys.find_by_id(device.last_survey.id)) ? (link_to device.last_survey.uuid, project_survey_path(current_project, device.last_survey)) : "" %></td>
           <td><%= device.device_sync_entries.blank? ? "" : time_ago_in_words(device.device_sync_entries.last.updated_at) + " ago" %> </td>
           <td><%= device.device_sync_entries.blank? ? "" : device.device_sync_entries.last.current_version_name %></td>
           <td><%= link_to 'Sync Entries', project_device_device_sync_entries_path(current_project, device) %></td>
