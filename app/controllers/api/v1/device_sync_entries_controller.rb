@@ -5,6 +5,19 @@ module Api
       respond_to :json
 
       def create
+        device = Device.find_by_identifier(params[:device_sync_entry][:device_uuid])
+        if device
+          project = Project.find_by_id(params[:device_sync_entry][:project_id])
+          device.projects << project unless device.projects.include?(project)
+        else
+          device = Device.new
+          device.projects << Project.find_by_id(params[:device_sync_entry][:project_id])
+          device.identifier = params[:device_sync_entry][:device_uuid]
+          device.label = params[:device_sync_entry][:device_label]
+          device.save
+        end
+        params[:device_sync_entry].delete :project_id
+        params[:device_sync_entry].delete :device_label
         @device_sync_entry = DeviceSyncEntry.new(params[:device_sync_entry])
         if @device_sync_entry.save
           render json: @device_sync_entry, status: :created
