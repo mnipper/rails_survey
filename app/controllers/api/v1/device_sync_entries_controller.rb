@@ -6,12 +6,12 @@ module Api
 
       def create
         device = Device.find_by_identifier(params[:device_sync_entry][:device_uuid])
+        project = Project.find_by_id(params[:device_sync_entry][:project_id])
         if device
-          project = Project.find_by_id(params[:device_sync_entry][:project_id])
-          device.projects << project unless device.projects.include?(project)
+          device.projects << project if project && !device.projects.include?(project)
         else
           device = Device.new
-          device.projects << Project.find_by_id(params[:device_sync_entry][:project_id])
+          device.projects << project if project && !device.projects.include?(project)
           device.identifier = params[:device_sync_entry][:device_uuid]
           device.label = params[:device_sync_entry][:device_label]
           device.save
