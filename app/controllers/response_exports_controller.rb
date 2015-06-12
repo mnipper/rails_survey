@@ -4,8 +4,8 @@ class ResponseExportsController < ApplicationController
       :instrument_wide_format_responses, :project_response_images, :instrument_response_images]
   
   def index
-    @project_exports = current_project.response_exports.order('created_at DESC')
-    @instrument_exports = current_project.instrument_response_exports
+    @project_exports = current_project.response_exports.order('created_at DESC').limit(10)
+    @instrument_exports = current_project.instrument_response_exports.take(10)
   end
   
   def new
