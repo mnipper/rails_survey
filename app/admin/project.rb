@@ -2,10 +2,12 @@ ActiveAdmin.register Project do
   menu priority: 4
 
   index do
-    column "Name" do |text|
+    selectable_column
+    column :id
+    column :name do |text|
       truncate(text.name, length: 50)
     end
-    column "Description" do |text|
+    column :description do |text|
       truncate(text.description, length: 100)
     end
     column :created_at

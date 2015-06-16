@@ -6,15 +6,15 @@ ActiveAdmin.register Response do
   
   index do
     selectable_column
-    column "Id" do |response|
+    column :id do |response|
       link_to response.id, admin_response_path(response.id)
      end
     column :uuid
-    column "Survey" do |s_uuid|
+    column "Survey", sortable: :survey_uuid do |s_uuid|
       survey = Survey.find_by_uuid(s_uuid.survey_uuid)
       link_to s_uuid.survey_uuid, admin_survey_path(survey.id)
     end
-    column "Question" do |q_id|
+    column "Question", sortable: :question_id do |q_id|
       question = Question.find_by_id(q_id.question_id)
       question ? (link_to q_id.question_id, admin_question_path(question.id)) : q_id.question_id
     end

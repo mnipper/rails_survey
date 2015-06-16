@@ -6,15 +6,15 @@ ActiveAdmin.register Survey do
     
     index do
       selectable_column
-      column "Id" do |survey|
+      column :id do |survey|
         link_to survey.id, admin_survey_path(survey.id)
       end
       column :uuid
-      column "Instrument" do |inst|
+      column "Instrument", sortable: :instrument_title do |inst|
         instrument = Instrument.find_by_id(inst.instrument_id)
         instrument ? (link_to inst.instrument_title, admin_instrument_path(inst.instrument_id)) : inst.instrument_title
       end
-      column "Instrument Versions" do |version|
+      column "Instrument Versions", sortable: :instrument_version_number do |version|
         version.instrument_version_number
       end
       column :created_at do |survey|
