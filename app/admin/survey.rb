@@ -1,4 +1,9 @@
 ActiveAdmin.register Survey do
+  sidebar "Survey Associations", only: :show do
+    ul do
+      li link_to "Responses",    admin_survey_responses_path(params[:id])
+    end
+  end
   permit_params :instrument_id, :instrument_version_number, :uuid, :device_id, :instrument_title,
     :device_uuid, :latitude, :longitude, :metadata, :completion_rate
     config.sort_order = "id_desc"

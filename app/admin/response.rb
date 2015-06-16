@@ -1,4 +1,5 @@
 ActiveAdmin.register Response do
+  belongs_to :survey
   permit_params :question_id, :text, :other_response, :special_response, :survey_uuid, :time_started, :time_ended,
     :question_identifier, :uuid, :device_user_id, :question_version
   config.sort_order = "id_desc"
@@ -7,7 +8,7 @@ ActiveAdmin.register Response do
   index do
     selectable_column
     column :id do |response|
-      link_to response.id, admin_response_path(response.id)
+      link_to response.id, admin_survey_response_path(params[:survey_id], response.id)
      end
     column :uuid
     column "Survey", sortable: :survey_uuid do |s_uuid|
