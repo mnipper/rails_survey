@@ -30,7 +30,7 @@ ActiveAdmin.register ResponseExport do
         end
         send_file file.path, :type => 'application/zip', :disposition => 'attachment', :filename => "exports_#{Time.now.to_i}.zip"
         file.close
-        DeleteFilesWorker.perform_in(2.minute, file.path)
+        DeleteFilesWorker.perform_in(2.minutes, file.path)
       end
     end  
   end
