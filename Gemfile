@@ -36,7 +36,7 @@ end
 gem 'exception_notification'
 gem 'sqlite3'
 gem 'chosen-rails'
-gem 'activeadmin', github: 'gregbell/active_admin'
+gem 'activeadmin', '~> 1.0.0.pre1'
 gem 'paranoia', '~> 2.0'
 gem 'pundit'
 gem 'groupdate', github: 'mieko/groupdate', :branch => 'sqlite3'
